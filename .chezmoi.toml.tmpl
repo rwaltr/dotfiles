@@ -1,0 +1,10 @@
+{{- $email := promptString "email" -}}
+{{- $name := promptString "name" -}}
+{{- $personal := promptString "Is this a personal device? (y/n)" -}}
+{{- $work := promptString "Is this a work device? (y/n)" -}}
+
+[data]
+  name = "{{ $name }}"
+  email = "{{ $email }}"
+  personal = "{{ $personal }}"
+  work = "{{ $work }}"

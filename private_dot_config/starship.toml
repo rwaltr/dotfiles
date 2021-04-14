@@ -1,0 +1,9 @@
+# Do not print newline after prompt
+add_newline = false
+
+[username]
+show_always = true
+
+[character]
+symbol = "➤"
+vimcd_symbol = "𝕍"
