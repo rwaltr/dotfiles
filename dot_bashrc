@@ -20,12 +20,6 @@ if [ -d ~/.bin/exec/ ]
 		PATH=$PATH:~/.bin/exec/
 fi
 
-# Hook into Tmux
-
-if [ -z $TMUX ]; then
-		tmux new; 
-fi
-
 # Source fzf
 source /usr/share/fzf/shell/key-bindings.bash
 
