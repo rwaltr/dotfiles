@@ -1,5 +1,4 @@
 # kubectl convenience aliases
-# requires https://github.com/cykerway/complete-alias
 ## base
 alias k="kubectl"
 complete -F _complete_alias k
@@ -281,6 +280,11 @@ complete -F _complete_alias kpchva
 alias kpchwli="kubectl patch workloadimages"
 complete -F _complete_alias kpchwli
 
+## create
+alias kcs="kubectl create secret"
+complete -F _complete_alias kcs
+alias kcsg="kubectl create secret generic"
+complete -F _complete_alias kcsg
 ## port-forward
 alias kpf="kubectl port-forward"
 complete -F _complete_alias kpf
@@ -300,3 +304,9 @@ alias kex="kubectl exec -it"
 complete -F _complete_alias kex
 alias kexw="kubectl exec -it --pod-running-timeout=1m"
 complete -F _complete_alias kexw
+
+## krew addons
+alias kvs="kubectl view-secret"
+complete -F _complete_alias kvs
+alias kvsa="kubectl view-secret -a"
+complete -F _complete_alias kvsa
