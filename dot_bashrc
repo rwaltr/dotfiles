@@ -55,6 +55,7 @@ shopt -s cdable_vars
 
 # Custom Alias
 
+
 # easy resource
 alias resource="source ~/.bashrc"
 
@@ -83,6 +84,7 @@ alias cd..=".."
 
 # Weather!
 alias wttr="curl wttr.in"
+alias wunderground="nc rainmaker.wunderground.com 3000"
 
 #QOL
 #Forgot a space
