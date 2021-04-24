@@ -26,7 +26,11 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		Plug 'liuchengxu/vim-which-key'
 		" Color preview
 		Plug 'https://github.com/ap/vim-css-color'
-
+		" Git Integration
+		Plug 'mhinz/vim-signify'
+		Plug 'tpope/vim-fugitive'
+		Plug 'tpope/vim-rhubarb'
+		Plug 'junegunn/gv.vim'
 		" LSP
 		if has("nvim-0.5")
 		Plug 'neovim/nvim-lspconfig'
