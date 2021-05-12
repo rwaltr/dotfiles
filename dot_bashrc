@@ -39,6 +39,9 @@ bind "set show-all-if-ambiguous on"
 # Immediately add a trailing slash when autocompleting symlinks to directories
 bind "set mark-symlinked-directories on"
 
+
+export HISTSIZE=10000
+
 # This defines where cd looks for targets
 # Add the directories you want to have fast access to, separated by colon
 # Ex: CDPATH=".:~:~/projects" will look for targets in the current working directory, in home and in the ~/projects folder
