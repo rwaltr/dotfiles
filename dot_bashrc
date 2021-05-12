@@ -121,6 +121,10 @@ alias ip='ip -br -c'
 alias tb='nc termbin.com 9999'
 alias termbin=tb
 
+
+# Argo!
+alias argo=argocd
+
 # Custom Prompts 
 if [ -x "$(command -v starship)" ]
 then
