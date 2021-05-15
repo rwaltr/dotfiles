@@ -20,6 +20,12 @@ if [ -d ~/.bin/exec/ ]
 		PATH=$PATH:~/.bin/exec/
 fi
 
+if [ -d ~/.krew/bin ]
+	then
+		export PATH="${PATH}:${HOME}/.krew/bin"
+fi
+
+
 # Source fzf
 source /usr/share/fzf/shell/key-bindings.bash
 
