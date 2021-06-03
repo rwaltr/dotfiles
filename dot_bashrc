@@ -97,7 +97,7 @@ alias wunderground="nc rainmaker.wunderground.com 3000"
 
 #QOL
 #Forgot a space
-alias sudo!!="sudo !!"
+alias sudo!="sudo !!"
 
 #GPG helpers
 # verify signature
