@@ -25,7 +25,6 @@ if [ -d ~/.krew/bin ]
 		export PATH="${PATH}:${HOME}/.krew/bin"
 fi
 
-
 # Source fzf
 source /usr/share/fzf/shell/key-bindings.bash
 
@@ -45,7 +44,6 @@ bind "set show-all-if-ambiguous on"
 # Immediately add a trailing slash when autocompleting symlinks to directories
 bind "set mark-symlinked-directories on"
 
-
 export HISTSIZE=10000
 
 # This defines where cd looks for targets
@@ -60,10 +58,7 @@ shopt -s cdable_vars
 # export documents="$HOME/Documents"
 # export dropbox="$HOME/Dropbox"
 
-
-
 # Custom Alias
-
 
 # easy resource
 alias resource="source ~/.bashrc"
@@ -127,7 +122,6 @@ alias ip='ip -br -c'
 alias tb='nc termbin.com 9999'
 alias termbin=tb
 
-
 # Argo!
 alias argo=argocd
 
@@ -136,8 +130,6 @@ if [ -x "$(command -v starship)" ]
 then
 	eval "$(starship init bash)"
 fi
-
-
 
 # Nvim
 if [ -x "$(command -v nvim)" ] 
@@ -161,19 +153,10 @@ else
 fi
 # Custom Envioment Vars
 
-# Chezmoi
-
-if [ -x "$(command -v chezmoi)" ]
-then
-	alias rconfig='rclone config && chezmoi add --encrypt $HOME/.config/rclone/rclone.conf'
-fi
+export TF_HTTP_USERNAME=rwaltr
 
 
 # Custom Functions
 fzopen (){
 fd -t f -H -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
 }
-
-
-
-
