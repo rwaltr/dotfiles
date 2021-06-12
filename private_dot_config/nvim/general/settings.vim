@@ -38,7 +38,7 @@ let g:chezmoi = "enabled" "engage Chezmoi Plug
 
 
 " Vimwiki settings
-let g:vimwiki_list = [{'path': '~/Documents/VimWiki/'}]
+let g:vimwiki_list = [{'path': '~/Documents/VimWiki/', 'syntax': 'markdown', 'ext': '.wiki'}]
 
 
 " Git related settings
