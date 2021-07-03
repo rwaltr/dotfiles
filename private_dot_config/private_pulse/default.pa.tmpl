@@ -1,4 +1,6 @@
+{{- if eq .chezmoi.os "linux" }}
 {{- if eq .chezmoi.hostname "monolith" }}
+{{- if eq .specialsound "y" }}
 # Include Defaults
 .include /etc/pulse/default.pa
 
@@ -20,4 +22,6 @@ set-default-source mic_denoised_out.monitor
 #Add Remappable input for OBS
 load-module module-remap-sink sink_name=RemappedSink master=alsa_output.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.iec958-stereo channels=2 remix=no
 
+{{- end }}
+{{- end }}
 {{- end }}
