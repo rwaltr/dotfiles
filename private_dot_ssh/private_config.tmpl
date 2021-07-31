@@ -25,3 +25,9 @@ host home.storage2
 	User blackphidora
 
 {{- end}}
+
+{{- if eq .work "true" }}
+
+Include work.conf
+
+{{- end}}

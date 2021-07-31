@@ -2,11 +2,22 @@
 add_newline = false
 
 [username]
-show_always = true
+show_always = false
+format = "[$user]($style) "
+
+[hostname]
+disabled = false
+ssh_only= true
+format = "@ [$hostname]($style) "
+style = "blue"
+
+[directory]
+truncation_length = 8
+truncation_symbol = "…/"
 
 [character]
-success_symbol = "[➤](bold green) "
-error_symbol = "[✗](bold red) "
+success_symbol = "[ᑀ](bold green) "
+error_symbol = "[⤬](bold red) "
 
 [kubernetes]
 disabled = true
@@ -15,6 +26,8 @@ disabled = true
 disabled = false
 
 [terraform]
-disabled = false
+disabled = true
 
+[git_branch]
+format = "[$symbol$branch]($style)"
 
