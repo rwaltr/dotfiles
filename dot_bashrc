@@ -61,7 +61,10 @@ shopt -s cdable_vars
 # export documents="$HOME/Documents"
 # export dropbox="$HOME/Dropbox"
 
+
 # Custom Alias
+
+alias ":q"="exit"
 
 # easy resource
 alias resource="source ~/.bashrc"
