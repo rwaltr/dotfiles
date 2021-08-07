@@ -20,7 +20,7 @@ success_symbol = "[ᑀ](bold green) "
 error_symbol = "[⤬](bold red) "
 
 [kubernetes]
-disabled = false
+disabled = true
 
 [helm]
 disabled = false
