@@ -1,22 +1,21 @@
-{{- $email := promptString "email" -}}
-{{- $name := promptString "name" -}}
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
 {{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
 {{- $transient := false -}}{{/* true if this machine is temporary, e.g. a cloud or VM instance */}}
 {{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
-{{- $city := "Austin, TX" -}}{{/* city inputs for weather */}}
-
+{{- $city := "KATX" -}}{{/* city inputs for weather */}}
+{{- $work := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
 
 format: yaml
 
 data:
-  name: "{{ $name }}"
-  email: "{{ $email }}"
+  name: "Ryan Walter"
+  email: "rwaltr@pm.me"
   personal: "{{ $personal }}"
   headless: "{{ $headless }}"
   transient: "{{ $transient }}"
   kubernetes: "{{ $kubernetes }}"
   city: "{{ $city }}"
+  work: "{{ $work }}"
 
 
 gpg:
