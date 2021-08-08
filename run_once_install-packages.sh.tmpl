@@ -1,6 +1,6 @@
 {{- if eq .chezmoi.os "linux" -}}
-#!/bin/bash
-{{ if eq .chezmoi.osRelease.name "Fedora" -}}
+#!/bin/sh
+{{ if eq .chezmoi.osRelease.id "fedora" -}}
 echo "Installing script packages"
 sudo dnf update -y
 sudo dnf install toilet git wget curl -y
