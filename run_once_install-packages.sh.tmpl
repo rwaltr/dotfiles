@@ -15,4 +15,11 @@ nvim -c PlugInstall +qall
 toilet "Vim updated" --metal
 toilet "All set!" --metal
 {{- end }}
+{{ if eq .chezmoi.osRelease.id "arch" -}}
+echo "Installing script packages"
+pacman -Syu --noconfirm git curl wget toilet 
+toilet "Installing Packages" --metal
+pacman -Syu --noconfirm neovim kubelet starship jq curl wget chezmoi k9s gh kubie-bin 
+toilet "All good" --metal
+{{- end }}
 {{- end }}
