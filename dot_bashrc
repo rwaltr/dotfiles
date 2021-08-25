@@ -144,7 +144,6 @@ then
 	alias vi=vim
 	export EDITOR=nvim
 else
-	echo "Nvim not found, using vim"
 	alias nvim=vim
 	alias vi=vim
 	export EDITOR=vim
@@ -154,8 +153,6 @@ fi
 if [ -x "$(command -v lsd)" ]
 then
 	alias ls=lsd
-else
-	echo "Using default ls"
 fi
 # Custom Envioment Vars
 
