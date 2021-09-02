@@ -31,6 +31,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-rhubarb'
 		Plug 'junegunn/gv.vim'
+    Plug 'scrooloose/nerdcommenter'
 		" LSP
 		if has("nvim-0.5")
 		Plug 'neovim/nvim-lspconfig'
