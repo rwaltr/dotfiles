@@ -89,7 +89,7 @@ alias lla="ls -lah"
 alias ..="cd .."
 alias ...="cd ../../../"
 alias ....="cd ../../../../"
-alias .....="cd ../../../../"
+alias .....="cd ../../../../../"
 alias cd..=".."
 
 # Weather!
