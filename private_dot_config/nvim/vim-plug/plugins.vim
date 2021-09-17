@@ -36,6 +36,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		if has("nvim-0.5")
 		Plug 'neovim/nvim-lspconfig'
 		Plug 'nvim-lua/plenary.nvim'
+		Plug 'nvim-lua/popup.nvim'
+		Plug 'nvim-telescope/telescope-fzy-native.nvim'
 		Plug 'nvim-telescope/telescope.nvim'
 	  else
 			
