@@ -35,5 +35,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		" LSP
 		if has("nvim-0.5")
 		Plug 'neovim/nvim-lspconfig'
+		Plug 'nvim-lua/plenary.nvim'
+		Plug 'nvim-telescope/telescope.nvim'
+	  else
+			
+		" LSP
 		endif
 call plug#end()
