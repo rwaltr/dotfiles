@@ -65,6 +65,7 @@ shopt -s cdable_vars
 # Custom Alias
 
 alias ":q"="exit"
+alias "x"="exit"
 
 # easy resource
 alias resource="source ~/.bashrc"
