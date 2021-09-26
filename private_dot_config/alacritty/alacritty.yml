@@ -9,7 +9,7 @@
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
 import:
-  - .config/alacritty/dracula.yaml
+  - .config/alacritty/nord.yml
 
 env:
   # TERM variable
