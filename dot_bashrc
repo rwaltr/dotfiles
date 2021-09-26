@@ -52,7 +52,7 @@ export HISTSIZE=10000
 # This defines where cd looks for targets
 # Add the directories you want to have fast access to, separated by colon
 # Ex: CDPATH=".:~:~/projects" will look for targets in the current working directory, in home and in the ~/projects folder
-CDPATH=".:~:~/src/personal:~/src/"
+CDPATH=".:~:~/src/rwaltr:~/src/"
 
 # Custom bookmarks
 shopt -s cdable_vars
