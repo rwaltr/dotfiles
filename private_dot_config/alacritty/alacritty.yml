@@ -18,7 +18,7 @@ env:
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  TERM: xterm-256color
+  TERM: xterm-256color-italic
 scrolling:
   #history: 10000
 
@@ -81,6 +81,15 @@ live_config_reload: true
 
 shell:
   program: bash
+  args:
+    - --login
+
+
+
+visual_bell:
+  animation: EaseOutExpo
+  duration: 500
+  color: 0xffffff
 
 mouse:
   # Click settings
