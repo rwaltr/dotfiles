@@ -120,6 +120,7 @@ alias push='git push origin'
 alias status='git status'
 alias tag='git tag'
 alias newtag='git tag -a'
+alias gdiff='git diff'
 
 # IP colors
 alias ip='ip -br -c'
