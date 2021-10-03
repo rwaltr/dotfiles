@@ -66,6 +66,7 @@ shopt -s cdable_vars
 
 alias ":q"="exit"
 alias "x"="exit"
+alias "q"="exit"
 
 # easy resource
 alias resource="source ~/.bashrc"
@@ -95,7 +96,7 @@ alias cd..=".."
 
 # Weather!
 alias wttr="curl wttr.in"
-alias wunderground="nc rainmaker.wunderground.com 3000"
+alias wttrv2="curl v2.wttr.in"
 
 #QOL
 #Forgot a space
@@ -164,4 +165,7 @@ export TF_HTTP_USERNAME=rwaltr
 # Custom Functions
 fzopen (){
 fd -t f -H -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
+}
+fzdopen (){
+fd -t d -H -I | fzf  --preview="ls {}" | xargs -ro -d cd
 }
