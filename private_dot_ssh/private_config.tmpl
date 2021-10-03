@@ -14,7 +14,7 @@ host github
 	User git
 	Hostname github.com
 
-{{- if eq .personal "y" }}
+{{- if eq .personal true }}
 
 host home.storage2
 	hostname storage2.waltr.lab
@@ -22,7 +22,7 @@ host home.storage2
 
 {{- end}}
 
-{{- if eq .work "true" }}
+{{- if eq .work true }}
 
 Include work.conf
 
