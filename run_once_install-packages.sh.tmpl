@@ -13,7 +13,7 @@ sudo dnf install -y git wget curl neovim lsd jq tmux starship
 
 # Install Arch Pachages
 {{ if eq .chezmoi.osRelease.id "arch" -}}
-sudo pacman -Syu --noconfirm neovim git curl wget kubelet starship jq curl wget chezmoi k9s gh kubie-bin tmux
+pacman -Syu --noconfirm neovim git curl wget starship jq curl wget chezmoi k9s tmux
 {{- end }}
 # TODO Install Ubuntu packages
 # TODO Install Alpine packages
