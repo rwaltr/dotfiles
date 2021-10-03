@@ -1,25 +1,26 @@
 {{- if eq .chezmoi.os "linux" -}}
 #!/bin/sh
+
+
+# Install Fedora Packages
 {{ if eq .chezmoi.osRelease.id "fedora" -}}
-echo "Installing script packages"
-sudo dnf update -y
-sudo dnf install toilet git wget curl -y
-toilet --metal "Installing RPM Fusion"
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-toilet --metal "RPMFUSION UPDATES"
+sudo dnf update -y
 sudo dnf groupupdate core -y
-toilet "Installing Basic Tools" --metal
-sudo dnf install -y neovim lsd jq 
-toilet "Updating Vim" --metal
-nvim -c PlugInstall +qall
-toilet "Vim updated" --metal
-toilet "All set!" --metal
+sudo dnf install -y git wget curl neovim lsd jq tmux starship 
 {{- end }}
+
+
+# Install Arch Pachages
 {{ if eq .chezmoi.osRelease.id "arch" -}}
-echo "Installing script packages"
-pacman -Syu --noconfirm git curl wget figlet 
-figlet "Installing Packages"
-pacman -Syu --noconfirm neovim kubelet starship jq curl wget chezmoi k9s gh kubie-bin 
-figlet "All good" 
+sudo pacman -Syu --noconfirm neovim git curl wget kubelet starship jq curl wget chezmoi k9s gh kubie-bin tmux
 {{- end }}
+# TODO Install Ubuntu packages
+# TODO Install Alpine packages
+# TODO Install Termux packages
+
+# Config tools
+nvim --headless -c PlugInstall +qall
+tmux new-session -d -s tpmgrab 'exit'
+
 {{- end }}
