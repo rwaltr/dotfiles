@@ -44,6 +44,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		Plug 'nvim-lua/popup.nvim'
 		Plug 'nvim-telescope/telescope-fzy-native.nvim'
 		Plug 'nvim-telescope/telescope.nvim'
+		Plug 'lukas-reineke/indent-blankline.nvim'
 	  else
 			
 		" LSP
