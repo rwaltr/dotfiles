@@ -157,7 +157,15 @@ if [ -x "$(command -v lsd)" ]
 then
 	alias ls=lsd
 fi
-# Custom Envioment Vars
+
+if [ -x "$(command -v thefuck)" ]
+then
+eval $(thefuck --alias f) 
+fi
+
+
+#Custom Envioment Vars
+#
 
 export TF_HTTP_USERNAME=rwaltr
 
