@@ -1,22 +1,19 @@
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
 {{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
-{{- $transient := false -}}{{/* true if this machine is temporary, e.g. a cloud or VM instance */}}
 {{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
 {{- $city := "KATX" -}}{{/* city inputs for weather */}}
 {{- $work := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
-
+{{- $personal = promptBool "personal" -}}
+{{- $work = promptBool "work" -}}
 format: yaml
 
 data:
   name: "Ryan Walter"
   email: "rwalt@pm.me"
   personal: {{ $personal }}
-  headless: {{ $headless }}
-  transient: {{ $transient }}
-  kubernetes: {{ $kubernetes }}
+  specialsound: false
   city: "{{ $city }}"
   work: {{ $work }}
-
 
 gpg:
   {{- if .personal }}

@@ -1,6 +1,6 @@
 {{- if eq .chezmoi.os "linux" }}
 {{- if eq .chezmoi.hostname "monolith" }}
-{{- if eq .specialsound "y" }}
+{{- if eq .specialsound true }}
 # Include Defaults
 .include /etc/pulse/default.pa
 
