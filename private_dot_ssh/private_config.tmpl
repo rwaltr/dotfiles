@@ -1,5 +1,5 @@
 # Global Config Settings
-#Gitlab SSH Creds
+#Git SSH Creds
 host gitlab.com
 	User git
 	Hostname gitlab.com
@@ -15,10 +15,14 @@ host github
 	Hostname github.com
 
 {{- if eq .personal true }}
-
-host home.storage2
+# Personal SSH Config
+host storage2
 	hostname storage2.waltr.lab
 	User blackphidora
+
+host router
+	hostname 192.168.1.1
+	user blackphidora
 
 {{- end}}
 
