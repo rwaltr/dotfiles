@@ -30,7 +30,9 @@ if [ -d /usr/share/fzf/shell  ]
   then
 source /usr/share/fzf/shell/key-bindings.bash
 fi
-
+if [ -f /usr/libexec/z.sh ]; then
+	. /usr/libexec/z.sh
+fi
 #Shell Options
 shopt -s autocd # change to named directory
 shopt -s cdspell # autocorrects cd misspellings
