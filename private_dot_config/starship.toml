@@ -20,6 +20,13 @@ error_symbol = "[⤬](bold red) "
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 symbol = "  "
+
+[aws.region_aliases]
+us-east-1 = "N. Virginia"
+us-east-2 = "Ohio"
+us-west-1 = "N. California"
+us-west-2 = "Oregon"
+
 [cmake]
 format = '\[[$symbol($version)]($style)\]'
 
