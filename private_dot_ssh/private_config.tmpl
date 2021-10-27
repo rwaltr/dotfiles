@@ -14,6 +14,11 @@ host github
 	User git
 	Hostname github.com
 
+host * 
+  ControlMaster auto
+	ControlPath ~/.ssh/control-%h-%p-%r
+
+
 {{- if eq .personal true }}
 # Personal SSH Config
 host storage2
