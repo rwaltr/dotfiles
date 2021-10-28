@@ -7,7 +7,12 @@
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
+{{ if eq .chezmoi.hostname "teletran1" -}}
+set $mod Mod1
+{{ else -}}
 set $mod Mod4
+{{ end -}}
+
 # Home row direction keys, like vim
 set $left h
 set $down j
