@@ -4,14 +4,12 @@
   email = {{ .email }}
 	{{ if eq .personal true -}}
   signingkey = 825ADD9150166DA2
-  {{ end -}}
-	{{ if eq .work true -}}
+	{{ else if eq .work true -}}
   {{ end -}}
 [commit]
 	{{ if eq .personal true -}}
 	gpgsign = true
-  {{ end -}}
-	{{ if eq .work true -}}
+	{{ else if eq .work true -}}
 	gpgsign = false
   {{ end -}}
 
