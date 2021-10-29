@@ -5,12 +5,13 @@
 	{{ if eq .personal true -}}
   signingkey = 825ADD9150166DA2
 	{{ else if eq .work true -}}
+	signingkey = 2C510316GB29BF80
   {{ end -}}
 [commit]
 	{{ if eq .personal true -}}
 	gpgsign = true
 	{{ else if eq .work true -}}
-	gpgsign = false
+	gpgsign = true
   {{ end -}}
 
 [format]
