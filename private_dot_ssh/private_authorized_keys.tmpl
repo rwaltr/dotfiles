@@ -3,3 +3,6 @@
 {{ .Key }}
 {{ end -}}
 {{ end -}}
+{{ if eq .work true -}}
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDxvk/afQdXTm6CPT4p4+1FzBK6OKFF4Sw/M4KEb2OfeDHxizFdBgLoA3SieYEvejxAMsFIZis3ry3M78+WNoeUdM7FcU2+U00S8dk9y0+st/gtvcdZfQ4TEGS4nPVYnXyTh7dxp9fdAiWum93YNt4GhN30AcHPBmN7qZyncHGqx+6xpd9fjVpszzi5NeIDR0NK/VM6lwg/zpKjXTpe+BsYkuGBgfkUS2JJyY+A0Nn5rXZwyviWJpWOAS06gSBQbAc/7Q2koBC6VmO45gm4S64lmgc/X/FNuk6oCTghJtgoZI56GNEYT0AtAe+HvXrJSqw+i8OcgDe0OHlInlV4UKzR PIV AUTH pubkey pkcs11:id=%01;object=PIV%20AUTH%20pubkey;token=Ryan%20Walter%20SSH%20Key;manufacturer=piv_II?module-path=/usr/lib64/opensc-pkcs11.so
+{{ end -}}
