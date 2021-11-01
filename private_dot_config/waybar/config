@@ -34,8 +34,8 @@
         "pulseaudio",
         "battery",
         "tray",
-        "clock#date",
-        "clock#time"
+        "clock#time",
+        "clock#date"
     ],
 
 
@@ -65,7 +65,7 @@
 
     "clock#time": {
         "interval": 1,
-        "format": "{:%H:%M:%S}",
+        "format": "{:%I:%M:%S %p}",
         "tooltip": false
     },
 
