@@ -11,16 +11,13 @@ sudo dnf install -y git wget curl neovim lsd jq tmux starship
 {{- end }}
 
 
-# Install Arch Pachages
 {{ if eq .chezmoi.osRelease.id "arch" -}}
+# Install Arch Pachages
 pacman -Syu --noconfirm neovim git curl wget starship jq curl wget chezmoi k9s tmux
 {{- end }}
-# TODO Install Ubuntu packages
-# TODO Install Alpine packages
 # TODO Install Termux packages
 
 # Config tools
 nvim --headless -c PlugInstall +qall
 tmux new-session -d -s tpmgrab 'exit'
-
 {{- end }}
