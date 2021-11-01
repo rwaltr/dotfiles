@@ -78,6 +78,9 @@ workspace 1 output DP-3
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
+# Autostart
+exec eval $(gnome-keyring-daemon --start)
+exec export SSH_AUTH_SOCK
 ### Key bindings
 #
 # Basics:
