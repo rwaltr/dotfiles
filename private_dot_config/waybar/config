@@ -30,7 +30,7 @@
         "memory",
         "cpu",
         "temperature",
-        "custom/keyboard-layout",
+        "idle_inhibitor",
         "pulseaudio",
         "battery",
         "tray",
@@ -92,6 +92,13 @@
       // Signal sent by Sway key binding (~/.config/sway/key-bindings)
       "signal": 1, // SIGHUP
       "tooltip": false
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
     },
 
     "memory": {
