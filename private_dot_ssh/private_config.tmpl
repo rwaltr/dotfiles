@@ -18,7 +18,6 @@ host *
   ControlMaster auto
 	ControlPath ~/.ssh/control-%h-%p-%r
 	ControlPersist 600
-	PKCS11Provider /usr/lib64/libykcs11.so
 
 {{- if eq .personal true }}
 # Personal SSH Config
