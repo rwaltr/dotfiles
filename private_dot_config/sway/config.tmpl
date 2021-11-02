@@ -26,6 +26,10 @@ set $term alacritty
 set $menu wofi --show drun  
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
+
+# lock and sleep
+bindsym $mod+Shift+Escape exec 'swaylock -c 000000'
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
