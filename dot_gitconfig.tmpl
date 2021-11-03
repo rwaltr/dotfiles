@@ -17,7 +17,7 @@ gpgsign = false
 signOff = true
 [url "ssh://git@github.com/"]
 pushInsteadOf = https://github.com/
-{{ if eq.personal true -}}
+{{ if eq .personal true -}}
 [alias]
 	yolo = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
 {{ end -}}	

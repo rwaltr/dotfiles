@@ -5,6 +5,8 @@
 # Install Fedora Packages
 {{ if eq .chezmoi.osRelease.id "fedora" -}}
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf config-manager --add-repo \
+  https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
 sudo dnf update -y
 sudo dnf groupupdate core -y
 sudo dnf install -y \
@@ -21,15 +23,21 @@ swayidle \
 waybar \
 swaylock \
 fd-find \
-fzf 
+fzf \
+jq \
+mtr \
+gh \
+kubernetes-client \
+terraform \
+https://github.com/mozilla/sops/releases/download/v3.7.1/sops-3.7.1-1.x86_64.rpm \
+rclone \
+pre-commit \
+packer \
+aria2
 
 {{- end }}
 
 
-{{ if eq .chezmoi.osRelease.id "arch" -}}
-# Install Arch Pachages
-pacman -Syu --noconfirm neovim git curl wget starship jq curl wget chezmoi k9s tmux
-{{- end }}
 # TODO Install Termux packages
 
 # Config tools
