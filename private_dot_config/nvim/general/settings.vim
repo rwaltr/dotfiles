@@ -38,7 +38,12 @@ let g:chezmoi = "enabled" "engage Chezmoi Plug
 
 
 " Vimwiki settings
-let g:vimwiki_list = [{'path': '~/Documents/VimWiki/', 'syntax': 'markdown', 'ext': '.wiki'}]
+let g:vimwiki_list = [{'path': '~/Documents/VimWiki/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let gvimwiki_markdown_link_ext=1
+
+let g:taskwiki_markdown_syntax = 'markdown'
+let g:markdown_folding = 1
 
 " NOARD
 colorscheme nord
