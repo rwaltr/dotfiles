@@ -1,11 +1,8 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
+# Rwaltr config for sway
 #
 # Read `man 5 sway` for a complete reference.
 
 ### Variables
-#
 # Logo key. Use Mod1 for Alt.
 {{ if eq .chezmoi.hostname "teletran1" -}}
 set $mod Mod1
@@ -13,13 +10,9 @@ set $mod Mod1
 set $mod Mod4
 {{ end -}}
 
-# Home row direction keys, like vim
-set $left h
-set $down j
-set $up k
-set $right l
 # Your preferred terminal emulator
 set $term alacritty
+
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -27,19 +20,26 @@ set $menu wofi --show drun
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
 
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
 # lock and sleep
 bindsym $mod+Shift+Escape exec 'swaylock -c 000000'
 
+# Window boaders
+
+default_border pixel 1
+default_floating_border normal
+hide_edge_borders smart
+smart_gaps on
+gaps inner 10
+
 ### Output configuration
-#
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-#output * bg /usr/share/backgrounds/default.png fill
-exec ~/.azotebg
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
+
+# Monitor Setup
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 {{ if eq .chezmoi.hostname "monolith" -}}
 # Main Monitor
@@ -49,10 +49,17 @@ output DP-2 pos 5360 0
 # left monitor
 output DP-1 pos 0 0 
 
+# Set custom workspaces locations
 workspace 2 output DP-1
 workspace 3 output DP-2 
 workspace 1 output DP-3
 {{ end -}}
+
+# Backgrounds
+#output * bg /usr/share/backgrounds/default.png fill
+# use Azote to set backgrounds per machine
+exec ~/.azotebg
+
 
 ### Idle configuration
 #
@@ -86,6 +93,7 @@ workspace 1 output DP-3
 # Autostart
 exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
+
 ### Key bindings
 #
 # Basics:
