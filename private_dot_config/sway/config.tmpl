@@ -95,6 +95,10 @@ exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
 exec autotiling
 
+# Inhibit Idle if a window is fullscreen
+for_window [class="^.*"] inhibit_idle fullscreen
+for_window [app_id="^.*"] inhibit_idle fullscreen
+
 ### Key bindings
 #
 # Basics:
