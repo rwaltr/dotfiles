@@ -1,0 +1,11 @@
+# Autostart
+
+# Keyring
+exec eval $(gnome-keyring-daemon --start)
+exec export SSH_AUTH_SOCK
+
+# Autotiling
+exec autotiling
+
+# network manager applet
+# nm-applet --indicator
