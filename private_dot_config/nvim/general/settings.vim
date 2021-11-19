@@ -45,8 +45,8 @@ let gvimwiki_markdown_link_ext=1
 let g:taskwiki_markdown_syntax = 'markdown'
 let g:markdown_folding = 1
 
-" NOARD
-colorscheme nord
+set termguicolors
+colorscheme wal
 
 " Git related settings
 
