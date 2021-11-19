@@ -1,209 +1,127 @@
 @import "../../.cache/wal/colors-waybar.css";
 
+
+@define-color text    @foreground;
+@define-color warn    @color6;
+@define-color crit    @color2;
+@define-color accent  @color4;
+@define-color hilight @color1;
+
 * {
-	font-size: 14px;
-	font-family: monospace;
+	font-size: 12px;
+	font-family: "Source Code Pro Medium", "Font Awesome 5 Free";
+	font-weight: bold;
 }
 
 window#waybar {
-	/*background-color: rgba(46, 52, 64, 1);
-	border: 3px solid #4C566A;
-  border: 2px solid @color6;*/
-	background-color: @background;
-	border-top: 2px solid @color6;
-	border-bottom: 0px solid @color6;
-	border-left: 2px solid @color6;
-	border-right: 2px solid @color6;
-	color: transparent;
-  transition-property: background-color;
-  transition-duration: .5s;
-}
-window#waybar.hidden {
-  opacity: 0.2;
-}
-window#waybar.empty {
-	/*background-color: rgba(46, 52, 64, 1);*/
-  background-color: @background;
-	color: transparent;
-}
-window#waybar.solo {
-	/*background-color: rgba(46, 52, 64, 1);*/
-  background-color: @background;
-	color: transparent;
-}
-/*window#waybar.Alacritty {
-	background-color: rgba(46, 52, 64, 1);
-	color: transparent;
-	border-bottom: 0px;
-}*/
-window#waybar.evolution,
-window#waybar.firefox,
-window#waybar.code-oss {
-	/*background-color: #FFFFFF;*/
-	background-color: @color0;
-	color: transparent;
+	color: @text;
+	text-shadow: 1px 1px 1px black;
+	background: @background;
+	border-radius: 4px;
 }
 
-#custom-right-arrow-dark,
-#custom-left-arrow-dark {
-	color: #1a1a1a;
-}
-#custom-right-arrow-light,
-#custom-left-arrow-light {
-	color: #2E3440;
-	background: #1a1a1a;
+window#waybar.top {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
-#clock.3 {
-	/*background: #1a1a1a;*/
-  background: @background;
-  padding: 0 6px;
-	/*border-top: 3px solid #4C566A;
-	border-bottom: 3px solid #4C566A;
-	border-left: 3px solid #4C566A;
-	border-right: 0px solid #4C566A;*/
-	border-top: 2px solid @color6;
-	border-bottom: 2px solid @color6;
-	border-left: 0px solid @color6;
-	border-right: 0px solid @color6;
+window#waybar.bottom {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 }
 
-#clock.1,
-#clock.2,
-#clock.4,
-#network,
+/* Base styling for modules */
+#workspaces,
+#mode,
+#idle_inhibitor,
 #pulseaudio,
-#backlight,
-#custom-arch-updates,
-#custom-weather,
-#custom-watson,
 #memory,
 #cpu,
-#temperature,
+#clock,
 #battery,
-#mode,
+#backlight,
+#disk,
+#taskbar,
 #tray {
-	/*background: #1a1a1a;*/
-  background: @background;
-  padding: 0 6px;
-	/*border-top: 3px solid #4C566A;
-	border-bottom: 3px solid #4C566A;
-	border-left: 3px solid #4C566A;
-	border-right: 0px solid #4C566A;*/
-	border-top: 2px solid @color6;
-	border-bottom: 2px solid @color6;
-	border-left: 2px solid @color6;
-	border-right: 0px solid @color6;
+	padding: 2px 10px 0px 10px;
 }
 
-#idle_inhibitor {
-	/*background: #1a1a1a;*/
-  background: @background;
-	padding: 0px 6px 0px 0px;
-	/*border-top: 3px solid #4C566A;
-	border-bottom: 3px solid #4C566A;
-	border-left: 0px solid #4C566A;
-	border-right: 3px solid #4C566A;*/
-	border-top: 2px solid @color6;
-	border-bottom: 2px solid @color6;
-	border-left: 0px solid @color6;
-	border-right: 2px solid @color6;
+#custom-separator {
+	color: @color8;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-#workspaces{
-	/*background: #1a1a1a;
-	border: 3px solid #4C566A;*/
-  background: @background;
-  border: 2px solid @color6;
+#workspaces {
+	padding: 0px;
 }
 #workspaces button {
-	/*box-shadow: -3px 0px 0px 0px #4C566A;
-  color: #fdf6e3;*/
-  border-radius: 0px;
-  box-shadow: -2px 0px 0px 0px @color6;
-  color: @color3;	
+	color: @text;
+	margin: 0;
+	padding: 3px 15px 0px 15px;
+	border-radius: 0px;
 }
 #workspaces button.focused {
-	/*color: #268bd2;*/
-  color: @color5;
-}
-#workspaces button:hover {
-	/*background: #4C566A;
-	border-color: #4C566A;*/
-	background: @color6;
-	border-color: @color6;
-}
-#workspaces button.urgent {
-  background-color: #eb4d4b;
+	color: @hilight;
 }
 
-#pulseaudio {
-	color: #268bd2;
-}
-#pulseaudio.muted {
-  color: #268bd2;
-}
-#backlight {
-	color: #b58900;
-}
-#memory {
-	color: #2aa198;
-}
-#temperature {
-	color: #b58900;
-}
-#cpu {
-	color: #6c71c4;
-}
-#battery {
-	color: #859900;
-}
-@keyframes blink {
-  to {
-    /*background-color: #1a1a1a;*/
-    background-color: @background;
-    color: #859900;
-  }
-}
-#battery.critical:not(.charging) {
-  background-color: #f53c3c;
-  color: #859900;
-  animation-name: blink;
-  animation-duration: 0.8s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
 #mode {
-	/*border-left: 0px solid #4C566A;
-	border-right: 3px solid #4C566A;*/
-	border-left: 0px solid @color6;
-	border-right: 2px solid @color6;
-}
-#custom-weather {
-	/*color: #FFFFFF;*/
-	color: @color3;
-	/*border-left: 0px solid #4C566A;
-	border-right: 3px solid #4C566A;*/
-	border-left: 0px solid @color6;
-	border-right: 2px solid @color6;
+	color: @warn;
 }
 
-#clock.1,
-#clock.2,
-#clock.3,
-#clock.4,
-#network,
-#custom-arch-updates,
-#custom-watson,
-#mode,
-#idle_inhibitor {
-  /*color: #fdf6e3;*/
-  color: @color5;
+#custom-auroch {
+	padding-left: 5px;
 }
 
-#custom-recorder {
-	font-size: 18px;
-	margin: 2px 7px 0px 7px;
-	color:#c9545d;
+#battery.good,
+#cpu.good,
+#memory.good {
+	color: @good;
+}
+
+#battery.warning,
+#cpu.warning,
+#memory.warning {
+	background: @background;
+	color: @warn;
+}
+
+#battery.critical,
+#cpu.critical,
+#memory.critical {
+	background: @background;
+	color: @crit;
+}
+
+/*
+#custom-auroch.no-updates,
+#custom-covid.DOWN,
+#custom-updates.no-updates {
+	color: @text;
+}
+*/
+
+#clock {
+	margin-left: 3px;
+}
+
+#taskbar {
+	padding-left: 0;
+}
+#taskbar button {
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+#taskbar button.active {
+	color: @accent;
+}
+
+/* Pad the tray so the bottom bar doesn't change size when no windows are open */
+#tray {
+	padding-top: 7px;
+	padding-bottom: 7px;
 }
