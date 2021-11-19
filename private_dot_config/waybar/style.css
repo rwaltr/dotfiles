@@ -1,194 +1,209 @@
-/* =============================================================================
- *
- * Waybar configuration
- *
- * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
- *
- * =========================================================================== */
+@import "../../.cache/wal/colors-waybar.css";
 
-/* -----------------------------------------------------------------------------
- * Keyframes
- * -------------------------------------------------------------------------- */
-
-@keyframes blink-warning {
-    70% {
-        color: white;
-    }
-
-    to {
-        color: white;
-        background-color: orange;
-    }
-}
-
-@keyframes blink-critical {
-    70% {
-      color: white;
-    }
-
-    to {
-        color: white;
-        background-color: red;
-    }
-}
-
-
-/* -----------------------------------------------------------------------------
- * Base styles
- * -------------------------------------------------------------------------- */
-
-/* Reset all styles */
 * {
-    border: none;
-    border-radius: 0;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
+	font-size: 14px;
+	font-family: monospace;
 }
 
-/* The whole bar */
-#waybar {
-    background: #323232;
-    color: white;
-    font-family: FiraCode Nerd Font Mono, Noto Sans, sans-serif;
-    font-size: 14px;
+window#waybar {
+	/*background-color: rgba(46, 52, 64, 1);
+	border: 3px solid #4C566A;
+  border: 2px solid @color6;*/
+	background-color: @background;
+	border-top: 2px solid @color6;
+	border-bottom: 0px solid @color6;
+	border-left: 2px solid @color6;
+	border-right: 2px solid @color6;
+	color: transparent;
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+window#waybar.hidden {
+  opacity: 0.2;
+}
+window#waybar.empty {
+	/*background-color: rgba(46, 52, 64, 1);*/
+  background-color: @background;
+	color: transparent;
+}
+window#waybar.solo {
+	/*background-color: rgba(46, 52, 64, 1);*/
+  background-color: @background;
+	color: transparent;
+}
+/*window#waybar.Alacritty {
+	background-color: rgba(46, 52, 64, 1);
+	color: transparent;
+	border-bottom: 0px;
+}*/
+window#waybar.evolution,
+window#waybar.firefox,
+window#waybar.code-oss {
+	/*background-color: #FFFFFF;*/
+	background-color: @color0;
+	color: transparent;
 }
 
-/* Each module */
-#battery,
-#clock,
-#cpu,
-#custom-keyboard-layout,
-#memory,
-#mode,
+#custom-right-arrow-dark,
+#custom-left-arrow-dark {
+	color: #1a1a1a;
+}
+#custom-right-arrow-light,
+#custom-left-arrow-light {
+	color: #2E3440;
+	background: #1a1a1a;
+}
+
+#clock.3 {
+	/*background: #1a1a1a;*/
+  background: @background;
+  padding: 0 6px;
+	/*border-top: 3px solid #4C566A;
+	border-bottom: 3px solid #4C566A;
+	border-left: 3px solid #4C566A;
+	border-right: 0px solid #4C566A;*/
+	border-top: 2px solid @color6;
+	border-bottom: 2px solid @color6;
+	border-left: 0px solid @color6;
+	border-right: 0px solid @color6;
+}
+
+#clock.1,
+#clock.2,
+#clock.4,
 #network,
 #pulseaudio,
+#backlight,
+#custom-arch-updates,
+#custom-weather,
+#custom-watson,
+#memory,
+#cpu,
 #temperature,
+#battery,
+#mode,
 #tray {
-    padding-left: 10px;
-    padding-right: 10px;
+	/*background: #1a1a1a;*/
+  background: @background;
+  padding: 0 6px;
+	/*border-top: 3px solid #4C566A;
+	border-bottom: 3px solid #4C566A;
+	border-left: 3px solid #4C566A;
+	border-right: 0px solid #4C566A;*/
+	border-top: 2px solid @color6;
+	border-bottom: 2px solid @color6;
+	border-left: 2px solid @color6;
+	border-right: 0px solid @color6;
 }
 
-
-/* -----------------------------------------------------------------------------
- * Module styles
- * -------------------------------------------------------------------------- */
-
-#battery {
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+#idle_inhibitor {
+	/*background: #1a1a1a;*/
+  background: @background;
+	padding: 0px 6px 0px 0px;
+	/*border-top: 3px solid #4C566A;
+	border-bottom: 3px solid #4C566A;
+	border-left: 0px solid #4C566A;
+	border-right: 3px solid #4C566A;*/
+	border-top: 2px solid @color6;
+	border-bottom: 2px solid @color6;
+	border-left: 0px solid @color6;
+	border-right: 2px solid @color6;
 }
 
-#battery.warning {
-    color: orange;
+#workspaces{
+	/*background: #1a1a1a;
+	border: 3px solid #4C566A;*/
+  background: @background;
+  border: 2px solid @color6;
 }
-
-#battery.critical {
-    color: red;
+#workspaces button {
+	/*box-shadow: -3px 0px 0px 0px #4C566A;
+  color: #fdf6e3;*/
+  border-radius: 0px;
+  box-shadow: -2px 0px 0px 0px @color6;
+  color: @color3;	
 }
-
-#battery.warning.discharging {
-    animation-name: blink-warning;
-    animation-duration: 3s;
+#workspaces button.focused {
+	/*color: #268bd2;*/
+  color: @color5;
 }
-
-#battery.critical.discharging {
-    animation-name: blink-critical;
-    animation-duration: 2s;
+#workspaces button:hover {
+	/*background: #4C566A;
+	border-color: #4C566A;*/
+	background: @color6;
+	border-color: @color6;
 }
-
-#clock {
-    font-weight: bold;
-}
-
-#cpu {
-  /* No styles */
-}
-
-#cpu.warning {
-    color: orange;
-}
-
-#cpu.critical {
-    color: red;
-}
-
-#memory {
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-#memory.warning {
-    color: orange;
-}
-
-#memory.critical {
-    color: red;
-    animation-name: blink-critical;
-    animation-duration: 2s;
-}
-
-#mode {
-    background: #64727D;
-    border-top: 2px solid white;
-    /* To compensate for the top border and still have vertical centering */
-    padding-bottom: 2px;
-}
-
-#network {
-    /* No styles */
-}
-
-#network.disconnected {
-    color: orange;
+#workspaces button.urgent {
+  background-color: #eb4d4b;
 }
 
 #pulseaudio {
-    /* No styles */
+	color: #268bd2;
 }
-
 #pulseaudio.muted {
-    /* No styles */
+  color: #268bd2;
 }
-
-#custom-spotify {
-    color: rgb(102, 220, 105);
+#backlight {
+	color: #b58900;
 }
-
+#memory {
+	color: #2aa198;
+}
 #temperature {
-    /* No styles */
+	color: #b58900;
+}
+#cpu {
+	color: #6c71c4;
+}
+#battery {
+	color: #859900;
+}
+@keyframes blink {
+  to {
+    /*background-color: #1a1a1a;*/
+    background-color: @background;
+    color: #859900;
+  }
+}
+#battery.critical:not(.charging) {
+  background-color: #f53c3c;
+  color: #859900;
+  animation-name: blink;
+  animation-duration: 0.8s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+#mode {
+	/*border-left: 0px solid #4C566A;
+	border-right: 3px solid #4C566A;*/
+	border-left: 0px solid @color6;
+	border-right: 2px solid @color6;
+}
+#custom-weather {
+	/*color: #FFFFFF;*/
+	color: @color3;
+	/*border-left: 0px solid #4C566A;
+	border-right: 3px solid #4C566A;*/
+	border-left: 0px solid @color6;
+	border-right: 2px solid @color6;
 }
 
-#temperature.critical {
-    color: red;
+#clock.1,
+#clock.2,
+#clock.3,
+#clock.4,
+#network,
+#custom-arch-updates,
+#custom-watson,
+#mode,
+#idle_inhibitor {
+  /*color: #fdf6e3;*/
+  color: @color5;
 }
 
-#tray {
-    /* No styles */
-}
-
-#window {
-    font-weight: bold;
-}
-
-#workspaces button {
-    border-top: 2px solid transparent;
-    /* To compensate for the top border and still have vertical centering */
-    padding-bottom: 2px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #888888;
-}
-
-#workspaces button.focused {
-    border-color: #4c7899;
-    color: white;
-    background-color: #285577;
-}
-
-#workspaces button.urgent {
-    border-color: #c9545d;
-    color: #c9545d;
+#custom-recorder {
+	font-size: 18px;
+	margin: 2px 7px 0px 7px;
+	color:#c9545d;
 }
