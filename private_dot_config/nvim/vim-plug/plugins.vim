@@ -33,11 +33,11 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		Plug 'tpope/vim-rhubarb'
 		Plug 'junegunn/gv.vim'
 		Plug 'christoomey/vim-tmux-navigator'
-		"Plug 'arcticicestudio/nord-vim'
+		Plug 'arcticicestudio/nord-vim'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'scrooloose/nerdcommenter'
-		Plug 'dylanaraps/wal.vim'
+		"Plug 'dylanaraps/wal.vim'
 		" LSP
 		if has("nvim-0.5")
 		Plug 'neovim/nvim-lspconfig'

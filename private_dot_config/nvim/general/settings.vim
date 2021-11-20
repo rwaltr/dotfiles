@@ -46,7 +46,7 @@ let g:taskwiki_markdown_syntax = 'markdown'
 let g:markdown_folding = 1
 
 set termguicolors
-colorscheme wal
+colorscheme nord
 
 " Git related settings
 
