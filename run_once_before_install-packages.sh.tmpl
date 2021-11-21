@@ -55,13 +55,8 @@ rm -rf $TMPDIR
 
 pip install autotiling
 pip install pywal
-wal --theme base16-nord
 {{- end }}
-
 
 # TODO Install Termux packages
 
-# Config tools
-nvim --headless -c PlugInstall +qall
-tmux new-session -d -s tpmgrab 'exit'
 {{- end }}

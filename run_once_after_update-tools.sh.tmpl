@@ -1,0 +1,7 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+# Config tools
+nvim --headless -c PlugInstall +qall
+# Apply theme
+wal -R
+{{- end }}
