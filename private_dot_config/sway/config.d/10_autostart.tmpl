@@ -9,3 +9,6 @@ exec autotiling
 
 # network manager applet
 # nm-applet --indicator
+
+# Gammastep
+exec gammastep-indicator -l $(curl https://location.services.mozilla.com/v1/geolocate?key=geoclue | jq -r  '.location | join(":")')
