@@ -69,7 +69,7 @@
         "format": "{:%I:%M:%S %p}",
         //"tooltip": false
         "tooltip-format": "{:UTC %T %n ISO %FT%T%z }",
-        "on-click": "date -Iseconds | wl-copy"
+        "on-click": "date -Iseconds | wl-copy && notify-send 'Date Copied'"
     },
 
     "clock#date": {

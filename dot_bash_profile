@@ -12,5 +12,5 @@ fi
 PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
 export PATH
-
+(cat ~/.cache/wal/sequences &)
 
