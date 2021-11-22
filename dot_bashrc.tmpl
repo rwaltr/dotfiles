@@ -166,7 +166,9 @@ fi
 #
 
 export TF_HTTP_USERNAME={{ .chezmoi.username }}
-
+{{ if eq .personal true -}}
+export VAULT_ADDR="https://vault.waltr.tech"
+{{ end -}}
 
 # Custom Functions
 fzopen (){
