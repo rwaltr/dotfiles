@@ -17,6 +17,8 @@ configs:
         - ~/.kube/configs/*.yaml
         - ~/.kube/kubie/*.yml
         - ~/.kube/kubie/*.yaml
+        - ~/.kube/clusters/*.yaml
+        - ~/.kube/clusters/*.yml
 
     # Exclude these globs.
     # Default: values listed below.
