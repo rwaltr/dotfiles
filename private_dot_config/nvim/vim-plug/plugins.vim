@@ -53,6 +53,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		Plug 'nvim-treesitter/playground'
 		" TODO
 		Plug 'puremourning/vimspector'
+		Plug 'folke/lsp-colors.nvim'
 		Plug 'williamboman/nvim-lsp-installer'
 		Plug 'nvim-lua/plenary.nvim'
 		Plug 'nvim-lua/popup.nvim'
