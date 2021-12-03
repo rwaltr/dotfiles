@@ -17,12 +17,9 @@ set relativenumber	" Show relativenumber
 set mouse=nv				" Allow Mouse in Normal and Visual mode
 filetype plugin on  " Filesystem
 syntax on						" Syntax Highlighting
-
-
 set ignorecase			" Ignoes case on searching
 set smartcase				" enable case sensitive when search contains case
 set incsearch				" go to next search
-
 set scrolloff=12				" starts scrolling before it hits the bottom or top of page
 
 " spell checking
@@ -55,29 +52,10 @@ let g:signify_sign_add               = '+'
 let g:signify_sign_delete            = '_'
 let g:signify_sign_delete_first_line = '‾'
 let g:signify_sign_change            = '~'
-
+set updatetime=100
 " I find the numbers disctracting
-let g:signify_sign_show_count = 0
+let g:signify_sign_show_count = 1
 let g:signify_sign_show_text = 1
-
-" Nerdfree
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-" Jump though hunks
-nmap <leader>gj <plug>(signify-next-hunk)
-nmap <leader>gk <plug>(signify-prev-hunk)
-nmap <leader>gJ 9999<leader>gJ
-nmap <leader>gK 9999<leader>gk
-
-" Telescope
-
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <C-p> <cmd>Telescope git_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " If you like colors instead
 " highlight SignifySignAdd                  ctermbg=green                guibg=#00ff00
@@ -88,8 +66,7 @@ au! BufWritePost $MYVIMR source %
 
 
 " Luatime..
-
-lua << END
+lua << EOF
 -- Lualine setup
 require'lualine'.setup()
 
@@ -116,4 +93,13 @@ end)
 --require'lspconfig'.yamlls.setup{}
 
 
-END
+require("which-key").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+		-- https://github.com/folke/which-key.nvim
+}
+
+require'colorizer'.setup()
+
+EOF

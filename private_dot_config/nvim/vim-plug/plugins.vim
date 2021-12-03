@@ -10,34 +10,55 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " Better Syntax Support
     Plug 'sheerun/vim-polyglot'
+
     " File Explorer
     Plug 'scrooloose/NERDTree'
 		Plug 'ryanoasis/vim-devicons'
+
     " Auto pairs for '(' '[' '{' 
     Plug 'jiangmiao/auto-pairs'
+
 		"Chezmoi Integration
 		Plug 'Lilja/vim-chezmoi'
+		Plug 'alker0/chezmoi.vim'
+
 		"Vimwiki
 		Plug 'vimwiki/vimwiki'
+
 		" FZF
 		"Plug 'junegunn/fzf.vim'
+
 		" Ansible-vim
 		Plug 'pearofducks/ansible-vim'
-		" Wich Vim
-		Plug 'liuchengxu/vim-which-key'
+
+		" Vim Script
+		Plug 'folke/which-key.nvim'
+
+
 		" Color preview
-		Plug 'https://github.com/ap/vim-css-color'
+		Plug 'norcalli/nvim-colorizer.lua'
+
+
+
 		" Git Integration
-		Plug 'mhinz/vim-signify'
+		if has('nvim') || has('patch-8.0.902')
+			Plug 'mhinz/vim-signify'
+		else
+			Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+		endif
+
 		Plug 'tpope/vim-fugitive'
 		Plug 'tpope/vim-rhubarb'
 		Plug 'junegunn/gv.vim'
+
+		" Tmux niceness
 		Plug 'christoomey/vim-tmux-navigator'
+		"NEORD
 		Plug 'arcticicestudio/nord-vim'
+		"Commenting
 		Plug 'scrooloose/nerdcommenter'
 
 		"Plug 'dylanaraps/wal.vim'
-		" LSP
 		if has("nvim-0.5")
 		" TODO
 		Plug 'neovim/nvim-lspconfig' 
@@ -66,8 +87,5 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		Plug 'hrsh7th/cmp-path'
 		Plug 'hrsh7th/cmp-cmdline'
 		Plug 'hrsh7th/nvim-cmp'
-	  else
-			
-		" LSP
 		endif
 call plug#end()
