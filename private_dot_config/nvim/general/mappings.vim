@@ -20,4 +20,4 @@ nnoremap <C-l> <C-w>l
 
 
 "Gfiles looks cool
-nnoremap <C-p> :GFiles<CR>
+"nnoremap <C-p> :GFiles<CR>

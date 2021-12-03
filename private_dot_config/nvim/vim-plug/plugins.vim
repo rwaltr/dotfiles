@@ -20,7 +20,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		"Vimwiki
 		Plug 'vimwiki/vimwiki'
 		" FZF
-		Plug 'junegunn/fzf.vim'
+		"Plug 'junegunn/fzf.vim'
 		" Ansible-vim
 		Plug 'pearofducks/ansible-vim'
 		" Wich Vim
@@ -34,17 +34,37 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		Plug 'junegunn/gv.vim'
 		Plug 'christoomey/vim-tmux-navigator'
 		Plug 'arcticicestudio/nord-vim'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'scrooloose/nerdcommenter'
+		Plug 'scrooloose/nerdcommenter'
+
 		"Plug 'dylanaraps/wal.vim'
 		" LSP
 		if has("nvim-0.5")
-		Plug 'neovim/nvim-lspconfig'
+		" TODO
+		Plug 'neovim/nvim-lspconfig' 
+		" TODO
+		Plug 'sbdchd/neoformat'
+		" TODO
+		Plug 'simrat39/symbols-outline.nvim'
+		" TODO
+	  Plug 'glepnir/lspsaga.nvim'	
+		" TODO
+		Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+		" TODO
+		Plug 'nvim-treesitter/playground'
+		" TODO
+		Plug 'puremourning/vimspector'
+		Plug 'williamboman/nvim-lsp-installer'
 		Plug 'nvim-lua/plenary.nvim'
 		Plug 'nvim-lua/popup.nvim'
 		Plug 'nvim-telescope/telescope-fzf-native.nvim'
 		Plug 'nvim-telescope/telescope.nvim'
+		Plug 'nvim-lualine/lualine.nvim'
+		Plug 'kyazdani42/nvim-web-devicons'
+		Plug 'hrsh7th/cmp-nvim-lsp'
+		Plug 'hrsh7th/cmp-buffer'
+		Plug 'hrsh7th/cmp-path'
+		Plug 'hrsh7th/cmp-cmdline'
+		Plug 'hrsh7th/nvim-cmp'
 	  else
 			
 		" LSP
