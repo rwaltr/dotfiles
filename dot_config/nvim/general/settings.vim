@@ -99,6 +99,11 @@ require("which-key").setup {
     -- refer to the configuration section below
 		-- https://github.com/folke/which-key.nvim
 }
+require("nvim-autopairs").setup{}
+
+
+require('telescope').setup{}
+require('telescope').load_extension('fzf')
 
 require'colorizer'.setup()
 
