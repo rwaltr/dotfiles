@@ -34,6 +34,7 @@ rclone \
 pre-commit \
 packer \
 aria2 \
+https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm \
 grim \
 grimshot \
 azote \
@@ -74,7 +75,11 @@ mv kubie ~/.local/bin
 curl https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz | mbuffer | tar -xzvf -
 mv $(fd helm) ~/.local/bin
 
-
+#Install K9s
+curl -L https://github.com/derailed/k9s/releases/download/v0.25.8/k9s_Linux_x86_64.tar.gz > k9s.tar.gz
+tar -xvf k9s.tar.gz
+rm k9s.tar.gz
+mv $(fd k9s) ~/.local/bin
 cd -
 rm -rf $TMPDIR
 
