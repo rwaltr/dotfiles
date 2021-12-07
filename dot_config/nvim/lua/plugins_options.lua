@@ -1,6 +1,18 @@
 -- status line
 require'lualine'.setup()
 
+-- Nvim tree
+
+require'nvim-tree'.setup{}
+
+-- Gitsigns
+require'gitsigns'.setup()
+
+-- Comments
+require'Comment'.setup()
+
+--Trouble
+require'trouble'.setup{}
 
 --autopairs
 require'nvim-autopairs'.setup{}
@@ -74,10 +86,13 @@ require'lspsaga'.init_lsp_saga()
 
 local lsp_installer = require("nvim-lsp-installer")
 
+
 -- Register a handler that will be called for all installed servers.
 -- Alternatively, you may also register handlers on specific server instances instead (see example below).
 lsp_installer.on_server_ready(function(server)
     local opts = {}
+		opts.on_attach = on_attach
+		opts.capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
     -- (optional) Customize the options passed to the server
     -- if server.name == "tsserver" then
@@ -89,6 +104,37 @@ lsp_installer.on_server_ready(function(server)
     server:setup(opts)
 end)
 
--- Treesitter
 
-require'nvim-treesitter.configs'.setup{}
+-- NullLS
+local nullls = require "null-ls"
+nullls.config {
+sources = {
+	nullls.builtins.formatting.prettier,
+	}
+}
+
+require'lspconfig'["null-ls"].setup{}
+
+-- Treesitter
+require'nvim-treesitter.configs'.setup{
+	highlight = {
+		enable = true,
+		disable = {},
+	},
+	indent = {
+		enable = true,
+		disable = {},
+	},
+	ensure_installed = {
+		"bash",
+		"dockerfile",
+		"go",
+		"gomod",
+		"json",
+		"lua",
+		"python",
+		"yaml",
+		"vim",
+		"toml",
+	},
+}

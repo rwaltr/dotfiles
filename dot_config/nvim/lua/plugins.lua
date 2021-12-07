@@ -17,8 +17,7 @@ use {
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    },
-    config = function() require'nvim-tree'.setup {} end
+    }
 }
   -- Chezmoi Integration
   use {'Lilja/vim-chezmoi'}
@@ -49,10 +48,7 @@ use {
   'lewis6991/gitsigns.nvim',
   requires = {
     'nvim-lua/plenary.nvim'
-  },
-  config = function()
-    require('gitsigns').setup()
-  end
+  }
 }
   -- Tmux easypane
   use {'christoomey/vim-tmux-navigator'}
@@ -63,11 +59,7 @@ use {
   -- New Commenting Plugin
 
 use {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup()
-    end
-}
+    'numToStr/Comment.nvim'}
   -- Autopairs
    use 'windwp/nvim-autopairs'
 
@@ -108,14 +100,7 @@ use 'nvim-lualine/lualine.nvim'
 
 use {
   "folke/trouble.nvim",
-  requires = "kyazdani42/nvim-web-devicons",
-  config = function()
-    require("trouble").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
+  requires = "kyazdani42/nvim-web-devicons"
 }
 
 use 'jose-elias-alvarez/null-ls.nvim'
