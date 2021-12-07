@@ -58,7 +58,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		"Commenting
 		Plug 'scrooloose/nerdcommenter'
 
-		"Plug 'dylanaraps/wal.vim'
+		Plug 'dylanaraps/wal.vim'
 		if has("nvim-0.5")
 		" TODO
 		Plug 'neovim/nvim-lspconfig' 
