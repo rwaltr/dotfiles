@@ -24,7 +24,7 @@ use {
   use {'alker0/chezmoi.vim'}
 
   -- Vimwiki
-  use {'vimwiki/vimwiki', opt=true}
+  use {'vimwiki/vimwiki', opt = true}
 
   -- Which Key, But better
   use {'folke/which-key.nvim'}
@@ -36,11 +36,11 @@ use {
 
   -- Git Integration
   use {'mhinz/vim-signify'}
-  use {'tpope/vim-fugitive', opt=true,
+  use {'tpope/vim-fugitive',
   cmd={'G','Gedit','Git','Gsplit','Gread','Gwrite','Ggrep','Glgrep','GMove','GDelete','Gstatus','GBrowse'},
-  requires = {'tpope/vim-rhubarb', opt=true}
+  requires = {'tpope/vim-rhubarb'}
    }
-  use {'junegunn/gv.vim', opt=true,
+  use {'junegunn/gv.vim',
   requires ={'tpope/vim-fugitive'},
   cmd = {'GV','GV!','GV?'}
    }
@@ -104,6 +104,11 @@ use {
 }
 
 use 'jose-elias-alvarez/null-ls.nvim'
+
+-- neorg
+	-- TODO:
+use {'nvim-neorg/neorg'}
+
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
