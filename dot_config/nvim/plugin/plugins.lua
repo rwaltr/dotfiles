@@ -10,6 +10,12 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
+-- Colorscheme for WAL
+use({
+	"oncomouse/lushwal",
+	requires = { { "rktjmp/lush.nvim", opt = true }, { "rktjmp/shipwright.nvim", opt = true } },
+})
+
 
 -- Tree explorer
 
@@ -124,9 +130,9 @@ use "lukas-reineke/indent-blankline.nvim"
 
 
    -- autocompletion
-	use {'nvim-cmp',
+	use {'hrsh7th/nvim-cmp',
 	config = function()
-     require'config.cmp'
+     require'config.cmp_config'
 		end
 		}
 
