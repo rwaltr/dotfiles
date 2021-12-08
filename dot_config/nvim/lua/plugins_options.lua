@@ -84,28 +84,51 @@ require'lspsaga'.init_lsp_saga()
   })
 --LSPInstall
 
-local lsp_installer = require("nvim-lsp-installer")
+
+local lsp_installer = require "nvim-lsp-installer"
+
+local function on_attach(client, bufnr)
+  -- Set up buffer-local keymaps (vim.api.nvim_buf_set_keymap()), etc.
 
 
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
+   -- formatting
+  if client.name == 'tsserver' then
+    client.resolved_capabilities.document_formatting = false
+  end
+
+  if client.resolved_capabilities.document_formatting then
+    vim.api.nvim_command [[augroup Format]]
+    vim.api.nvim_command [[autocmd! * <buffer>]]
+    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
+    vim.api.nvim_command [[augroup END]]
+  end
+end
+
 lsp_installer.on_server_ready(function(server)
-    local opts = {}
-		opts.on_attach = on_attach
-		opts.capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Specify the default options which we'll use to setup all servers
+  local default_opts = {
+    on_attach = on_attach,
+	  capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  }
 
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
-    -- end
+  -- Now we'll create a server_opts table where we'll specify our custom LSP server configuration
+  local server_opts = {
+    -- Provide settings that should only apply to the "eslintls" server
+    ["eslintls"] = function()
+      default_opts.settings = {
+        format = {
+          enable = true,
+        },
+      }
+    end,
+  }
 
-    -- This setup() function is exactly the same as lspconfig's setup function.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-    server:setup(opts)
+  -- Use the server's custom settings, if they exist, otherwise default to the default options
+  local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
+  server:setup(server_options)
 end)
 
-
--- NullLS
+-- Nullls
 local nullls = require "null-ls"
 nullls.config {
 sources = {
