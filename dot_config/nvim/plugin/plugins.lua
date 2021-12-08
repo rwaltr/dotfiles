@@ -17,6 +17,9 @@ use {
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
+			config = function()
+				require'nvim-tree'.setup{}
+			end
     }
 }
   -- Chezmoi Integration
@@ -27,11 +30,19 @@ use {
   use {'vimwiki/vimwiki', opt = true}
 
   -- Which Key, But better
-  use {'folke/which-key.nvim'}
+  use {'folke/which-key.nvim',
+	config = function()
+		 require'which-key'.setup{}
+		end
+		}
 
   -- Inline Color preview
   -- https://github.com/norcalli/nvim-colorizer.lua
-  use {'norcalli/nvim-colorizer.lua'}
+  use {'norcalli/nvim-colorizer.lua',
+	config = function()
+       require'colorizer'.setup()
+			end
+	}
 
 
   -- Git Integration
@@ -48,7 +59,10 @@ use {
   'lewis6991/gitsigns.nvim',
   requires = {
     'nvim-lua/plenary.nvim'
-  }
+  },
+	config = function()
+		require'gitsigns'.setup()
+		end
 }
   -- Tmux easypane
   use {'christoomey/vim-tmux-navigator'}
@@ -59,14 +73,42 @@ use {
   -- New Commenting Plugin
 
 use {
-    'numToStr/Comment.nvim'}
+    'numToStr/Comment.nvim',
+	config = function()
+	  require'Comment'.setup()
+		end
+	}
   -- Autopairs
-   use 'windwp/nvim-autopairs'
+   use {'windwp/nvim-autopairs',
+		 config = function()
+	require'nvim-autopairs'.setup{}
+			end
+	}
 
    -- LSPConfig
    use 'neovim/nvim-lspconfig'
+
+
+
    -- TODO: Setup lspsaga
-use { 'tami5/lspsaga.nvim' }
+use { 'tami5/lspsaga.nvim',
+	config = function()
+	require'lspsaga'.init_lsp_saga()
+			end
+	}
+
+
+-- Todo comment highlighting
+  use {
+    'folke/todo-comments.nvim',
+    config = function ()
+      require("todo-comments").setup()
+    end
+  }
+
+	-- Blank line Indenting
+use "lukas-reineke/indent-blankline.nvim"
+
    -- TODO: setup nvim-treesitter
    use {'nvim-treesitter/nvim-treesitter',
    run = ':TSUpdate'}
@@ -92,15 +134,38 @@ use { 'tami5/lspsaga.nvim' }
    -- TELESCOPIC
 use {
   'nvim-telescope/telescope.nvim',
-  requires = { {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } }
+  requires = { {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+		config = function()
+			require'telescope'.setup{}
+				end}
 }
+
+use {'nvim-telescope/telescope-fzf-native.nvim',
+	run = 'make',
+	requires = 'nvim-telescope/telescope.nvim',
+	config = function()
+		require'telescope'.load_extention('fzf')
+			end
+	}
+
+
+
 use 'nvim-lua/popup.nvim'
 
-use 'nvim-lualine/lualine.nvim'
+
+-- StatusLine
+use {'nvim-lualine/lualine.nvim',
+	config = function()
+	  require'lualine'.setup()
+		end
+		}
 
 use {
   "folke/trouble.nvim",
-  requires = "kyazdani42/nvim-web-devicons"
+  requires = "kyazdani42/nvim-web-devicons",
+	config = function()
+		require'trouble'.setup{}
+			end
 }
 
 use 'jose-elias-alvarez/null-ls.nvim'
