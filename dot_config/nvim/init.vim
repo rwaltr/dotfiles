@@ -4,7 +4,3 @@
 source $HOME/.config/nvim/general/settings.vim
 source $HOME/.config/nvim/general/mappings.vim
 
-" The great Luaing
-lua << EOF
-require('plugins_options')
-EOF

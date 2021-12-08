@@ -10,18 +10,17 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- Bindly import new packages
 
+-- Tree explorer
 
 use {
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
-			config = function()
-				require'nvim-tree'.setup{}
-			end
-    }
+    },
+    config = function() require'nvim-tree'.setup {} end
 }
+
   -- Chezmoi Integration
   use {'Lilja/vim-chezmoi'}
   use {'alker0/chezmoi.vim'}
@@ -71,13 +70,13 @@ use {
    use {'arcticicestudio/nord-vim'}
 
   -- New Commenting Plugin
-
 use {
     'numToStr/Comment.nvim',
 	config = function()
 	  require'Comment'.setup()
 		end
 	}
+
   -- Autopairs
    use {'windwp/nvim-autopairs',
 		 config = function()
@@ -88,17 +87,14 @@ use {
    -- LSPConfig
    use 'neovim/nvim-lspconfig'
 
-
-
-   -- TODO: Setup lspsaga
+-- TODO: Setup lspsaga
 use { 'tami5/lspsaga.nvim',
 	config = function()
 	require'lspsaga'.init_lsp_saga()
 			end
 	}
 
-
--- Todo comment highlighting
+-- TODO: comment highlighting
   use {
     'folke/todo-comments.nvim',
     config = function ()
@@ -109,12 +105,18 @@ use { 'tami5/lspsaga.nvim',
 	-- Blank line Indenting
 use "lukas-reineke/indent-blankline.nvim"
 
-   -- TODO: setup nvim-treesitter
    use {'nvim-treesitter/nvim-treesitter',
-   run = ':TSUpdate'}
+   run = ':TSUpdate',
+	config = function()
+	require'config.nvim-treesitter'
+		end
+		}
 
    -- LspInstall
-   use 'williamboman/nvim-lsp-installer'
+   use {'williamboman/nvim-lsp-installer',
+		config = function()
+			require'config.lspinstall'
+			end}
 
    -- colors for LSP that doesnt have current theme
    use 'folke/lsp-colors.nvim'
@@ -122,19 +124,24 @@ use "lukas-reineke/indent-blankline.nvim"
 
 
    -- autocompletion
+	use {'nvim-cmp',
+	config = function()
+     require'config.cmp'
+		end
+		}
+
    use {
      'hrsh7th/cmp-nvim-lsp',
      'hrsh7th/cmp-buffer',
      'hrsh7th/cmp-path',
      'hrsh7th/cmp-cmdline',
-     'hrsh7th/nvim-cmp',
      'hrsh7th/cmp-vsnip',
      'hrsh7th/vim-vsnip'
    }
    -- TELESCOPIC
 use {
   'nvim-telescope/telescope.nvim',
-  requires = { {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+  requires = { {'nvim-lua/plenary.nvim'},
 		config = function()
 			require'telescope'.setup{}
 				end}
@@ -144,8 +151,9 @@ use {'nvim-telescope/telescope-fzf-native.nvim',
 	run = 'make',
 	requires = 'nvim-telescope/telescope.nvim',
 	config = function()
-		require'telescope'.load_extention('fzf')
-			end
+		require('telescope').load_extension('fzf')			
+		end
+
 	}
 
 
@@ -168,10 +176,14 @@ use {
 			end
 }
 
-use 'jose-elias-alvarez/null-ls.nvim'
+use {'jose-elias-alvarez/null-ls.nvim',
+	config = function()
+   require'config.nullls'
+		end
+	}
 
 -- neorg
-	-- TODO:
+-- TODO:Setup Neorg
 use {'nvim-neorg/neorg'}
 
 
