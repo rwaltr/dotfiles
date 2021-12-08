@@ -6,6 +6,5 @@ source $HOME/.config/nvim/general/mappings.vim
 
 " The great Luaing
 lua << EOF
-require('plugins')
 require('plugins_options')
 EOF
