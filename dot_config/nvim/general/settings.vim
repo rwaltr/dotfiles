@@ -1,4 +1,5 @@
 " Rwaltr Nvim Settings
+" TODO: Convert to Lua
 set number					" show numbers
 set nowrap					" No line wrapping
 set mouse=a					" Auto Mouse support

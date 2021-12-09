@@ -1,4 +1,5 @@
 " Rwaltr Nvim Mappings
+" TODO: Convert to Lua
 
 " Window navigation
 nnoremap <C-J> <C-W><C-J>
