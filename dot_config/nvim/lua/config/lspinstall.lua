@@ -18,7 +18,6 @@ local function on_attach(client, bufnr)
     vim.api.nvim_command [[augroup END]]
   end
 end
-
 lsp_installer.on_server_ready(function(server)
   -- Specify the default options which we'll use to setup all servers
   local default_opts = {
@@ -36,7 +35,22 @@ lsp_installer.on_server_ready(function(server)
         },
       }
     end,
+		["sumneko_lua"] = function()
+		  default_opts.settings = {
+				Lua = {
+					diagnostics = {
+-- reconize Vim global
+						globals = {"vim"},
+					},
+					workspace = {
+						library = vim.api.nvim_get_runtime_file("",true),
+					},
+				},
+			}
+
+		end,
   }
+
 
   -- Use the server's custom settings, if they exist, otherwise default to the default options
   local server_options = server_opts[server.name] and server_opts[server.name]() or default_opts
