@@ -1,0 +1,9 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+# Config tools
+nvim --headless -c PackerInstall +qall
+nvim --headless -c PackerCompile +qall
+# Apply theme
+wal -R
+nvim --headless -c LushwalCompile +qall
+{{- end }}

@@ -11,6 +11,7 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
 -- Colorscheme for WAL
+	-- TODO: Enable addons support
 use({
 	"oncomouse/lushwal",
 	requires = { { "rktjmp/lush.nvim", opt = true }, { "rktjmp/shipwright.nvim", opt = true } },
