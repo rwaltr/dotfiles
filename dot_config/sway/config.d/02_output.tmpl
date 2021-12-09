@@ -14,4 +14,9 @@ output DP-1 pos 5360 0
 # Backgrounds
 #output * bg /usr/share/backgrounds/default.png fill
 # use Azote to set backgrounds per machine
-exec ~/.azotebg
+#exec ~/.azotebg
+
+# TODO: Use Sway to manage backgrounds for both solid and wallpapers
+include ~/.cache/wal/colors-sway
+
+output * bg $background solid_color
