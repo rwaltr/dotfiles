@@ -171,6 +171,7 @@ export VAULT_ADDR="https://vault.waltr.tech"
 {{ end -}}
 
 # Custom Functions
+# TODO: Move to Bash function dir
 fzopen (){
 fd -t f -H -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
 }
