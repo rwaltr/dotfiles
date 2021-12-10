@@ -1,0 +1,7 @@
+
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+# Haaaash {{ include "dot_config/nvim/plugin/plugins.lua" | sha256sum }}
+nvim --headless -c PackerInstall +qall
+nvim --headless -c PackerCompile +qall
+{{- end }}
