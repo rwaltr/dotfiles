@@ -31,7 +31,7 @@ assign [class="^Riot$"] $ws3
 
 # Set custom workspaces locations
 {{ if eq .chezmoi.hostname "monolith" -}}
-workspace $ws3 output DP-1
-workspace $ws1 output DP-2 
+workspace $ws1 output DP-1
+workspace $ws3 output DP-2 
 workspace $ws2 output DP-3
 {{ end -}}
