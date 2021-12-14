@@ -95,7 +95,7 @@ use {
    use 'neovim/nvim-lspconfig'
 
 -- TODO: Setup lspsaga
-use { 'tami5/lspsaga.nvim',
+ use { 'tami5/lspsaga.nvim',
 	config = function()
 	require'lspsaga'.init_lsp_saga()
 			end
@@ -151,7 +151,10 @@ use {
   requires = { {'nvim-lua/plenary.nvim'},
 		config = function()
 			require'telescope'.setup{}
-				end}
+				end
+		},
+		commit = "80cdb00b221f69348afc4fb4b701f51eb8dd3120"
+
 }
 
 use {'nvim-telescope/telescope-fzf-native.nvim',
