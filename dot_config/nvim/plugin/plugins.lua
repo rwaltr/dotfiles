@@ -54,12 +54,10 @@ use {
   -- Git Integration
   use {'mhinz/vim-signify'}
   use {'tpope/vim-fugitive',
-  cmd={'G','Gedit','Git','Gsplit','Gread','Gwrite','Ggrep','Glgrep','GMove','GDelete','Gstatus','GBrowse'},
   requires = {'tpope/vim-rhubarb'}
    }
   use {'junegunn/gv.vim',
   requires ={'tpope/vim-fugitive'},
-  cmd = {'GV','GV!','GV?'}
    }
 use {
   'lewis6991/gitsigns.nvim',
