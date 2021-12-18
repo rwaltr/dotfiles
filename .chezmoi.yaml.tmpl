@@ -1,10 +1,10 @@
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
 {{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
-{{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
 {{- $city := "KATX" -}}{{/* city inputs for weather */}}
 {{- $work := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
 {{- $personal = promptBool "personal" -}}
 {{- $work = promptBool "work" -}}
+{{- $battlestation = promptBool "attached to battlestation?" -}}
 format: yaml
 
 data:
@@ -14,6 +14,7 @@ data:
   specialsound: false
   city: "{{ $city }}"
   work: {{ $work }}
+	battlestation: {{ $battlestation }}
 
 gpg:
   {{- if .personal }}

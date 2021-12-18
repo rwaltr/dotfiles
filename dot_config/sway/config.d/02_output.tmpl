@@ -1,22 +1,29 @@
 ### Output configuration
+include ~/.cache/wal/colors-sway
+
 
 # Monitor Setup
 # You can get the names of your outputs by running: swaymsg -t get_outputs
-{{ if eq .chezmoi.hostname "monolith" -}}
-# Main Monitor
-output DP-3 pos 1920 0 
-# right monitor
-output DP-2 pos 0 0 
-# left monitor
-output DP-1 pos 5360 0 
+{{ if eq .battlestation true  -}}
+# Left Monitor
+output "Dell Inc. DELL P2214H KW14V41N249B" {
+  pos 0 0 
+  mode 1920x1080@60Hz
+	bg $background solid_color
+}
+# Middle Monitor
+output "Acer Technologies ED347CKR 0x00003617" {
+	pos 1920 0 
+	mode 3440x1440@99.998Hz
+	#bg $wallpaper fill $background
+  bg $background solid_color
+}
+# Right Monitor
+output "Dell Inc. DELL P2214H T0RN665G2R5S" {
+  pos 5360 0 
+  mode 1920x1080@60Hz
+  bg $background solid_color
+}
+{{ else }}
+output * bg $wallpaper fill $background
 {{ end -}}
-
-# Backgrounds
-#output * bg /usr/share/backgrounds/default.png fill
-# use Azote to set backgrounds per machine
-#exec ~/.azotebg
-
-# TODO: Use Sway to manage backgrounds for both solid and wallpapers
-include ~/.cache/wal/colors-sway
-
-output * bg $background solid_color
