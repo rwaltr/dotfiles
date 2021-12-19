@@ -50,6 +50,14 @@ use {
 			end
 	}
 
+-- Startpage
+use {
+    'goolord/alpha-nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function ()
+        require'alpha'.setup(require'alpha.themes.startify'.opts)
+    end
+}
 
   -- Git Integration
   use {'mhinz/vim-signify'}
