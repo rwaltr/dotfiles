@@ -95,8 +95,8 @@ use {
 -- TODO: Setup lspsaga
  use { 'tami5/lspsaga.nvim',
 	config = function()
-	require'lspsaga'.init_lsp_saga()
-			end
+  	require'lspsaga'.init_lsp_saga()
+	end
 	}
 
 -- TODO: comment highlighting
@@ -187,7 +187,7 @@ use {
 use {'jose-elias-alvarez/null-ls.nvim',
 	config = function()
    require'config.nullls'
-		end
+	end
 	}
 
 -- neorg

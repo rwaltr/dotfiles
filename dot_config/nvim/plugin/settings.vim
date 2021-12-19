@@ -20,7 +20,7 @@ set ignorecase			" Ignoes case on searching
 set smartcase				" enable case sensitive when search contains case
 set incsearch				" go to next search
 set scrolloff=12				" starts scrolling before it hits the bottom or top of page
-
+set completeopt=menu,menuone,noselect
 " spell checking
 "set complete+=kspell
 "set completeopt=menuone,longest
