@@ -1,0 +1,24 @@
+{{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $battlestation := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $city := "KATX" -}}{{/* city inputs for weather */}}
+{{- $work := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
+{{- $personal = promptBool "personal" -}}
+{{- $work = promptBool "work" -}}
+{{- $battlestation = promptBool "Battlestation" -}}
+
+data:
+  name: "Ryan Walter"
+  email: "rwalt@pm.me"
+  personal: {{ $personal }}
+  specialsound: false
+  city: "{{ $city }}"
+  work: {{ $work }}
+  battlestation: {{ $battlestation }}
+gpg:
+  {{- if .personal }}
+  recipient: "43A697C7D3B8377EB8A0E7C127DDBC18CC4F3E04"
+  {{- end}}
+  {{- if .work }}
+  recipient: ""
+  {{- end}}
