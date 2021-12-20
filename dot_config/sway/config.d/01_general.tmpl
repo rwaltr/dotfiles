@@ -3,7 +3,7 @@ font pango: FuraMono Nerd Font Mono
 
 ### Variables
 # Logo key. Use Mod1 for Alt.
-{{ if eq .chezmoi.hostname "teletran1" -}}
+{{ if ( and (eq .chezmoi.hostname "teletran1") ( eq .battlestation false)) -}}
 set $mod Mod1
 {{ else -}}
 set $mod Mod4
