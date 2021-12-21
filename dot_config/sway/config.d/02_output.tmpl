@@ -6,20 +6,23 @@ include ~/.cache/wal/colors-sway
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 {{ if eq .battlestation true  -}}
 # Left Monitor
-output "Dell Inc. DELL P2214H KW14V41N249B" {
+set $leftmon "Dell Inc. DELL P2214H KW14V41N249B"
+set $midmon "Acer Technologies ED347CKR 0x00003617"
+set $rightmon "Dell Inc. DELL P2214H T0RN665G2R5S"
+output $leftmon { 
   pos 0 0 
   mode 1920x1080@60Hz
 	bg $background solid_color
 }
 # Middle Monitor
-output "Acer Technologies ED347CKR 0x00003617" {
+output $midmon {
 	pos 1920 0 
 	mode 3440x1440@99.998Hz
 	#bg $wallpaper fill $background
   bg $background solid_color
 }
 # Right Monitor
-output "Dell Inc. DELL P2214H T0RN665G2R5S" {
+output $rightmon {
   pos 5360 0 
   mode 1920x1080@60Hz
   bg $background solid_color

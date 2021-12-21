@@ -32,7 +32,7 @@ assign [class="^Riot$"] $ws3
 # Set custom workspaces locations
 {{ if eq .chezmoi.hostname "monolith" -}}
 # TODO: make workspaces monitor based and not edpi based
-workspace $ws1 output DP-1
-workspace $ws3 output DP-2 
-workspace $ws2 output DP-3
+workspace $ws3 output $leftmon 
+workspace $ws1 output $midmon
+workspace $ws2 output $rightmon 
 {{ end -}}
