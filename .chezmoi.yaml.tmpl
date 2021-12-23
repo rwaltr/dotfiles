@@ -15,6 +15,11 @@ data:
   city: "{{ $city }}"
   work: {{ $work }}
   battlestation: {{ $battlestation }}
+  mpd:
+    enabled: false
+    server: localhost
+    port: 6600
+    timeout: 15
 gpg:
   {{- if .personal }}
   recipient: "43A697C7D3B8377EB8A0E7C127DDBC18CC4F3E04"
