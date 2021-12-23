@@ -13,23 +13,14 @@ if [ -d $HOME/.config/bash ]; then
 	  source $i;
 	done
 fi
-# Custom Local PATH
-
-if [ -d ~/.bin/exec/ ]
-	then
-		PATH=$PATH:~/.bin/exec/
-fi
+# Custom Local PATHs
 
 if [ -d ~/.krew/bin ]
 	then
 		export PATH="${PATH}:${HOME}/.krew/bin"
 fi
 
-# Source fzf
-if [ -d /usr/share/fzf/shell  ]
-  then
-source /usr/share/fzf/shell/key-bindings.bash
-fi
+
 shopt -s autocd # change to named directory
 shopt -s cdspell # autocorrects cd misspellings
 shopt -s cmdhist # save multi-line commands in history as single line
@@ -60,121 +51,3 @@ shopt -s cdable_vars
 # export dropbox="$HOME/Dropbox"
 
 
-# Custom Alias
-
-alias ":q"="exit"
-alias "x"="exit"
-alias "q"="exit"
-
-# easy resource
-alias resource="source ~/.bashrc"
-
-#Vimwiki alias
-alias vimwiki="vim -c VimwikiIndex"
-alias vimdiary="vim -c VimwikiDiaryIndex"
-alias vw=vimwiki
-alias vd=vimdiary
-
-# Easy Open
-alias open="xdg-open"
-
-# File listing
-alias l="ls"
-alias ls="ls --color"
-alias ll="ls -lh"
-alias la="ls -ah"
-alias lla="ls -lah"
-
-# Easy upward navigation
-alias ..="cd .."
-alias ...="cd ../../../"
-alias ....="cd ../../../../"
-alias .....="cd ../../../../../"
-alias cd..=".."
-
-# Weather!
-alias wttr="curl wttr.in"
-alias wttrv2="curl v2.wttr.in"
-
-#QOL
-#Forgot a space
-alias sudo!="sudo !!"
-
-#GPG helpers
-# verify signature
-alias gpg-check="gpg --keyserver-options auto-key-retrieve --verify"
-# receive the key of a developer
-alias gpg-retrieve="gpg --keyserver-options auto-key-retrieve --receive-keys"
-
-# git
-alias addup='git add -u'
-alias addall='git add .'
-alias branch='git branch'
-alias checkout='git checkout'
-alias clone='git clone'
-alias commit='git commit -m'
-alias fetch='git fetch'
-alias pull='git pull origin'
-alias push='git push origin'
-alias status='git status'
-alias tag='git tag'
-alias newtag='git tag -a'
-alias gdiff='git diff'
-
-# IP colors
-alias ip='ip -br -c'
-
-# Services
-#Termbin
-alias tb='nc termbin.com 9999'
-alias termbin=tb
-
-# Argo!
-alias argo=argocd
-
-# Custom Prompts 
-if [ -x "$(command -v starship)" ]
-then
-	eval "$(starship init bash)"
-fi
-
-# Nvim
-if [ -x "$(command -v nvim)" ] 
-then
-	alias vim=nvim
-	alias vi=vim
-	export EDITOR=nvim
-else
-	alias nvim=vim
-	alias vi=vim
-	export EDITOR=vim
-fi
-
-# lsd
-if [ -x "$(command -v lsd)" ]
-then
-	alias ls=lsd
-fi
-
-if [ -x "$(command -v thefuck)" ]
-then
-eval $(thefuck --alias f) 
-fi
-
-
-#Custom Envioment Vars
-#
-
-export TF_HTTP_USERNAME={{ .chezmoi.username }}
-{{ if eq .personal true -}}
-export VAULT_ADDR="https://vault.waltr.tech"
-{{ end -}}
-
-# Custom Functions
-# TODO: Move to Bash function dir
-fzopen (){
-fd -t f -H -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
-}
-fzdopen (){
-fd -t d -H -I | fzf  --preview="ls {}" | xargs -ro -d cd
-}
