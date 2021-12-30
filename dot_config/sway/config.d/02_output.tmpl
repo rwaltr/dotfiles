@@ -28,7 +28,8 @@ output $rightmon {
   bg $background solid_color
 }
 {{ else }}
-output * bg $wallpaper fill $background
+output * bg $background solid_color
+# output * bg $wallpaper fill $background
 {{ end -}}
 
 {{ if eq .chezmoi.hostname "teletran1" -}}
