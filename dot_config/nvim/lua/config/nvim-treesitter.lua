@@ -6,7 +6,7 @@ require'nvim-treesitter.configs'.setup{
 	},
 	indent = {
 		enable = true,
-		disable = {},
+		disable = {"yaml"},
 	},
 	ensure_installed = "maintained",
 }
