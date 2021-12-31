@@ -129,7 +129,7 @@ return require("packer").startup(function(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 		config = function()
-			require("config.nvim-treesitter")
+			require("rwaltr.nvim-treesitter")
 		end,
 	})
 
@@ -137,7 +137,7 @@ return require("packer").startup(function(use)
 	use({
 		"williamboman/nvim-lsp-installer",
 		config = function()
-			require("config.lspinstall")
+			require("rwaltr.lspinstall")
 		end,
 	})
 
@@ -149,17 +149,21 @@ return require("packer").startup(function(use)
 	use({
 		"hrsh7th/nvim-cmp",
 		config = function()
-			require("config.cmp_config")
+			require("rwaltr.cmp_config")
 		end,
 		requires = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-vsnip",
-			"hrsh7th/vim-vsnip",
+			"saadparwaiz1/cmp_luasnip",
 		},
 	})
+
+
+  -- snippets
+  use "L3MON4D3/LuaSnip" --snippet engine
+  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 	-- TELESCOPIC
 	use({
 		"nvim-telescope/telescope.nvim",
@@ -202,7 +206,7 @@ return require("packer").startup(function(use)
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
 		config = function()
-			require("config.nullls")
+			require("rwaltr.nullls")
 		end,
 	})
 
