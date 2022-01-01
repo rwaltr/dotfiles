@@ -17,7 +17,6 @@ return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	-- Colorscheme for WAL
-	-- TODO: Enable addons support
 	use({
 		"oncomouse/lushwal",
 		requires = { { "rktjmp/lush.nvim", opt = true }, { "rktjmp/shipwright.nvim", opt = true } },
@@ -114,7 +113,6 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	-- TODO: comment highlighting
 	use({
 		"folke/todo-comments.nvim",
 		config = function()
