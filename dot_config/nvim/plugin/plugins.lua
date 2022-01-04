@@ -159,6 +159,12 @@ return require("packer").startup(function(use)
 	})
 
 
+  -- Bufferlines
+  use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons',
+  config = function ()
+   require("bufferline").setup{}
+  end}
+
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
