@@ -17,10 +17,13 @@ return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	-- Colorscheme for WAL
-	use({
-		"oncomouse/lushwal",
-		requires = { { "rktjmp/lush.nvim", opt = true }, { "rktjmp/shipwright.nvim", opt = true } },
-	})
+use({
+	"oncomouse/lushwal",
+	requires = { { "rktjmp/lush.nvim", opt = true }, { "rktjmp/shipwright.nvim", opt = true },
+    config = function()
+      require("rwaltr.lushwal")
+    end},
+})
 
 	-- Tree explorer
 
