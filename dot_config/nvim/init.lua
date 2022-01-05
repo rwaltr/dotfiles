@@ -1,3 +1,5 @@
 require("rwaltr.options")
 require("rwaltr.keybindings")
 require("rwaltr.colorscheme")
+require("rwaltr.autocommands")
+require("rwaltr.lsp")

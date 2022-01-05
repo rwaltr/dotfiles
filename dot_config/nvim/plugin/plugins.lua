@@ -11,6 +11,15 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	})
 end
 
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | silent exec "!chezmoi apply ~/.config/nvim" 
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]]
+
 return require("packer").startup(function(use)
 	-- My plugins here
 	-- Packer can manage itself
@@ -27,6 +36,9 @@ return require("packer").startup(function(use)
 			end,
 		},
 	})
+use "tamago324/nlsp-settings.nvim"
+
+
 
 	-- colorscheme from lunarvim
 	use("LunarVim/Colorschemes")
@@ -106,7 +118,7 @@ return require("packer").startup(function(use)
 			"nvim-lua/plenary.nvim",
 		},
 		config = function()
-			require("gitsigns").setup()
+      require("rwaltr.gitsigns")
 		end,
 	})
 	-- Tmux easypane
@@ -168,9 +180,6 @@ return require("packer").startup(function(use)
 	-- LspInstall
 	use({
 		"williamboman/nvim-lsp-installer",
-		config = function()
-			require("rwaltr.lspinstall")
-		end,
 	})
 
 	-- colors for LSP that doesnt have current theme
@@ -197,7 +206,7 @@ return require("packer").startup(function(use)
 		"akinsho/bufferline.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
 		config = function()
-			require("bufferline").setup({})
+		  require("rwaltr.bufferline")
 		end,
 	})
 
@@ -245,9 +254,6 @@ return require("packer").startup(function(use)
 
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
-		config = function()
-			require("rwaltr.nullls")
-		end,
 	})
 
 	-- neorg
