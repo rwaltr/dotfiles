@@ -17,23 +17,28 @@ return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	-- Colorscheme for WAL
-use({
-	"oncomouse/lushwal",
-	requires = { { "rktjmp/lush.nvim", opt = true }, { "rktjmp/shipwright.nvim", opt = true },
-    config = function()
-      require("rwaltr.lushwal")
-    end},
-})
+	use({
+		"oncomouse/lushwal",
+		requires = {
+			{ "rktjmp/lush.nvim", opt = true },
+			{ "rktjmp/shipwright.nvim", opt = true },
+			config = function()
+				require("rwaltr.lushwal")
+			end,
+		},
+	})
 
--- colorscheme from lunarvim
-  use "LunarVim/Colorschemes"
-use "lunarvim/darkplus.nvim"
+	-- colorscheme from lunarvim
+	use("LunarVim/Colorschemes")
+	use("lunarvim/darkplus.nvim")
 
-
--- speed stuff
-  use ({"lewis6991/impatient.nvim", config = function ()
-require("impatient").enable_profile()
-  end})
+	-- speed stuff
+	use({
+		"lewis6991/impatient.nvim",
+		config = function()
+			require("impatient").enable_profile()
+		end,
+	})
 	-- Tree explorer
 
 	use({
@@ -55,22 +60,23 @@ require("impatient").enable_profile()
 		"folke/which-key.nvim",
 		config = function()
 			-- require("which-key").setup({})
-      require("rwaltr.whichkey")
+			require("rwaltr.whichkey")
 		end,
 	})
-use {"akinsho/toggleterm.nvim",
-  config = function()
-    require("rwaltr.toggleterm")
-  end}
+	use({
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("rwaltr.toggleterm")
+		end,
+	})
 
-
--- Project integration
-use {
-  "ahmedkhalf/project.nvim",
-  config = function()
-    require("rwaltr.project")
-  end
-}
+	-- Project integration
+	use({
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("rwaltr.project")
+		end,
+	})
 	-- Inline Color preview
 	-- https://github.com/norcalli/nvim-colorizer.lua
 	use({
@@ -85,11 +91,11 @@ use {
 		"goolord/alpha-nvim",
 		requires = { "kyazdani42/nvim-web-devicons" },
 		config = function()
-		 require("rwaltr.alpha")
+			require("rwaltr.alpha")
 		end,
 	})
-  -- Buffer bye
-  use "moll/vim-bbye"
+	-- Buffer bye
+	use("moll/vim-bbye")
 	-- Git Integration
 	use({ "mhinz/vim-signify" })
 	use({ "tpope/vim-fugitive", requires = { "tpope/vim-rhubarb" } })
@@ -114,7 +120,7 @@ use {
 		"numToStr/Comment.nvim",
 		config = function()
 			require("rwaltr.comment")
-    end,
+		end,
 	})
 
 	-- Autopairs
@@ -122,7 +128,7 @@ use {
 		"windwp/nvim-autopairs",
 		config = function()
 			require("rwaltr.autopairs")
-    end,
+		end,
 	})
 
 	-- LSPConfig
@@ -144,10 +150,12 @@ use {
 	})
 
 	-- Blank line Indenting
-	use({"lukas-reineke/indent-blankline.nvim",
-  config = function ()
-    require("rwaltr.indentline")
-  end})
+	use({
+		"lukas-reineke/indent-blankline.nvim",
+		config = function()
+			require("rwaltr.indentline")
+		end,
+	})
 
 	use({
 		"nvim-treesitter/nvim-treesitter",
@@ -184,16 +192,18 @@ use {
 		},
 	})
 
+	-- Bufferlines
+	use({
+		"akinsho/bufferline.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("bufferline").setup({})
+		end,
+	})
 
-  -- Bufferlines
-  use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons',
-  config = function ()
-   require("bufferline").setup{}
-  end}
-
-  -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+	-- snippets
+	use("L3MON4D3/LuaSnip") --snippet engine
+	use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
 	-- TELESCOPIC
 	use({
 		"nvim-telescope/telescope.nvim",
@@ -201,9 +211,9 @@ use {
 			{ "nvim-lua/plenary.nvim" },
 		},
 		commit = "80cdb00b221f69348afc4fb4b701f51eb8dd3120",
-    config = function ()
-      require("rwaltr.telescope")
-    end
+		config = function()
+			require("rwaltr.telescope")
+		end,
 	})
 
 	use({
@@ -221,7 +231,7 @@ use {
 	use({
 		"nvim-lualine/lualine.nvim",
 		config = function()
-      require("rwaltr.lualine")
+			require("rwaltr.lualine")
 		end,
 	})
 

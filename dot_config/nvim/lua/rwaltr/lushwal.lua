@@ -31,5 +31,5 @@ vim.g.lushwal_configuration = {
 		vim_signify = false,
 		vim_sneak = false,
 		which_key_nvim = true,
-	}
+	},
 }

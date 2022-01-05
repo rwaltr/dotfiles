@@ -2,7 +2,7 @@
 
 local keymap = vim.api.nvim_set_keymap
 
-local opts = { noremap = true, silent=true }
+local opts = { noremap = true, silent = true }
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
@@ -19,7 +19,6 @@ keymap("n", "<C-H>", "<C-W><C-H>", opts)
 keymap("n", "<C-Q>", "<C-W><C-Q>", opts)
 keymap("n", "<C-W>t", ":tabnew<CR>", opts)
 keymap("n", "<C-W><C-t>", ":tabnew<CR>", opts)
-
 
 -- Clear search highlights
 keymap("n", "<C-c>", ":nohlsearch<CR>", opts)
@@ -38,7 +37,6 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 -- nvim tree
 keymap("n", "<C-t>", ":NvimTreeToggle<CR>", opts)
-
 
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)

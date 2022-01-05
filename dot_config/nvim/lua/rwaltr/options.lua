@@ -1,5 +1,5 @@
 local options = {
-	termguicolors = true,                    -- set term gui colors (most terminals support this)
+	termguicolors = true, -- set term gui colors (most terminals support this)
 	autoindent = true, --- Good auto indent
 	backup = false, -- creates a backup file
 	clipboard = "unnamedplus",
@@ -16,7 +16,7 @@ local options = {
 	ignorecase = true, --- Ignoes case on searching
 	incsearch = true, --- go to next search
 	mouse = "nv", --- Allow Mouse in Normal and Visual mode
-  compatible = false, --- Doesnt try to be old vim
+	compatible = false, --- Doesnt try to be old vim
 	wrap = false, --- No line wrapping
 	number = true, --- show numbers
 	numberwidth = 4, -- set number column width to 2 {default 4}
@@ -43,11 +43,10 @@ local options = {
 	writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 }
 
-
-vim.opt.shortmess:append "c"
+vim.opt.shortmess:append("c")
 
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
-vim.cmd [[set iskeyword+=-]]
+vim.cmd([[set iskeyword+=-]])
