@@ -12,13 +12,13 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd [[
+vim.cmd([[
   augroup packer_user_config
     autocmd!
     autocmd BufWritePost plugins.lua source <afile> | silent exec "!chezmoi apply ~/.config/nvim" 
     autocmd BufWritePost plugins.lua source <afile> | PackerSync
   augroup end
-]]
+]])
 
 return require("packer").startup(function(use)
 	-- My plugins here
@@ -36,9 +36,7 @@ return require("packer").startup(function(use)
 			end,
 		},
 	})
-use "tamago324/nlsp-settings.nvim"
-
-
+	use("tamago324/nlsp-settings.nvim")
 
 	-- colorscheme from lunarvim
 	use("LunarVim/Colorschemes")
@@ -109,7 +107,6 @@ use "tamago324/nlsp-settings.nvim"
 	-- Buffer bye
 	use("moll/vim-bbye")
 	-- Git Integration
-	use({ "mhinz/vim-signify" })
 	use({ "tpope/vim-fugitive", requires = { "tpope/vim-rhubarb" } })
 	use({ "junegunn/gv.vim", requires = { "tpope/vim-fugitive" } })
 	use({
@@ -118,7 +115,7 @@ use "tamago324/nlsp-settings.nvim"
 			"nvim-lua/plenary.nvim",
 		},
 		config = function()
-      require("rwaltr.gitsigns")
+			require("rwaltr.gitsigns")
 		end,
 	})
 	-- Tmux easypane
@@ -206,7 +203,7 @@ use "tamago324/nlsp-settings.nvim"
 		"akinsho/bufferline.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
 		config = function()
-		  require("rwaltr.bufferline")
+			require("rwaltr.bufferline")
 		end,
 	})
 

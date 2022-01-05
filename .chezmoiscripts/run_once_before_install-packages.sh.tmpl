@@ -5,7 +5,7 @@
 # Install Fedora Packages
 {{ if eq .chezmoi.osRelease.id "fedora" -}}
 
-dnf copr enable agriffis/neovim-nightly -y
+sudo dnf copr enable atim/lazygit -y
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf config-manager --add-repo \
   https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
@@ -43,6 +43,7 @@ grim \
 grimshot \
 azote \
 mako \
+lazygit \
 gammastep \
 mbuffer \
 gammastep-indicator \
