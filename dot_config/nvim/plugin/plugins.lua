@@ -15,7 +15,7 @@ end
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | silent exec "!chezmoi apply ~/.config/nvim" 
+    autocmd BufWritePost plugins.lua source <afile> | silent exec "!chezmoi apply ~/.config/nvim/plugin/plugins.lua" 
     autocmd BufWritePost plugins.lua source <afile> | PackerSync
   augroup end
 ]])
@@ -41,7 +41,7 @@ return require("packer").startup(function(use)
 	-- colorscheme from lunarvim
 	use("LunarVim/Colorschemes")
 	use("lunarvim/darkplus.nvim")
-
+	use("JoosepAlviste/nvim-ts-context-commentstring")
 	-- speed stuff
 	use({
 		"lewis6991/impatient.nvim",
@@ -216,7 +216,6 @@ return require("packer").startup(function(use)
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
 		},
-		commit = "80cdb00b221f69348afc4fb4b701f51eb8dd3120",
 		config = function()
 			require("rwaltr.telescope")
 		end,
