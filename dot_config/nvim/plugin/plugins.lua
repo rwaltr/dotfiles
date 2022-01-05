@@ -25,6 +25,15 @@ use({
     end},
 })
 
+-- colorscheme from lunarvim
+  use "LunarVim/Colorschemes"
+use "lunarvim/darkplus.nvim"
+
+
+-- speed stuff
+  use ({"lewis6991/impatient.nvim", config = function ()
+require("impatient").enable_profile()
+  end})
 	-- Tree explorer
 
 	use({
@@ -33,7 +42,7 @@ use({
 			"kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
 		config = function()
-			require("nvim-tree").setup({})
+			require("rwaltr.nvim-tree")
 		end,
 	})
 
@@ -41,17 +50,27 @@ use({
 	use({ "Lilja/vim-chezmoi" })
 	use({ "alker0/chezmoi.vim" })
 
-	-- Vimwiki
-	use({ "vimwiki/vimwiki", opt = true })
-
 	-- Which Key, But better
 	use({
 		"folke/which-key.nvim",
 		config = function()
-			require("which-key").setup({})
+			-- require("which-key").setup({})
+      require("rwaltr.whichkey")
 		end,
 	})
+use {"akinsho/toggleterm.nvim",
+  config = function()
+    require("rwaltr.toggleterm")
+  end}
 
+
+-- Project integration
+use {
+  "ahmedkhalf/project.nvim",
+  config = function()
+    require("rwaltr.project")
+  end
+}
 	-- Inline Color preview
 	-- https://github.com/norcalli/nvim-colorizer.lua
 	use({
@@ -66,10 +85,11 @@ use({
 		"goolord/alpha-nvim",
 		requires = { "kyazdani42/nvim-web-devicons" },
 		config = function()
-			require("alpha").setup(require("alpha.themes.startify").opts)
+		 require("rwaltr.alpha")
 		end,
 	})
-
+  -- Buffer bye
+  use "moll/vim-bbye"
 	-- Git Integration
 	use({ "mhinz/vim-signify" })
 	use({ "tpope/vim-fugitive", requires = { "tpope/vim-rhubarb" } })
@@ -93,38 +113,41 @@ use({
 	use({
 		"numToStr/Comment.nvim",
 		config = function()
-			require("Comment").setup()
-		end,
+			require("rwaltr.comment")
+    end,
 	})
 
 	-- Autopairs
 	use({
 		"windwp/nvim-autopairs",
 		config = function()
-			require("nvim-autopairs").setup({})
-		end,
+			require("rwaltr.autopairs")
+    end,
 	})
 
 	-- LSPConfig
 	use("neovim/nvim-lspconfig")
 
-	-- TODO: Setup lspsaga
-	use({
-		"tami5/lspsaga.nvim",
-		config = function()
-			require("lspsaga").init_lsp_saga()
-		end,
-	})
+	-- -- TODO: Setup lspsaga
+	-- use({
+	-- 	"tami5/lspsaga.nvim",
+	-- 	config = function()
+	-- 		require("lspsaga").init_lsp_saga()
+	-- 	end,
+	-- })
 
 	use({
 		"folke/todo-comments.nvim",
 		config = function()
-			require("todo-comments").setup()
+			require("rwaltr.todo")
 		end,
 	})
 
 	-- Blank line Indenting
-	use("lukas-reineke/indent-blankline.nvim")
+	use({"lukas-reineke/indent-blankline.nvim",
+  config = function ()
+    require("rwaltr.indentline")
+  end})
 
 	use({
 		"nvim-treesitter/nvim-treesitter",
@@ -176,11 +199,11 @@ use({
 		"nvim-telescope/telescope.nvim",
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
-			config = function()
-				require("telescope").setup({})
-			end,
 		},
 		commit = "80cdb00b221f69348afc4fb4b701f51eb8dd3120",
+    config = function ()
+      require("rwaltr.telescope")
+    end
 	})
 
 	use({
@@ -198,7 +221,7 @@ use({
 	use({
 		"nvim-lualine/lualine.nvim",
 		config = function()
-			require("lualine").setup()
+      require("rwaltr.lualine")
 		end,
 	})
 
