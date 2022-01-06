@@ -1,31 +1,30 @@
 local fn = vim.fn
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system {
-    "git",
-    "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
-  }
-  print "Installing packer close and reopen Neovim..."
-  vim.cmd [[packadd packer.nvim]]
+	PACKER_BOOTSTRAP = fn.system({
+		"git",
+		"clone",
+		"--depth",
+		"1",
+		"https://github.com/wbthomason/packer.nvim",
+		install_path,
+	})
+	print("Installing packer close and reopen Neovim...")
+	vim.cmd([[packadd packer.nvim]])
 end
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
-  return
+	return
 end
 
 -- Have packer use a popup window
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-}
-
+packer.init({
+	display = {
+		open_fn = function()
+			return require("packer.util").float({ border = "rounded" })
+		end,
+	},
+})
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
 vim.cmd([[
@@ -260,15 +259,17 @@ return packer.startup(function(use)
 		"jose-elias-alvarez/null-ls.nvim",
 	})
 
-	use({ "nvim-neorg/neorg",
-  config = function()
-    require("rwaltr.neorg")
-  end,
-  requires = {"nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope"}})
+	use({
+		"nvim-neorg/neorg",
+		config = function()
+			require("rwaltr.neorg")
+		end,
+		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
-  end
+	if PACKER_BOOTSTRAP then
+		require("packer").sync()
+	end
 end)

@@ -1,4 +1,4 @@
-vim.cmd [[
+vim.cmd([[
   augroup end
   augroup _git
     autocmd!
@@ -10,4 +10,4 @@ vim.cmd [[
     autocmd FileType markdown setlocal wrap
     autocmd FileType markdown setlocal spell
   augroup end
-]]
+]])
