@@ -131,9 +131,9 @@ local mappings = {
 
 	l = {
 		name = "LSP",
-		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+		a = { "<cmd>Telescope lsp_code_actions<cr>", "Code Action" },
 		d = {
-			"<cmd>Telescope lsp_document_diagnostics<cr>",
+			"<cmd>Telescope diagnostics bufnr=0 <cr>",
 			"Document Diagnostics",
 		},
 		w = {
@@ -171,6 +171,7 @@ local mappings = {
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
 		t = { "<cmd>TodoTelescope<cr>", "Todo tags" },
+		n = { "<cmd>Telescope notify<cr>", "Notification History" },
 	},
 
 	t = {
