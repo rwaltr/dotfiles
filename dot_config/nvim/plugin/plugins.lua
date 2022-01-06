@@ -31,7 +31,7 @@ packer.init {
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | silent exec "!chezmoi apply ~/.config/nvim/plugin/plugins.lua" 
+    autocmd BufWritePost plugins.lua source <afile> | silent exec "!chezmoi apply ~/.config/nvim" 
     autocmd BufWritePost plugins.lua source <afile> | PackerSync
   augroup end
 ]])
@@ -159,14 +159,6 @@ return packer.startup(function(use)
 	-- LSPConfig
 	use("neovim/nvim-lspconfig")
 
-	-- -- TODO: Setup lspsaga
-	-- use({
-	-- 	"tami5/lspsaga.nvim",
-	-- 	config = function()
-	-- 		require("lspsaga").init_lsp_saga()
-	-- 	end,
-	-- })
-
 	use({
 		"folke/todo-comments.nvim",
 		config = function()
@@ -268,9 +260,11 @@ return packer.startup(function(use)
 		"jose-elias-alvarez/null-ls.nvim",
 	})
 
-	-- neorg
-	-- TODO:Setup Neorg
-	use({ "nvim-neorg/neorg" })
+	use({ "nvim-neorg/neorg",
+  config = function()
+    require("rwaltr.neorg")
+  end,
+  requires = {"nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope"}})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

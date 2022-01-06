@@ -107,6 +107,7 @@ cmp.setup({
 		end,
 	},
 	sources = cmp.config.sources({
+    { name = "neorg"},
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" }, -- For luasnip users.
 		{
