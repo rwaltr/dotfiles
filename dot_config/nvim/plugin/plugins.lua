@@ -1,7 +1,7 @@
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-	packer_bootstrap = fn.system({
+	PACKER_BOOTSTRAP = fn.system({
 		"git",
 		"clone",
 		"--depth",
@@ -9,20 +9,61 @@ if fn.empty(fn.glob(install_path)) > 0 then
 		"https://github.com/wbthomason/packer.nvim",
 		install_path,
 	})
+	print("Installing packer close and reopen Neovim...")
+	vim.cmd([[packadd packer.nvim]])
+end
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+	return
 end
 
-return require("packer").startup(function(use)
+-- Have packer use a popup window
+packer.init({
+	display = {
+		open_fn = function()
+			return require("packer.util").float({ border = "rounded" })
+		end,
+	},
+})
+
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | silent exec "!chezmoi apply ~/.config/nvim" 
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]])
+
+return packer.startup(function(use)
 	-- My plugins here
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
 
 	-- Colorscheme for WAL
-	-- TODO: Enable addons support
 	use({
 		"oncomouse/lushwal",
-		requires = { { "rktjmp/lush.nvim", opt = true }, { "rktjmp/shipwright.nvim", opt = true } },
+		requires = {
+			{ "rktjmp/lush.nvim", opt = true },
+			{ "rktjmp/shipwright.nvim", opt = true },
+			config = function()
+				require("rwaltr.lushwal")
+			end,
+		},
 	})
+	use("tamago324/nlsp-settings.nvim")
 
+	-- colorscheme from lunarvim
+	use("LunarVim/Colorschemes")
+	use("lunarvim/darkplus.nvim")
+	use("JoosepAlviste/nvim-ts-context-commentstring")
+	-- speed stuff
+	use({
+		"lewis6991/impatient.nvim",
+		config = function()
+			require("impatient").enable_profile()
+		end,
+	})
 	-- Tree explorer
 
 	use({
@@ -31,25 +72,42 @@ return require("packer").startup(function(use)
 			"kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
 		config = function()
-			require("nvim-tree").setup({})
+			require("rwaltr.nvim-tree")
 		end,
 	})
-
+	-- Discord
+	use({
+		"andweeb/presence.nvim",
+		config = function()
+			require("rwaltr.presense")
+		end,
+	})
 	-- Chezmoi Integration
 	use({ "Lilja/vim-chezmoi" })
 	use({ "alker0/chezmoi.vim" })
-
-	-- Vimwiki
-	use({ "vimwiki/vimwiki", opt = true })
 
 	-- Which Key, But better
 	use({
 		"folke/which-key.nvim",
 		config = function()
-			require("which-key").setup({})
+			-- require("which-key").setup({})
+			require("rwaltr.whichkey")
+		end,
+	})
+	use({
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("rwaltr.toggleterm")
 		end,
 	})
 
+	-- Project integration
+	use({
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("rwaltr.project")
+		end,
+	})
 	-- Inline Color preview
 	-- https://github.com/norcalli/nvim-colorizer.lua
 	use({
@@ -64,12 +122,12 @@ return require("packer").startup(function(use)
 		"goolord/alpha-nvim",
 		requires = { "kyazdani42/nvim-web-devicons" },
 		config = function()
-			require("alpha").setup(require("alpha.themes.startify").opts)
+			require("rwaltr.alpha")
 		end,
 	})
-
+	-- Buffer bye
+	use("moll/vim-bbye")
 	-- Git Integration
-	use({ "mhinz/vim-signify" })
 	use({ "tpope/vim-fugitive", requires = { "tpope/vim-rhubarb" } })
 	use({ "junegunn/gv.vim", requires = { "tpope/vim-fugitive" } })
 	use({
@@ -78,12 +136,19 @@ return require("packer").startup(function(use)
 			"nvim-lua/plenary.nvim",
 		},
 		config = function()
-			require("gitsigns").setup()
+			require("rwaltr.gitsigns")
 		end,
 	})
 	-- Tmux easypane
 	use({ "christoomey/vim-tmux-navigator" })
 
+	-- -- WebBrowser funness
+	-- use({
+	-- 	"glacambre/firenvim",
+	-- 	run = function()
+	-- 		vim.fn["firenvim#install"](0)
+	-- 	end,
+	-- })
 	-- NORD
 	use({ "arcticicestudio/nord-vim" })
 
@@ -91,7 +156,7 @@ return require("packer").startup(function(use)
 	use({
 		"numToStr/Comment.nvim",
 		config = function()
-			require("Comment").setup()
+			require("rwaltr.comment")
 		end,
 	})
 
@@ -99,46 +164,39 @@ return require("packer").startup(function(use)
 	use({
 		"windwp/nvim-autopairs",
 		config = function()
-			require("nvim-autopairs").setup({})
+			require("rwaltr.autopairs")
 		end,
 	})
 
 	-- LSPConfig
 	use("neovim/nvim-lspconfig")
 
-	-- TODO: Setup lspsaga
-	use({
-		"tami5/lspsaga.nvim",
-		config = function()
-			require("lspsaga").init_lsp_saga()
-		end,
-	})
-
-	-- TODO: comment highlighting
 	use({
 		"folke/todo-comments.nvim",
 		config = function()
-			require("todo-comments").setup()
+			require("rwaltr.todo")
 		end,
 	})
 
 	-- Blank line Indenting
-	use("lukas-reineke/indent-blankline.nvim")
+	use({
+		"lukas-reineke/indent-blankline.nvim",
+		config = function()
+			require("rwaltr.indentline")
+		end,
+	})
 
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 		config = function()
-			require("config.nvim-treesitter")
+			require("rwaltr.nvim-treesitter")
 		end,
 	})
 
 	-- LspInstall
 	use({
 		"williamboman/nvim-lsp-installer",
-		config = function()
-			require("config.lspinstall")
-		end,
 	})
 
 	-- colors for LSP that doesnt have current theme
@@ -149,27 +207,38 @@ return require("packer").startup(function(use)
 	use({
 		"hrsh7th/nvim-cmp",
 		config = function()
-			require("config.cmp_config")
+			require("rwaltr.cmp_config")
 		end,
 		requires = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-vsnip",
-			"hrsh7th/vim-vsnip",
+			"saadparwaiz1/cmp_luasnip",
 		},
 	})
+
+	-- Bufferlines
+	use({
+		"akinsho/bufferline.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("rwaltr.bufferline")
+		end,
+	})
+
+	-- snippets
+	use("L3MON4D3/LuaSnip") --snippet engine
+	use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
 	-- TELESCOPIC
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
-			config = function()
-				require("telescope").setup({})
-			end,
 		},
-		commit = "80cdb00b221f69348afc4fb4b701f51eb8dd3120",
+		config = function()
+			require("rwaltr.telescope")
+		end,
 	})
 
 	use({
@@ -187,7 +256,7 @@ return require("packer").startup(function(use)
 	use({
 		"nvim-lualine/lualine.nvim",
 		config = function()
-			require("lualine").setup()
+			require("rwaltr.lualine")
 		end,
 	})
 
@@ -201,18 +270,19 @@ return require("packer").startup(function(use)
 
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
-		config = function()
-			require("config.nullls")
-		end,
 	})
 
-	-- neorg
-	-- TODO:Setup Neorg
-	use({ "nvim-neorg/neorg" })
+	use({
+		"nvim-neorg/neorg",
+		config = function()
+			require("rwaltr.neorg")
+		end,
+		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
-	if packer_bootstrap then
+	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
 end)

@@ -30,9 +30,11 @@ assign [class="^Signal$"] $ws3
 assign [class="^Riot$"] $ws3
 
 # Set custom workspaces locations
-{{ if eq .chezmoi.hostname "monolith" -}}
-# TODO: make workspaces monitor based and not edpi based
-workspace $ws3 output $leftmon 
+{{ if eq .battlestation true -}}
+workspace $ws4 output $leftmon 
+workspace $ws9 output $leftmon 
 workspace $ws1 output $midmon
-workspace $ws2 output $rightmon 
+workspace $ws2 output $midmon
+workspace $ws5 output $midmon
+workspace $ws3 output $rightmon 
 {{ end -}}
