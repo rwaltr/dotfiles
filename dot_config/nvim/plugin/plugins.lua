@@ -75,7 +75,13 @@ return packer.startup(function(use)
 			require("rwaltr.nvim-tree")
 		end,
 	})
-
+	-- Discord
+	use({
+		"andweeb/presence.nvim",
+		config = function()
+			require("rwaltr.presense")
+		end,
+	})
 	-- Chezmoi Integration
 	use({ "Lilja/vim-chezmoi" })
 	use({ "alker0/chezmoi.vim" })
@@ -136,6 +142,13 @@ return packer.startup(function(use)
 	-- Tmux easypane
 	use({ "christoomey/vim-tmux-navigator" })
 
+	-- -- WebBrowser funness
+	-- use({
+	-- 	"glacambre/firenvim",
+	-- 	run = function()
+	-- 		vim.fn["firenvim#install"](0)
+	-- 	end,
+	-- })
 	-- NORD
 	use({ "arcticicestudio/nord-vim" })
 

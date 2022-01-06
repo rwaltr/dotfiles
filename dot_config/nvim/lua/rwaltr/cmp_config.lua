@@ -107,9 +107,9 @@ cmp.setup({
 		end,
 	},
 	sources = cmp.config.sources({
-		{ name = "neorg" },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" }, -- For luasnip users.
+		{ name = "spell" },
 		{
 			name = "buffer",
 			option = {
@@ -119,6 +119,7 @@ cmp.setup({
 			},
 		},
 		{ name = "path" },
+		{ name = "neorg" },
 	}),
 })
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
