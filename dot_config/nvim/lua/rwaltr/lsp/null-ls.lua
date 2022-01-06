@@ -17,6 +17,7 @@ null_ls.setup({
 		formatting.stylua,
 		formatting.shfmt,
 		diagnostics.codespell,
+		formatting.codespell,
 		diagnostics.shellcheck,
 		diagnostics.yamllint,
 		diagnostics.proselint,

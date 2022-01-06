@@ -52,7 +52,12 @@ return packer.startup(function(use)
 		},
 	})
 	use("tamago324/nlsp-settings.nvim")
-
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			require("rwaltr.notify")
+		end,
+	})
 	-- colorscheme from lunarvim
 	use("LunarVim/Colorschemes")
 	use("lunarvim/darkplus.nvim")
@@ -79,7 +84,7 @@ return packer.startup(function(use)
 	use({
 		"andweeb/presence.nvim",
 		config = function()
-			require("rwaltr.presense")
+			require("rwaltr.presence")
 		end,
 	})
 	-- Chezmoi Integration
@@ -100,7 +105,18 @@ return packer.startup(function(use)
 			require("rwaltr.toggleterm")
 		end,
 	})
-
+	-- Github fanciness
+	use({
+		"pwntester/octo.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"kyazdani42/nvim-web-devicons",
+		},
+		config = function()
+			require("rwaltr.octo")
+		end,
+	})
 	-- Project integration
 	use({
 		"ahmedkhalf/project.nvim",
@@ -199,7 +215,7 @@ return packer.startup(function(use)
 		"williamboman/nvim-lsp-installer",
 	})
 
-	-- colors for LSP that doesnt have current theme
+	-- colors for LSP that does not have current theme
 	use("folke/lsp-colors.nvim")
 	use("kyazdani42/nvim-web-devicons")
 
