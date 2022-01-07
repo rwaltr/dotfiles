@@ -23,7 +23,7 @@ null_ls.setup({
 		diagnostics.yamllint,
 		diagnostics.proselint,
 		code_actions.shellcheck,
-		hover.dictionary,
+		-- hover.dictionary,
 		-- diagnostics.flake8
 		code_actions.gitsigns,
 	},
