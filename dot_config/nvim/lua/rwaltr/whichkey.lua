@@ -95,6 +95,7 @@ local mappings = {
 	},
 	["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
+	["T"] = { "<cmd>TroubleToggle<cr>", "Trouble" },
 
 	p = {
 		name = "Packer",
@@ -170,7 +171,8 @@ local mappings = {
 		R = { "<cmd>Telescope registers<cr>", "Registers" },
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
-		t = { "<cmd>TodoTelescope<cr>", "Todo tags" },
+		t = { "<cmd>TodoTelescope<cr>", "Todo Search" },
+		T = { "<cmd>TodoTrouble<cr>", "Todo Trouble" },
 		n = { "<cmd>Telescope notify<cr>", "Notification History" },
 	},
 
