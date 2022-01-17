@@ -5,9 +5,9 @@ set $ws2   2:
 set $ws3   3:
 set $ws4   4:
 set $ws5   5:
-set $ws6   6:6
-set $ws7   7:7
-set $ws8   8:8
+set $ws6   6:
+set $ws7   7:
+set $ws8   8:
 set $ws9   9:
 set $ws10  10:
 # Assign program to workspace
@@ -16,6 +16,7 @@ assign [class="Firefox"] $ws2
 assign [class="firefox"] $ws2
 assign [app_id="firefox"] $ws2
 assign [class="^Chromium$"] $ws2
+assign [class="^Chrome$"] $ws2
 # Editors
 assign [class="^code-oss$"] $ws5
 assign [class="libreoffice"] $ws5
@@ -28,13 +29,20 @@ assign [class="discord"] $ws3
 assign [class="Microsoft Teams*"] $ws3
 assign [class="^Signal$"] $ws3
 assign [class="^Riot$"] $ws3
-
+#Game Clients
+assign [class="^Steam$"] $ws6
 # Set custom workspaces locations
 {{ if eq .battlestation true -}}
+# Left Monitor
 workspace $ws4 output $leftmon 
+workspace $ws6 output $leftmon 
 workspace $ws9 output $leftmon 
+# Mid Monitor
 workspace $ws1 output $midmon
 workspace $ws2 output $midmon
 workspace $ws5 output $midmon
+workspace $ws7 output $midmon
+# Right Monitor
 workspace $ws3 output $rightmon 
+workspace $ws8 output $rightmon 
 {{ end -}}
