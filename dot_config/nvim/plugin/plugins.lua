@@ -145,8 +145,8 @@ return packer.startup(function(use)
 	-- Buffer bye
 	use("moll/vim-bbye")
 	-- Git Integration
-	-- use({ "tpope/vim-fugitive", requires = { "tpope/vim-rhubarb" } })
-	-- use({ "junegunn/gv.vim", requires = { "tpope/vim-fugitive" } })
+	use({ "tpope/vim-fugitive", requires = { "tpope/vim-rhubarb" } })
+	use({ "junegunn/gv.vim", requires = { "tpope/vim-fugitive" } })
 	use({
 		"lewis6991/gitsigns.nvim",
 		requires = {
