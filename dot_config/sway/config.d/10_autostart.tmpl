@@ -12,3 +12,9 @@ exec autotiling
 
 # Gammastep
 exec gammastep-indicator -l $(curl https://location.services.mozilla.com/v1/geolocate?key=geoclue | jq -r  '.location | join(":")')
+
+
+
+
+# Window Focus
+exec swaymsg focus output $ws2 
