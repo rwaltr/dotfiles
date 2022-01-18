@@ -156,7 +156,7 @@ return packer.startup(function(use)
 		end,
 	})
 	-- Tmux easypane
-  -- TODO: Replace with better Tmux navigator
+	-- TODO: Replace with better Tmux navigator
 	use({ "christoomey/vim-tmux-navigator" })
 
 	-- -- WebBrowser funness
@@ -288,6 +288,9 @@ return packer.startup(function(use)
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
 	})
+
+	-- Sneeky sneeky
+	use("ggandor/lightspeed.nvim")
 
 	use({
 		"nvim-neorg/neorg",
