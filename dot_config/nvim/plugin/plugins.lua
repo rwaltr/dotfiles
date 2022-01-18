@@ -132,8 +132,7 @@ return packer.startup(function(use)
 			require("colorizer").setup()
 		end,
 	})
-	-- Sneeky sneeky
-	use("ggandor/lightspeed.nvim")
+
 	-- Startpage
 	use({
 		"goolord/alpha-nvim",
@@ -290,13 +289,13 @@ return packer.startup(function(use)
 		"jose-elias-alvarez/null-ls.nvim",
 	})
 
-	-- use({
-	-- 	"nvim-neorg/neorg",
-	-- 	config = function()
-	-- 		require("rwaltr.neorg")
-	-- 	end,
-	-- 	requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
-	-- })
+	use({
+		"nvim-neorg/neorg",
+		config = function()
+			require("rwaltr.neorg")
+		end,
+		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
