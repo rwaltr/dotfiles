@@ -30,6 +30,7 @@ packer.init({
 vim.cmd([[
   augroup packer_user_config
     autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | lua vim.notify("Applying Chezmoi")
     autocmd BufWritePost plugins.lua source <afile> | silent exec "!chezmoi apply ~/.config/nvim" 
     autocmd BufWritePost plugins.lua source <afile> | PackerSync
   augroup end
