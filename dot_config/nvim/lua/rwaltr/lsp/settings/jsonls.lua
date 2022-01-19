@@ -11,7 +11,7 @@ end
 -- 		url = "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
 -- 	},
 -- }
-local schemas = vim.list_extend(require("schemastore").json.schemas())
+local schemas = require("schemastore").json.schemas()
 
 local function extend(tab1, tab2)
 	for _, value in ipairs(tab2) do

@@ -217,7 +217,7 @@ return packer.startup(function(use)
 		"williamboman/nvim-lsp-installer",
 	})
 
-	-- colors for LSP that does not have current theme
+	-- colors for LSP that does not have current
 	use("folke/lsp-colors.nvim")
 	use("kyazdani42/nvim-web-devicons")
 
@@ -266,13 +266,13 @@ return packer.startup(function(use)
 			require("rwaltr.lsp.signature")
 		end,
 	})
-	use({
-		"kosayoda/nvim-lightbulb",
-		config = function()
-			require("rwaltr.lightbulb")
-		end,
-	})
-
+	-- use({
+	-- 	"kosayoda/nvim-lightbulb",
+	-- 	config = function()
+	-- 		require("rwaltr.lightbulb")
+	-- 	end,
+	-- })
+	--
 	use({
 		"nvim-telescope/telescope-fzf-native.nvim",
 		run = "make",
