@@ -258,6 +258,20 @@ return packer.startup(function(use)
 			require("rwaltr.telescope")
 		end,
 	})
+	-- schemastore
+	use("b0o/schemastore.nvim")
+	use({
+		"ray-x/lsp_signature.nvim",
+		config = function()
+			require("rwaltr.lsp.signature")
+		end,
+	})
+	use({
+		"kosayoda/nvim-lightbulb",
+		config = function()
+			require("rwaltr.lightbulb")
+		end,
+	})
 
 	use({
 		"nvim-telescope/telescope-fzf-native.nvim",
