@@ -133,7 +133,13 @@ return packer.startup(function(use)
 			require("colorizer").setup()
 		end,
 	})
-
+-- use({
+-- 		"AlphaTechnolog/pywal.nvim",
+-- 		as = "pywal",
+-- 		config = function()
+-- 			require("pywal").setup()
+-- 		end,
+-- 	})
 	-- Startpage
 	use({
 		"goolord/alpha-nvim",
