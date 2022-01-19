@@ -37,48 +37,100 @@ vim.cmd([[
 ]])
 
 return packer.startup(function(use)
-	-- My plugins here
 	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
 
-	-- Colorscheme for WAL
+	-------------------------------------------------
+	-- Telescope
+	-- TELESCOPIC
 	use({
-		"oncomouse/lushwal",
+		"nvim-telescope/telescope.nvim",
 		requires = {
-			{ "rktjmp/lush.nvim", opt = true },
-			{ "rktjmp/shipwright.nvim", opt = true },
-			config = function()
-				require("rwaltr.lushwal")
-			end,
+			{ "nvim-lua/plenary.nvim" },
 		},
-	})
-	use("tamago324/nlsp-settings.nvim")
-	use({
-		"rcarriga/nvim-notify",
 		config = function()
-			require("rwaltr.notify")
+			require("rwaltr.telescope")
 		end,
 	})
-	-- colorscheme from lunarvim
-	use("LunarVim/Colorschemes")
-	use("lunarvim/darkplus.nvim")
+	use({
+		"nvim-telescope/telescope-fzf-native.nvim",
+		run = "make",
+		requires = "nvim-telescope/telescope.nvim",
+		config = function()
+			require("telescope").load_extension("fzf")
+		end,
+	})
+	------------------------------------------
+	-------------------------------------------------
+	-- Treesitter
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+		config = function()
+			require("rwaltr.nvim-treesitter")
+		end,
+	})
 	use("JoosepAlviste/nvim-ts-context-commentstring")
-	-- speed stuff
+	------------------------------------------
+	-- LSP
+
+	-- LSPConfig
+	use("neovim/nvim-lspconfig")
+
+	-- LspInstall
 	use({
-		"lewis6991/impatient.nvim",
+		"williamboman/nvim-lsp-installer",
+	})
+	-- LSP for non LSP items
+	use({
+		"jose-elias-alvarez/null-ls.nvim",
+	})
+	-- colors for LSP that does not have current
+	use("folke/lsp-colors.nvim")
+
+	-- LSP Information
+	use({
+		"ray-x/lsp_signature.nvim",
 		config = function()
-			require("impatient").enable_profile()
+			require("rwaltr.lsp.signature")
 		end,
 	})
-	-- Tree explorer
+	-- Json enabled lsp settings
+	use("tamago324/nlsp-settings.nvim")
+
+	------------------------------------------
+	-- Autocompletion
 
 	use({
-		"kyazdani42/nvim-tree.lua",
-		requires = {
-			"kyazdani42/nvim-web-devicons", -- optional, for file icon
-		},
+		"hrsh7th/nvim-cmp",
 		config = function()
-			require("rwaltr.nvim-tree")
+			require("rwaltr.cmp_config")
+		end,
+		requires = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"saadparwaiz1/cmp_luasnip",
+		},
+	})
+	-----------------------------------------
+	-- Snippits
+
+	-- Snippit Engine
+	use("L3MON4D3/LuaSnip")
+	-- Premade Snippits
+	use("rafamadriz/friendly-snippets")
+
+	------------------------------------------
+	-- Miscs
+
+	-- Startpage
+	use({
+		"goolord/alpha-nvim",
+		requires = { "kyazdani42/nvim-web-devicons" },
+		config = function()
+			require("rwaltr.alpha")
 		end,
 	})
 	-- Discord
@@ -86,6 +138,99 @@ return packer.startup(function(use)
 		"andweeb/presence.nvim",
 		config = function()
 			require("rwaltr.presence")
+		end,
+	})
+
+	-- Buffer bye
+	use("moll/vim-bbye")
+
+	-- Project integration
+	use({
+		"ahmedkhalf/project.nvim",
+		config = function()
+			require("rwaltr.project")
+		end,
+	})
+
+	-- Inline Color preview
+	-- https://github.com/norcalli/nvim-colorizer.lua
+	use({
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup()
+		end,
+	})
+
+	-- Tmux easypane
+	-- TODO: Replace with better Tmux navigator
+	use({ "christoomey/vim-tmux-navigator" })
+	-- Highlight TODO comments
+	use({
+		"folke/todo-comments.nvim",
+		config = function()
+			require("rwaltr.todo")
+		end,
+	})
+
+	-- Indenting Guides
+	use({
+		"lukas-reineke/indent-blankline.nvim",
+		config = function()
+			require("rwaltr.indentline")
+		end,
+	})
+
+	-- Bufferlines
+	use({
+		"akinsho/bufferline.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("rwaltr.bufferline")
+		end,
+	})
+	use("nvim-lua/popup.nvim")
+	-- StatusLine
+	use({
+		"nvim-lualine/lualine.nvim",
+		config = function()
+			require("rwaltr.lualine")
+		end,
+	})
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup({})
+		end,
+	})
+	-- Sneeky sneeky
+	use("ggandor/lightspeed.nvim")
+
+	use({
+		"nvim-neorg/neorg",
+		config = function()
+			require("rwaltr.neorg")
+		end,
+		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
+	})
+	-- -- WebBrowser funness
+	-- use({
+	-- 	"glacambre/firenvim",
+	-- 	run = function()
+	-- 		vim.fn["firenvim#install"](0)
+	-- 	end,
+	-- })
+
+	-- Github fanciness
+	use({
+		"pwntester/octo.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"kyazdani42/nvim-web-devicons",
+		},
+		config = function()
+			require("rwaltr.octo")
 		end,
 	})
 	-- Chezmoi Integration
@@ -106,51 +251,67 @@ return packer.startup(function(use)
 			require("rwaltr.toggleterm")
 		end,
 	})
-	-- Github fanciness
+
+	-- Tree explorer
+
 	use({
-		"pwntester/octo.nvim",
+		"kyazdani42/nvim-tree.lua",
 		requires = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-			"kyazdani42/nvim-web-devicons",
+			"kyazdani42/nvim-web-devicons", -- optional, for file icon
 		},
 		config = function()
-			require("rwaltr.octo")
+			require("rwaltr.nvim-tree")
 		end,
 	})
-	-- Project integration
+	-- speed stuff
 	use({
-		"ahmedkhalf/project.nvim",
+		"lewis6991/impatient.nvim",
 		config = function()
-			require("rwaltr.project")
+			require("impatient").enable_profile()
 		end,
 	})
-	-- Inline Color preview
-	-- https://github.com/norcalli/nvim-colorizer.lua
 	use({
-		"norcalli/nvim-colorizer.lua",
+		"rcarriga/nvim-notify",
 		config = function()
-			require("colorizer").setup()
+			require("rwaltr.notify")
 		end,
 	})
--- use({
--- 		"AlphaTechnolog/pywal.nvim",
--- 		as = "pywal",
--- 		config = function()
--- 			require("pywal").setup()
--- 		end,
--- 	})
-	-- Startpage
+
+	use("kyazdani42/nvim-web-devicons")
+
+	-- Colorscheme for WAL
 	use({
-		"goolord/alpha-nvim",
-		requires = { "kyazdani42/nvim-web-devicons" },
-		config = function()
-			require("rwaltr.alpha")
-		end,
+		"oncomouse/lushwal",
+		requires = {
+			{ "rktjmp/lush.nvim", opt = true },
+			{ "rktjmp/shipwright.nvim", opt = true },
+			config = function()
+				require("rwaltr.lushwal")
+			end,
+		},
 	})
-	-- Buffer bye
-	use("moll/vim-bbye")
-	-- Git Integration
+
+	-- colorscheme from lunarvim
+	use("LunarVim/Colorschemes")
+	use("lunarvim/darkplus.nvim")
+	-- use({
+	-- 		"AlphaTechnolog/pywal.nvim",
+	-- 		as = "pywal",
+	-- 		config = function()
+	-- 			require("pywal").setup()
+	-- 		end,
+	-- 	})
+	-- use({
+	-- 	"kosayoda/nvim-lightbulb",
+	-- 	config = function()
+	-- 		require("rwaltr.lightbulb")
+	-- 	end,
+	-- })
+	--
+	-- schemastore
+	use("b0o/schemastore.nvim")
+	------------------------------------------
+	-- Git
 	use({ "tpope/vim-fugitive", requires = { "tpope/vim-rhubarb" } })
 	use({ "junegunn/gv.vim", requires = { "tpope/vim-fugitive" } })
 	use({
@@ -162,20 +323,9 @@ return packer.startup(function(use)
 			require("rwaltr.gitsigns")
 		end,
 	})
-	-- Tmux easypane
-	-- TODO: Replace with better Tmux navigator
-	use({ "christoomey/vim-tmux-navigator" })
-
-	-- -- WebBrowser funness
-	-- use({
-	-- 	"glacambre/firenvim",
-	-- 	run = function()
-	-- 		vim.fn["firenvim#install"](0)
-	-- 	end,
-	-- })
-	-- NORD
-	use({ "arcticicestudio/nord-vim" })
-
+	------------------------------------------
+	------------------------------------------
+	-- Editing
 	-- New Commenting Plugin
 	use({
 		"numToStr/Comment.nvim",
@@ -191,136 +341,7 @@ return packer.startup(function(use)
 			require("rwaltr.autopairs")
 		end,
 	})
-
-	-- LSPConfig
-	use("neovim/nvim-lspconfig")
-
-	use({
-		"folke/todo-comments.nvim",
-		config = function()
-			require("rwaltr.todo")
-		end,
-	})
-
-	-- Blank line Indenting
-	use({
-		"lukas-reineke/indent-blankline.nvim",
-		config = function()
-			require("rwaltr.indentline")
-		end,
-	})
-
-	use({
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-		config = function()
-			require("rwaltr.nvim-treesitter")
-		end,
-	})
-
-	-- LspInstall
-	use({
-		"williamboman/nvim-lsp-installer",
-	})
-
-	-- colors for LSP that does not have current
-	use("folke/lsp-colors.nvim")
-	use("kyazdani42/nvim-web-devicons")
-
-	-- autocompletion
-	use({
-		"hrsh7th/nvim-cmp",
-		config = function()
-			require("rwaltr.cmp_config")
-		end,
-		requires = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
-			"saadparwaiz1/cmp_luasnip",
-		},
-	})
-
-	-- Bufferlines
-	use({
-		"akinsho/bufferline.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("rwaltr.bufferline")
-		end,
-	})
-
-	-- snippets
-	use("L3MON4D3/LuaSnip") --snippet engine
-	use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
-	-- TELESCOPIC
-	use({
-		"nvim-telescope/telescope.nvim",
-		requires = {
-			{ "nvim-lua/plenary.nvim" },
-		},
-		config = function()
-			require("rwaltr.telescope")
-		end,
-	})
-	-- schemastore
-	use("b0o/schemastore.nvim")
-	use({
-		"ray-x/lsp_signature.nvim",
-		config = function()
-			require("rwaltr.lsp.signature")
-		end,
-	})
-	-- use({
-	-- 	"kosayoda/nvim-lightbulb",
-	-- 	config = function()
-	-- 		require("rwaltr.lightbulb")
-	-- 	end,
-	-- })
-	--
-	use({
-		"nvim-telescope/telescope-fzf-native.nvim",
-		run = "make",
-		requires = "nvim-telescope/telescope.nvim",
-		config = function()
-			require("telescope").load_extension("fzf")
-		end,
-	})
-
-	use("nvim-lua/popup.nvim")
-
-	-- StatusLine
-	use({
-		"nvim-lualine/lualine.nvim",
-		config = function()
-			require("rwaltr.lualine")
-		end,
-	})
-
-	use({
-		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("trouble").setup({})
-		end,
-	})
-
-	use({
-		"jose-elias-alvarez/null-ls.nvim",
-	})
-
-	-- Sneeky sneeky
-	use("ggandor/lightspeed.nvim")
-
-	use({
-		"nvim-neorg/neorg",
-		config = function()
-			require("rwaltr.neorg")
-		end,
-		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
-	})
-
+	------------------------------------------
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
