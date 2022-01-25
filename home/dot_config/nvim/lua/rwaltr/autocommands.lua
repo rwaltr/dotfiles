@@ -12,3 +12,18 @@ vim.cmd([[
   augroup end
 ]])
 
+vim.cmd([[
+ augroup end
+ augroup _chezmoi
+  autocmd!
+  autocmd BufWritePost ~/.local/share/chezmoi/* | !chezmoi apply --source-path "%" 
+ augroup end
+]])
+
+vim.cmd([[
+ augroup end
+ augroup _neovimconfig
+  autocmd!
+  autocmd BufWritePost ~/.local/share/chezmoi/home/dot_config/nvim/* | source $MYVIMRC
+ augroup end
+]])
