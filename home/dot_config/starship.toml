@@ -2,6 +2,12 @@
 add_newline = false
 
 
+[shell]
+fish_indicator = ""
+powershell_indicator = ""
+bash_indicator = "_"
+style = "red bold"
+disabled = false
 
 [hostname]
 disabled = false
