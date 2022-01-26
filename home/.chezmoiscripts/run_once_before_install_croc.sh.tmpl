@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+
+curl https://getcroc.schollz.com | bash
+
+{{- end }}

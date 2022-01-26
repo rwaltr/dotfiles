@@ -2,9 +2,9 @@
 #!/bin/sh
 
 
-# Install Fedora Packages
 {{ if eq .chezmoi.osRelease.id "fedora" -}}
 
+# Install Fedora Packages
 sudo dnf copr enable atim/lazygit -y
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf config-manager --add-repo \
@@ -59,51 +59,6 @@ libffi-devel
 sudo dnf groupinstall -y "C Development Tools and Libraries"
 
 
-# install helm
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# install croc
-curl https://getcroc.schollz.com | bash
-
-# install viddy
-TMPDIR=$(mktemp -d)
-cd $TMPDIR
-wget -O viddy.tar.gz https://github.com/sachaos/viddy/releases/download/v0.3.2/viddy_0.3.2_Linux_x86_64.tar.gz && tar xf viddy.tar.gz && sudo mv viddy /usr/local/bin
-
-# Install Kubie
-curl -O kubie https://github.com/sbstp/kubie/releases/download/v0.15.3/kubie-linux-amd64
-mv kubie ~/.local/bin
-
-# Install krew
-
-(
-  set -x; cd "$(mktemp -d)" &&
-  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
-  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-  KREW="krew-${OS}_${ARCH}" &&
-  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
-  tar zxvf "${KREW}.tar.gz" &&
-  ./"${KREW}" install krew
-)
-
-#Install Helm
-curl https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz | mbuffer | tar -xzvf -
-mv $(fd helm) ~/.local/bin
-
-#Install K9s
-curl -L https://github.com/derailed/k9s/releases/download/v0.25.8/k9s_Linux_x86_64.tar.gz > k9s.tar.gz
-tar -xvf k9s.tar.gz
-rm k9s.tar.gz
-mv $(fd k9s) ~/.local/bin
-cd -
-rm -rf $TMPDIR
-
-
-sh -c "$(curl -fsSL https://starship.rs/install.sh)"
-
-
-pip install autotiling
-pip install pywal
 {{- end }}
 
 # TODO: Install Termux packages

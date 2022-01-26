@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+
+sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+
+{{- end }}
