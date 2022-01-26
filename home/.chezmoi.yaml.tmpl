@@ -1,20 +1,87 @@
-{{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
-{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{/* boolean feature tags */}}
 {{- $battlestation := false -}}{{/* true if this machine does not have a screen and keyboard */}}
-{{- $city := "KATX" -}}{{/* city inputs for weather */}}
-{{- $work := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
-{{- $personal = promptBool "personal" -}}
-{{- $work = promptBool "work" -}}
-{{- $battlestation = promptBool "Battlestation" -}}
+{{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
+{{- $work := false -}}{{/* true if this machine should have work secrets from BitWarden */}}
+{{- $kubernetes := false -}}{{/* Kubernetes */}}
+
+{{/* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "vagrant" "vscode") -}}
+{{-   $headless = true -}}
+{{-   $ephemeral = true -}}
+{{- end -}}
+
+{{- if eq .chezmoi.os "windows" -}}
+{{-   $ephemeral = true -}}
+{{- end -}}
+
+{{- $hostname := .chezmoi.hostname -}}
+{{- if not $ephemeral -}}
+{{-    if eq $hostname "monolith" -}}
+{{-     $headless = false -}}
+{{-     $personal = true -}}
+{{-     $kubernetes = true -}}
+{{-     $battlestation = true -}}
+
+{{-   else if eq $hostname "teletran1" -}}
+{{-     $headless = false -}}
+{{-     $work = true -}}
+{{-     $kubernetes = true -}}
+
+{{-   else if stdinIsATTY -}}
+
+{{-     if hasKey . "headless" -}}
+{{-       $headless = .headless -}}
+{{-     else -}}
+{{-       $headless = promptBool "headless" -}}
+{{-     end -}}
+
+{{-     if hasKey . "personal" -}}
+{{-       $personal = .personal -}}
+{{-     else -}}
+{{-       $personal = promptBool "personal" -}}
+{{-     end -}}
+
+{{-     if hasKey . "work" -}}
+{{-       $work = .work -}}
+{{-     else -}}
+{{-       $work = promptBool "work" -}}
+{{-     end -}}
+
+{{-     if hasKey . "ephemeral" -}}
+{{-       $ephemeral = .ephemeral -}}
+{{-     else -}}
+{{-       $ephemeral = promptBool "ephemeral" -}}
+{{-     end -}}
+
+{{-     if hasKey . "kubernetes" -}}
+{{-       $kubernetes = .kubernetes -}}
+{{-     else -}}
+{{-       $kubernetes = promptBool "kubernetes" -}}
+{{-     end -}}
+
+{{-     if hasKey . "battlestation" -}}
+{{-       $battlestation = .battlestation -}}
+{{-     else -}}
+{{-       $battlestation = promptBool "battlestation" -}}
+{{-     end -}}
+
+{{-   else -}}
+{{-     $headless = true -}}
+{{-     $ephemeral = true -}}
+{{-   end -}}
+{{- end -}}
 
 data:
   name: "Ryan Walter"
   email: "rwalt@pm.me"
   personal: {{ $personal }}
   specialsound: false
-  city: "{{ $city }}"
   work: {{ $work }}
   battlestation: {{ $battlestation }}
+  kubernetes: {{ $kubernetes }}
+  ephemeral: {{ $ephemeral }}
   mpd:
     enabled: false
     server: localhost
