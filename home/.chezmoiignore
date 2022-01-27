@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.headless true -}}
+.config/sway
+.config/swaylock
+.config/mpv
+.local/share/applications
+{{- end -}}

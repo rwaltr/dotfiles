@@ -1,0 +1,4 @@
+{{- if eq .chezmoi.headless true -}}
+#!/bin/bash
+fc-cache -vf "~/.local/share/fonts"
+{{- end -}}
