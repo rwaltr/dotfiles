@@ -119,7 +119,6 @@ cmp.setup({
 			},
 		},
 		{ name = "path" },
-		{ name = "neorg" },
 	}),
 })
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).

@@ -205,13 +205,6 @@ return packer.startup(function(use)
 	-- Sneeky sneeky
 	use("ggandor/lightspeed.nvim")
 
-	use({
-		"nvim-neorg/neorg",
-		config = function()
-			require("rwaltr.neorg")
-		end,
-		requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
-	})
 	-- -- WebBrowser funness
 	-- use({
 	-- 	"glacambre/firenvim",
