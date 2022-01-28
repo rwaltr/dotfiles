@@ -11,12 +11,45 @@
     // Global configuration
     // -------------------------------------------------------------------------
 
+{{- if eq .battlestation true -}}
     "layer": "top",
 
     "position": "top",
 
     // If height property would be not present, it'd be calculated dynamically
-    "height": 30,
+    "height": 10,
+
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-center": [
+    ],
+    "modules-right": [
+        "sway/window",
+        "network",
+				{{- if eq .mpd.enabled true -}}
+        "mpd",
+				{{- end }}
+        /* "memory", */
+        /* "cpu", */
+        /* "temperature", */
+        "idle_inhibitor",
+        "pulseaudio",
+        /* "battery", */
+        "tray",
+        "clock#time",
+        "clock#date"
+    ],
+{{- else -}}
+    "layer": "top",
+
+    "position": "top",
+
+    // If height property would be not present, it'd be calculated dynamically
+    "height": 10,
+
 
     "modules-left": [
         "sway/workspaces",
@@ -30,9 +63,9 @@
 				{{- if eq .mpd.enabled true -}}
         "mpd",
 				{{- end }}
-        "memory",
-        "cpu",
-        "temperature",
+        /* "memory", */
+        /* "cpu", */
+        /* "temperature", */
         "idle_inhibitor",
         "pulseaudio",
         "battery",
@@ -40,6 +73,7 @@
         "clock#time",
         "clock#date"
     ],
+{{- end -}}
 
 
     // -------------------------------------------------------------------------
