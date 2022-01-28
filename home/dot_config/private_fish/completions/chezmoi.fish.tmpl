@@ -1,0 +1,4 @@
+{{- if lookPath "chezmoi" -}}
+alias chez chezmoi
+{{- output "chezmoi" "completion" "fish" | trim -}}
+{{- end -}}
