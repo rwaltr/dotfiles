@@ -2,7 +2,7 @@
 # Force kubie to use a particular shell, if unset detect shell currently in use.
 # Possible values: bash, dash, fish, zsh
 # Default: unset
-shell: bash
+# shell: bash
 
 # Configure where to look for kubernetes config files.
 configs:
