@@ -4,6 +4,6 @@ if status is-interactive
 bass eval (gnome-keyring-daemon --start)
 export SSH_AUTH_SOCK
   end
-fish_add_path ~/.local/bin
-fish_add_path ~/bin
+set -gx CDPATH ".:~:~/src/rwaltr:~/src/"
+fish_vi_key_bindings
 end
