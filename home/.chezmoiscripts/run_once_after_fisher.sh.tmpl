@@ -1,5 +1,5 @@
 {{- if (lookPath "fish") -}}
-#!/usr/bin/fish
+#!{{ lookPath "fish" }}
 {{- if (not (stat (joinPath .chezmoi.homeDir ".config/fish/functions/fisher.fish"))) }}
 # https://github.com/twpayne/chezmoi/issues/1306
 curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher

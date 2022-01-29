@@ -1,6 +1,6 @@
 {{- if eq .chezmoi.os "linux" -}}
-#!/bin/sh
+#!{{ lookPath "sh"}}
 
-sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y
 
 {{- end }}
