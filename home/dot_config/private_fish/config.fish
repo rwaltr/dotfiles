@@ -5,6 +5,7 @@ bass eval (gnome-keyring-daemon --start)
 export SSH_AUTH_SOCK
   end
 set -gx CDPATH ".:~:~/src/rwaltr:~/src/"
-fish_vi_key_bindings
 set -gx HISTSIZE 10000
+fish_vi_key_bindings
+set -U fish_greeting
 end

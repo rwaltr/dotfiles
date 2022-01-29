@@ -80,7 +80,7 @@ cursor:
 live_config_reload: true
 
 shell:
-  program: bash
+  program: fish
   args:
     - --login
 
