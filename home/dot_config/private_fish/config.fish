@@ -2,7 +2,8 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
   if type -q gnome-keyring-daemon 
 bass eval (gnome-keyring-daemon --start)
-bass export SSH_AUTH_SOCK
+set -Ux SSH_AGENT_PID $SSH_AGENT_PID
+set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
   end
 set -gx CDPATH ".:~:~/src/rwaltr:~/src/"
 set -gx HISTSIZE 10000
