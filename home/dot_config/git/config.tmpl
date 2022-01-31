@@ -5,7 +5,7 @@ email = {{ .email }}
 {{ if eq .personal true -}}
 signingkey = 825ADD9150166DA2
 {{ else if eq .work true -}}
-signingkey = 8730F0808F556599A9AD00A62C510316FB39BF80    
+signingkey = 2F229B60DC918FB2F90C713CA71F460F6224B07B
 {{ end -}}
 [commit]
 {{ if (or (eq .personal true) ( eq .work true )) -}}
