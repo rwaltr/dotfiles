@@ -6,7 +6,7 @@ add_newline = false
 fish_indicator = ""
 powershell_indicator = ""
 bash_indicator = "_"
-style = "red bold"
+style = "blue bold"
 disabled = false
 
 [hostname]
