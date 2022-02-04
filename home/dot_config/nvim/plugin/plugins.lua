@@ -124,6 +124,9 @@ return packer.startup(function(use)
 	------------------------------------------
 	-- Miscs
 
+	-- Glow
+	use({ "ellisonleao/glow.nvim" })
+
 	-- Startpage
 	use({
 		"goolord/alpha-nvim",
