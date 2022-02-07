@@ -5,9 +5,7 @@ alias "x" "exit"
 alias "q" "exit"
 
 # easy resource
-alias resource "source ~/.bashrc"
-
-#Vimwiki alias
+alias resource "source ~/.config/fish/config.fish"
 
 # Easy Open
 alias open "xdg-open"
@@ -20,8 +18,9 @@ alias la "ls -ah"
 alias lla "ls -lah"
 
 # Weather!
-alias wttr "curl wttr.in"
+alias wttrv1 "curl wttr.in"
 alias wttrv2 "curl v2.wttr.in"
+alias wttr wttrv2
 
 #QOL
 #Forgot a space
@@ -36,6 +35,7 @@ alias gpg-retrieve "gpg --keyserver-options auto-key-retrieve --receive-keys"
 # git
 alias pull "git pull origin"
 alias push "git push origin"
+alias g "git"
 
 # IP colors
 alias ip "ip -br -c"
