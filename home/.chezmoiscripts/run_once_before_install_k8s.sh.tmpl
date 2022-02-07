@@ -6,6 +6,7 @@ curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 # Install krew
 
+export KREW_ROOT=$HOME/.local/share/krew
 (
   set -x; cd "$(mktemp -d)" &&
   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
