@@ -7,17 +7,70 @@ signingkey = 825ADD9150166DA2
 {{ else if eq .work true -}}
 signingkey = 2F229B60DC918FB2F90C713CA71F460F6224B07B
 {{ end -}}
+
 [commit]
 {{ if (or (eq .personal true) ( eq .work true )) -}}
 gpgsign = true
 {{ else }}
 gpgsign = false
 {{ end -}}
+
 [format]
 signOff = true
+
 [url "ssh://git@github.com/"]
 pushInsteadOf = https://github.com/
-{{ if eq .personal true -}}
+
 [alias]
+{{ if eq .personal true -}}
 	yolo = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
 {{ end -}}	
+	a = add
+	ap = add -p
+	amc = am --continue
+	b = branch
+	bm = branch --merged
+	bnm = branch --no-merged
+	c = commit
+	cl = clonr
+	ca = commit --amend
+	cane = commit --amend --no-edit
+	cf = commit --fixup
+	cm = commit --message
+	co = checkout
+	cob = checkout -b
+	com = checkout master
+	cp = cherry-pick
+	d = diff
+	dc = diff --cached
+	dom = diff origin/master
+	fo = fetch origin
+	g = grep --line-number
+	mbhom = merge-base HEAD origin/master
+	mff = merge --ff-only
+	ol = log --pretty=oneline
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	p = push
+	pf = push --force
+	prb = pull --rebase
+	r = restore
+	ra = rebase --abort
+	rc = rebase --continue
+	ri = rebase --interactive
+	rl = reflog
+	riom = rebase --interactive origin/master
+	rpo = remote prune origin
+	s = status -sb
+	ss = commit --message snapshot --no-gpg-sign
+	su = submodule update
+	wd = diff --patience --word-diff
+
+[core]
+	editor = nvim
+	excludesfile = ~/.config/git/ignore
+	whitespace = trailing-space,space-before-tab
+
+
+
+
+{{/* vim: set filetype=gitconfig: */}}
