@@ -1,0 +1,4 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!{{ lookPath "bash"}}
+aqua install -a -l
+{{- end }}
