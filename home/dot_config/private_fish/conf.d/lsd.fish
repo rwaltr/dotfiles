@@ -1,3 +1,3 @@
 if type -q lsd
-alias ls lsd
+    alias ls lsd
 end

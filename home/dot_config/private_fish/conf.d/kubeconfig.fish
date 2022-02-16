@@ -7,11 +7,11 @@ mkdir -p "$CLUSTERS_DIR"
 test CLUSTERS_DIR
 
 for cluster in (find $CLUSTERS_DIR -type f -name "*.yml")
-  set FILES "$cluster:$FILES"
+    set FILES "$cluster:$FILES"
 end
 
 for cluster in (find $CLUSTERS_DIR -type f -name "*.yaml")
-  set FILES "$cluster:$FILES"
+    set FILES "$cluster:$FILES"
 end
 
 

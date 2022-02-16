@@ -1,6 +1,6 @@
 {{ if eq .personal true -}}
-function haste 
+function haste
 a=(cat); 
-curl -X POST -s -d "$a" https://bin.waltr.tech/documents | awk -F '"' '{print "https://bin.waltr.tech/"$4}'; 
+    curl -X POST -s -d "$a" https://bin.waltr.tech/documents | awk -F '"' '{print "https://bin.waltr.tech/"$4}'
 end
 {{ end -}}
