@@ -11,7 +11,7 @@ local code_actions = null_ls.builtins.code_actions
 local hover = null_ls.builtins.hover
 null_ls.setup({
 	debug = false,
-  on_attach = require("rwaltr.lsp.handlers").on_attach,
+	on_attach = require("rwaltr.lsp.handlers").on_attach,
 	sources = {
 		formatting.prettier.with({ extra_args = { "--no-semi", "--jsx-single-quote" } }),
 		-- formatting.black.with({ extra_args = { "--fast" } }),
@@ -23,6 +23,9 @@ null_ls.setup({
 		diagnostics.yamllint,
 		diagnostics.proselint,
 		code_actions.shellcheck,
+		code_actions.gitrebase,
+		code_actions.proselint,
+		formatting.fish_indent,
 		-- hover.dictionary,
 		-- diagnostics.flake8
 		code_actions.gitsigns,

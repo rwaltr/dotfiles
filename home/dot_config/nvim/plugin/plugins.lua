@@ -106,11 +106,14 @@ return packer.startup(function(use)
 		end,
 		requires = {
 			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lua",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
 			"saadparwaiz1/cmp_luasnip",
 			"f3fora/cmp-spell",
+			"hrsh7th/cmp-emoji",
+			"hrsh7th/cmp-calc",
 		},
 	})
 	-----------------------------------------

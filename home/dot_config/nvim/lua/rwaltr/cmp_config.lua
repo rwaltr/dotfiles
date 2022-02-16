@@ -13,7 +13,6 @@ local check_backspace = function()
 	local col = vim.fn.col(".") - 1
 	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
-
 --   פּ ﯟ   some other good icons
 local kind_icons = {
 	Text = "",
@@ -97,7 +96,7 @@ cmp.setup({
 		format = function(entry, vim_item)
 			-- Kind icons
 			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-			-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+			-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatenates the icons with the name of the item kind
 			vim_item.menu = ({
 				luasnip = "[Snippet]",
 				buffer = "[Buffer]",
@@ -105,14 +104,18 @@ cmp.setup({
 				spell = "[Spelling]",
 				nvim_lsp = "[LSP]",
 				cmdline = "[CMD]",
+				emoji = "[Emoji]",
+				calc = "[Calc]",
+				nvim_lua = "[NvimLua]",
 			})[entry.source.name]
 			return vim_item
 		end,
 	},
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
+		-- { name = "nvim_lua" },
 		{ name = "luasnip" }, -- For luasnip users.
-		{ name = "spell" },
+		{ name = "path" },
 		{
 			name = "buffer",
 			option = {
@@ -121,7 +124,9 @@ cmp.setup({
 				end,
 			},
 		},
-		{ name = "path" },
+		{ name = "calc" },
+		{ name = "emoji" },
+		{ name = "spell" },
 	}),
 })
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
