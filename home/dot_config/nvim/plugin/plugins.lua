@@ -130,6 +130,9 @@ return packer.startup(function(use)
 	-- Glow
 	use({ "ellisonleao/glow.nvim" })
 
+  -- peak lines
+  use({ "nacro90/numb.nvim"})
+
 	-- Startpage
 	use({
 		"goolord/alpha-nvim",
@@ -321,6 +324,8 @@ return packer.startup(function(use)
 			require("rwaltr.gitsigns")
 		end,
 	})
+  use({ "https://github.com/rhysd/conflict-marker.vim" })
+
 	------------------------------------------
 	------------------------------------------
 	-- Editing
