@@ -2,6 +2,13 @@
 add_newline = false
 
 
+[custom.talos]
+command = "yq .context ~/.talos/config"
+when = "test -f ~/.talos/config"
+symbol = "🐦"
+style = "red"
+format ='\[[$symbol$output]($style)\]'
+
 [shell]
 fish_indicator = ""
 powershell_indicator = ""
