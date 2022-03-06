@@ -1,0 +1,39 @@
+@import "/home/blackphidora/.cache/wal/colors-waybar.css";
+
+#window {
+	border-radius: 2px;
+	border: 2px solid @foreground;
+  background-color: @background;
+}
+#input {
+  background-color: @background;
+  border: 2px solid @color4;
+  padding: 4px;
+}
+
+#text {
+	color: @foreground;
+}
+
+#outer-box {
+  padding: 5px;
+  margin: 10px;
+}
+
+#inner-box {
+  padding-top: 10px;
+  background-color: @color0;
+}
+
+#img {
+  margin-right: 5px;
+}
+
+#entry:selected {
+	/* background-color: @color6; */
+	/* color: @background; */
+  border: 1px solid @color1;
+}
+#text:selected {
+  color: @color1;
+}
