@@ -126,12 +126,12 @@ return packer.startup(function(use)
 
 	------------------------------------------
 	-- Miscs
-
+	use({ "AlphaTechnolog/pywal.nvim", as = "pywal" })
 	-- Glow
 	use({ "ellisonleao/glow.nvim" })
 
-  -- peak lines
-  use({ "nacro90/numb.nvim"})
+	-- peak lines
+	use({ "nacro90/numb.nvim" })
 
 	-- Startpage
 	use({
@@ -324,7 +324,7 @@ return packer.startup(function(use)
 			require("rwaltr.gitsigns")
 		end,
 	})
-  use({ "https://github.com/rhysd/conflict-marker.vim" })
+	use({ "https://github.com/rhysd/conflict-marker.vim" })
 
 	------------------------------------------
 	------------------------------------------
