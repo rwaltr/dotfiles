@@ -1,4 +1,4 @@
-show=drun
+show=drun,run
 prompt=Rwaltr
 term=alacritty
 layer=overlay

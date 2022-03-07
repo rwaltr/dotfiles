@@ -1,18 +1,18 @@
-@import "/home/blackphidora/.cache/wal/colors-waybar.css";
+@import "{{ .chezmoi.homeDir }}/.cache/wal/colors-waybar.css";
 
 #window {
-	border-radius: 2px;
-	border: 2px solid @foreground;
+  border-radius: 2px;
+  border: 2px solid @color4;
   background-color: @background;
 }
 #input {
   background-color: @background;
-  border: 2px solid @color4;
+  border: 2px solid @foreground;
   padding: 4px;
 }
 
 #text {
-	color: @foreground;
+  color: @foreground;
 }
 
 #outer-box {
@@ -30,10 +30,10 @@
 }
 
 #entry:selected {
-	/* background-color: @color6; */
-	/* color: @background; */
+  background-color: @background;
+  /* color: @background; */
   border: 1px solid @color1;
 }
 #text:selected {
-  color: @color1;
+  color: @color9;
 }
