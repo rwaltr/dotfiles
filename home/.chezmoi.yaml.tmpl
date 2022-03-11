@@ -1,12 +1,12 @@
+{{- $email := "rwalt@pm.me" -}}
 {{/* boolean feature tags */}}
 {{- $battlestation := false -}}{{/* true if this machine does not have a screen and keyboard */}}
 {{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
 {{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
 {{- $work := false -}}{{/* true if this machine should have work secrets from BitWarden */}}
-{{- $kubernetes := false -}}{{/* Kubernetes */}}
 
-{{/* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */}}
+{{- /* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */ -}}
 {{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "vagrant" "vscode") -}}
 {{-   $headless = true -}}
 {{-   $ephemeral = true -}}
@@ -21,13 +21,11 @@
 {{-    if eq $hostname "monolith" -}}
 {{-     $headless = false -}}
 {{-     $personal = true -}}
-{{-     $kubernetes = true -}}
 {{-     $battlestation = true -}}
 
 {{-   else if eq $hostname "teletran1" -}}
 {{-     $headless = false -}}
 {{-     $work = true -}}
-{{-     $kubernetes = true -}}
 
 {{-   else if stdinIsATTY -}}
 
@@ -55,12 +53,6 @@
 {{-       $ephemeral = promptBool "ephemeral" -}}
 {{-     end -}}
 
-{{-     if hasKey . "kubernetes" -}}
-{{-       $kubernetes = .kubernetes -}}
-{{-     else -}}
-{{-       $kubernetes = promptBool "kubernetes" -}}
-{{-     end -}}
-
 {{-     if hasKey . "battlestation" -}}
 {{-       $battlestation = .battlestation -}}
 {{-     else -}}
@@ -73,19 +65,27 @@
 {{-   end -}}
 {{- end -}}
 
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{- if ne .personal true -}}
+{{- $email = promptString "Email" -}}
+{{- end -}}
+
 data:
   name: "Ryan Walter"
-  email: "rwalt@pm.me"
+  email: {{ $email | quote }}
   personal: {{ $personal }}
-  specialsound: false
   work: {{ $work }}
   battlestation: {{ $battlestation }}
-  kubernetes: {{ $kubernetes }}
   ephemeral: {{ $ephemeral }}
   headless: {{ $headless }}
+  osid: {{ $osid | quote }}
   mpd:
     enabled: false
-    server: localhost
+    server: "localhost"
     port: 6600
     timeout: 15
 gpg:
