@@ -57,5 +57,6 @@ sudo dnf groupinstall -y "C Development Tools and Libraries"
 
 {{- end -}}
 {{- if eq .osid "android" -}}
+#!{{ lookPath "bash"}}
 # TODO: Install Termux packages
 {{- end -}}
