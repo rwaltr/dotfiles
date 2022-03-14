@@ -1,6 +1,9 @@
 
 # kubectl convenience aliases
 ## base
+{{ if lookPath "kubecolor" -}}
+alias kubectl "kubecolor"
+{{- end }}
 alias k "kubectl"
 
 ## attach
