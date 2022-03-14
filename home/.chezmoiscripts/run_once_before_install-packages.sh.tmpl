@@ -1,9 +1,5 @@
-{{- if eq .chezmoi.os "linux" -}}
+{{- if eq .osid "linux-fedora" -}}
 #!{{ lookPath "bash"}}
-
-
-{{ if eq .chezmoi.osRelease.id "fedora" -}}
-
 # Install Fedora Packages
 sudo dnf copr enable atim/lazygit -y
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
@@ -59,8 +55,7 @@ libffi-devel
 sudo dnf groupinstall -y "C Development Tools and Libraries"
 
 
-{{- end }}
-
+{{- end -}}
+{{- if eq .osid "android" -}}
 # TODO: Install Termux packages
-
-{{- end }}
+{{- end -}}
