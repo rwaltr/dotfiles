@@ -102,17 +102,19 @@
 
     "clock#time": {
         "interval": 1,
-        "format": "{:%I:%M:%S %p}",
+        "format": "{:%r}",
         //"tooltip": false
-        "tooltip-format": "{:UTC %T %n ISO %FT%T%z }",
-        "on-click": "date -Iseconds | wl-copy && notify-send 'Date Copied'"
+        "tooltip-format": "{:24h %R %nISO %FT%T%z }",
+        "on-click": "date -Iseconds | wl-copy && notify-send 'Time Copied'",
+        "on-click-right": "TZ=UTC date -Iseconds | wl-copy && notify-send 'UTC Time Copied'"
     },
 
     "clock#date": {
       "interval": 10,
       //"format": "  {:%e %b %Y}", // Icon: calendar-alt
       "format": "  {:%a %b %F}", // Icon: calendar-alt
-      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><big>{calendar}</big></tt>"
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><big>{calendar}</big></tt>",
+      "on-click": "date -I | wl-copy && notify-send 'Date Copied'"
     },
 
     "cpu": {
