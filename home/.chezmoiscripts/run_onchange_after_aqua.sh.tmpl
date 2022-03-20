@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "linux" -}}
+{{- if lookPath "aqua" -}}
 #!{{ lookPath "bash"}}
 # Hash {{- include (joinPath .chezmoi.homeDir ".config/aqua/aqua.yaml") | sha256sum }}
 aqua install -a -l
