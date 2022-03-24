@@ -187,6 +187,10 @@ local mappings = {
 		h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
 		v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
 	},
+	z = {
+		name = "Telekasten",
+	},
+	Z = { "<cmd>Telekasten panel<cr>", "Panel" },
 }
 
 which_key.setup(setup)

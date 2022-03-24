@@ -213,13 +213,13 @@ return packer.startup(function(use)
 	-- Sneeky sneeky
 	use("ggandor/lightspeed.nvim")
 
-	-- -- WebBrowser funness
-	-- use({
-	-- 	"glacambre/firenvim",
-	-- 	run = function()
-	-- 		vim.fn["firenvim#install"](0)
-	-- 	end,
-	-- })
+	-- WebBrowser funness
+	use({
+		"glacambre/firenvim",
+		run = function()
+			vim.fn["firenvim#install"](0)
+		end,
+	})
 
 	-- Github fanciness
 	use({
@@ -297,10 +297,10 @@ return packer.startup(function(use)
 	use({
 		"atalazer/wally.nvim",
 		run = "./setup.sh",
-		setup = function() 
-    vim.g.wally_italic_functions = true
-    vim.g.wally_sidebars = { "qf", "vista_kind", "terminal", "Nvimtree", "Trouble", "packer", }
-    end,
+		setup = function()
+			vim.g.wally_italic_functions = true
+			vim.g.wally_sidebars = { "qf", "vista_kind", "terminal", "Nvimtree", "Trouble", "packer" }
+		end,
 		config = [[require("wally").colorscheme()]],
 	})
 	-- use({
@@ -352,6 +352,27 @@ return packer.startup(function(use)
 			require("rwaltr.autopairs")
 		end,
 	})
+
+	-- Notetaking
+	use({
+		"renerocksai/telekasten.nvim",
+		requires = {
+			"renerocksai/calendar-vim",
+		},
+    config = function()
+      require("rwaltr.telekasten")
+    end
+	})
+	------------------------------------------
+	-- Zen
+
+	use({
+		"Pocco81/TrueZen.nvim",
+		config = function()
+			require("rwaltr.zen")
+		end,
+	})
+
 	------------------------------------------
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
