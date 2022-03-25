@@ -212,7 +212,8 @@ local mappings = {
 		m = { "<cmd> lua require('telekasten').browse_media()<CR>", "Browse media" },
 		a = { "<cmd> lua require('telekasten').show_tags()<CR>", "Show tags" },
 		r = { "<cmd> lua require('telekasten').rename_note()<CR>", "Rename note" },
-		P = { "<cmd>lua require('Telekasten').panel()<cr>", "Panel" },
+		P = { "<cmd> lua require('telekasten').panel()<cr>", "Panel" },
+    l = { "<cmd> lua require('telekasten').insert_link()<cr>", "Insert note Link" }
 	},
 }
 
