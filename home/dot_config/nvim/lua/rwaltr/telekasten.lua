@@ -37,15 +37,15 @@ require("telekasten").setup({
 
 	-- template for new notes (new_note, follow_link)
 	-- set to `nil` or do not specify if you do not want a template
-	template_new_note = notebook .. "/" .. "Templates/Zettlekasten Idea.md",
+	template_new_note = notebook .. "/" .. "Templates/idea.md",
 
 	-- template for newly created daily notes (goto_today)
 	-- set to `nil` or do not specify if you do not want a template
-	template_new_daily = notebook .. "/" .. "Templates/Dailynote.md",
+	template_new_daily = notebook .. "/" .. "Templates/daily.md",
 
 	-- template for newly created weekly notes (goto_thisweek)
 	-- set to `nil` or do not specify if you do not want a template
-	template_new_weekly= notebook .. '/' .. 'templates/weekly.md',
+	template_new_weekly= notebook .. '/' .. 'Templates/weekly.md',
 
 	-- image link style
 	-- wiki:     ![[image name]]
