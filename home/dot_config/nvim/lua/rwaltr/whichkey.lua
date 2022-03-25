@@ -188,9 +188,32 @@ local mappings = {
 		v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
 	},
 	z = {
+
 		name = "Telekasten",
+
+		f = { "<cmd> lua require('telekasten').find_notes()<CR>", "Find note" },
+		d = { "<cmd> lua require('telekasten').find_daily_notes()<CR>", "Find Daily note" },
+		g = { "<cmd> lua require('telekasten').search_notes()<CR>", "Search notes" },
+		z = { "<cmd> lua require('telekasten').follow_link()<CR>", "Follow link" },
+		T = { "<cmd> lua require('telekasten').goto_today()<CR>", "Today's Note" },
+		W = { "<cmd> lua require('telekasten').goto_thisweek()<CR>", "This weeks note" },
+		w = { "<cmd> lua require('telekasten').find_weekly_notes()<CR>", "Find Daily note" },
+		n = { "<cmd> lua require('telekasten').new_note()<CR>", "New blank note" },
+		N = { "<cmd> lua require('telekasten').new_templated_note()<CR>", "New Templated note" },
+		y = { "<cmd> lua require('telekasten').yank_notelink()<CR>", "Grab note link" },
+		c = { "<cmd> lua require('telekasten').show_calendar()<CR>", "Show calendars" },
+		C = { "<cmd> CalendarT<CR>", "Show big calendar" },
+		i = { "<cmd> lua require('telekasten').paste_img_and_link()<CR>", "Paste link/img" },
+		t = { "<cmd> lua require('telekasten').toggle_todo()<CR>", "Toggle todo" },
+		b = { "<cmd> lua require('telekasten').show_backlinks()<CR>", "Show backlinks" },
+		F = { "<cmd> lua require('telekasten').find_friends()<CR>", "Find backlinks to current link" },
+		I = { "<cmd> lua require('telekasten').insert_img_link({ i=true })<CR>", "Add img" },
+		-- p = { "<cmd> lua require('telekasten').preview_img()<CR>", "Preview image" },
+		m = { "<cmd> lua require('telekasten').browse_media()<CR>", "Browse media" },
+		a = { "<cmd> lua require('telekasten').show_tags()<CR>", "Show tags" },
+		r = { "<cmd> lua require('telekasten').rename_note()<CR>", "Rename note" },
+		P = { "<cmd>lua require('Telekasten').panel()<cr>", "Panel" },
 	},
-	Z = { "<cmd>Telekasten panel<cr>", "Panel" },
 }
 
 which_key.setup(setup)

@@ -21,6 +21,10 @@ dashboard.section.buttons.val = {
 	dashboard.button("p", "  Find project", ":Telescope projects <CR>"),
 	dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
 	dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
+	dashboard.button("n", "  New note", ":Telekasten new_templated_note <CR>"),
+	dashboard.button("N", "  Search Notes", ":Telekasten find_notes <CR>"),
+	dashboard.button("d", "ﴬ  Open Today's Note", ":Telekasten goto_today <CR>"),
+	dashboard.button("w", "ﴬ  Open Week's Note", ":Telekasten goto_thisweek <CR>"),
 	dashboard.button("c", "  Configuration", ":e ~/.local/share/chezmoi/home/dot_config/nvim/init.lua <CR>"),
 	dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
 }
