@@ -4,7 +4,7 @@ local extension = ".md"
 
 -- Replaces take over my home with Notebook
 -- https://github.com/renerocksai/telekasten.nvim/blob/15f68e7d9fbf050c9c4b60d9ce890c49867f0abf/lua/telekasten.lua#L2688
-vim.cmd("au BufEnter " .. notebook .. "/*" .. extension .. " set ft=telekasten")
+vim.cmd("au BufEnter " .. notebook .. "/*/*" .. extension .. " set ft=telekasten")
 
 require("telekasten").setup({
 	-- Smart function only respects "home"
@@ -33,7 +33,7 @@ require("telekasten").setup({
 	-- following a link to a non-existing note will create it
 	follow_creates_nonexisting = true,
 	dailies_create_nonexisting = true,
-	weeklies_create_nonexisting = false,
+	weeklies_create_nonexisting = true,
 
 	-- template for new notes (new_note, follow_link)
 	-- set to `nil` or do not specify if you do not want a template
@@ -45,7 +45,7 @@ require("telekasten").setup({
 
 	-- template for newly created weekly notes (goto_thisweek)
 	-- set to `nil` or do not specify if you do not want a template
-	-- template_new_weekly= home .. '/' .. 'templates/weekly.md',
+	template_new_weekly= notebook .. '/' .. 'templates/weekly.md',
 
 	-- image link style
 	-- wiki:     ![[image name]]
