@@ -8,13 +8,13 @@ vim.cmd("au BufEnter " .. notebook .. "/*/*" .. extension .. " set ft=telekasten
 
 require("telekasten").setup({
 	-- Smart function only respects "home"
-	home = notebook .. "/" .. "Zettelkasten",
+	home = notebook,
 
 	-- markdown file extension
 	extension = extension,
 
 	-- if true, telekasten will be enabled when opening a note within the configured home
-	take_over_my_home = false,
+	take_over_my_home = true,
 
 	-- auto-set telekasten filetype: if false, the telekasten filetype will not be used
 	--                               and thus the telekasten syntax will not be loaded either
