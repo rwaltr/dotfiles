@@ -45,7 +45,7 @@ require("telekasten").setup({
 
 	-- template for newly created weekly notes (goto_thisweek)
 	-- set to `nil` or do not specify if you do not want a template
-	template_new_weekly= notebook .. '/' .. 'Templates/weekly.md',
+	template_new_weekly = notebook .. "/" .. "Templates/weekly.md",
 
 	-- image link style
 	-- wiki:     ![[image name]]
