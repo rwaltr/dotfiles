@@ -3,7 +3,11 @@
   url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
   refreshPeriod: 169h
   exact: false
-
+".local/share/fonts/firamono":
+  type: archive
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraMono.zip
+  refreshPeriod: 169h
+  exact: false
 ".local/share/fonts/lekton":
   type: archive
   url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Lekton.zip
@@ -12,6 +16,16 @@
 ".local/share/fonts/gocode":
   type: archive
   url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Go-Mono.zip
+  refreshPeriod: 169h
+  exact: false
+".local/share/fonts/heavydata":
+  type: archive
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/HeavyData.zip
+  refreshPeriod: 169h
+  exact: false
+".local/share/fonts/terminus":
+  type: archive
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Terminus.zip
   refreshPeriod: 169h
   exact: false
 
