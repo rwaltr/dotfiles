@@ -41,3 +41,6 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 -- Telescope
 keymap("n", "<C-p>", ":lua require('telescope.builtin').git_files()<CR>", opts)
+
+--- Why didn't I think of this?
+keymap("n", ";", ":", opts)
