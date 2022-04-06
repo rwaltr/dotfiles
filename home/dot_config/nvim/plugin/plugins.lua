@@ -213,14 +213,6 @@ return packer.startup(function(use)
 	-- Sneeky sneeky
 	use("ggandor/lightspeed.nvim")
 
-	-- WebBrowser funness
-	use({
-		"glacambre/firenvim",
-		run = function()
-			vim.fn["firenvim#install"](0)
-		end,
-	})
-
 	-- Github fanciness
 	use({
 		"pwntester/octo.nvim",
@@ -359,9 +351,9 @@ return packer.startup(function(use)
 		requires = {
 			"renerocksai/calendar-vim",
 		},
-    config = function()
-      require("rwaltr.telekasten")
-    end
+		config = function()
+			require("rwaltr.telekasten")
+		end,
 	})
 	------------------------------------------
 	-- Zen
