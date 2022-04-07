@@ -286,15 +286,15 @@ return packer.startup(function(use)
 	-- colorscheme from lunarvim
 	use("LunarVim/Colorschemes")
 	use("lunarvim/darkplus.nvim")
-	use({
-		"atalazer/wally.nvim",
-		run = "./setup.sh",
-		setup = function()
-			vim.g.wally_italic_functions = true
-			vim.g.wally_sidebars = { "qf", "vista_kind", "terminal", "Nvimtree", "Trouble", "packer" }
-		end,
-		config = [[require("wally").colorscheme()]],
-	})
+	-- use({
+	-- 	"atalazer/wally.nvim",
+	-- 	run = "./setup.sh",
+	-- 	setup = function()
+	-- 		vim.g.wally_italic_functions = true
+	-- 		vim.g.wally_sidebars = { "qf", "vista_kind", "terminal", "Nvimtree", "Trouble", "packer" }
+	-- 	end,
+	-- 	config = [[require("wally").colorscheme()]],
+	-- })
 	-- use({
 	-- 		"AlphaTechnolog/pywal.nvim",
 	-- 		as = "pywal",
