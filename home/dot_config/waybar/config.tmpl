@@ -28,6 +28,7 @@
     ],
     "modules-right": [
         "sway/window",
+        "custom/weather",
         "network",
 				{{- if eq .mpd.enabled true -}}
         "mpd",
@@ -59,6 +60,7 @@
         "sway/window"
     ],
     "modules-right": [
+        "custom/weather",
         "network",
 				{{- if eq .mpd.enabled true -}}
         "mpd",
@@ -236,5 +238,12 @@
         "on-scroll-up": "mpc volume +2",
         "on-scroll-down": "mpc volume -2"
         
-    }
+    },
+    "custom/weather": {
+       "format": "{}",
+       "tooltip": true,
+       "interval": 3600,
+       "exec": "waybar-wttr.py",
+       "return-type": "json"
+     }
 }
