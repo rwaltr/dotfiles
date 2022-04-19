@@ -84,6 +84,20 @@ local function lsp_keymaps(bufnr)
 	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 end
 
+local status_ok, which_key = pcall(require, "which-key")
+if status_ok then
+	which_key.register({
+		g = {
+			D = "LSP Declaration",
+			d = "LSP Definition",
+			i = "LSP Implementation",
+			r = "LSP Reference",
+			l = "LSP Diagnostics",
+		},
+		K = "LSP Hover",
+	})
+end
+
 M.on_attach = function(client, bufnr)
 	if client.name == "tsserver" then
 		client.resolved_capabilities.document_formatting = false

@@ -194,6 +194,7 @@ return packer.startup(function(use)
 		config = function()
 			require("rwaltr.bufferline")
 		end,
+		branch = "main",
 	})
 	use("nvim-lua/popup.nvim")
 	-- StatusLine
@@ -242,6 +243,7 @@ return packer.startup(function(use)
 		config = function()
 			require("rwaltr.toggleterm")
 		end,
+    branch = "main"
 	})
 
 	-- Tree explorer
@@ -335,6 +337,7 @@ return packer.startup(function(use)
 		config = function()
 			require("rwaltr.comment")
 		end,
+    tag = "v0.6"
 	})
 
 	-- Autopairs
