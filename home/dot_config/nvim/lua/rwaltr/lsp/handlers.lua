@@ -1,6 +1,5 @@
 local M = {}
 
--- TODO: backfill this to template
 M.setup = function()
 	local signs = {
 		{ name = "DiagnosticSignError", text = "" },
@@ -44,6 +43,8 @@ M.setup = function()
 	})
 end
 
+---Sets Document Highlighting
+---@param client any
 local function lsp_highlight_document(client)
 	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
@@ -60,6 +61,8 @@ local function lsp_highlight_document(client)
 	end
 end
 
+--- Sets Keymaps for LSP and adds them to which key
+---@param bufnr any
 local function lsp_keymaps(bufnr)
 	local opts = { noremap = true, silent = true }
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
@@ -82,21 +85,35 @@ local function lsp_keymaps(bufnr)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+
+	local status_ok, which_key = pcall(require, "which-key")
+	if status_ok then
+		which_key.register({
+			g = {
+				D = "LSP Declaration",
+				d = "LSP Definition",
+				i = "LSP Implementation",
+				r = "LSP Reference",
+				l = "LSP Diagnostics",
+			},
+			K = "LSP Hover",
+		})
+	end
 end
 
-local status_ok, which_key = pcall(require, "which-key")
-if status_ok then
-	which_key.register({
-		g = {
-			D = "LSP Declaration",
-			d = "LSP Definition",
-			i = "LSP Implementation",
-			r = "LSP Reference",
-			l = "LSP Diagnostics",
-		},
-		K = "LSP Hover",
-	})
-end
+-- local status_ok, which_key = pcall(require, "which-key")
+-- if status_ok then
+-- 	which_key.register({
+-- 		g = {
+-- 			D = "LSP Declaration",
+-- 			d = "LSP Definition",
+-- 			i = "LSP Implementation",
+-- 			r = "LSP Reference",
+-- 			l = "LSP Diagnostics",
+-- 		},
+-- 		K = "LSP Hover",
+-- 	})
+-- end
 
 M.on_attach = function(client, bufnr)
 	if client.name == "tsserver" then
