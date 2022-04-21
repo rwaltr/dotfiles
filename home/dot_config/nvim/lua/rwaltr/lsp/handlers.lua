@@ -48,6 +48,7 @@ end
 local function lsp_highlight_document(client)
 	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
+    -- TODO: Change to LUA style
 		vim.api.nvim_exec(
 			[[
       augroup lsp_document_highlight

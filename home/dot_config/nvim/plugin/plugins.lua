@@ -27,6 +27,7 @@ packer.init({
 })
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
+-- TODO: Change to lua form of cmd
 vim.cmd([[
   augroup packer_user_config
     autocmd!
