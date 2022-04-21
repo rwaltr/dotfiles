@@ -47,6 +47,18 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 })
 --#endregion chezmoi
 
+--#region svn
+local svngroup = vim.api.nvim_create_augroup("_svn", { clear = true })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	pattern = "svn",
+	callback = function()
+		vim.api.nvim_set_option_value("wrap", "true", "local")
+		vim.api.nvim_set_option_value("spell", "true", "local")
+	end,
+	group = svngroup,
+})
+--#endregion svn
+
 --#region TextYankin
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
   callback = function() vim.highlight.on_yank({higroup = 'Visual', timeout = 200}) end,
