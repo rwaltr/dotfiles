@@ -1,9 +1,9 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=CTeams
+Name=Teams
 Comment=Microsoft Teams (Chrome)
-Exec=flatpak run com.google.Chrome "https://teams.microsoft.com/"
+Exec=flatpak run com.google.ChromeDev --app="https://teams.microsoft.com/"
 Icon=
 Path=
 Terminal=false
