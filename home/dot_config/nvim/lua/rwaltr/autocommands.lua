@@ -64,3 +64,17 @@ vim.api.nvim_create_autocmd({"TextYankPost"}, {
   callback = function() vim.highlight.on_yank({higroup = 'Visual', timeout = 200}) end,
 })
 --#endregion TextYankin
+
+--#region Yaml
+local yamlgroup = vim.api.nvim_create_augroup('_yaml', {clear = true})
+vim.api.nvim_create_autocmd({"FileType"}, {
+  pattern = "yaml",
+  group = yamlgroup,
+  callback = function ()
+		vim.api.nvim_set_option_value("ts", "2", "local")
+		vim.api.nvim_set_option_value("sts", "2", "local")
+		vim.api.nvim_set_option_value("sw", "2", "local")
+		vim.api.nvim_set_option_value("expandtab", "true", "local")
+  end
+})
+--#endregion Yaml
