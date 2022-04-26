@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Teams
+Comment=Discord (Chrome)
+Exec=flatpak run com.google.ChromeDev --app="https://discord.com"
+Icon=
+Path=
+Terminal=false
+StartupNotify=false
