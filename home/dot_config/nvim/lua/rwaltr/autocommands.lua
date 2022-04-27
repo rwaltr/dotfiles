@@ -1,4 +1,6 @@
-vim.cmd([[
+if vim.fn.has("nvim-0.7") == 0 then
+
+  vim.cmd([[
   augroup end
   augroup _git
     autocmd!
@@ -10,71 +12,70 @@ vim.cmd([[
     autocmd FileType markdown setlocal wrap
     autocmd FileType markdown setlocal spell
   augroup end
-]])
+]] )
 
-vim.cmd([[
+  vim.cmd([[
  augroup end
  augroup _chezmoi
   autocmd!
   autocmd BufWritePost ~/.local/share/chezmoi/* | !chezmoi apply --source-path "%" 
  augroup end
-]])
+]] )
 
-if vim.fn.has("nvim-0.7") == 0 then
-	return
+  return
 end
 
 --#region git
 local gitgroup = vim.api.nvim_create_augroup("_git", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = "gitcommit",
-	callback = function()
-		vim.api.nvim_set_option_value("wrap", "true", "local")
-		vim.api.nvim_set_option_value("spell", "true", "local")
-	end,
-	group = gitgroup,
+  pattern = "gitcommit",
+  callback = function()
+    vim.api.nvim_set_option_value("wrap", true, { scope = "local" })
+    vim.api.nvim_set_option_value("spell", true, { scope = "local" })
+  end,
+  group = gitgroup
 })
 --#endregion git
 
 --#region chezmoi
 local chezmoigroup = vim.api.nvim_create_augroup("_chezmoi", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	pattern = "~/.local/share/chezmoi/*",
-	callback = function()
+  pattern = "~/.local/share/chezmoi/*",
+  callback = function()
     vim.cmd("silent! chezmoi apply --source-path %")
   end,
-	group = chezmoigroup,
+  group = chezmoigroup,
 })
 --#endregion chezmoi
 
 --#region svn
 local svngroup = vim.api.nvim_create_augroup("_svn", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = "svn",
-	callback = function()
-		vim.api.nvim_set_option_value("wrap", "true", "local")
-		vim.api.nvim_set_option_value("spell", "true", "local")
-	end,
-	group = svngroup,
+  pattern = "svn",
+  callback = function()
+    vim.api.nvim_set_option_value("wrap", true, { scope = "local" })
+    vim.api.nvim_set_option_value("spell", true, { scope = "local" })
+  end,
+  group = svngroup,
 })
 --#endregion svn
 
 --#region TextYankin
-vim.api.nvim_create_autocmd({"TextYankPost"}, {
-  callback = function() vim.highlight.on_yank({higroup = 'Visual', timeout = 200}) end,
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+  callback = function() vim.highlight.on_yank({ higroup = 'Visual', timeout = 200 }) end,
 })
 --#endregion TextYankin
 
 --#region Yaml
-local yamlgroup = vim.api.nvim_create_augroup('_yaml', {clear = true})
-vim.api.nvim_create_autocmd({"FileType"}, {
+local yamlgroup = vim.api.nvim_create_augroup('_yaml', { clear = true })
+vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = "yaml",
   group = yamlgroup,
-  callback = function ()
-		vim.api.nvim_set_option_value("ts", "2", "local")
-		vim.api.nvim_set_option_value("sts", "2", "local")
-		vim.api.nvim_set_option_value("sw", "2", "local")
-		vim.api.nvim_set_option_value("expandtab", "true", "local")
+  callback = function()
+    vim.api.nvim_set_option_value("ts", "2", { scope = "local" })
+    vim.api.nvim_set_option_value("sts", "2", { scope = "local" })
+    vim.api.nvim_set_option_value("sw", "2", { scope = "local" })
+    vim.api.nvim_set_option_value("expandtab", "true", { scope = "local" })
   end
 })
 --#endregion Yaml
