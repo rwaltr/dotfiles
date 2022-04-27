@@ -72,10 +72,10 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = "yaml",
   group = yamlgroup,
   callback = function()
-    vim.api.nvim_set_option_value("ts", "2", { scope = "local" })
-    vim.api.nvim_set_option_value("sts", "2", { scope = "local" })
-    vim.api.nvim_set_option_value("sw", "2", { scope = "local" })
-    vim.api.nvim_set_option_value("expandtab", "true", { scope = "local" })
+    vim.api.nvim_set_option_value("ts", 2, { scope = "local" })
+    vim.api.nvim_set_option_value("sts", 2, { scope = "local" })
+    vim.api.nvim_set_option_value("sw", 2, { scope = "local" })
+    vim.api.nvim_set_option_value("expandtab", true, { scope = "local" })
   end
 })
 --#endregion Yaml
