@@ -79,3 +79,17 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end
 })
 --#endregion Yaml
+
+--#region markdown
+local markdowngroup = vim.api.nvim_create_augroup("_markdown", { clear = true })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "markdown",
+  callback = function()
+    vim.api.nvim_set_option_value("wrap", true, { scope = "local" })
+    vim.api.nvim_set_option_value("spell", true, { scope = "local" })
+    -- changes ... to the elispis character to make proselint happy, but only in markdown files
+    vim.cmd("iab ... …")
+  end,
+  group = markdowngroup,
+})
+--#endregion svn
