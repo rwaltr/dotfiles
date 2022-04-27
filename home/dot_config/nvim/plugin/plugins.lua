@@ -338,7 +338,6 @@ return packer.startup(function(use)
 		config = function()
 			require("rwaltr.comment")
 		end,
-    tag = "v0.6"
 	})
 
 	-- Autopairs
