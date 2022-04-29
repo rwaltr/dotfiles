@@ -9,7 +9,6 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos>
     ];
 
   # Use the GRUB 2 boot loader.
@@ -44,7 +43,9 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-
+  nix.extraOptions = ''
+  experimental-features = nix-command flakes
+  '';
 
 
   # Configure keymap in X11
@@ -70,10 +71,6 @@
     extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
     password = "dank";
   };
-  home-manager.users.rwaltr = { pkgs, ... }: {
-    home.packages = [ pkgs.chezmoi ];
-  };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
