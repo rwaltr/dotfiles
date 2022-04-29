@@ -16,7 +16,7 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/6ca0f4a0-6cdd-45ce-bb2c-68015e2560d4";
+      device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
