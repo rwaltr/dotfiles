@@ -1,5 +1,0 @@
-{{- if eq .chezmoi.os "linux" -}}
-#!{{ lookPath "sh"}}
-# Haaaash {{ include (joinPath .chezmoi.homeDir ".config/nvim/plugin/plugins.lua" ) | sha256sum }}
-nvim --headless -c PackerSync +qall
-{{- end }}
