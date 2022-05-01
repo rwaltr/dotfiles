@@ -1,6 +1,7 @@
 { hmUsers, pkgs, config, ... }: {
   home-manager.users = { inherit (hmUsers) rwaltr; };
   users.defaultUserShell = pkgs.fish;
+  users.mutableUsers = true;
   users.users.rwaltr = {
     description = "default";
     isNormalUser = true;
