@@ -1,3 +1,3 @@
-{suites, ...}: {
-  imports = [ ./configuration.nix ] ++ suites.base;
+{
+  imports = [ ./configuration.nix ];
 }
