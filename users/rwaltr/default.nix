@@ -6,5 +6,6 @@
     isNormalUser = true;
     group = "rwaltr";
     extraGroups = [ "wheel" "networkmanager" ];
+    initalPassword = "dank";
   };
 }
