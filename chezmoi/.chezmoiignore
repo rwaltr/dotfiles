@@ -3,4 +3,7 @@
 .config/swaylock
 .config/mpv
 .local/share/applications
+Documents
+Music
+Videos
 {{- end -}}
