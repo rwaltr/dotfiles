@@ -1,3 +1,4 @@
+# "$schema" = 'https://starship.rs/config-schema.json'
 # Do not print newline after prompt
 add_newline = false
 
@@ -10,6 +11,13 @@ add_newline = false
 # format ='\[[$symbol$output]($style)\]'
 # disabled = true
 
+# format = "$all"
+format = """
+[┌─ ](dark grey)$shell$username$hostname$directory$fill$all $cmd_duration$status$sudo 
+[└](dark gray)$character
+"""
+
+
 [shell]
 fish_indicator = ""
 powershell_indicator = ""
@@ -17,19 +25,28 @@ bash_indicator = ""
 style = "blue bold"
 disabled = false
 
+[fill]
+symbol = " "
+
 [hostname]
 disabled = false
-ssh_only= true
-format = "@ [$hostname]($style) "
+ssh_only= false
+format = "[@](dimmed white)[$hostname]($style) "
 style = "blue"
 
 [directory]
 truncation_length = 8
 truncation_symbol = "…/"
 read_only = " "
+home_symbol = " "
+
 [character]
-success_symbol = "[ᑀ](bold green) "
-error_symbol = "[⤬](bold red) "
+success_symbol = "[>](dark grey)"
+error_symbol = "[⤬](bold red)"
+
+[status]
+disabled = false
+format = "[$symbol $status]($style) "
 
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
@@ -45,7 +62,8 @@ us-west-2 = "Oregon"
 format = '\[[$symbol($version)]($style)\]'
 
 [cmd_duration]
-format = '\[[⏱ $duration ]($style)\]'
+format = '[  $duration ]($style)'
+min_time = 5_000
 
 [conda]
 format = '\[[$symbol$environment]($style)\]'
@@ -93,6 +111,7 @@ symbol = " "
 
 [helm]
 format = '\[[$symbol($version)]($style)\]'
+symbol = "ﴱ "
 
 [hg_branch]
 format = '\[[$symbol$branch]($style)\]'
@@ -100,12 +119,10 @@ symbol = " "
 
 [java]
 format = '\[[$symbol($version)]($style)\]'
-
 symbol = " "
 
 [julia]
 format = '\[[$symbol($version)]($style)\]'
-
 symbol = " "
 
 [kotlin]
@@ -121,6 +138,7 @@ format = '\[[$symbol($version)]($style)\]'
 [memory_usage]
 format = '\[$symbol[$ram( | $swap)]($style)\]'
 symbol = " "
+disabled = false
 
 [nim]
 format = '\[[$symbol($version)]($style)\]'
@@ -128,8 +146,7 @@ symbol = " "
 
 [nix_shell]
 format = '\[[$symbol$state( \($name\))]($style)\]'
-
-symbol = " "
+symbol = " "
 
 [nodejs]
 format = '\[[$symbol($version)]($style)\]'
@@ -178,14 +195,24 @@ symbol = " "
 format = '\[[$symbol($version)]($style)\]'
 symbol = "ﯣ "
 
+[sudo]
+disabled = false
+format = '[$symbol]($style)'
+symbol = " "
+style = "bold red"
+
 [terraform]
 format = '\[[$symbol$workspace]($style)\]'
 
 [time]
-format = '\[[$time]($style)\]'
+format = '\[🕙[$time]($style)\]'
+disabled = true
+time_format = "%T"
 
 [username]
-format = '\[[$user]($style)\]'
+format = '[$user]($style)'
+show_always = true
+style_user = "purple"
 
 [vagrant]
 format = '\[[$symbol($version)]($style)\]'
@@ -198,3 +225,6 @@ format = '\[[$symbol($version)]($style)\]'
 
 [shlvl]
 symbol = " "
+
+[line_break]
+disabled = true
