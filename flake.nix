@@ -124,7 +124,7 @@
           importables = rec {
             profiles = digga.lib.rakeLeaves ./users/profiles;
             suites = with profiles; rec {
-              base = [ direnv git ];
+              base = [ direnv git lsd viddy ];
             };
           };
           users = {
