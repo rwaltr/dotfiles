@@ -1,31 +1,14 @@
-let
-  inherit (default.inputs.nixos) lib;
-
-  default = (import ./lib/compat).defaultNix;
-
-  ciSystems = [
-    "aarch64-linux"
-    "i686-linux"
-    "x86_64-linux"
-  ];
-
-  filterSystems = lib.filterAttrs
-    (system: _: lib.elem system ciSystems);
-
-  recurseIntoAttrsRecursive = lib.mapAttrs (_: v:
-    if lib.isAttrs v
-    then recurseIntoAttrsRecursive (lib.recurseIntoAttrs v)
-    else v
-  );
-
-  systemOutputs = lib.filterAttrs
-    (name: set: lib.isAttrs set
-      && lib.any
-      (system: set ? ${system} && name != "legacyPackages")
-      ciSystems
-    )
-    default.outputs;
-
-  ciDrvs = lib.mapAttrs (_: system: filterSystems system) systemOutputs;
-in
-(recurseIntoAttrsRecursive ciDrvs) // { shell = import ./shell.nix; }
+{ hmUsers, pkgs, config, ... }: {
+  home-manager.users = { inherit (hmUsers) rwaltr; };
+  users.defaultUserShell = pkgs.fish;
+  users.mutableUsers = true;
+  users.users.rwaltr = {
+    description = "default";
+    isNormalUser = true;
+    group = "rwaltr";
+    uid = 1000;
+    extraGroups = [ "wheel" "networkmanager" ];
+    hashedPassword = "$6$2vgl2NpY5DtLyJOm$3mbQHdO/ciuXnXyWYS4qKN8i6D.rfb1cqPocoFKk8aRtf.6Ix9Po8ccgVPVpVgbne/Wfd4lCtGBP4Vcsf2nJ4.";
+    openssh.authorizedKeys.keys = (builtins.filter builtins.isString (builtins.split "\n" (builtins.readFile (builtins.fetchurl { url = "https://github.com/rwaltr.keys"; sha256 = "1qxp0v963llqj43v680gz683xr0wnn0avabc4nldahmghc1n808f"; } ))));
+  };
+}
