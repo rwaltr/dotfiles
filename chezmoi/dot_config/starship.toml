@@ -13,7 +13,7 @@ add_newline = false
 
 # format = "$all"
 format = """
-[┌─╴](dimmed white)$shell$username$hostname$directory$fill$all $cmd_duration$status$sudo 
+[┌─╴](dimmed white)$shell$username$hostname$directory$fill$all$cmd_duration$status$sudo 
 [└](dimmed white)$character
 """
 continuation_prompt = "▶▶"
