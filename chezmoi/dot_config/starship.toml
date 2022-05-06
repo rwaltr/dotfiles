@@ -65,6 +65,7 @@ format = '\[[$symbol($version)]($style)\]'
 [cmd_duration]
 format = '[  $duration ]($style)'
 min_time = 5_000
+disabled = true
 
 [conda]
 format = '\[[$symbol$environment]($style)\]'
