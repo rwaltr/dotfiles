@@ -40,17 +40,18 @@ notify=notify-send -a ${app-id} -i ${app-id} ${title} ${body}
 # command-focused=no
 
 [scrollback]
-# lines=1000
+lines=1000
 # multiplier=3.0
 # indicator-position=relative
 # indicator-format=
 
 [url]
-# launch=xdg-open ${url}
+launch=xdg-open ${url}
 # label-letters=sadfjklewcmpgh
 # osc8-underline=url-mode
 # protocols=http, https, ftp, ftps, file, gemini, gopher
-# uri-characters=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.,~:;/?#@!$&%*+="'()[]
+protocols=http, https, ftp, ftps, file, gemini, gopher
+uri-characters=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.,~:;/?#@!$&%*+="'()[]
 
 [cursor]
 # style=block
@@ -106,7 +107,7 @@ notify=notify-send -a ${app-id} -i ${app-id} ${title} ${body}
 # scrollback-indicator=<regular0> <bright4>
 
 [csd]
-# preferred=server
+preferred=server
 # size=26
 # font=<primary font>
 # color=<foreground color>
