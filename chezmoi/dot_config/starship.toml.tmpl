@@ -29,10 +29,14 @@ disabled = false
 symbol = " "
 
 [hostname]
-disabled = false
 ssh_only = false
 format = "[@](dimmed white)[$hostname]($style) "
 style = "blue"
+{{- if eq .osid "android"}}
+disabled = true
+{{- else }}
+disabled = false
+{{- end}}
 
 [directory]
 truncation_length = 8
@@ -140,7 +144,11 @@ format = '\[[$symbol($version)]($style)\]'
 [memory_usage]
 format = '\[$symbol[$ram( | $swap)]($style)\]'
 symbol = " "
+{{- if eq .osid "android"}}
+disabled = true
+{{- else }}
 disabled = false
+{{- end}}
 
 [nim]
 format = '\[[$symbol($version)]($style)\]'
