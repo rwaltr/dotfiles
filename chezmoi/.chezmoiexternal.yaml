@@ -3,11 +3,6 @@
   url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
   refreshPeriod: 169h
   exact: false
-".local/share/fonts/firamono":
-  type: archive
-  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraMono.zip
-  refreshPeriod: 169h
-  exact: false
 ".local/share/fonts/lekton":
   type: archive
   url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Lekton.zip
@@ -18,14 +13,18 @@
   url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Go-Mono.zip
   refreshPeriod: 169h
   exact: false
-".local/share/fonts/heavydata":
+".local/share/fonts/jetbriansmono":
   type: archive
-  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/HeavyData.zip
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
   refreshPeriod: 169h
   exact: false
-".local/share/fonts/terminus":
+".local/share/fonts/proggyclean":
   type: archive
-  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Terminus.zip
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/ProggyClean.zip
   refreshPeriod: 169h
   exact: false
-
+".local/share/fonts/Monoid":
+  type: archive
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Monoid.zip
+  refreshPeriod: 169h
+  exact: false
