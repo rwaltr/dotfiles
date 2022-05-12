@@ -8,8 +8,8 @@
 @define-color hilight @color1;
 
 * {
-	font-size: 16px;
-	font-family: Lekton Nerd Font;
+	font-size: {{ round .font.title.size 0 }}px;
+	font-family: {{ .font.title.name }};
 	font-weight: bold;
 }
 
