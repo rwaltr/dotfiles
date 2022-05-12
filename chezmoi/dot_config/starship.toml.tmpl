@@ -223,6 +223,11 @@ time_format = "%T"
 format = '[$user]($style)'
 show_always = true
 style_user = "purple"
+{{- if eq .osid "android"}}
+disabled = true
+{{- else }}
+disabled = false
+{{- end}}
 
 [vagrant]
 format = '\[[$symbol($version)]($style)\]'
