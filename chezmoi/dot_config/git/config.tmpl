@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
 name = {{ .name }}
-email = {{ .email }}
+email = {{ .email | lower }}
 {{ if eq .personal true -}}
 signingkey = 4186BF653F777F6190DAF3C469977470B0541C75
 {{ else if eq .work true -}}
