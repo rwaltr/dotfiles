@@ -4,6 +4,8 @@
   border-radius: 2px;
   border: 2px solid @color4;
   background-color: @background;
+  font-family: {{ .font.gui.name | quote }};
+  font-size: {{ add ( round .font.gui.size 0 ) 5 }}px;
 }
 #input {
   background-color: @background;
