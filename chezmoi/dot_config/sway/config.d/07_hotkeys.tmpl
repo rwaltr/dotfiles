@@ -15,7 +15,7 @@ bindsym $mod+Shift+Escape exec 'swaylock -c 000000'
 # Start a terminal
 bindsym $mod+Return exec $term
 # Nvim Scratchpad
-# bindsym $mod+Shift+Return exec $term --title nvim-float --command nvim 
+ bindsym $mod+Shift+Return exec {{ .programs.visual }}
 
 # Kill focused window
 bindsym $mod+Shift+q kill

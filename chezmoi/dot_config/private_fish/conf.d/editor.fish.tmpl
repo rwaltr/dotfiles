@@ -1,0 +1,10 @@
+if type -q nvim
+    set -gx EDITOR {{ .programs.editor }}
+    set -gx VISUAL {{ .programs.visual }}
+    set -gx KUBE_EDITOR {{ .programs.editor }}
+    alias vim nvim
+    alias vi nvim
+    alias nano nvim
+else
+    alias nvim vim
+end
