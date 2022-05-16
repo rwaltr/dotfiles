@@ -5,7 +5,8 @@
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
-
+{{- $theme:= fromYaml (output "chezmoi" "execute-template" ( include  ".chezmoitemplates/theme" | trim )) }}
+# {{ $theme.colors.color1 | trimPrefix "#" }}
 # Source modular Bash files
 if [ -d $HOME/.config/bash ]; then
   for i in $(ls $HOME/.config/bash/*) ;
