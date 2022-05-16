@@ -165,7 +165,7 @@
 {{ $install_cmd =printf "%s %s" $sudo $install_cmd | trim -}}
 {{- end -}}
 
-sourceDir : {{ .chezmoi.sourceDir | quote }}
+sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
   name: "Ryan Walter"
