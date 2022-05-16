@@ -1,5 +1,5 @@
 {{- if lookPath "aqua" -}}
 #!{{ lookPath "bash"}}
-# Hash {{- include (joinPath .chezmoi.homeDir ".config/aqua/aqua.yaml") | sha256sum }}
+# Hash {{ include (joinPath .chezmoi.homeDir ".config/aqua/aqua.yaml") | sha1sum }}
 aqua install -a -l
 {{- end }}
