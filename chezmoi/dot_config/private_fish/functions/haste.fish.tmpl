@@ -1,4 +1,4 @@
-{{ if eq .personal true -}}
+{{ if eq .is.personal true -}}
 function haste
 a=(cat); 
     curl -X POST -s -d "$a" https://bin.waltr.tech/documents | awk -F '"' '{print "https://bin.waltr.tech/"$4}'
