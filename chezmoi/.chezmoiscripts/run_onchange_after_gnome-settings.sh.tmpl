@@ -7,7 +7,6 @@
 {{- if ne (output "gsettings" "get" "org.gnome.desktop.interface" "font-name" | trim ) ( ( cat .font.gui.name .font.gui.size ) | squote )}}
 gsettings set org.gnome.desktop.interface font-name {{ cat .font.gui.name .font.gui.size | squote }}
 {{- end}}
-
 #######################################
 # Setting Background
 #######################################
