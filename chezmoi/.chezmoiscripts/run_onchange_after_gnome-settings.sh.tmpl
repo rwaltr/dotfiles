@@ -1,0 +1,22 @@
+{{- if and ( eq .chezmoi.os "linux" ) ( not .is.headless ) -}}
+#!{{- lookPath "bash" }}
+{{- if lookPath "gsettings"}}
+#######################################
+# CONFIGURE FONTS 
+#######################################
+{{- if ne (output "gsettings" "get" "org.gnome.desktop.interface" "font-name" | trim ) ( ( cat .font.gui.name .font.gui.size ) | squote )}}
+gsettings set org.gnome.desktop.interface font-name {{ cat .font.gui.name .font.gui.size | squote }}
+{{- end}}
+
+#######################################
+# Setting Background
+#######################################
+{{- $theme:= fromYaml (output "chezmoi" "execute-template" ( include  ".chezmoitemplates/theme" | trim )) }}
+{{- if ne $theme.wallpaper "None" }}
+{{- $background_uri := printf "file://%s/%s" .chezmoi.homeDir $theme.wallpaper }}
+{{- if ne (output "gsettings" "get" "org.gnome.desktop.background" "picture-uri" | trim ) ( $background_uri | squote ) }}
+gsettings set org.gnome.desktop.background {{ $background_uri | squote }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
