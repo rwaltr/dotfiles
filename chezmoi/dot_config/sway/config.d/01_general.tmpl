@@ -4,7 +4,7 @@ font pango: {{ .font.gui.name }} {{ .font.gui.size}}
 
 ### Variables
 # Logo key. Use Mod1 for Alt.
-{{ if ( and (eq .chezmoi.hostname "teletran1") ( eq .is.battlestation false)) -}}
+{{ if ( and (eq .chezmoi.hostname "teletran1-work") ( eq .is.battlestation false)) -}}
 set $mod Mod1
 {{ else -}}
 set $mod Mod4
