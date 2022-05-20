@@ -8,3 +8,5 @@ jorgebucaran/autopair.fish
 jorgebucaran/spark.fish
 nickeb96/puffer-fish
 wfxr/forgit
+evanlucas/fish-kubectl-completions
+awinecki/fish-kubecolor-completions
