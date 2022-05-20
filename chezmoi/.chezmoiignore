@@ -7,3 +7,6 @@ Documents
 Music
 Videos
 {{- end -}}
+{{- if eq .is.work false -}}
+.ssh/config.d/work.conf
+{{- end -}}
