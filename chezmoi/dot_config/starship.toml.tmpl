@@ -243,3 +243,13 @@ symbol = " "
 
 [line_break]
 disabled = true
+
+[custom.talos]
+disabled = false
+command = "yq e '.context' ~/.talos/config"
+symbol = "🐦"
+style = "red"
+shell = ["bash", "--noprofile", "--norc"]
+format = '\[[$symbol $output]($style)\]'
+when = "test -f ~/.talos/config"
+
