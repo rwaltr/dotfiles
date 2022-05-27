@@ -1,8 +1,8 @@
-{{ if eq .personal true -}}
+{{ if eq .is.personal true -}}
 {{ range (gitHubKeys "rwaltr") -}}
 {{ .Key }}
 {{ end -}}
 {{ end -}}
-{{ if eq .work true -}}
+{{ if eq .is.work true -}}
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnzPT611NeZvUoCzU5W6sjsHMSzH06NzQuncMZE7AWackzhdwt5PC/PwMhKKny/SdqQ1N4ROHs6u7lnm+90y8OSkATzmiRP15boh3b7IrKYFTdWb4Cz2yJVdVJtF3bKbjFjL64+Dc3YGIxJDSM5R6J43Ms7Pmexs0fz7ObTjhTlN7QrgFGdSnjFm5yr1FI15c9qTBzofl8cL9eyYbd1j5h7/bFz5nZ3YI9bXwyEVSEMFPxoJdBA7RArba76zUzRuu/4CHxfFdmys4f52J0IYCJv0Bxupjd8dwyHwLLSJkoLGbf3njxcgEi/XSctdcHtnWTiKjfEB+6Lrguhgkg/CCv ryanw@yubikey-14819324
 {{ end -}}

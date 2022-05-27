@@ -1,4 +1,4 @@
-{{- if eq .headless true -}}
+{{- if eq .is.headless true -}}
 .config/sway
 .config/swaylock
 .config/mpv
@@ -6,4 +6,7 @@
 Documents
 Music
 Videos
+{{- end -}}
+{{- if eq .is.work false -}}
+.ssh/config.d/work.conf
 {{- end -}}

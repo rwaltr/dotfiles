@@ -6,6 +6,9 @@
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
 {{- $work := false -}}{{/* true if this machine should have work secrets from BitWarden */}}
 
+{{- $work := contains "-work" (lower .chezmoi.hostname) -}}
+{{- $personal := not $work -}}
+
 {{- /* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */ -}}
 {{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "vagrant" "vscode") -}}
 {{-   $headless = true -}}
@@ -22,10 +25,6 @@
 {{-     $headless = false -}}
 {{-     $personal = true -}}
 {{-     $battlestation = true -}}
-
-{{-   else if eq $hostname "teletran1" -}}
-{{-     $headless = false -}}
-{{-     $work = true -}}
 
 {{-   else if stdinIsATTY -}}
 
@@ -53,7 +52,7 @@
 {{-       $ephemeral = promptBool "ephemeral" -}}
 {{-     end -}}
 
-{{-     if hasKey . "battlestation" -}}
+{{-     if hasKey . "battlestation" -}}{{/* True if this machine is attached to the battlestation workstation */}}
 {{-       $battlestation = .battlestation -}}
 {{-     else -}}
 {{-       $battlestation = promptBool "battlestation" -}}
@@ -66,28 +65,131 @@
 {{- end -}}
 
 {{- $osid := .chezmoi.os -}}
+{{- $osIDLike := ""}}
 {{- if hasKey .chezmoi.osRelease "id" -}}
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{-   $osIDLike = .chezmoi.osRelease.id }}
 {{- end -}}
 
 {{- if ne .personal true -}}
 {{- $email = promptString "Email" -}}
 {{- end -}}
 
+{{- $editor := "" -}}
+{{- if lookPath "nvim" -}}
+  {{- $editor = "nvim" -}}
+{{- else if lookPath "vim" -}}
+  {{- $editor = "vim" -}}
+{{- else if lookPath "vi" -}}
+  {{- $editor = "vi" -}}
+{{- else if lookPath "nano" -}}
+  {{- $editor = "nano" -}}
+{{- end -}}
+
+{{- $visual := "" -}}
+{{- if lookPath "neovide" -}}
+  {{- $visual = "neovide" -}}
+{{- else if lookPath "nvim-qt" -}}
+  {{- $visual = "nvim-qt" -}}
+  {{- else -}}
+{{- $visual = $editor -}}
+{{- end -}}
+
+{{ $terminal := "" -}}
+{{- if lookPath "foot" -}}
+  {{- $terminal = "foot" -}}
+{{- else if lookPath "alacritty" -}}
+  {{- $terminal = "alacritty" -}}
+  {{- else -}}
+{{- $terminal = "gnome-terminal" -}}
+{{- end }}
+
+{{ $sudo := "sudo" -}}
+{{ if eq .chezmoi.username "root" -}}
+{{ $sudo = "" -}}
+{{ end -}}
+
+{{ $update_cmd :="" -}}
+{{ $upgrade_cmd :="" -}}
+{{ $install_cmd := "" -}}
+
+{{- if eq .chezmoi.os "darwin" -}}
+
+{{-   $update_cmd ="brew update" -}}
+{{-   $upgrade_cmd ="brew update && brew upgrade" -}}
+{{-   $install_cmd ="brew install" -}}
+
+{{- else if eq .chezmoi.os "linux" -}}
+
+{{-   if eq $osIDLike "debian" -}}
+{{-   $update_cmd = "apt -qq -y update" -}}
+{{-   $upgrade_cmd =printf "%s apt update && %s apt upgrade -y" $sudo $sudo | trim -}}
+{{-   $install_cmd ="apt -qq -y install" -}}
+
+{{-   else if eq $osIDLike "alpine" -}}
+{{-   $update_cmd ="apk update" -}}
+{{-   $upgrade_cmd =printf "%s apk update && %s apk upgrade" $sudo $sudo | trim -}}
+{{-   $install_cmd ="apk add" -}}
+
+{{-   else if eq $osIDLike "suse" -}}
+{{-   $update_cmd ="zypper refresh" -}}
+{{-   $upgrade_cmd =printf "%s zypper update" $sudo | trim -}}
+{{-   $install_cmd ="zypper in" -}}
+
+{{-   else if eq $osIDLike "gentoo" -}}
+{{-   $update_cmd ="emerge -u world" -}}
+{{-   $upgrade_cmd =printf "%s emerge -u world" $sudo | trim -}}
+{{-   $install_cmd ="emerge -av" -}}
+
+{{-   else if eq $osIDLike "fedora" -}}
+{{-   $update_cmd ="dnf check-update" -}}
+{{-   $upgrade_cmd =printf "%s dnf upgrade" $sudo | trim -}}
+{{-   $install_cmd ="dnf install" -}}
+
+{{-   else if eq $osIDLike "centos" -}}
+{{-   $update_cmd ="yum check-update" -}}
+{{-   $upgrade_cmd =printf "%s yum update" $sudo | trim -}}
+{{-   $install_cmd ="yum install" -}}
+
+{{-   else if eq $osIDLike "arch" -}}
+{{-   $update_cmd ="pacman -Syy" -}}
+{{-   $upgrade_cmd =printf "%s pacman -Syu" $sudo | trim -}}
+{{-   $install_cmd ="pacman -S" -}}
+
+{{-   end -}}
+{{ $update_cmd =printf "%s %s" $sudo $update_cmd | trim -}}
+{{ $install_cmd =printf "%s %s" $sudo $install_cmd | trim -}}
+{{- end -}}
+
+sourceDir: {{ .chezmoi.sourceDir | quote }}
+
 data:
   name: "Ryan Walter"
   email: {{ $email | quote }}
-  personal: {{ $personal }}
-  work: {{ $work }}
-  battlestation: {{ $battlestation }}
-  ephemeral: {{ $ephemeral }}
-  headless: {{ $headless }}
+  is:
+    personal: {{ $personal }}
+    work: {{ $work }}
+    battlestation: {{ $battlestation }}
+    ephemeral: {{ $ephemeral }}
+    headless: {{ $headless }}
   osid: {{ $osid | quote }}
+  osidlike: {{ $osIDLike | quote }}
   theme: "rwaltr"
   programs:
-    terminal: alacritty
-    editor: nvim
-    visual: neovide
+    terminal: {{ $terminal | quote }}
+    editor: {{ $editor | quote }}
+    visual: {{ $visual | quote }}
+    browser: "firefox"
+  cmd:
+    sudo: {{ $sudo }}
+    os:
+      update: {{ $update_cmd }}
+      upgrade: {{ $upgrade_cmd }}
+      install: {{ $install_cmd }}
+    python:
+      install: pip3 install --user
+    node:
+      install: npm install -g --prefix {{.chezmoi.homeDir}}/.local/share/npm
   font:
     gui:
       name: "Lekton Nerd Font"
@@ -104,9 +206,9 @@ data:
     port: 6600
     timeout: 15
 gpg:
-  {{- if .personal }}
+  {{- if $personal }}
   recipient: "4186BF653F777F6190DAF3C469977470B0541C75"
   {{- end}}
-  {{- if .work }}
+  {{- if $work }}
   recipient: "2F229B60DC918FB2F90C713CA71F460F6224B07B"
   {{- end}}

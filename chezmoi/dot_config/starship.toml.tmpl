@@ -13,7 +13,7 @@ add_newline = false
 
 # format = "$all"
 format = """
-[┌─╴](dimmed white)$shell$username$hostname$directory$fill$all$cmd_duration$status$sudo 
+[┌─╴](dimmed white)$shell$username$hostname$sudo$directory$fill$all$status 
 [└](dimmed white)$character
 """
 continuation_prompt = "▶▶"
@@ -67,7 +67,7 @@ us-west-2 = "Oregon"
 format = '\[[$symbol($version)]($style)\]'
 
 [cmd_duration]
-format = '[  $duration ]($style)'
+format = '[ $duration]($style)'
 min_time = 5_000
 disabled = true
 
@@ -208,7 +208,7 @@ symbol = "ﯣ "
 [sudo]
 disabled = false
 format = '[$symbol]($style)'
-symbol = ""
+symbol = " "
 style = "bold red"
 
 [terraform]
@@ -243,3 +243,13 @@ symbol = " "
 
 [line_break]
 disabled = true
+
+[custom.talos]
+disabled = false
+command = "yq e '.context' ~/.talos/config"
+symbol = "🐦"
+style = "red"
+shell = ["bash", "--noprofile", "--norc"]
+format = '\[[$symbol $output]($style)\]'
+when = "test -f ~/.talos/config"
+

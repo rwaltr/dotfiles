@@ -41,7 +41,7 @@ no_focus [app_id="avizo-service"]
 for_window [window_role = "GtkFileChooserDialog"] resize set 590 340
 for_window [window_role = "GtkFiileChooserDialog"] move position center
 for_window [app_id = "tlp-ui"] floating enable
-for_window [title = "mpvfloat"] floating enable
+for_window [app_id="mpv"] floating enable, border pixel 0
 for_window [title = ".*Kee - Mozilla Firefox"] floating enable
 for_window [app_id = "nm-openconnect-auth-dialog"] floating enable
 for_window [class = "davmail-DavGateway"] floating enable
@@ -82,6 +82,8 @@ for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
 for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
 for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
 for_window [title="^Steam Keyboard$"] floating enable
+for_window [title="^Arma 3*Arma3_64.exe*"] floating enable
+for_window [title="^Arma 3 Launcher"] floating enable
 
 
 # Scratchpad neovim 

@@ -2,14 +2,14 @@
 [user]
 name = {{ .name }}
 email = {{ .email | lower }}
-{{ if eq .personal true -}}
+{{ if eq .is.personal true -}}
 signingkey = 4186BF653F777F6190DAF3C469977470B0541C75
-{{ else if eq .work true -}}
+{{ else if eq .is.work true -}}
 signingkey = 2F229B60DC918FB2F90C713CA71F460F6224B07B
 {{ end -}}
 
 [commit]
-{{ if (or (eq .personal true) ( eq .work true )) -}}
+{{ if (or (eq .is.personal true) ( eq .is.work true )) -}}
 gpgsign = true
 {{ else }}
 gpgsign = false
@@ -22,7 +22,7 @@ signOff = true
 pushInsteadOf = https://github.com/
 
 [alias]
-{{ if eq .personal true -}}
+{{ if eq .is.personal true -}}
 	yolo = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
 {{ end -}}	
 	a = add
