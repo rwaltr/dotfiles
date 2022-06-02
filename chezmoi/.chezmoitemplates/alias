@@ -1,12 +1,12 @@
 {{- if eq .shell "fish" -}}
-# {{- .description -}}
+# {{- .description }}
 alias {{ .name }} {{ .definition }}
 {{- end -}}
 {{- if eq .shell "bash" -}}
-# {{- .description -}}
+# {{- .description }}
 alias {{ .name }}={{ .definition }}
 {{- end -}}
 {{- if eq .shell "zsh" -}}
-# {{- .description -}}
+# {{- .description }}
 alias {{ .name }}={{ .definition }}
 {{- end -}}
