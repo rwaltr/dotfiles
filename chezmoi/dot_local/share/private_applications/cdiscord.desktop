@@ -3,7 +3,7 @@ Version=1.0
 Type=Application
 Name=Discord
 Comment=Discord (Chrome)
-Exec=flatpak run com.google.ChromeDev --app="https://discord.com"
+Exec=flatpak run com.google.ChromeDev --app="https://discord.com/app"
 Icon=
 Path=
 Terminal=false
