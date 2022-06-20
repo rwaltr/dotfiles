@@ -1,11 +1,5 @@
 {
     "output": {
-        "autogain": {
-            "input-gain": 0.0,
-            "output-gain": 0.0,
-            "reference": "Geometric Mean (MSI)",
-            "target": -15.0
-        },
         "bass_enhancer": {
             "amount": 5.0,
             "blend": 0.0,
@@ -240,20 +234,11 @@
             },
             "split-channels": false
         },
-        "maximizer": {
-            "ceiling": 0.0,
-            "input-gain": 0.0,
-            "output-gain": 0.0,
-            "release": 3.149999999999997,
-            "threshold": -3.0000000000000013
-        },
         "plugins_order": [
             "equalizer",
             "convolver",
             "bass_enhancer",
-            "crossfeed",
-            "autogain",
-            "maximizer"
+            "crossfeed"
         ]
     }
 }
