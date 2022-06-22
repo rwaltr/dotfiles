@@ -36,7 +36,7 @@ packages:
 - name: mikefarah/yq@v4.21.1
 - name: mozilla/sops@v3.7.2
 - name: ogham/dog@v0.1.0
-- name: rclone/rclone@v1.57.0
+- name: rclone/rclone@v1.58.1
 - name: restic/restic@v0.12.1
 - name: sachaos/viddy@v0.3.4
 - name: sbstp/kubie@v0.16.0
