@@ -1,0 +1,23 @@
+{
+  extends: [
+    ":enableRenovate",
+    "config:base",
+    ":disableRateLimiting",
+    "github>aquaproj/aqua-renovate-config#0.1.8",
+    "github>aquaproj/aqua-renovate-config:installer-script#0.1.8(install-aqua\\.sh)",
+    "github>aquaproj/aqua-renovate-config:file#0.1.8(^aqua/.*\\.ya?ml$)"
+    /* "github>rwaltr/infra//.github/renovate/autoMerge", */
+  ],
+  platform: "github",
+  username: "Teletraan-X[bot]",
+  repositories: ["rwaltr/dotfiles"],
+  onboarding: false,
+  requireConfig: false,
+  gitAuthor: "99223764+teletraan-x[bot]@users.noreply.github.com",
+  dependencyDashboardTitle: "Renovate Dashboard 🤖",
+  suppressNotifications: ["prIgnoreNotification"],
+  rebaseWhen: "conflicted",
+  // set up ignored deps
+  // ignoreDeps: [],
+  // ignorePaths: ["legacy/**", "docs/**"] */
+}
