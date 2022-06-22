@@ -24,7 +24,7 @@ packages:
 - name: go-task/task@v3.12.1
 - name: hashicorp/consul@v1.11.4
 - name: hashicorp/vault@v1.9.3
-- name: helm/helm@v3.8.0
+- name: helm/helm@v3.9.0
 - name: hidetatz/kubecolor@v0.0.20
 - name: infracost/infracost@v0.9.18
 - name: itchyny/gojq@v0.12.7
