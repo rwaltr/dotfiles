@@ -32,7 +32,7 @@ packages:
 - name: kubernetes-sigs/krew@v0.4.3
 - name: kubernetes-sigs/kustomize@kustomize/v4.5.5
 - name: kubernetes/kubectl@v1.23.4
-- name: kubernetes/minikube@v1.25.1
+- name: kubernetes/minikube@v1.25.2
 - name: mikefarah/yq@v4.21.1
 - name: mozilla/sops@v3.7.2
 - name: ogham/dog@v0.1.0
