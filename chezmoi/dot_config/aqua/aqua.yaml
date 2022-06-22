@@ -27,7 +27,7 @@ packages:
 - name: helm/helm@v3.8.0
 - name: hidetatz/kubecolor@v0.0.20
 - name: infracost/infracost@v0.9.18
-- name: itchyny/gojq@v0.12.7
+- name: itchyny/gojq@v0.12.8
 - name: kubernetes-sigs/cluster-api@v1.1.2
 - name: kubernetes-sigs/krew@v0.4.3
 - name: kubernetes-sigs/kustomize@kustomize/v4.5.5
