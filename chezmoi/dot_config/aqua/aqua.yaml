@@ -16,7 +16,7 @@ packages:
 - name: aquasecurity/trivy@v0.29.2
 - name: argoproj/argo-cd@v2.2.7
 - name: argoproj/argo-rollouts@v1.2.1
-- name: argoproj/argo-workflows@v3.2.9
+- name: argoproj/argo-workflows@v3.3.7
 - name: cheat/cheat@4.2.3
 - name: cli/cli@v2.12.1
 - name: derailed/k9s@v0.25.18
