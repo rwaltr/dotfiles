@@ -46,3 +46,4 @@ packages:
 - name: siderolabs/talos@v1.1.0
 - name: twpayne/chezmoi@v2.18.0
 - name: wagoodman/dive@v0.10.0
+- name: go-jira/jira@v1.0.27
