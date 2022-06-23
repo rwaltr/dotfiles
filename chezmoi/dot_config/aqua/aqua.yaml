@@ -26,7 +26,7 @@ packages:
 - name: hashicorp/vault@v1.11.0
 - name: helm/helm@v3.9.0
 - name: hidetatz/kubecolor@v0.0.20
-- name: infracost/infracost@v0.10.4
+- name: infracost/infracost@v0.10.5
 - name: itchyny/gojq@v0.12.8
 - name: kubernetes-sigs/cluster-api@v1.1.4
 - name: kubernetes-sigs/krew@v0.4.3
