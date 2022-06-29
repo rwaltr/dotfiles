@@ -102,61 +102,9 @@
   {{- $terminal = "alacritty" -}}
   {{- else -}}
 {{- $terminal = "gnome-terminal" -}}
-{{- end }}
+{{- end -}}
 
-{{ $sudo := "sudo" -}}
-{{ if eq .chezmoi.username "root" -}}
-{{ $sudo = "" -}}
-{{ end -}}
-
-{{ $update_cmd :="" -}}
-{{ $upgrade_cmd :="" -}}
-{{ $install_cmd := "" -}}
-
-{{- if eq .chezmoi.os "darwin" -}}
-
-{{-   $update_cmd ="brew update" -}}
-{{-   $upgrade_cmd ="brew update && brew upgrade" -}}
-{{-   $install_cmd ="brew install" -}}
-
-{{- else if eq .chezmoi.os "linux" -}}
-
-{{-   if eq $osIDLike "debian" -}}
-{{-   $update_cmd = "apt -qq -y update" -}}
-{{-   $upgrade_cmd =printf "%s apt update && %s apt upgrade -y" $sudo $sudo | trim -}}
-{{-   $install_cmd ="apt -qq -y install" -}}
-
-{{-   else if eq $osIDLike "alpine" -}}
-{{-   $update_cmd ="apk update" -}}
-{{-   $upgrade_cmd =printf "%s apk update && %s apk upgrade" $sudo $sudo | trim -}}
-{{-   $install_cmd ="apk add" -}}
-
-{{-   else if eq $osIDLike "suse" -}}
-{{-   $update_cmd ="zypper refresh" -}}
-{{-   $upgrade_cmd =printf "%s zypper update" $sudo | trim -}}
-{{-   $install_cmd ="zypper in" -}}
-
-{{-   else if eq $osIDLike "gentoo" -}}
-{{-   $update_cmd ="emerge -u world" -}}
-{{-   $upgrade_cmd =printf "%s emerge -u world" $sudo | trim -}}
-{{-   $install_cmd ="emerge -av" -}}
-
-{{-   else if eq $osIDLike "fedora" -}}
-{{-   $update_cmd ="dnf check-update" -}}
-{{-   $upgrade_cmd =printf "%s dnf upgrade" $sudo | trim -}}
-{{-   $install_cmd ="dnf install" -}}
-
-{{-   else if eq $osIDLike "centos" -}}
-{{-   $update_cmd ="yum check-update" -}}
-{{-   $upgrade_cmd =printf "%s yum update" $sudo | trim -}}
-{{-   $install_cmd ="yum install" -}}
-
-{{-   else if eq $osIDLike "arch" -}}
-{{-   $update_cmd ="pacman -Syy" -}}
-{{-   $upgrade_cmd =printf "%s pacman -Syu" $sudo | trim -}}
-{{-   $install_cmd ="pacman -S" -}}
-
-{{-   end -}}
+{{- end -}}
 {{ $update_cmd =printf "%s %s" $sudo $update_cmd | trim -}}
 {{ $install_cmd =printf "%s %s" $sudo $install_cmd | trim -}}
 {{- end -}}
@@ -182,16 +130,6 @@ data:
     browser: "firefox"
     vault:
       addr: "https://vault.waltr.tech"
-  cmd:
-    sudo: {{ $sudo }}
-    os:
-      update: {{ $update_cmd }}
-      upgrade: {{ $upgrade_cmd }}
-      install: {{ $install_cmd }}
-    python:
-      install: pip3 install --user
-    node:
-      install: npm install -g --prefix {{.chezmoi.homeDir}}/.local/share/npm
   font:
     gui:
       name: "Lekton Nerd Font"
