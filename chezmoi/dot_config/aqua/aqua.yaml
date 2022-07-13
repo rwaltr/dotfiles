@@ -43,7 +43,7 @@ packages:
 - name: schollz/croc@v9.6.0
 - name: sharkdp/bat@v0.21.0
 - name: stern/stern@v1.21.0
-- name: siderolabs/talos@v1.1.0
+- name: siderolabs/talos@v1.1.1
 - name: twpayne/chezmoi@v2.18.1
 - name: wagoodman/dive@v0.10.0
 - name: go-jira/jira@v1.0.27
