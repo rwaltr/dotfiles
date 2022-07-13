@@ -44,11 +44,13 @@ truncation_length = 8
 truncation_symbol = "…/"
 read_only = " "
 home_symbol = " "
+disabled = false
 
 [character]
 success_symbol = "[>](dimmed white)"
 error_symbol = "[>](bold red)"
 vicmd_symbol = '[](dimmed white)'
+disabled = false
 
 [status]
 disabled = false
@@ -57,6 +59,7 @@ format = "[$symbol $status]($style) "
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 symbol = " "
+disabled = false
 
 [aws.region_aliases]
 us-east-1 = "N. Virginia"
@@ -66,6 +69,7 @@ us-west-2 = "Oregon"
 
 [cmake]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [cmd_duration]
 format = '[ $duration]($style)'
@@ -75,65 +79,83 @@ disabled = true
 [conda]
 format = '\[[$symbol$environment]($style)\]'
 symbol = " "
+disabled = false
 
 [crystal]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [dart]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [deno]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [docker_context]
 format = '\[[$symbol$context]($style)\]'
 symbol = " "
+disabled = false
 
 [dotnet]
 format = '\[[$symbol($version)(🎯 $tfm)]($style)\]'
+disabled = false
 
 [elixir]
 format = '\[[$symbol($version \(OTP $otp_version\))]($style)\]'
 symbol = " "
+disabled = false
 
 [elm]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [erlang]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [gcloud]
 format = '\[[$symbol$account(@$domain)(\($region\))]($style)\]'
+disabled = false
 
 [git_branch]
 format = '\[[$symbol$branch]($style)\]'
 symbol = " "
+disabled = false
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style))'
+disabled = false
 
 [golang]
 format = '\[[$symbol($version)]($style)\]'
 symbol = " "
+disabled = false
 
 [helm]
 format = '\[[$symbol($version)]($style)\]'
 symbol = "ﴱ "
+disabled = false
 
 [hg_branch]
 format = '\[[$symbol$branch]($style)\]'
 symbol = " "
+disabled = false
 
 [java]
 format = '\[[$symbol($version)]($style)\]'
 symbol = " "
+disabled = false
 
 [julia]
 format = '\[[$symbol($version)]($style)\]'
 symbol = " "
+disabled = false
 
 [kotlin]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [kubernetes]
 # format = '\[[$symbol$context( \($namespace\))]($style)\]'
@@ -142,6 +164,7 @@ disabled = false
 
 [lua]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [memory_usage]
 format = '\[$symbol[$ram( | $swap)]($style)\]'
@@ -155,57 +178,72 @@ disabled = false
 [nim]
 format = '\[[$symbol($version)]($style)\]'
 symbol = " "
+disabled = false
 
 [nix_shell]
 format = '\[[$symbol$state( \($name\))]($style)\]'
 symbol = " "
+disabled = false
 
 [nodejs]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [ocaml]
 format = '\[[$symbol($version)(\($switch_indicator$switch_name\))]($style)\]'
+disabled = false
 
 [openstack]
 format = '\[[$symbol$cloud(\($project\))]($style)\]'
+disabled = false
 
 [package]
 format = '\[[$symbol$version]($style)\]'
 symbol = " "
+disabled = false
 
 [perl]
 format = '\[[$symbol($version)]($style)\]'
 symbol = " "
+disabled = false
 
 [php]
 format = '\[[$symbol($version)]($style)\]'
 symbol = " "
+disabled = false
 
 [purescript]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [python]
 format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
 symbol = " "
+disabled = false
 
 [red]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [ruby]
 format = '\[[$symbol($version)]($style)\]'
-
 symbol = " "
+disabled = false
+
 [rust]
 format = '\[[$symbol($version)]($style)\]'
 symbol = " "
+disabled = false
 
 [scala]
 format = '\[[$symbol($version)]($style)\]'
 symbol = " "
+disabled = false
 
 [swift]
 format = '\[[$symbol($version)]($style)\]'
 symbol = "ﯣ "
+disabled = false
 
 [sudo]
 disabled = false
@@ -215,6 +253,7 @@ style = "bold red"
 
 [terraform]
 format = '\[[$symbol$workspace]($style)\]'
+disabled = false
 
 [time]
 format = '\[🕙[$time]($style)\]'
@@ -233,15 +272,19 @@ disabled = false
 
 [vagrant]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [vlang]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [zig]
 format = '\[[$symbol($version)]($style)\]'
+disabled = false
 
 [shlvl]
 symbol = " "
+disabled = false
 
 [line_break]
 disabled = true
