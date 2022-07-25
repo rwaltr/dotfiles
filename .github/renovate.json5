@@ -3,6 +3,7 @@
     ":enableRenovate",
     "config:base",
     ":disableRateLimiting",
+    ":semanticCommits",
     "github>aquaproj/aqua-renovate-config#1.2.0",
     "github>aquaproj/aqua-renovate-config:installer-script#1.2.0(install-aqua\\.sh)",
     "github>aquaproj/aqua-renovate-config:file#1.2.0(^aqua/.*\\.ya?ml$)"
@@ -17,6 +18,40 @@
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
   suppressNotifications: ["prIgnoreNotification"],
   rebaseWhen: "conflicted",
+  commitMessageTopic: "{{depName}}",
+  commitMessageExtra: "to {{newVersion}}",
+  commitMessageSuffix: "",
+  semanticCommitScope: "",
+  packageRules: [
+    {
+      matchUpdateTypes: ["major"],
+      semanticCommitType: "feat!",
+    },
+    {
+      matchUpdateTypes: ["minor"],
+      semanticCommitType: "feat",
+    },
+    {
+      matchUpdateTypes: ["patch"],
+      semanticCommitType: "fix",
+    },
+    {
+      matchManagers: ["github-actions"],
+      automerge: true,
+      automergeType: "branch",
+      requiredStatusChecks: null,
+      matchUpdateTypes: ["minor", "patch"],
+    },
+    {
+      automerge: true,
+      automergeType: "branch",
+      requiredStatusChecks: null,
+      matchUpdateTypes: ["minor", "patch"],
+      "matchPackageNames": [
+        "aquaproj/aqua-registry"
+      ]
+    },
+  ],
   // set up ignored deps
   // ignoreDeps: [],
   // ignorePaths: ["legacy/**", "docs/**"] */
