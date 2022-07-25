@@ -105,15 +105,13 @@
 {{- end -}}
 
 {{- end -}}
-{{ $update_cmd =printf "%s %s" $sudo $update_cmd | trim -}}
-{{ $install_cmd =printf "%s %s" $sudo $install_cmd | trim -}}
 {{- end -}}
-
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
 data:
   name: "Ryan Walter"
   email: {{ $email | quote }}
+  keyboard: "qwerty"
   is:
     personal: {{ $personal }}
     work: {{ $work }}
