@@ -40,9 +40,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 --#region chezmoi
 local chezmoigroup = vim.api.nvim_create_augroup("_chezmoi", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  pattern = "~/.local/share/chezmoi/*",
+  pattern = "$HOME/.local/share/chezmoi/*",
   callback = function()
-    vim.cmd("silent! chezmoi apply --source-path %")
+  vim.fn.jobstart({"chezmoi", "apply" })
   end,
   group = chezmoigroup,
 })
