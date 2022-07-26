@@ -13,7 +13,7 @@ packages:
 - name: ahmetb/kubectl-tree@v0.4.2
 - name: ahmetb/kubectx/kubens@v0.9.4
 - name: ahmetb/kubectx@v0.9.4
-- name: aquasecurity/trivy@v0.30.3
+- name: aquasecurity/trivy@v0.30.4
 - name: argoproj/argo-cd@v2.4.7
 - name: argoproj/argo-rollouts@v1.2.2
 - name: argoproj/argo-workflows@v3.3.8
