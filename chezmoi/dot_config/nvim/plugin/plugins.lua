@@ -77,9 +77,21 @@ return packer.startup(function(use)
   use("neovim/nvim-lspconfig")
 
   -- LspInstall
-  use({
-    "williamboman/nvim-lsp-installer",
-  })
+  -- use({
+  --   "williamboman/nvim-lsp-installer",
+  -- })
+  -- New LSP with Mason
+  use { "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end
+  }
+  use { "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require('mason-lspconfig').setup()
+    end
+  }
+
   -- LSP for non LSP items
   use({
     "jose-elias-alvarez/null-ls.nvim",
@@ -365,7 +377,7 @@ return packer.startup(function(use)
   -- Zen
 
   use({
-    "Pocco81/TrueZen.nvim",
+    "Pocco81/true-zen.nvim",
     config = function()
       require("rwaltr.zen")
     end,
