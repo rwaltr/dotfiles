@@ -81,16 +81,8 @@ return packer.startup(function(use)
   --   "williamboman/nvim-lsp-installer",
   -- })
   -- New LSP with Mason
-  use { "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end
-  }
-  use { "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require('mason-lspconfig').setup()
-    end
-  }
+  use { "williamboman/mason.nvim"}
+  use { "williamboman/mason-lspconfig.nvim"}
 
   -- LSP for non LSP items
   use({
@@ -109,6 +101,8 @@ return packer.startup(function(use)
   -- Json enabled lsp settings
   use("tamago324/nlsp-settings.nvim")
 
+  -- Lua settings helper
+  use ("folke/lua-dev.nvim")
   ------------------------------------------
   -- Autocompletion
 
