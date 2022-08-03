@@ -119,6 +119,9 @@ use({
     require("lsp_lines").setup()
   end,
 })
+
+  -- LSP Symbols
+use {'simrat39/symbols-outline.nvim'}
   ------------------------------------------
   -- Autocompletion
 
