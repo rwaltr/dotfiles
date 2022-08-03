@@ -19,6 +19,8 @@ end
 
 -- Have packer use a popup window
 packer.init({
+  snapshot_path = fn.stdpath "config" .. "/snapshots",
+  max_jobs = 50,
   display = {
     open_fn = function()
       return require("packer.util").float({ border = "rounded" })
@@ -81,8 +83,8 @@ return packer.startup(function(use)
   --   "williamboman/nvim-lsp-installer",
   -- })
   -- New LSP with Mason
-  use { "williamboman/mason.nvim"}
-  use { "williamboman/mason-lspconfig.nvim"}
+  use { "williamboman/mason.nvim" }
+  use { "williamboman/mason-lspconfig.nvim" }
 
   -- LSP for non LSP items
   use({
@@ -102,7 +104,21 @@ return packer.startup(function(use)
   use("tamago324/nlsp-settings.nvim")
 
   -- Lua settings helper
-  use ("folke/lua-dev.nvim")
+  use("folke/lua-dev.nvim")
+
+  -- LSP Status indicator
+  use { "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup {}
+    end,
+  }
+  -- LSP lines instead of being hidden
+use({
+  "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  config = function()
+    require("lsp_lines").setup()
+  end,
+})
   ------------------------------------------
   -- Autocompletion
 
