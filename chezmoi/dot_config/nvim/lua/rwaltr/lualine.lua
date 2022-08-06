@@ -61,12 +61,10 @@ end
 local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
--- local pywal_theme = require('pywal.lualine.themes.pywal-nvim')
 lualine.setup({
 	options = {
 		icons_enabled = true,
 		theme = "auto",
-		-- theme = "pywal_theme",
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
 		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },

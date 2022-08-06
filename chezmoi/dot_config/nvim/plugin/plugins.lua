@@ -23,7 +23,8 @@ packer.init({
   max_jobs = 50,
   display = {
     open_fn = function()
-      return require("packer.util").float({ border = "rounded" })
+      -- return require("packer.util").float({ border = "rounded" })
+      return require("packer.util").float({})
     end,
   },
 })
@@ -113,15 +114,15 @@ return packer.startup(function(use)
     end,
   }
   -- LSP lines instead of being hidden
-use({
-  "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  config = function()
-    require("lsp_lines").setup()
-  end,
-})
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
 
   -- LSP Symbols
-use {'simrat39/symbols-outline.nvim'}
+  use { 'simrat39/symbols-outline.nvim' }
   ------------------------------------------
   -- Autocompletion
 
@@ -302,37 +303,14 @@ use {'simrat39/symbols-outline.nvim'}
 
   use("kyazdani42/nvim-web-devicons")
 
-  -- Colorscheme for WAL
-  use({
-    "oncomouse/lushwal",
-    requires = {
-      { "rktjmp/lush.nvim", opt = true },
-      { "rktjmp/shipwright.nvim", opt = true },
-      config = function()
-        require("rwaltr.lushwal")
-      end,
-    },
-  })
-
   -- colorscheme from lunarvim
   use("LunarVim/Colorschemes")
-  use("lunarvim/darkplus.nvim")
-  -- use({
-  -- 	"atalazer/wally.nvim",
-  -- 	run = "./setup.sh",
-  -- 	setup = function()
-  -- 		vim.g.wally_italic_functions = true
-  -- 		vim.g.wally_sidebars = { "qf", "vista_kind", "terminal", "Nvimtree", "Trouble", "packer" }
-  -- 	end,
-  -- 	config = [[require("wally").colorscheme()]],
-  -- })
-  -- use({
-  -- 		"AlphaTechnolog/pywal.nvim",
-  -- 		as = "pywal",
-  -- 		config = function()
-  -- 			require("pywal").setup()
-  -- 		end,
-  -- 	})
+  --
+  -- Themer...
+  use({
+    "themercorp/themer.lua",
+  })
+
   -- use({
   -- 	"kosayoda/nvim-lightbulb",
   -- 	config = function()
