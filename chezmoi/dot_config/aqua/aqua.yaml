@@ -51,3 +51,4 @@ packages:
 - name: cloudflare/cfssl@v1.6.1
 - name: kopia/kopia@v0.11.3
 - name: zellij-org/zellij@v0.31.1
+- name: budimanjojo/talhelper@v1.2.3
