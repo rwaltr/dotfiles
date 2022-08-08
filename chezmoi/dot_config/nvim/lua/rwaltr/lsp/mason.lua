@@ -19,7 +19,12 @@ local servers = {
   "yamlls",
   "sumneko_lua",
   "tflint",
-  "bashls"
+  "bashls",
+  "marksman",
+  "prosemd_lsp",
+  "dockerls",
+  "gopls",
+  "golangci_lint_ls",
 }
 
 local settings = {
