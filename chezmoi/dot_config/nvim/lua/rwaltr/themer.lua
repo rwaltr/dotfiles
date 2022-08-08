@@ -14,6 +14,7 @@ if not status_ok then
     vim.notify("colorscheme " .. colorscheme_backup .. " not found!")
     return
   end
+  return
 end
 
 -- Set up themer if all goes well
