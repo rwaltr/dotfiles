@@ -1,30 +1,3 @@
-if vim.fn.has("nvim-0.7") == 0 then
-
-  vim.cmd([[
-  augroup end
-  augroup _git
-    autocmd!
-    autocmd FileType gitcommit setlocal wrap
-    autocmd FileType gitcommit setlocal spell
-  augroup end
-  augroup _markdown
-    autocmd!
-    autocmd FileType markdown setlocal wrap
-    autocmd FileType markdown setlocal spell
-  augroup end
-]] )
-
-  vim.cmd([[
- augroup end
- augroup _chezmoi
-  autocmd!
-  autocmd BufWritePost ~/.local/share/chezmoi/* | !chezmoi apply --source-path "%" 
- augroup end
-]] )
-
-  return
-end
-
 --#region git
 local gitgroup = vim.api.nvim_create_augroup("_git", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {
@@ -40,9 +13,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 --#region chezmoi
 local chezmoigroup = vim.api.nvim_create_augroup("_chezmoi", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  pattern = "$HOME/.local/share/chezmoi/*",
+  pattern = "~/.local/share/chezmoi/chezmoi/*",
   callback = function()
-  vim.fn.jobstart({"chezmoi", "apply" })
+    -- TODO: Chezmoi apply
   end,
   group = chezmoigroup,
 })
