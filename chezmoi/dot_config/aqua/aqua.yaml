@@ -52,3 +52,4 @@ packages:
 - name: kopia/kopia@v0.11.3
 - name: zellij-org/zellij@v0.31.1
 - name: budimanjojo/talhelper@v1.2.3
+- name: tsenart/vegeta@v12.8.4
