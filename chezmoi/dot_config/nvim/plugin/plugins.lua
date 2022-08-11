@@ -126,11 +126,13 @@ return packer.startup(function(use)
 
   -- Rust tools
   use { 'simrat39/rust-tools.nvim' }
-  use {"Saecki/crates.nvim",
-  config = function()
+  use { "Saecki/crates.nvim",
+    config = function()
       require("rwaltr.crates")
     end,
   }
+
+  use { 'RRethy/vim-illuminate' }
   ------------------------------------------
   -- Autocompletion
 
@@ -375,12 +377,12 @@ return packer.startup(function(use)
   ------------------------------------------
   -- Zen
 
-  use({
-    "Pocco81/true-zen.nvim",
-    config = function()
-      require("rwaltr.zen")
-    end,
-  })
+  -- use({
+  --   "Pocco81/true-zen.nvim",
+  --   config = function()
+  --     require("rwaltr.zen")
+  --   end,
+  -- })
 
   ------------------------------------------
   -- Automatically set up your configuration after cloning packer.nvim
