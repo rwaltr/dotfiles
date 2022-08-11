@@ -5,7 +5,6 @@ registries:
 - type: standard
   ref: v3.26.0 # renovate: depName=aquaproj/aqua-registry
 
-    # TODO: Add renovate ref
 packages:
 - name: BurntSushi/ripgrep@13.0.0
 - name: FiloSottile/age@v1.0.0
