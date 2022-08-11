@@ -123,6 +123,14 @@ return packer.startup(function(use)
 
   -- LSP Symbols
   use { 'simrat39/symbols-outline.nvim' }
+
+  -- Rust tools
+  use { 'simrat39/rust-tools.nvim' }
+  use {"Saecki/crates.nvim",
+  config = function()
+      require("rwaltr.crates")
+    end,
+  }
   ------------------------------------------
   -- Autocompletion
 
