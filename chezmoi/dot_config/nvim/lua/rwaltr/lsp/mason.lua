@@ -26,6 +26,7 @@ local servers = {
   "gopls",
   "golangci_lint_ls",
   "rust-analyzer",
+  "zk@v0.10.1",
 }
 
 local settings = {
@@ -92,7 +93,7 @@ mason_lspconfig.setup_handlers({
     lspconfig.sumneko_lua.setup(luadev)
   end,
   -- Rust Tooling
-  ["rust_analyzer"] = function ()
+  ["rust_analyzer"] = function()
     local rust_opts = require("rwaltr.lsp.settings.rust")
     local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
     if not rust_tools_status_ok then
@@ -100,5 +101,10 @@ mason_lspconfig.setup_handlers({
     end
     rust_tools.setup(rust_opts)
   end,
+  ["zk"] = function()
+    local zk_opts = require("rwaltr.lsp.settings.zk")
+    local extented_opts = vim.tbl_deep_extend("force", zk_opts, opts)
+    lspconfig.zk.setup(extented_opts)
+  end
   -- insert more here
 })
