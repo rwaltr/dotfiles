@@ -46,7 +46,7 @@ packages:
 - name: twpayne/chezmoi@v2.20.0
 - name: wagoodman/dive@v0.10.0
 - name: go-jira/jira@v1.0.27
-- name: terraform-linters/tflint@v0.39.2
+- name: terraform-linters/tflint@v0.39.3
 - name: cloudflare/cfssl@v1.6.1
 - name: kopia/kopia@v0.11.3
 - name: zellij-org/zellij@v0.31.1
