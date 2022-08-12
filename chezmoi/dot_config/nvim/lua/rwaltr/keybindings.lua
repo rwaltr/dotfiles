@@ -3,6 +3,10 @@
 local keymap = vim.api.nvim_set_keymap
 
 local opts = { noremap = true, silent = true }
+
+keymap("n", "<Space>", "", opts)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
