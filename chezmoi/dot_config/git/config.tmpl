@@ -52,7 +52,8 @@ pushInsteadOf = https://github.com/
 	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	p = push
 	pf = push --force
-	prb = pull --rebase
+  pl = pull
+	plrb = pull --rebase --autostash
 	r = restore
 	ra = rebase --abort
 	rc = rebase --continue
