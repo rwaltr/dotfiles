@@ -49,7 +49,7 @@ packages:
 - name: terraform-linters/tflint@v0.39.3
 - name: cloudflare/cfssl@v1.6.1
 - name: kopia/kopia@v0.11.3
-- name: zellij-org/zellij@v0.31.1
+- name: zellij-org/zellij@v0.31.3
 - name: budimanjojo/talhelper@v1.2.3
 - name: tsenart/vegeta@v12.8.4
 - name: fluxcd/flux2@v0.32.0
