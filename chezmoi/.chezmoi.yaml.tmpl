@@ -21,18 +21,17 @@
 
 {{- $hostname := .chezmoi.hostname -}}
 {{- if not $ephemeral -}}
-{{-    if eq $hostname "monolith" -}}
+{{-   if eq $hostname "monolith" -}}
 {{-     $headless = false -}}
 {{-     $personal = true -}}
 {{-     $battlestation = true -}}
-
 {{-   else if stdinIsATTY -}}
-
 {{-     if hasKey . "headless" -}}
 {{-       $headless = .headless -}}
 {{-     else -}}
 {{-       $headless = promptBool "headless" -}}
 {{-     end -}}
+{{-   end -}}
 
 {{-     if hasKey . "personal" -}}
 {{-       $personal = .personal -}}
@@ -62,7 +61,6 @@
 {{-     $headless = true -}}
 {{-     $ephemeral = true -}}
 {{-   end -}}
-{{- end -}}
 
 {{- $osid := .chezmoi.os -}}
 {{- $osIDLike := ""}}
@@ -76,35 +74,32 @@
 {{- end -}}
 
 {{- $editor := "" -}}
-{{- if lookPath "nvim" -}}
-  {{- $editor = "nvim" -}}
-{{- else if lookPath "vim" -}}
-  {{- $editor = "vim" -}}
-{{- else if lookPath "vi" -}}
-  {{- $editor = "vi" -}}
-{{- else if lookPath "nano" -}}
-  {{- $editor = "nano" -}}
-{{- end -}}
+{{-   if lookPath "nvim" -}}
+{{-     $editor = "nvim" -}}
+{{-   else if lookPath "vim" -}}
+{{-     $editor = "vim" -}}
+{{-   else if lookPath "vi" -}}
+{{-     $editor = "vi" -}}
+{{-   else if lookPath "nano" -}}
+{{-     $editor = "nano" -}}
+{{-   end -}}
 
 {{- $visual := "" -}}
-{{- if lookPath "neovide" -}}
-  {{- $visual = "neovide" -}}
-{{- else if lookPath "nvim-qt" -}}
-  {{- $visual = "nvim-qt" -}}
-  {{- else -}}
-{{- $visual = $editor -}}
-{{- end -}}
+{{-   if lookPath "neovide" -}}
+{{-     $visual = "neovide" -}}
+{{-   else if lookPath "nvim-qt" -}}
+{{-     $visual = "nvim-qt" -}}
+{{-   else -}}
+{{-     $visual = $editor -}}
+{{-   end -}}
 
 {{ $terminal := "" -}}
-{{- if lookPath "foot" -}}
-  {{- $terminal = "foot" -}}
-{{- else if lookPath "alacritty" -}}
-  {{- $terminal = "alacritty" -}}
-  {{- else -}}
-{{- $terminal = "gnome-terminal" -}}
-{{- end -}}
-
-{{- end -}}
+{{-   if lookPath "foot" -}}
+{{-     $terminal = "foot" -}}
+{{-   else if lookPath "alacritty" -}}
+{{-     $terminal = "alacritty" -}}
+{{-   else -}}
+{{-     $terminal = "gnome-terminal" -}}
 {{- end -}}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 

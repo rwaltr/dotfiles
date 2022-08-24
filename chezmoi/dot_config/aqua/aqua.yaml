@@ -3,7 +3,7 @@
 # https://aquaproj.github.io/
 registries:
 - type: standard
-  ref: v3.30.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v3.38.0 # renovate: depName=aquaproj/aqua-registry
 
 packages:
 - name: BurntSushi/ripgrep@13.0.0
@@ -13,11 +13,11 @@ packages:
 - name: ahmetb/kubectx/kubens@v0.9.4
 - name: ahmetb/kubectx@v0.9.4
 - name: aquasecurity/trivy@v0.31.2
-- name: argoproj/argo-cd@v2.4.9
+- name: argoproj/argo-cd@v2.4.11
 - name: argoproj/argo-rollouts@v1.2.2
 - name: argoproj/argo-workflows@v3.3.9
 - name: cheat/cheat@4.3.1
-- name: cli/cli@v2.14.4
+- name: cli/cli@v2.14.6
 - name: derailed/k9s@v0.26.3
 - name: digitalocean/doctl@v1.78.0
 - name: go-task/task@v3.14.1
@@ -27,10 +27,10 @@ packages:
 - name: hidetatz/kubecolor@v0.0.20
 - name: infracost/infracost@v0.10.10
 - name: itchyny/gojq@v0.12.8
-- name: kubernetes-sigs/cluster-api@v1.2.0
+- name: kubernetes-sigs/cluster-api@v1.2.1
 - name: kubernetes-sigs/krew@v0.4.3
 - name: kubernetes-sigs/kustomize@kustomize/v4.5.7
-- name: kubernetes/kubectl@v1.24.3
+- name: kubernetes/kubectl@v1.25.0
 - name: mikefarah/yq@v4.27.2
 - name: kubernetes/minikube@v1.26.1
 - name: mozilla/sops@v3.7.3
@@ -43,13 +43,13 @@ packages:
 - name: sharkdp/bat@v0.21.0
 - name: stern/stern@v1.21.0
 - name: siderolabs/talos@v1.1.2
-- name: twpayne/chezmoi@v2.20.0
+- name: twpayne/chezmoi@v2.21.0
 - name: wagoodman/dive@v0.10.0
 - name: go-jira/jira@v1.0.27
 - name: terraform-linters/tflint@v0.39.3
 - name: cloudflare/cfssl@v1.6.1
 - name: kopia/kopia@v0.11.3
-- name: zellij-org/zellij@v0.31.1
+- name: zellij-org/zellij@v0.31.3
 - name: budimanjojo/talhelper@v1.2.3
 - name: tsenart/vegeta@v12.8.4
 - name: fluxcd/flux2@v0.32.0
