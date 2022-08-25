@@ -34,7 +34,6 @@ packages:
 - name: mikefarah/yq@v4.27.2
 - name: kubernetes/minikube@v1.26.1
 - name: mozilla/sops@v3.7.3
-- name: ogham/dog@v0.1.0
 - name: rclone/rclone@v1.59.1
 - name: restic/restic@v0.13.1
 - name: sachaos/viddy@v0.3.6
