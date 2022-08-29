@@ -51,4 +51,4 @@ packages:
 - name: zellij-org/zellij@v0.31.3
 - name: budimanjojo/talhelper@v1.2.3
 - name: tsenart/vegeta@v12.8.4
-- name: fluxcd/flux2@v0.32.0
+- name: fluxcd/flux2@v0.33.0
