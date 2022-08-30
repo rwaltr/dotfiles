@@ -141,6 +141,16 @@ return packer.startup(function(use)
     requires = 'kevinhwang91/promise-async',
   }
 
+  --[[ Yaml Assistant ]]
+  use {
+    "someone-stole-my-name/yaml-companion.nvim",
+    requires = {
+      { "neovim/nvim-lspconfig" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
+    },
+  }
+
   ------------------------------------------
   -- Autocompletion
 
