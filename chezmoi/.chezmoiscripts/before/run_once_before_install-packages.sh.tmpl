@@ -2,6 +2,7 @@
 #!{{ lookPath "bash"}}
 # Install Fedora Packages
 sudo dnf copr enable atim/lazygit -y
+sudo dnf copr enable anthr76/golang-to-fedora -y
 sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf config-manager --add-repo \
   https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
