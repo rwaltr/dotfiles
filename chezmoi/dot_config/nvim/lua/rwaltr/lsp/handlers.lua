@@ -114,6 +114,14 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
+local ufo_ok = pcall(require, "ufo")
+if ufo_ok then
+ capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+  }
+end
+
 local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_ok then
   return

@@ -132,7 +132,15 @@ return packer.startup(function(use)
     end,
   }
 
+  --[[ word highlighting ]]
   use { 'RRethy/vim-illuminate' }
+
+  -- Folding tool
+
+  use { 'kevinhwang91/nvim-ufo',
+    requires = 'kevinhwang91/promise-async',
+  }
+
   ------------------------------------------
   -- Autocompletion
 
@@ -166,6 +174,9 @@ return packer.startup(function(use)
 
   ------------------------------------------
   -- Miscs
+  -- pre-commit
+  use 'ttibsi/pre-commit.nvim'
+
   -- Glow
   use({ "ellisonleao/glow.nvim" })
 
@@ -267,8 +278,7 @@ return packer.startup(function(use)
     end,
   })
   -- Chezmoi Integration
-  use({ "Lilja/vim-chezmoi" })
-  use({ "alker0/chezmoi.vim" })
+  --[[ use({ "alker0/chezmoi.vim" }) ]]
 
   -- Which Key, But better
   use({

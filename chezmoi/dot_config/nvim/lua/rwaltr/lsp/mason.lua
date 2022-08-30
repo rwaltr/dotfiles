@@ -108,3 +108,4 @@ mason_lspconfig.setup_handlers({
   end
   -- insert more here
 })
+require("rwaltr.ufo")
