@@ -1,6 +1,10 @@
 if type -q nvim
     set -gx EDITOR {{ .programs.editor }}
+    {{- if eq .programs.visual "neovide"}}
+    set -gx VISUAL {{ .programs.visual }} --no-fork
+    {{- else }}
     set -gx VISUAL {{ .programs.visual }}
+    {{- end}}
     set -gx KUBE_EDITOR {{ .programs.editor }}
     alias vim nvim
     alias vi nvim

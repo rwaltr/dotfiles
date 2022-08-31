@@ -16,9 +16,9 @@ bindsym $mod+Shift+Escape exec 'swaylock -c 000000'
 bindsym $mod+Return exec $term
 # Nvim Scratchpad
 {{- if contains .programs.visual  "neovide" }}
- bindsym $mod+Shift+Return exec {{ .programs.visual }} --wayland-app-id 'nvim-float'
+bindsym $mod+Shift+Return exec {{ .programs.visual }} --wayland-app-id 'nvim-float'
 {{- else}}
- bindsym $mod+Shift+Return exec {{ .programs.visual }}
+bindsym $mod+Shift+Return exec {{ .programs.visual }}
 {{- end}}
 
 # Kill focused window
