@@ -1,7 +1,7 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
     if type -q gnome-keyring-daemon
-        bass eval (gnome-keyring-daemon --start)
+        bass eval (gnome-keyring-daemon)
         set -Ux SSH_AGENT_PID $SSH_AGENT_PID
         set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
     end
