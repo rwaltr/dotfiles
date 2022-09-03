@@ -151,6 +151,12 @@ return packer.startup(function(use)
     },
   }
 
+  --[[ use treesitter to help spellcheck ]]
+  use { 'lewis6991/spellsitter.nvim',
+  config = function ()
+      require("spellsitter").setup()
+  end}
+
   ------------------------------------------
   -- Autocompletion
 
