@@ -153,9 +153,9 @@ return packer.startup(function(use)
 
   --[[ use treesitter to help spellcheck ]]
   use { 'lewis6991/spellsitter.nvim',
-  config = function ()
+    config = function()
       require("spellsitter").setup()
-  end}
+    end }
 
   ------------------------------------------
   -- Autocompletion
@@ -370,6 +370,11 @@ return packer.startup(function(use)
     end,
   })
   use({ "https://github.com/rhysd/conflict-marker.vim" })
+
+  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim',
+  config = function()
+      require("rwaltr.diffview")
+  end}
 
   ------------------------------------------
   ------------------------------------------
