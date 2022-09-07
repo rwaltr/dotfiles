@@ -1,3 +1,4 @@
+local icons = require("rwaltr.util.icons")
 require("notify").setup({
   -- Animation style (see below for details)
   stages = "fade_in_slide_out",
@@ -23,11 +24,11 @@ require("notify").setup({
 
   -- Icons for the different levels
   icons = {
-    ERROR = "",
-    WARN = "",
-    INFO = "",
-    DEBUG = "",
-    TRACE = "✎",
+    ERROR = icons.diagnostics.Error,
+    WARN = icons.diagnostics.Warning,
+    INFO =  icons.diagnostics.Information,
+    DEBUG = icons.ui.Bug,
+    TRACE = icons.ui.Pencil,
   },
 })
 vim.notify = require("notify")
