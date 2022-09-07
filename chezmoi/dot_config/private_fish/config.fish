@@ -5,5 +5,4 @@ if status is-interactive
     # set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
     set -gx HISTSIZE 10000
     fish_vi_key_bindings
-    set -U fish_greeting
 end
