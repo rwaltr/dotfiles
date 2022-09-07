@@ -92,6 +92,7 @@ return {
     ChevronRight = ">",
     Table = "",
     Calendar = "",
+    Selection = "",
     CloudDownload = "",
     Performance = "",
   },

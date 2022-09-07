@@ -4,12 +4,13 @@ if not status_ok then
 end
 
 local actions = require("telescope.actions")
+local icons = require("rwaltr.util.icons")
 
 telescope.setup({
   defaults = {
 
-    prompt_prefix = " ",
-    selection_caret = " ",
+    prompt_prefix = icons.ui.Telescope .. " ",
+    selection_caret = icons.ui.Selection .. " ",
     path_display = { "smart" },
     file_ignore_patterns = {
       ".git/",
