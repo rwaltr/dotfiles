@@ -281,18 +281,6 @@ return packer.startup(function(use)
   -- Sneeky sneeky
   use("ggandor/lightspeed.nvim")
 
-  -- Github fanciness
-  use({
-    "pwntester/octo.nvim",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "kyazdani42/nvim-web-devicons",
-    },
-    config = function()
-      require("rwaltr.octo")
-    end,
-  })
   -- Chezmoi Integration
   --[[ use({ "alker0/chezmoi.vim" }) ]]
 
