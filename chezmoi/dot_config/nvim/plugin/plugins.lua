@@ -62,6 +62,7 @@ return packer.startup(function(use)
       require("telescope").load_extension("fzf")
     end,
   })
+  use { 'nvim-telescope/telescope-ui-select.nvim' }
   ------------------------------------------
   -------------------------------------------------
   -- Treesitter
@@ -360,9 +361,20 @@ return packer.startup(function(use)
   use({ "https://github.com/rhysd/conflict-marker.vim" })
 
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim',
-  config = function()
+    config = function()
       require("rwaltr.diffview")
-  end}
+    end }
+
+  -- GitHub
+  use {
+    'ldelossa/gh.nvim',
+    requires = { { 'ldelossa/litee.nvim' } },
+    config = function()
+      require("rwaltr.gh")
+    end
+  }
+
+
 
   ------------------------------------------
   ------------------------------------------

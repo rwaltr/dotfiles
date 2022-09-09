@@ -130,6 +130,9 @@ telescope.setup({
     -- builtin picker
   },
   extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown()
+    }
     -- Your extension configuration goes here:
     -- extension_name = {
     --   extension_config_key = value,
@@ -137,3 +140,5 @@ telescope.setup({
     -- please take a look at the readme of the extension you want to configure
   },
 })
+
+telescope.load_extension("ui-select")
