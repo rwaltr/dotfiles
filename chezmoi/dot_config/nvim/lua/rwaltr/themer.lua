@@ -1,5 +1,5 @@
 -- Set up colorschemes
-local colorscheme_themer = "onedark"
+local colorscheme_themer = "github_dark"
 local colorscheme_backup = "lunar"
 
 -- Call In Themer
