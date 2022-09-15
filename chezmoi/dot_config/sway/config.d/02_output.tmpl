@@ -23,19 +23,20 @@ set $midmon "Acer Technologies ED347CKR 0x00003617"
 set $rightmon "Dell Inc. DELL P2214H T0RN665G2R5S"
 output $leftmon { 
   pos 0 0 
+  transform 90
   mode 1920x1080@60Hz
 	bg {{ $bgSetting }}
 }
 # Middle Monitor
 output $midmon {
-	pos 1920 0 
+	pos 1080 0 
 	mode 3440x1440@99.998Hz
 	#bg $wallpaper fill $background
   bg {{ $bgSetting }}
 }
 # Right Monitor
 output $rightmon {
-  pos 5360 0 
+  pos {{ add 1080 3440 }} 0 
   mode 1920x1080@60Hz
   bg {{ $bgSetting }}
 }
