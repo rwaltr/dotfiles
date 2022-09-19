@@ -1,7 +1,7 @@
 # Autostart
 
 # SystemD Target
-exec_always "systemctl --user import-environment; systemctl --user start sway-session.target"
+exec_always "systemctl --user import-environment {,WAYLAND_}DISPLAY SWAYSOCK; systemctl --user start sway-session.target"
 
 # Keyring
 exec eval $(gnome-keyring-daemon --start)
