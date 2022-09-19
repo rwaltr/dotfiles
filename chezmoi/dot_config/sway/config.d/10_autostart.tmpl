@@ -1,5 +1,8 @@
 # Autostart
 
+# SystemD Target
+exec_always "systemctl --user import-environment; systemctl --user start sway-session.target"
+
 # Keyring
 exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
@@ -7,14 +10,8 @@ exec export SSH_AUTH_SOCK
 # Autotiling
 exec autotiling
 
-# network manager applet
-# nm-applet --indicator
-
 # Gammastep
 exec gammastep-indicator -l $(curl https://location.services.mozilla.com/v1/geolocate?key=geoclue | jq -r  '.location | join(":")')
-
-
-
 
 # Window Focus
 exec swaymsg focus output $ws2 
