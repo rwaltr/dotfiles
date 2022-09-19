@@ -1,0 +1,16 @@
+[Unit]
+Description=Idle manager for Wayland
+Documentation=man:swayidle(1)
+PartOf=sway-session.target
+
+[Service]
+Type=simple
+; Use ~/.config/swayidle/config to change settings
+ExecStart=/usr/bin/swayidle -w 
+ExecStop=/bin/kill -2 $MAINPID
+Restart=on-failure
+RestartSec=1
+TimeoutStopSec=10
+
+[Install]
+WantedBy=sway-session.target
