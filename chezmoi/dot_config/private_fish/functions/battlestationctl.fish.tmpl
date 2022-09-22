@@ -14,6 +14,16 @@ function battlestationctl
                     swaymsg 'output "Dell Inc. DELL P2214H T0RN665G2R5S" enable'
                     return 0
             end
+        case brightness
+          switch $argv[2]
+            case get
+              set r (ddcutil getvcp 10)
+              echo $r
+              return 0
+            case set
+              ddcutil setvcp 10 $argv[3]
+              return 0
+        end
     end
     echo "I dont know what that means"
     return 1
