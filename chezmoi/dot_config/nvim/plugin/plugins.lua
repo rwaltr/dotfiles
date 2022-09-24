@@ -73,7 +73,16 @@ return packer.startup(function(use)
       require("rwaltr.nvim-treesitter")
     end,
   })
+  --[[ Comment Context ]]
   use("JoosepAlviste/nvim-ts-context-commentstring")
+
+--[[CONTEXT]]
+  use({
+    "lewis6991/nvim-treesitter-context", -- Show current context via TreeSitter
+    config = function()
+      require("treesitter-context").setup()
+    end,
+  })
   ------------------------------------------
   -- LSP
 
