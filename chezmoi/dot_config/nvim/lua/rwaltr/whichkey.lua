@@ -214,8 +214,9 @@ local mappings = {
     a = { "<cmd> lua require('telekasten').show_tags()<CR>", "Show tags" },
     r = { "<cmd> lua require('telekasten').rename_note()<CR>", "Rename note" },
     P = { "<cmd> lua require('telekasten').panel()<cr>", "Panel" },
-    l = { "<cmd> lua require('telekasten').insert_link()<cr>", "Insert note Link" }
+    l = { "<cmd> lua require('telekasten').insert_link()<cr>", "Insert note Link" },
   },
+  L = { "<cmd> lua require('lsp_lines').toggle() <cr>", "Toggle LSP lines"},
 }
 
 which_key.setup(setup)

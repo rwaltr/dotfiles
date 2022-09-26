@@ -1,5 +1,6 @@
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+-- ignore
 if fn.empty(fn.glob(install_path)) > 0 then
   PACKER_BOOTSTRAP = fn.system({
     "git",
@@ -137,7 +138,11 @@ return packer.startup(function(use)
   })
 
   -- LSP Symbols
-  use { 'simrat39/symbols-outline.nvim' }
+  use { 'simrat39/symbols-outline.nvim',
+    config = function()
+      require("symbols-outline").setup()
+    end,
+  }
 
   -- Rust tools
   use { 'simrat39/rust-tools.nvim' }
