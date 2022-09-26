@@ -76,7 +76,7 @@ return packer.startup(function(use)
   --[[ Comment Context ]]
   use("JoosepAlviste/nvim-ts-context-commentstring")
 
---[[CONTEXT]]
+  --[[CONTEXT]]
   use({
     "lewis6991/nvim-treesitter-context", -- Show current context via TreeSitter
     config = function()
@@ -96,6 +96,9 @@ return packer.startup(function(use)
   -- New LSP with Mason
   use { "williamboman/mason.nvim" }
   use { "williamboman/mason-lspconfig.nvim" }
+
+  -- TODO: Install
+  --https://github.com/jayp0521/mason-null-ls.nvim
 
   -- LSP for non LSP items
   use({
@@ -200,6 +203,30 @@ return packer.startup(function(use)
 
   ------------------------------------------
   -- Miscs
+  -- Surround
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  })
+  -- Windows
+  use { "anuvyklack/windows.nvim",
+    requires = {
+      "anuvyklack/middleclass",
+      "anuvyklack/animation.nvim"
+    },
+    config = function()
+      vim.o.winwidth = 10
+      vim.o.winminwidth = 10
+      vim.o.equalalways = false
+      require('windows').setup()
+    end
+  }
+
   -- pre-commit
   use 'ttibsi/pre-commit.nvim'
 
