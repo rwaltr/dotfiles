@@ -49,6 +49,6 @@ packages:
 - name: zellij-org/zellij@v0.31.4
 - name: budimanjojo/talhelper@v1.4.1
 - name: tsenart/vegeta@v12.8.4
-- name: fluxcd/flux2@v0.34.0
+- name: fluxcd/flux2@v0.35.0
 - name: ankitpokhrel/jira-cli@v1.1.0
 - name: weaveworks/tf-controller/tfctl@v3.31.0
