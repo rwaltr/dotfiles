@@ -22,7 +22,7 @@ packages:
 - name: digitalocean/doctl@v1.82.2
 - name: hashicorp/consul@v1.13.2
 - name: hashicorp/vault@v1.11.4
-- name: helm/helm@v3.9.4
+- name: helm/helm@v3.10.0
 - name: hidetatz/kubecolor@v0.0.20
 - name: infracost/infracost@v0.10.12
 - name: itchyny/gojq@v0.12.9
