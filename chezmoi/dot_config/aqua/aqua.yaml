@@ -40,7 +40,7 @@ packages:
 - name: schollz/croc@v9.6.0
 - name: sharkdp/bat@v0.21.0
 - name: stern/stern@v1.21.0
-- name: siderolabs/talos@v1.1.2
+- name: siderolabs/talos@v1.2.3
 - name: twpayne/chezmoi@v2.21.0
 - name: wagoodman/dive@v0.10.0
 - name: terraform-linters/tflint@v0.39.3
