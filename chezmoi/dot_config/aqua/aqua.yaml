@@ -47,7 +47,7 @@ packages:
 - name: cloudflare/cfssl@v1.6.3
 - name: kopia/kopia@v0.12.1
 - name: zellij-org/zellij@v0.31.4
-- name: budimanjojo/talhelper@v1.5.2
+- name: budimanjojo/talhelper@v1.5.3
 - name: tsenart/vegeta@v12.8.4
 - name: fluxcd/flux2@v0.35.0
 - name: ankitpokhrel/jira-cli@v1.1.0
