@@ -26,7 +26,7 @@ local servers = {
   "gopls",
   "golangci_lint_ls",
   "rust-analyzer",
-  "zk@v0.10.1",
+  "zk@v0.11.1",
 }
 
 local settings = {
