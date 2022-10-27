@@ -40,7 +40,7 @@ packages:
 - name: schollz/croc@v9.6.0
 - name: sharkdp/bat@v0.22.1
 - name: stern/stern@v1.21.0
-- name: siderolabs/talos@v1.2.3
+- name: siderolabs/talos@v1.2.6
 - name: twpayne/chezmoi@v2.24.0
 - name: wagoodman/dive@v0.10.0
 - name: terraform-linters/tflint@v0.41.0
@@ -52,3 +52,4 @@ packages:
 - name: fluxcd/flux2@v0.35.0
 - name: ankitpokhrel/jira-cli@v1.1.0
 - name: weaveworks/tf-controller/tfctl@v3.31.0
+- name: kyverno/kyverno@v1.8.1
