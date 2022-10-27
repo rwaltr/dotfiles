@@ -121,7 +121,7 @@ return packer.startup(function(use)
   use("tamago324/nlsp-settings.nvim")
 
   -- Lua settings helper
-  use("folke/lua-dev.nvim")
+  use("folke/neodev.nvim")
 
   -- LSP Status indicator
   use { "j-hui/fidget.nvim",

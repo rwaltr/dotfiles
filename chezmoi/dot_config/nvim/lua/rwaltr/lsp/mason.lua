@@ -1,12 +1,28 @@
+-- init ops 🤷
+local opts = {
+  on_attach = require("rwaltr.lsp.handlers").on_attach,
+  capabilities = require("rwaltr.lsp.handlers").capabilities,
+}
 -- Import mason and lspconfig
 local status_ok, mason = pcall(require, "mason")
 if not status_ok then
   return
 end
+
 local mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 if not mason_lspconfig_ok then
   return
 end
+
+--#region Luadev
+local l_status, neodev = pcall(require, "neodev")
+if not l_status then
+  vim.notify("No neodev")
+  return
+end
+neodev.setup({})
+--#endregion Luadev
+
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
   return
@@ -25,7 +41,7 @@ local servers = {
   "dockerls",
   "gopls",
   "golangci_lint_ls",
-  "rust-analyzer",
+  "rust_analyzer",
   "zk@v0.11.1",
 }
 
@@ -43,11 +59,7 @@ mason_lspconfig.setup {
   automatic_installation = true,
 }
 
--- init ops 🤷
-local opts = {
-  on_attach = require("rwaltr.lsp.handlers").on_attach,
-  capabilities = require("rwaltr.lsp.handlers").capabilities,
-}
+
 
 -- Mason setup_handlers expects the first key to be the "default function"
 -- Then you can custiomize the handler using a key=value pair
@@ -76,21 +88,20 @@ mason_lspconfig.setup_handlers({
     -- local extended_opts = vim.tbl_deep_extend("force", lua_opts, opts)
     -- lspconfig.sumneko_lua.setup { extended_opts }
     -- /OLD
-
-    --#region Luadev
-    local l_status, lua_dev = pcall(require, "lua-dev")
-    if not l_status then
-      return
-    end
-
-    local luadev = lua_dev.setup({
-      lspconfig = {
-        on_attach = opts.on_attach,
-        capabilities = opts.capabilities,
-      },
+    lspconfig.sumneko_lua.setup({
+      settings = {
+        -- on_attach = opts.on_attach,
+        -- capabilities = opts.capabilities,
+        Lua = {
+          diagnostics = {
+            globals = {"vim"},
+          },
+          completion = {
+            callSnippet = "Replace"
+          }
+        }
+      }
     })
-    --#endregion Luadev
-    lspconfig.sumneko_lua.setup(luadev)
   end,
   -- Rust Tooling
   ["rust_analyzer"] = function()
