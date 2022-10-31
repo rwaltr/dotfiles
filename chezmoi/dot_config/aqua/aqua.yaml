@@ -43,7 +43,7 @@ packages:
 - name: siderolabs/talos@v1.2.6
 - name: twpayne/chezmoi@v2.25.0
 - name: wagoodman/dive@v0.10.0
-- name: terraform-linters/tflint@v0.41.0
+- name: terraform-linters/tflint@v0.42.2
 - name: cloudflare/cfssl@v1.6.3
 - name: kopia/kopia@v0.12.1
 - name: zellij-org/zellij@v0.31.4
