@@ -41,7 +41,7 @@ packages:
 - name: sharkdp/bat@v0.22.1
 - name: stern/stern@v1.22.0
 - name: siderolabs/talos@v1.2.6
-- name: twpayne/chezmoi@v2.25.0
+- name: twpayne/chezmoi@v2.26.0
 - name: wagoodman/dive@v0.10.0
 - name: terraform-linters/tflint@v0.42.2
 - name: cloudflare/cfssl@v1.6.3
