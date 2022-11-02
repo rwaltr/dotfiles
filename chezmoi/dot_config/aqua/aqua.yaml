@@ -1,0 +1,55 @@
+---
+# aqua - Declarative CLI Version Manager
+# https://aquaproj.github.io/
+registries:
+- type: standard
+  ref: v3.84.0 # renovate: depName=aquaproj/aqua-registry
+
+packages:
+- name: BurntSushi/ripgrep@13.0.0
+- name: FiloSottile/age@v1.0.0
+- name: TheZoraiz/ascii-image-converter@v1.12.0
+- name: ahmetb/kubectl-tree@v0.4.3
+- name: ahmetb/kubectx/kubens@v0.9.4
+- name: ahmetb/kubectx@v0.9.4
+- name: aquasecurity/trivy@v0.31.0
+- name: argoproj/argo-cd@v2.5.0
+- name: argoproj/argo-rollouts@v1.3.1
+- name: argoproj/argo-workflows@v3.4.2
+- name: cheat/cheat@4.3.3
+- name: cli/cli@v2.18.1
+- name: derailed/k9s@v0.26.6
+- name: digitalocean/doctl@v1.84.1
+- name: hashicorp/consul@v1.13.3
+- name: hashicorp/vault@v1.12.0
+- name: helm/helm@v3.10.1
+- name: hidetatz/kubecolor@v0.0.20
+- name: infracost/infracost@v0.10.13
+- name: itchyny/gojq@v0.12.9
+- name: kubernetes-sigs/cluster-api@v1.2.4
+- name: kubernetes-sigs/krew@v0.4.3
+- name: kubernetes-sigs/kustomize@kustomize/v4.5.7
+- name: kubernetes/kubectl@v1.25.3
+- name: mikefarah/yq@v4.29.2
+- name: kubernetes/minikube@v1.27.1
+- name: mozilla/sops@v3.7.3
+- name: rclone/rclone@v1.60.0
+- name: restic/restic@v0.14.0
+- name: sachaos/viddy@v0.3.6
+- name: sbstp/kubie@v0.19.0
+- name: schollz/croc@v9.6.1
+- name: sharkdp/bat@v0.22.1
+- name: stern/stern@v1.22.0
+- name: siderolabs/talos@v1.2.6
+- name: twpayne/chezmoi@v2.25.0
+- name: wagoodman/dive@v0.10.0
+- name: terraform-linters/tflint@v0.42.2
+- name: cloudflare/cfssl@v1.6.3
+- name: kopia/kopia@v0.12.1
+- name: zellij-org/zellij@v0.31.4
+- name: budimanjojo/talhelper@v1.5.3
+- name: tsenart/vegeta@v12.8.4
+- name: fluxcd/flux2@v0.36.0
+- name: ankitpokhrel/jira-cli@v1.1.0
+- name: weaveworks/tf-controller/tfctl@v3.31.0
+- name: kyverno/kyverno@v1.8.1
