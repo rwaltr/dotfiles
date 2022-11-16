@@ -19,7 +19,7 @@ set $background {{ $theme.special.background }}
 {{ if eq .is.battlestation true  -}}
 # Left Monitor
 set $leftmon "Dell Inc. DELL P2214H KW14V41N249B"
-set $midmon "Acer Technologies ED347CKR 0x00003617"
+set $midmon "Goldstar Company Ltd LG ULTRAWIDE 208NTNHFM391"
 set $rightmon "Dell Inc. DELL P2214H T0RN665G2R5S"
 output $leftmon { 
   pos 0 0 
@@ -29,14 +29,14 @@ output $leftmon {
 }
 # Middle Monitor
 output $midmon {
-	pos 1080 0 
-	mode 3440x1440@99.998Hz
+	pos 1080 {{ floor (mulf 1920 .25) }} 
+	mode 3440x1440@158.962Hz
 	#bg $wallpaper fill $background
   bg {{ $bgSetting }}
 }
 # Right Monitor
 output $rightmon {
-  pos {{ add 1080 3440 }} 0 
+  pos {{ add 1080 3440 }} {{ floor (mulf 1920 .25) }} 
   mode 1920x1080@60Hz
   bg {{ $bgSetting }}
 }
