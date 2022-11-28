@@ -27,7 +27,7 @@ packages:
 - name: kubernetes-sigs/krew@v0.4.3
 - name: kubernetes-sigs/kustomize@kustomize/v4.5.7
 - name: kubernetes/kubectl@v1.25.4
-- name: mikefarah/yq@v4.29.2
+- name: mikefarah/yq@v4.30.5
 - name: kubernetes/minikube@v1.28.0
 - name: mozilla/sops@v3.7.3
 - name: rclone/rclone@v1.60.1
