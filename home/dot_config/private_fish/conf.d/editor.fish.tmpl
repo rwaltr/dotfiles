@@ -1,7 +1,7 @@
 if type -q nvim
     set -gx EDITOR {{ .programs.editor }}
     {{- if eq .programs.visual "neovide"}}
-    set -gx VISUAL "{{ .programs.visual }} --nofork"
+    set -gx VISUAL "{{ .programs.visual }} --nofork --wayland-app-id 'nvim-float'"
     {{- else }}
     set -gx VISUAL {{ .programs.visual }}
     {{- end}}
