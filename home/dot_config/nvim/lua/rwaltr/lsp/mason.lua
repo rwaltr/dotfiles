@@ -14,6 +14,14 @@ if not mason_lspconfig_ok then
   return
 end
 
+-- Import Neoconf
+local status_neoconf_ok , neoconf = pcall (require, "neoconf")
+if status_neoconf_ok then
+  neoconf.setup()
+end
+
+
+
 --#region Luadev
 local l_status, neodev = pcall(require, "neodev")
 if not l_status then

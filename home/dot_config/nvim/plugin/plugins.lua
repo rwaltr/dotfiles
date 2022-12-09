@@ -123,6 +123,9 @@ return packer.startup(function(use)
   -- Lua settings helper
   use("folke/neodev.nvim")
 
+  -- Config management
+  use{"folke/neoconf.nvim"}
+
   -- LSP Status indicator
   use { "j-hui/fidget.nvim",
     config = function()
