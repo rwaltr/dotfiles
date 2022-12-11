@@ -451,6 +451,11 @@ return packer.startup(function(use)
       require("rwaltr.telekasten")
     end,
   })
+
+  use{"mickael-menu/zk-nvim",
+  config = function ()
+   require("zk").setup()
+  end}
   ------------------------------------------
   -- Zen
 
