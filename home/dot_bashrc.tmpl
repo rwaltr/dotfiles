@@ -8,6 +8,7 @@ fi
 {{- $theme:= fromYaml (output "chezmoi" "execute-template" ( include  ".chezmoitemplates/theme" | trim )) }}
 
 # Source modular Bash files
+# TODO: move bash.d to shell.d/bash
 if [ -d $HOME/.config/bash.d ]; then
   for i in $(ls $HOME/.config/bash.d/*) ;
 	do

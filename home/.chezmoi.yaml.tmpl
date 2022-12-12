@@ -1,3 +1,4 @@
+# vi: set ft=yaml
 {{- $email := "rwalt@pm.me" -}}
 {{/* boolean feature tags */}}
 {{- $battlestation := false -}}{{/* true if this machine does not have a screen and keyboard */}}
@@ -103,10 +104,10 @@
 {{- end -}}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
+# TODO: Add Tmux Mod, GUI Mod config
 data:
   name: "Ryan Walter"
   email: {{ $email | quote }}
-  keyboard: "qwerty"
   is:
     personal: {{ $personal }}
     work: {{ $work }}
