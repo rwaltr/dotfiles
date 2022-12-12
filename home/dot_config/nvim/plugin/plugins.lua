@@ -41,6 +41,7 @@ vim.cmd([[
   augroup end
 ]])
 
+-- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
 return packer.startup(function(use)
   -- Packer can manage itself
   use("wbthomason/packer.nvim")
