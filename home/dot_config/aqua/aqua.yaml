@@ -52,3 +52,4 @@ packages:
 - name: kyverno/kyverno@v1.8.2
 - name: charmbracelet/vhs@v0.2.0
 - name: PaulJuliusMartinez/jless@v0.8.0
+- name: yannh/kubeconform@v0.5.0
