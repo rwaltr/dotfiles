@@ -326,7 +326,10 @@ return packer.startup(function(use)
     end,
   })
   -- Sneeky sneeky
-  use("ggandor/lightspeed.nvim")
+  use({"ggandor/leap.nvim",
+  config = function ()
+    require("leap").add_default_mappings()
+  end})
 
   -- Chezmoi Integration
   --[[ use({ "alker0/chezmoi.vim" }) ]]
