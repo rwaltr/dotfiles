@@ -1,8 +1,3 @@
--- following options are the default
--- each of these are documented in `:help nvim-tree.OPTION_NAME`
-
-
-
 local status_ok, nvim_tree = pcall(require, "nvim-tree")
 if not status_ok then
   return
@@ -14,6 +9,7 @@ end
 -- end
 
 -- local tree_cb = nvim_tree_config.nvim_tree_callback
+local icons = require("rwaltr.util.icons")
 
 nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
   auto_reload_on_write = true,
@@ -60,7 +56,7 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
       webdev_colors = true,
       git_placement = "before",
       padding = " ",
-      symlink_arrow = " ➛ ",
+      symlink_arrow = " " .. icons.ui.ArrowRight .. " ",
       show = {
         file = true,
         folder = true,
@@ -68,26 +64,26 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
         git = true,
       },
       glyphs = {
-        default = "",
-        symlink = "",
+        default = icons.documents.Default,
+        symlink = icons.documents.Symlink,
         folder = {
-        arrow_open = "",
-        arrow_closed = "",
-          default = "",
-          open = "",
-          empty = "",
-          empty_open = "",
-          symlink = "",
-          symlink_open = "",
+        arrow_open = icons.ui.ArrowOpen,
+        arrow_closed = icons.ui.ArrowClosed,
+          default = icons.documents.Folder,
+          open = icons.documents.OpenFolder,
+          empty = icons.documents.EmptyFolder,
+          empty_open = icons.documents.EmptyOpenFolder,
+          symlink = icons.documents.SymlinkFolder,
+          symlink_open = icons.documents.SymlinkFolderOpen,
         },
         git = {
-          unstaged = "",
-          staged = "S",
-          unmerged = "",
-          renamed = "➜",
-          untracked = "U",
-          deleted = "",
-          ignored = "◌",
+          unstaged = icons.git.Unstaged,
+          staged = icons.git.Staged,
+          unmerged = icons.git.Unmerged,
+          renamed = icons.git.Renamed,
+          untracked = icons.git.Untracked,
+          deleted = icons.git.Deleted,
+          ignored = icons.git.Ignored,
         },
       },
     },
@@ -107,13 +103,13 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
     args = {},
   },
   diagnostics = {
-    enable = false,
+    enable = true,
     show_on_dirs = false,
     icons = {
-      hint = "",
-      info = "",
-      warning = "",
-      error = "",
+      hint = icons.diagnostics.Hint,
+      info = icons.diagnostics.Information,
+      warning = icons.diagnostics.Warningj,
+      error = icons.diagnostics.Error,
     },
   },
   filters = {

@@ -55,7 +55,7 @@ return packer.startup(function(use)
       { "nvim-lua/plenary.nvim" },
     },
     config = function()
-      require("rwaltr.telescope")
+      require("rwaltr.plugins.telescope")
     end,
   })
   use({
@@ -74,7 +74,7 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     config = function()
-      require("rwaltr.nvim-treesitter")
+      require("rwaltr.plugins.nvim-treesitter")
     end,
   })
   --[[ Comment Context ]]
@@ -115,7 +115,7 @@ return packer.startup(function(use)
   use({
     "ray-x/lsp_signature.nvim",
     config = function()
-      require("rwaltr.lsp.signature")
+      require("rwaltr.plugins.lsp.signature")
     end,
   })
   -- Json enabled lsp settings
@@ -152,7 +152,7 @@ return packer.startup(function(use)
   use { 'simrat39/rust-tools.nvim' }
   use { "Saecki/crates.nvim",
     config = function()
-      require("rwaltr.crates")
+      require("rwaltr.plugins.crates")
     end,
   }
 
@@ -187,7 +187,7 @@ return packer.startup(function(use)
   use({
     "hrsh7th/nvim-cmp",
     config = function()
-      require("rwaltr.cmp_config")
+      require("rwaltr.plugins.cmp_config")
     end,
     requires = {
       "hrsh7th/cmp-nvim-lsp",
@@ -207,7 +207,7 @@ return packer.startup(function(use)
   -- Snippit Engine
   use({ "L3MON4D3/LuaSnip",
     config = function()
-      require("rwaltr.luasnip")
+      require("rwaltr.plugins.luasnip")
     end })
   -- Premade Snippits
   use("rafamadriz/friendly-snippets")
@@ -252,14 +252,14 @@ return packer.startup(function(use)
     "goolord/alpha-nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
     config = function()
-      require("rwaltr.alpha")
+      require("rwaltr.plugins.alpha")
     end,
   })
   -- Discord
   use({
     "andweeb/presence.nvim",
     config = function()
-      require("rwaltr.presence")
+      require("rwaltr.plugins.presence")
     end,
   })
 
@@ -270,7 +270,7 @@ return packer.startup(function(use)
   use({
     "ahmedkhalf/project.nvim",
     config = function()
-      require("rwaltr.project")
+      require("rwaltr.plugins.project")
     end,
   })
 
@@ -290,7 +290,7 @@ return packer.startup(function(use)
   use({
     "folke/todo-comments.nvim",
     config = function()
-      require("rwaltr.todo")
+      require("rwaltr.plugins.todo")
     end,
   })
 
@@ -298,7 +298,7 @@ return packer.startup(function(use)
   use({
     "lukas-reineke/indent-blankline.nvim",
     config = function()
-      require("rwaltr.indentline")
+      require("rwaltr.plugins.indentline")
     end,
   })
 
@@ -307,7 +307,7 @@ return packer.startup(function(use)
     "akinsho/bufferline.nvim",
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
-      require("rwaltr.bufferline")
+      require("rwaltr.plugins.bufferline")
     end,
     branch = "main",
   })
@@ -316,7 +316,7 @@ return packer.startup(function(use)
   use({
     "nvim-lualine/lualine.nvim",
     config = function()
-      require("rwaltr.lualine")
+      require("rwaltr.plugins.lualine")
     end,
   })
   use({
@@ -340,13 +340,13 @@ return packer.startup(function(use)
     "folke/which-key.nvim",
     config = function()
       -- require("which-key").setup({})
-      require("rwaltr.whichkey")
+      require("rwaltr.plugins.whichkey")
     end,
   })
   use({
     "akinsho/toggleterm.nvim",
     config = function()
-      require("rwaltr.toggleterm")
+      require("rwaltr.plugins.toggleterm")
     end,
     branch = "main"
   })
@@ -359,7 +359,7 @@ return packer.startup(function(use)
       "kyazdani42/nvim-web-devicons", -- optional, for file icon
     },
     config = function()
-      require("rwaltr.nvim-tree")
+      require("rwaltr.plugins.nvim-tree")
     end,
   })
   -- speed stuff
@@ -372,7 +372,7 @@ return packer.startup(function(use)
   use({
     "rcarriga/nvim-notify",
     config = function()
-      require("rwaltr.notify")
+      require("rwaltr.plugins.notify")
     end,
   })
 
@@ -389,7 +389,7 @@ return packer.startup(function(use)
   -- use({
   -- 	"kosayoda/nvim-lightbulb",
   -- 	config = function()
-  -- 		require("rwaltr.lightbulb")
+  -- 		require("rwaltr.plugins.lightbulb")
   -- 	end,
   -- })
   --
@@ -405,14 +405,14 @@ return packer.startup(function(use)
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      require("rwaltr.gitsigns")
+      require("rwaltr.plugins.gitsigns")
     end,
   })
   use({ "https://github.com/rhysd/conflict-marker.vim" })
 
   use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim',
     config = function()
-      require("rwaltr.diffview")
+      require("rwaltr.plugins.diffview")
     end }
 
   -- GitHub
@@ -420,7 +420,7 @@ return packer.startup(function(use)
     'ldelossa/gh.nvim',
     requires = { { 'ldelossa/litee.nvim' } },
     config = function()
-      require("rwaltr.gh")
+      require("rwaltr.plugins.gh")
     end
   }
 
@@ -433,7 +433,7 @@ return packer.startup(function(use)
   use({
     "numToStr/Comment.nvim",
     config = function()
-      require("rwaltr.comment")
+      require("rwaltr.plugins.comment")
     end,
   })
 
@@ -441,7 +441,7 @@ return packer.startup(function(use)
   use({
     "windwp/nvim-autopairs",
     config = function()
-      require("rwaltr.autopairs")
+      require("rwaltr.plugins.autopairs")
     end,
   })
 
@@ -452,7 +452,7 @@ return packer.startup(function(use)
       "renerocksai/calendar-vim",
     },
     config = function()
-      require("rwaltr.telekasten")
+      require("rwaltr.plugins.telekasten")
     end,
   })
 
@@ -460,16 +460,7 @@ return packer.startup(function(use)
   config = function ()
    require("zk").setup()
   end}
-  ------------------------------------------
-  -- Zen
-
-  -- use({
-  --   "Pocco81/true-zen.nvim",
-  --   config = function()
-  --     require("rwaltr.zen")
-  --   end,
-  -- })
-
+  
   ------------------------------------------
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
