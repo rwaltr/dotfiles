@@ -67,6 +67,8 @@ return packer.startup(function(use)
     end,
   })
   use { 'nvim-telescope/telescope-ui-select.nvim' }
+  use ({"nvim-telescope/telescope-project.nvim"})
+  use { "nvim-telescope/telescope-file-browser.nvim" }
   ------------------------------------------
   -------------------------------------------------
   -- Treesitter
@@ -272,6 +274,7 @@ return packer.startup(function(use)
     config = function()
       require("rwaltr.plugins.project")
     end,
+    disable = true
   })
 
   -- Inline Color preview

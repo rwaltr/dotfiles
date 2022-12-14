@@ -9,6 +9,8 @@ end
 -- end
 
 -- local tree_cb = nvim_tree_config.nvim_tree_callback
+
+-- ICONS
 local icons = require("rwaltr.util.icons")
 
 nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
