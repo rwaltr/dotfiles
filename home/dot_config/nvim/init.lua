@@ -1,9 +1,6 @@
--- Move options, keybindings, other things to rwaltr.core
-require("rwaltr.options")
-require("rwaltr.keybindings")
-require("rwaltr.themer")
-require("rwaltr.autocommands")
+require("rwaltr.core")
+-- enable staticy generated color theme
+require("rwaltr.plugins.themer")
 -- Refactor lsp
-require("rwaltr.lsp")
--- Migrate plugins.lua to be part of either init.lua or rwaltr.plugins
-require("rwaltr.neovide")
+require("rwaltr.plugins.lsp")
+-- Migrate plugins.lua to be part of either init.lua, rwaltr.plugins, or use something like folke's plugin rendering
