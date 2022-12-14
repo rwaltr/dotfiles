@@ -1,7 +1,7 @@
 -- init ops 🤷
 local opts = {
-  on_attach = require("rwaltr.lsp.handlers").on_attach,
-  capabilities = require("rwaltr.lsp.handlers").capabilities,
+  on_attach = require("rwaltr.plugins.lsp.handlers").on_attach,
+  capabilities = require("rwaltr.plugins.lsp.handlers").capabilities,
 }
 -- Import mason and lspconfig
 local status_ok, mason = pcall(require, "mason")
@@ -79,13 +79,13 @@ mason_lspconfig.setup_handlers({
   end,
   -- JsonLS settings
   ["jsonls"] = function()
-    local jsonls_opts = require("rwaltr.lsp.settings.jsonls")
+    local jsonls_opts = require("rwaltr.plugins.lsp.settings.jsonls")
     local extended_opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
     lspconfig.jsonls.setup({ extended_opts })
   end,
   -- Yamlls settings
   ["yamlls"] = function()
-    local yamls_opts = require("rwaltr.lsp.settings.yamlls")
+    local yamls_opts = require("rwaltr.plugins.lsp.settings.yamlls")
     local extended_opts = vim.tbl_deep_extend("force", yamls_opts, opts)
     lspconfig.yamlls.setup({ extended_opts })
   end,
@@ -113,7 +113,7 @@ mason_lspconfig.setup_handlers({
   end,
   -- Rust Tooling
   ["rust_analyzer"] = function()
-    local rust_opts = require("rwaltr.lsp.settings.rust")
+    local rust_opts = require("rwaltr.plugins.lsp.settings.rust")
     local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
     if not rust_tools_status_ok then
       return
@@ -121,10 +121,10 @@ mason_lspconfig.setup_handlers({
     rust_tools.setup(rust_opts)
   end,
   ["zk"] = function()
-    local zk_opts = require("rwaltr.lsp.settings.zk")
+    local zk_opts = require("rwaltr.plugins.lsp.settings.zk")
     local extented_opts = vim.tbl_deep_extend("force", zk_opts, opts)
     lspconfig.zk.setup(extented_opts)
   end
   -- insert more here
 })
-require("rwaltr.ufo")
+require("rwaltr.plugins.ufo")
