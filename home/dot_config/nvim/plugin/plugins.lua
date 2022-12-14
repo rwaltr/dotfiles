@@ -41,6 +41,39 @@ vim.cmd([[
   augroup end
 ]])
 
+-- TODO: Check out the following items  
+-- colorful-winseps.nvim
+-- duck.nvim (lol)
+-- fsread.nvim
+-- fzf-lua-projections.nvim
+-- grapple.nvim
+-- grpc-nvim
+-- https://github.com/GnikDroy/projections.nvim
+-- https://github.com/glepnir/lspsaga.nvim
+-- https://github.com/stevearc/dressing.nvim
+-- kustomize.nvim
+-- leap.nvim
+-- legendary.nvim
+-- lsp-format-modifications.nvim
+-- lush.nvim
+-- murmur.nvim (replaces illuminate, maybe)
+-- neoconf.nvim
+-- nvim-material-icon
+-- nvim-nonicons
+-- nvim-scroll-bar
+-- stuff.nvim
+-- styler.nvim
+-- treesj
+-- nvim-file-location
+-- ascii.nvim
+-- silicon.lua
+-- neorg.lua
+-- telescope-tabs.nvim
+-- noice.nvim
+-- https://github.com/AbdelrahmanDwedar/awesome-nvim-colorschemes
+-- https://roobert.github.io/2022/12/03/Extending-Neovim/
+
+
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
 return packer.startup(function(use)
   -- Packer can manage itself
