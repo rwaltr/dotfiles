@@ -34,7 +34,7 @@
 {{-   end -}}
 
 {{-     if hasKey . "personal" -}}
-{{-       $personal = .personal -}}
+{{-       $personal = .is.personal -}}
 {{-     else -}}
 {{-       $personal = promptBool "personal" -}}
 {{-     end -}}
@@ -69,7 +69,7 @@
 {{-   $osIDLike = .chezmoi.osRelease.id }}
 {{- end -}}
 
-{{- if ne .personal true -}}
+{{- if ne .is.personal true -}}
 {{- $email = promptString "Email" -}}
 {{- end -}}
 
