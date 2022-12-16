@@ -38,6 +38,7 @@ local options = {
 	swapfile = false, -- creates a swapfile
 	tabstop = 2,
 	timeoutlen = 100, -- time to wait for a mapped sequence to complete (in milliseconds)
+  -- TODO: Set opt.undodir with os.getenv and a path
 	undofile = true, -- enable persistent undo
 	updatetime = 300, -- faster completion (4000ms default)
 	writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
