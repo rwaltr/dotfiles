@@ -72,6 +72,7 @@ vim.cmd([[
 -- noice.nvim
 -- https://github.com/AbdelrahmanDwedar/awesome-nvim-colorschemes
 -- https://roobert.github.io/2022/12/03/Extending-Neovim/
+-- mbbil/undotree
 
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
