@@ -16,6 +16,7 @@ end
 
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
+---@diagnostic disable-next-line: param-type-mismatch
   vim.notify("Packer is not working", "error")
   return
 end
@@ -42,17 +43,19 @@ vim.cmd([[
 ]])
 
 -- TODO: Check out the following items
--- fzf-lua-projections.nvim
 -- https://github.com/GnikDroy/projections.nvim
--- https://github.com/glepnir/lspsaga.nvim
--- https://github.com/stevearc/dressing.nvim
--- legendary.nvim
 -- lush.nvim
 -- neorg.lua
--- noice.nvim
 -- https://github.com/AbdelrahmanDwedar/awesome-nvim-colorschemes
 -- https://roobert.github.io/2022/12/03/Extending-Neovim/
 -- mbbil/undotree
+-- https://github.com/ziontee113/icon-picker.nvim
+-- https://github.com/anuvyklack/hydra.nvim
+-- https://github.com/epwalsh/obsidian.nvim
+-- https://github.com/jbyuki/instant.nvim
+-- https://github.com/petertriho/nvim-scrollbar
+-- https://github.com/gpanders/editorconfig.nvim
+-- https://github.com/jamestthompson3/nvim-remote-containers
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
 return packer.startup(function(use)
@@ -91,7 +94,9 @@ return packer.startup(function(use)
   --   end,
   })
 
-  use({ "nvim-telescope/telescope-project.nvim" })
+  -- Not a huge fan of this one
+  use({ "nvim-telescope/telescope-project.nvim",
+  disable = false,})
   use({ "nvim-telescope/telescope-file-browser.nvim" })
   ------------------------------------------
   -------------------------------------------------
@@ -301,6 +306,10 @@ return packer.startup(function(use)
   use("moll/vim-bbye")
 
   -- Project integration
+  -- TODO: Replace with either...
+  -- https://github.com/ahmedkhalf/project.nvim
+  -- or https://github.com/GnikDroy/projections.nvim
+  -- or https://github.com/rockerBOO/awesome-neovim/blob/main/README.md#project
   use({
     "ahmedkhalf/project.nvim",
     config = function()
@@ -319,8 +328,9 @@ return packer.startup(function(use)
   })
 
   -- Tmux easypane
-  -- TODO: Replace with better Tmux navigator
+  -- TODO: Replace with numToStr/Navigator.nvim
   use({ "christoomey/vim-tmux-navigator" })
+
   -- Highlight TODO comments
   use({
     "folke/todo-comments.nvim",
@@ -416,6 +426,8 @@ return packer.startup(function(use)
       require("impatient").enable_profile()
     end,
   })
+
+  -- TODO: Maybe use https://github.com/vigoux/notifier.nvim
   use({
     "rcarriga/nvim-notify",
     config = function()
