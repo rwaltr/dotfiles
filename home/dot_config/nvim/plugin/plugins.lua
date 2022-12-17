@@ -22,7 +22,7 @@ end
 
 -- Have packer use a popup window
 packer.init({
-  snapshot_path = fn.stdpath "config" .. "/snapshots",
+  snapshot_path = fn.stdpath("config") .. "/snapshots",
   max_jobs = 50,
   display = {
     open_fn = function()
@@ -41,39 +41,18 @@ vim.cmd([[
   augroup end
 ]])
 
--- TODO: Check out the following items  
--- colorful-winseps.nvim
--- duck.nvim (lol)
--- fsread.nvim
+-- TODO: Check out the following items
 -- fzf-lua-projections.nvim
--- grapple.nvim
--- grpc-nvim
 -- https://github.com/GnikDroy/projections.nvim
 -- https://github.com/glepnir/lspsaga.nvim
 -- https://github.com/stevearc/dressing.nvim
--- kustomize.nvim
--- leap.nvim
 -- legendary.nvim
--- lsp-format-modifications.nvim
 -- lush.nvim
--- murmur.nvim (replaces illuminate, maybe)
--- neoconf.nvim
--- nvim-material-icon
--- nvim-nonicons
--- nvim-scroll-bar
--- stuff.nvim
--- styler.nvim
--- treesj
--- nvim-file-location
--- ascii.nvim
--- silicon.lua
 -- neorg.lua
--- telescope-tabs.nvim
 -- noice.nvim
 -- https://github.com/AbdelrahmanDwedar/awesome-nvim-colorschemes
 -- https://roobert.github.io/2022/12/03/Extending-Neovim/
 -- mbbil/undotree
-
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
 return packer.startup(function(use)
@@ -100,9 +79,20 @@ return packer.startup(function(use)
       require("telescope").load_extension("fzf")
     end,
   })
-  use { 'nvim-telescope/telescope-ui-select.nvim' }
-  use ({"nvim-telescope/telescope-project.nvim"})
-  use { "nvim-telescope/telescope-file-browser.nvim" }
+
+  -- Replaces vim.select.ui
+  use({ "nvim-telescope/telescope-ui-select.nvim",
+    disable = true })
+
+  -- Also replaces vim.select.ui
+  use({ 'stevearc/dressing.nvim',
+  -- config = function()
+  --     require('dressing').setup()
+  --   end,
+  })
+
+  use({ "nvim-telescope/telescope-project.nvim" })
+  use({ "nvim-telescope/telescope-file-browser.nvim" })
   ------------------------------------------
   -------------------------------------------------
   -- Treesitter
@@ -113,6 +103,8 @@ return packer.startup(function(use)
       require("rwaltr.plugins.nvim-treesitter")
     end,
   })
+  use({ "nvim-treesitter/playground" })
+
   --[[ Comment Context ]]
   use("JoosepAlviste/nvim-ts-context-commentstring")
 
@@ -134,8 +126,8 @@ return packer.startup(function(use)
   --   "williamboman/nvim-lsp-installer",
   -- })
   -- New LSP with Mason
-  use { "williamboman/mason.nvim" }
-  use { "williamboman/mason-lspconfig.nvim" }
+  use({ "williamboman/mason.nvim" })
+  use({ "williamboman/mason-lspconfig.nvim" })
 
   -- TODO: Install
   --https://github.com/jayp0521/mason-null-ls.nvim
@@ -161,14 +153,15 @@ return packer.startup(function(use)
   use("folke/neodev.nvim")
 
   -- Config management
-  use{"folke/neoconf.nvim"}
+  use({ "folke/neoconf.nvim" })
 
   -- LSP Status indicator
-  use { "j-hui/fidget.nvim",
+  use({
+    "j-hui/fidget.nvim",
     config = function()
-      require("fidget").setup {}
+      require("fidget").setup({})
     end,
-  }
+  })
   -- LSP lines instead of being hidden
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -178,44 +171,46 @@ return packer.startup(function(use)
   })
 
   -- LSP Symbols
-  use { 'simrat39/symbols-outline.nvim',
+  use({
+    "simrat39/symbols-outline.nvim",
     config = function()
       require("symbols-outline").setup()
     end,
-  }
+  })
 
   -- Rust tools
-  use { 'simrat39/rust-tools.nvim' }
-  use { "Saecki/crates.nvim",
+  use({ "simrat39/rust-tools.nvim" })
+  use({
+    "Saecki/crates.nvim",
     config = function()
       require("rwaltr.plugins.crates")
     end,
-  }
+  })
 
   --[[ word highlighting ]]
-  use { 'RRethy/vim-illuminate' }
+  use({ "RRethy/vim-illuminate" })
 
   -- Folding tool
 
-  use { 'kevinhwang91/nvim-ufo',
-    requires = 'kevinhwang91/promise-async',
-  }
+  use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
   --[[ Yaml Assistant ]]
-  use {
+  use({
     "someone-stole-my-name/yaml-companion.nvim",
     requires = {
       { "neovim/nvim-lspconfig" },
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope.nvim" },
     },
-  }
+  })
 
   --[[ use treesitter to help spellcheck ]]
-  use { 'lewis6991/spellsitter.nvim',
+  use({
+    "lewis6991/spellsitter.nvim",
     config = function()
       require("spellsitter").setup()
-    end }
+    end,
+  })
 
   ------------------------------------------
   -- Autocompletion
@@ -241,10 +236,12 @@ return packer.startup(function(use)
   -- Snippits
 
   -- Snippit Engine
-  use({ "L3MON4D3/LuaSnip",
+  use({
+    "L3MON4D3/LuaSnip",
     config = function()
       require("rwaltr.plugins.luasnip")
-    end })
+    end,
+  })
   -- Premade Snippits
   use("rafamadriz/friendly-snippets")
 
@@ -258,24 +255,25 @@ return packer.startup(function(use)
       require("nvim-surround").setup({
         -- Configuration here, or leave empty to use defaults
       })
-    end
+    end,
   })
   -- Windows
-  use { "anuvyklack/windows.nvim",
+  use({
+    "anuvyklack/windows.nvim",
     requires = {
       "anuvyklack/middleclass",
-      "anuvyklack/animation.nvim"
+      "anuvyklack/animation.nvim",
     },
     config = function()
       vim.o.winwidth = 10
       vim.o.winminwidth = 10
       vim.o.equalalways = false
-      require('windows').setup()
-    end
-  }
+      require("windows").setup()
+    end,
+  })
 
   -- pre-commit
-  use 'ttibsi/pre-commit.nvim'
+  use("ttibsi/pre-commit.nvim")
 
   -- Glow
   use({ "ellisonleao/glow.nvim" })
@@ -308,7 +306,7 @@ return packer.startup(function(use)
     config = function()
       require("rwaltr.plugins.project")
     end,
-    disable = true
+    disable = true,
   })
 
   -- Inline Color preview
@@ -364,10 +362,12 @@ return packer.startup(function(use)
     end,
   })
   -- Sneeky sneeky
-  use({"ggandor/leap.nvim",
-  config = function ()
-    require("leap").add_default_mappings()
-  end})
+  use({
+    "ggandor/leap.nvim",
+    config = function()
+      require("leap").add_default_mappings()
+    end,
+  })
 
   -- Chezmoi Integration
   --[[ use({ "alker0/chezmoi.vim" }) ]]
@@ -376,16 +376,26 @@ return packer.startup(function(use)
   use({
     "folke/which-key.nvim",
     config = function()
-      -- require("which-key").setup({})
       require("rwaltr.plugins.whichkey")
     end,
   })
+
+  -- legendary works with which-key
+  use({
+    "mrjones2014/legendary.nvim",
+    tag = "v2.1.0", -- renovate: datasource=github-releases depName=mrjones2014/legendary.nvim
+    requires = "kkharji/sqlite.lua",
+    config = function()
+      require("legendary").setup()
+    end,
+  })
+
   use({
     "akinsho/toggleterm.nvim",
     config = function()
       require("rwaltr.plugins.toggleterm")
     end,
-    branch = "main"
+    branch = "main",
   })
 
   -- Tree explorer
@@ -447,21 +457,22 @@ return packer.startup(function(use)
   })
   use({ "https://github.com/rhysd/conflict-marker.vim" })
 
-  use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim',
+  use({
+    "sindrets/diffview.nvim",
+    requires = "nvim-lua/plenary.nvim",
     config = function()
       require("rwaltr.plugins.diffview")
-    end }
+    end,
+  })
 
   -- GitHub
-  use {
-    'ldelossa/gh.nvim',
-    requires = { { 'ldelossa/litee.nvim' } },
+  use({
+    "ldelossa/gh.nvim",
+    requires = { { "ldelossa/litee.nvim" } },
     config = function()
       require("rwaltr.plugins.gh")
-    end
-  }
-
-
+    end,
+  })
 
   ------------------------------------------
   ------------------------------------------
@@ -493,11 +504,16 @@ return packer.startup(function(use)
     end,
   })
 
-  use{"mickael-menu/zk-nvim",
-  config = function ()
-   require("zk").setup()
-  end}
-  
+  use({
+    "mickael-menu/zk-nvim",
+    config = function()
+      require("zk").setup()
+    end,
+  })
+
+  -- Faster reading
+  use({ "nullchilly/fsread.nvim" })
+
   ------------------------------------------
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
