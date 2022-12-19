@@ -23,7 +23,7 @@ packages:
 - name: hidetatz/kubecolor@v0.0.25
 - name: infracost/infracost@v0.10.13
 - name: itchyny/gojq@v0.12.9
-- name: kubernetes-sigs/cluster-api@v1.2.6
+- name: kubernetes-sigs/cluster-api@v1.3.1
 - name: kubernetes-sigs/krew@v0.4.3
 - name: kubernetes-sigs/kustomize@kustomize/v4.5.7
 - name: kubernetes/kubectl@v1.25.4
