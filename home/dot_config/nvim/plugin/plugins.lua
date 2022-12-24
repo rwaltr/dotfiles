@@ -56,9 +56,9 @@ vim.cmd([[
 -- TODO: Install https://github.com/akinsho/git-conflict.nvim
 -- TODO: Install https://github.com/petertriho/nvim-scrollbar
 -- TODO: Install https://github.com/danymat/neogen
--- TODO: Install https://github.com/gpanders/editorconfig.nvim
 -- TODO: Install https://github.com/ziontee113/icon-picker.nvim
 -- TODO: Install https://github.com/debugloop/telescope-undo.nvim
+-- https://github.com/x-motemen/ghq
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
 return packer.startup(function(use)
@@ -530,6 +530,8 @@ return packer.startup(function(use)
   -- Auto create parent dirs
   use ({'jghauser/mkdir.nvim'})
 
+  -- Respect editorconfig
+  use ({'gpanders/editorconfig.nvim'})
   ------------------------------------------
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
