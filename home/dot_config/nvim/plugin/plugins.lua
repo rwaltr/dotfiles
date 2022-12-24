@@ -16,7 +16,7 @@ end
 
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
----@diagnostic disable-next-line: param-type-mismatch
+  ---@diagnostic disable-next-line: param-type-mismatch
   vim.notify("Packer is not working", "error")
   return
 end
@@ -48,9 +48,18 @@ vim.cmd([[
 -- neorg.lua
 -- https://github.com/AbdelrahmanDwedar/awesome-nvim-colorschemes
 -- https://roobert.github.io/2022/12/03/Extending-Neovim/
--- mbbil/undotree
+-- https://github.com/debugloop/telescope-undo.nvim
+-- https://github.com/dense-analysis/neural
+-- https://github.com/danymat/neogen
+-- https://github.com/monaqa/dial.nvim
+-- https://github.com/ElPiloto/significant.nvim
+-- https://github.com/akinsho/git-conflict.nvim
 -- https://github.com/ziontee113/icon-picker.nvim
+-- https://github.com/jghauser/mkdir.nvim
+-- https://github.com/ziontee113/icon-picker.nvim
+-- https://github.com/cbochs/grapple.nvim
 -- https://github.com/anuvyklack/hydra.nvim
+-- https://github.com/nvim-neotest/neotest
 -- https://github.com/epwalsh/obsidian.nvim
 -- https://github.com/jbyuki/instant.nvim
 -- https://github.com/petertriho/nvim-scrollbar
@@ -84,19 +93,18 @@ return packer.startup(function(use)
   })
 
   -- Replaces vim.select.ui
-  use({ "nvim-telescope/telescope-ui-select.nvim",
-    disable = true })
+  use({ "nvim-telescope/telescope-ui-select.nvim", disable = true })
 
   -- Also replaces vim.select.ui
-  use({ 'stevearc/dressing.nvim',
-  -- config = function()
-  --     require('dressing').setup()
-  --   end,
+  use({
+    "stevearc/dressing.nvim",
+    -- config = function()
+    --     require('dressing').setup()
+    --   end,
   })
 
   -- Not a huge fan of this one
-  use({ "nvim-telescope/telescope-project.nvim",
-  disable = false,})
+  use({ "nvim-telescope/telescope-project.nvim", disable = false })
   use({ "nvim-telescope/telescope-file-browser.nvim" })
   ------------------------------------------
   -------------------------------------------------
