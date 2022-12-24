@@ -43,28 +43,23 @@ vim.cmd([[
 ]])
 
 -- TODO: Check out the following items
--- https://github.com/GnikDroy/projections.nvim
--- lush.nvim
--- neorg.lua
--- https://github.com/AbdelrahmanDwedar/awesome-nvim-colorschemes
--- https://roobert.github.io/2022/12/03/Extending-Neovim/
--- https://github.com/debugloop/telescope-undo.nvim
--- https://github.com/dense-analysis/neural
--- https://github.com/danymat/neogen
--- https://github.com/monaqa/dial.nvim
--- https://github.com/ElPiloto/significant.nvim
--- https://github.com/akinsho/git-conflict.nvim
--- https://github.com/ziontee113/icon-picker.nvim
--- https://github.com/jghauser/mkdir.nvim
--- https://github.com/ziontee113/icon-picker.nvim
--- https://github.com/cbochs/grapple.nvim
--- https://github.com/anuvyklack/hydra.nvim
--- https://github.com/nvim-neotest/neotest
--- https://github.com/epwalsh/obsidian.nvim
+-- https://github.com/nvim-neotest/neotest -- look deeper into this when its time for DAP
 -- https://github.com/jbyuki/instant.nvim
--- https://github.com/petertriho/nvim-scrollbar
--- https://github.com/gpanders/editorconfig.nvim
 -- https://github.com/jamestthompson3/nvim-remote-containers
+-- https://github.com/nvim-neorg/neorg
+
+-- TODO: Install https://github.com/jackMort/ChatGPT.nvim
+-- TODO: Install https://github.com/dense-analysis/neural
+-- TODO: Install https://github.com/cbochs/grapple.nvim
+-- TODO: Install https://github.com/ziontee113/icon-picker.nvim
+-- TODO: Install https://github.com/monaqa/dial.nvim
+-- TODO: Install https://github.com/akinsho/git-conflict.nvim
+-- TODO: Install https://github.com/petertriho/nvim-scrollbar
+-- TODO: Install https://github.com/danymat/neogen
+-- TODO: Install https://github.com/gpanders/editorconfig.nvim
+-- TODO: Install https://github.com/ziontee113/icon-picker.nvim
+-- TODO: Install https://github.com/jghauser/mkdir.nvim
+-- TODO: Install https://github.com/debugloop/telescope-undo.nvim
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
 return packer.startup(function(use)
@@ -142,8 +137,7 @@ return packer.startup(function(use)
   use({ "williamboman/mason.nvim" })
   use({ "williamboman/mason-lspconfig.nvim" })
 
-  -- TODO: Install
-  --https://github.com/jayp0521/mason-null-ls.nvim
+  -- TODO: Install https://github.com/jayp0521/mason-null-ls.nvim
 
   -- LSP for non LSP items
   use({
@@ -417,7 +411,7 @@ return packer.startup(function(use)
   })
 
   -- Tree explorer
-
+  -- TODO: Compare with https://github.com/nvim-neo-tree/neo-tree.nvim
   use({
     "kyazdani42/nvim-tree.lua",
     requires = {
