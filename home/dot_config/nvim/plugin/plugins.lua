@@ -548,7 +548,16 @@ return packer.startup(function(use)
   use {
     "cbochs/grapple.nvim",
     requires = { "nvim-lua/plenary.nvim" },
-}
+  }
+
+  -- A fancy Scrollbar
+  use({"petertriho/nvim-scrollbar",
+    requires = {"lewis6991/gitsigns.nvim",},
+    config = function ()
+      require("scrollbar").setup()
+      require("scrollbar.handlers.gitsigns").setup()
+    end
+    })
   ------------------------------------------
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
