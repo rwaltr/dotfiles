@@ -53,7 +53,6 @@ vim.cmd([[
 -- TODO: Install https://github.com/dense-analysis/neural
 -- TODO: Install https://github.com/ziontee113/icon-picker.nvim
 -- TODO: Install https://github.com/monaqa/dial.nvim
--- TODO: Install https://github.com/petertriho/nvim-scrollbar
 -- TODO: Install https://github.com/ziontee113/icon-picker.nvim
 -- TODO: Install https://github.com/debugloop/telescope-undo.nvim
 
