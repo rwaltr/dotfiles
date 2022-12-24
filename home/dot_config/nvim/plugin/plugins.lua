@@ -53,7 +53,6 @@ vim.cmd([[
 -- TODO: Install https://github.com/dense-analysis/neural
 -- TODO: Install https://github.com/ziontee113/icon-picker.nvim
 -- TODO: Install https://github.com/monaqa/dial.nvim
--- TODO: Install https://github.com/ziontee113/icon-picker.nvim
 -- TODO: Install https://github.com/debugloop/telescope-undo.nvim
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
@@ -88,9 +87,9 @@ return packer.startup(function(use)
   -- Also replaces vim.select.ui
   use({
     "stevearc/dressing.nvim",
-    -- config = function()
-    --     require('dressing').setup()
-    --   end,
+    config = function()
+        require('dressing').setup()
+    end,
   })
 
   -- Not a huge fan of this one
