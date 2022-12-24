@@ -548,7 +548,7 @@ return packer.startup(function(use)
     requires = { "nvim-lua/plenary.nvim" },
   }
 
-  -- A fancy Scrollbar
+  -- A fancy scrollbar
   use({"petertriho/nvim-scrollbar",
     requires = {"lewis6991/gitsigns.nvim",},
     config = function ()
