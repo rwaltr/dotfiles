@@ -1,6 +1,9 @@
 local ls = require("luasnip")
 
-require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+ls.loaders.from_lua.load({ paths = "~/.config/nvim/snippets/" })
+ls.loaders.from_vscode.lazy_load()
+
+-- TODO: https://github.com/garcia5/dotfiles/blob/master/files/nvim/lua/ag/plugin-conf/luasnip.lua
 
 ls.config.set_config({
   history = true, -- Keeps last snippit local to jump back
