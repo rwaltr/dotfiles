@@ -543,6 +543,12 @@ return packer.startup(function(use)
 
   -- Respect editorconfig
   use ({'gpanders/editorconfig.nvim'})
+
+  -- Mark manager
+  use {
+    "cbochs/grapple.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+}
   ------------------------------------------
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
