@@ -58,7 +58,6 @@ vim.cmd([[
 -- TODO: Install https://github.com/danymat/neogen
 -- TODO: Install https://github.com/gpanders/editorconfig.nvim
 -- TODO: Install https://github.com/ziontee113/icon-picker.nvim
--- TODO: Install https://github.com/jghauser/mkdir.nvim
 -- TODO: Install https://github.com/debugloop/telescope-undo.nvim
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
@@ -527,6 +526,9 @@ return packer.startup(function(use)
 
   -- Faster reading
   use({ "nullchilly/fsread.nvim" })
+
+  -- Auto create parent dirs
+  use ({'jghauser/mkdir.nvim'})
 
   ------------------------------------------
   -- Automatically set up your configuration after cloning packer.nvim
