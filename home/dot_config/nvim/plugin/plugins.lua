@@ -53,7 +53,6 @@ vim.cmd([[
 -- TODO: Install https://github.com/dense-analysis/neural
 -- TODO: Install https://github.com/ziontee113/icon-picker.nvim
 -- TODO: Install https://github.com/monaqa/dial.nvim
--- TODO: Install https://github.com/debugloop/telescope-undo.nvim
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
 return packer.startup(function(use)
@@ -80,6 +79,14 @@ return packer.startup(function(use)
       require("telescope").load_extension("fzf")
     end,
   })
+  use({
+    "debugloop/telescope-undo.nvim",
+    requires = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("telescope").load_extension("undo")
+      -- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+    end,
+  })
 
   -- Replaces vim.select.ui
   use({ "nvim-telescope/telescope-ui-select.nvim", disable = true })
@@ -88,7 +95,7 @@ return packer.startup(function(use)
   use({
     "stevearc/dressing.nvim",
     config = function()
-        require('dressing').setup()
+      require("dressing").setup()
     end,
   })
 
@@ -107,15 +114,15 @@ return packer.startup(function(use)
   use({ "nvim-treesitter/playground" })
 
   -- Fancy Comment generations
-  use {
+  use({
     "danymat/neogen",
     config = function()
-        require('neogen').setup {}
+      require("neogen").setup({})
     end,
     requires = "nvim-treesitter/nvim-treesitter",
     -- Uncomment next line if you want to follow only stable versions
     -- tag = "*"
-}
+  })
 
   --[[ Comment Context ]]
   use("JoosepAlviste/nvim-ts-context-commentstring")
@@ -312,22 +319,13 @@ return packer.startup(function(use)
   use("moll/vim-bbye")
 
   -- Project integration
-  -- TODO: Replace with either...
-  -- https://github.com/ahmedkhalf/project.nvim
-  -- or https://github.com/GnikDroy/projections.nvim
-  -- or https://github.com/rockerBOO/awesome-neovim/blob/main/README.md#project
   use({
-    "ahmedkhalf/project.nvim",
+    "gnikdroy/projections.nvim",
+    requires = { "nvim-telescope/telescope.nvim" },
     config = function()
-      require("rwaltr.plugins.project")
-    end,
-    disable = true,
-  })
-  use({"gnikdroy/projections.nvim",
-    requires = {"nvim-telescope/telescope.nvim"},
-    config = function ()
       require("rwaltr.plugins.projections")
-    end})
+    end,
+  })
 
   -- Inline Color preview
   -- https://github.com/norcalli/nvim-colorizer.lua
@@ -479,9 +477,13 @@ return packer.startup(function(use)
     end,
   })
 
-  use {'akinsho/git-conflict.nvim', tag = "*", config = function()
-    require('git-conflict').setup()
-  end}
+  use({
+    "akinsho/git-conflict.nvim",
+    tag = "*",
+    config = function()
+      require("git-conflict").setup()
+    end,
+  })
 
   use({
     "sindrets/diffview.nvim",
@@ -541,25 +543,26 @@ return packer.startup(function(use)
   use({ "nullchilly/fsread.nvim" })
 
   -- Auto create parent dirs
-  use ({'jghauser/mkdir.nvim'})
+  use({ "jghauser/mkdir.nvim" })
 
   -- Respect editorconfig
-  use ({'gpanders/editorconfig.nvim'})
+  use({ "gpanders/editorconfig.nvim" })
 
   -- Mark manager
-  use {
+  use({
     "cbochs/grapple.nvim",
     requires = { "nvim-lua/plenary.nvim" },
-  }
+  })
 
   -- A fancy scrollbar
-  use({"petertriho/nvim-scrollbar",
-    requires = {"lewis6991/gitsigns.nvim",},
-    config = function ()
+  use({
+    "petertriho/nvim-scrollbar",
+    requires = { "lewis6991/gitsigns.nvim" },
+    config = function()
       require("scrollbar").setup()
       require("scrollbar.handlers.gitsigns").setup()
-    end
-    })
+    end,
+  })
   ------------------------------------------
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

@@ -21,7 +21,7 @@ dashboard.section.buttons.val = {
   dashboard.button("f", icons.documents.Files .. " Find file", ":Telescope find_files <CR>"),
   dashboard.button("F", icons.documents.Files .. " File Browser ", ":Telescope file_browser <CR>"),
   dashboard.button("e", icons.ui.NewFile .. " New file", ":ene <BAR> startinsert <CR>"),
-  dashboard.button("p", icons.git.Repo .. " Find project", ":lua require'telescope'.extensions.project.project{ display_type = 'full' } <CR>"),
+  dashboard.button("p", icons.git.Repo .. " Find project", ":Telescope projections <CR>"),
   dashboard.button("r", icons.ui.History .. " Recently used files", ":Telescope oldfiles <CR>"),
   dashboard.button("t", icons.type.String .. " Find text", ":Telescope live_grep <CR>"),
   dashboard.button("N", icons.ui.Pen .. " New note", ":lua require('telekasten').new_templated_note()<CR>"),
