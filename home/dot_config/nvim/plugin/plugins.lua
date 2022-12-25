@@ -93,7 +93,6 @@ return packer.startup(function(use)
   })
 
   -- Not a huge fan of this one
-  use({ "nvim-telescope/telescope-project.nvim", disable = false })
   use({ "nvim-telescope/telescope-file-browser.nvim" })
   ------------------------------------------
   -------------------------------------------------
@@ -324,6 +323,11 @@ return packer.startup(function(use)
     end,
     disable = true,
   })
+  use({"gnikdroy/projections.nvim",
+    requires = {"nvim-telescope/telescope.nvim"},
+    config = function ()
+      require("rwaltr.plugins.projections")
+    end})
 
   -- Inline Color preview
   -- https://github.com/norcalli/nvim-colorizer.lua

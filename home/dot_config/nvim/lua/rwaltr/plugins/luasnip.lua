@@ -1,7 +1,7 @@
 local ls = require("luasnip")
 
-ls.loaders.from_lua.load({ paths = "~/.config/nvim/snippets/" })
-ls.loaders.from_vscode.lazy_load()
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippits/"})
+require("luasnip.loaders.from_vscode").lazy_load()
 
 -- TODO: https://github.com/garcia5/dotfiles/blob/master/files/nvim/lua/ag/plugin-conf/luasnip.lua
 
