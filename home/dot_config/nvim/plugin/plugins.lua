@@ -48,10 +48,9 @@ vim.cmd([[
 -- https://github.com/jamestthompson3/nvim-remote-containers
 -- https://github.com/nvim-neorg/neorg
 -- https://github.com/x-motemen/ghq
+-- https://github.com/jackMort/ChatGPT.nvim
+-- https://github.com/dense-analysis/neural
 
--- TODO: Install https://github.com/jackMort/ChatGPT.nvim
--- TODO: Install https://github.com/dense-analysis/neural
--- TODO: Install https://github.com/ziontee113/icon-picker.nvim
 -- TODO: Install https://github.com/monaqa/dial.nvim
 
 -- TODO: https://github.com/folke/dot/blob/master/config/nvim/lua/util/packer.lua has some interesting package setups
@@ -96,6 +95,16 @@ return packer.startup(function(use)
     "stevearc/dressing.nvim",
     config = function()
       require("dressing").setup()
+    end,
+  })
+
+  -- TODO: Define Keymaps
+  use({
+    "ziontee113/icon-picker.nvim",
+    config = function()
+      require("icon-picker").setup({
+        disable_legacy_commands = true
+      })
     end,
   })
 
