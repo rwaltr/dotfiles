@@ -107,7 +107,7 @@ local mappings = {
     R = { "<cmd>Telescope registers<cr>", "Registers" },
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
     C = { "<cmd>Telescope commands<cr>", "Commands" },
-    p = { "<cmd>lua require'telescope'.extensions.project.project{ display_type = 'full' }<cr>", "Projects" },
+    p = { "<cmd>Telescope projections<cr>", "Projects" },
     n = { "<cmd>Telescope notify<cr>", "Notification History" },
   },
 
