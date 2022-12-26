@@ -14,7 +14,7 @@ packages:
 - name: ahmetb/kubectx@v0.9.4
 - name: aquasecurity/trivy@v0.31.0
 - name: cheat/cheat@4.4.0
-- name: cli/cli@v2.20.2
+- name: cli/cli@v2.21.1
 - name: derailed/k9s@v0.26.7
 - name: digitalocean/doctl@v1.88.0
 - name: hashicorp/consul@v1.13.2
