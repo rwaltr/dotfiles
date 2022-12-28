@@ -69,7 +69,7 @@
 {{-   $osIDLike = .chezmoi.osRelease.id }}
 {{- end -}}
 
-{{- if ne .is.personal true -}}
+{{- if ne $personal true -}}
 {{- $email = promptString "Email" -}}
 {{- end -}}
 
