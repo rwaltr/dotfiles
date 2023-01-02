@@ -7,7 +7,7 @@ registries:
 
 packages:
 - name: BurntSushi/ripgrep@13.0.0
-- name: FiloSottile/age@v1.0.0
+- name: FiloSottile/age@v1.1.1
 - name: TheZoraiz/ascii-image-converter@v1.12.0
 - name: ahmetb/kubectl-tree@v0.4.3
 - name: ahmetb/kubectx/kubens@v0.9.4
