@@ -50,6 +50,12 @@ vim.cmd([[
 -- https://github.com/x-motemen/ghq
 -- https://github.com/jackMort/ChatGPT.nvim
 -- https://github.com/dense-analysis/neural
+-- https://github.com/iamcco/markdown-preview.nvim
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
+-- https://github.com/phaazon/mind.nvim
+-- https://github.com/m4xshen/autoclose.nvim
+-- https://github.com/roobert/search-replace.nvim
+-- https://github.com/shortcuts/no-neck-pain.nvim
 
 -- TODO: Install https://github.com/monaqa/dial.nvim
 
