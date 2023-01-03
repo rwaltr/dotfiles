@@ -42,6 +42,9 @@ vim.cmd([[
   augroup end
 ]])
 
+
+-- TODO: Migrate from packer to  https://github.com/folke/lazy.nvim
+
 -- TODO: Check out the following items
 -- https://github.com/nvim-neotest/neotest -- look deeper into this when its time for DAP
 -- https://github.com/jbyuki/instant.nvim
@@ -53,9 +56,10 @@ vim.cmd([[
 -- https://github.com/iamcco/markdown-preview.nvim
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
 -- https://github.com/phaazon/mind.nvim
--- https://github.com/m4xshen/autoclose.nvim
 -- https://github.com/roobert/search-replace.nvim
 -- https://github.com/shortcuts/no-neck-pain.nvim
+-- https://github.com/folke/dot/tree/master/config/nvim
+-- https://github.com/glacambre/firenvim again..
 
 -- TODO: Install https://github.com/monaqa/dial.nvim
 
@@ -186,7 +190,9 @@ return packer.startup(function(use)
   use("folke/neodev.nvim")
 
   -- Config management
-  use({ "folke/neoconf.nvim" })
+  use({ "folke/neoconf.nvim",
+    cmd = "Neoconf",
+  })
 
   -- LSP Status indicator
   use({
@@ -311,6 +317,13 @@ return packer.startup(function(use)
   -- Glow
   use({ "ellisonleao/glow.nvim" })
 
+  -- Markdown Preview
+
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
+
   -- peak lines
   use({ "nacro90/numb.nvim" })
 
@@ -331,6 +344,7 @@ return packer.startup(function(use)
   })
 
   -- Buffer bye
+  -- TODO: Compare with https://github.com/echasnovski/mini.bufremove
   use("moll/vim-bbye")
 
   -- Project integration
@@ -403,6 +417,9 @@ return packer.startup(function(use)
     end,
   })
 
+  -- More leap goodness
+  use({"ggandor/flit.nvim"})
+
   -- Chezmoi Integration
   --[[ use({ "alker0/chezmoi.vim" }) ]]
 
@@ -450,6 +467,9 @@ return packer.startup(function(use)
       require("impatient").enable_profile()
     end,
   })
+
+  -- Startup Metrics
+ use({"dstein64/vim-startuptime"}) 
 
   -- TODO: Maybe use https://github.com/vigoux/notifier.nvim
   use({
