@@ -1,3 +1,4 @@
+-- Refactor LSP Interface and Keybinds
 return {
   {
     "neovim/nvim-lspconfig",
@@ -9,7 +10,8 @@ return {
       {
         "ray-x/lsp_signature.nvim", config = function()
           require("rwaltr.plugins.lsp.signature")
-        end
+        end,
+        enabled = false,
       },
       {
         "j-hui/fidget.nvim",

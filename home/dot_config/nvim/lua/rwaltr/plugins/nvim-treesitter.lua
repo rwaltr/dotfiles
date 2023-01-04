@@ -45,9 +45,14 @@ return {
       })
     end,
   },
-  { 
+  {
     "nvim-treesitter/playground",
     cmd = "TSPlaygroundToggle",
     build = ":TSInstall query",
   },
+  {
+    "folke/twilight.nvim",
+    cmd = { "Twilight", "TwilightEnable" },
+    config = true,
+  }
 }
