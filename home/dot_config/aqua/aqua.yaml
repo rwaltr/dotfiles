@@ -19,7 +19,7 @@ packages:
 - name: digitalocean/doctl@v1.91.0
 - name: hashicorp/consul@v1.13.2
 - name: hashicorp/vault@v1.12.2
-- name: helm/helm@v3.10.2
+- name: helm/helm@v3.10.3
 - name: hidetatz/kubecolor@v0.0.25
 - name: infracost/infracost@v0.10.13
 - name: itchyny/gojq@v0.12.9
