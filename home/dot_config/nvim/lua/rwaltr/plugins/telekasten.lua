@@ -2,7 +2,7 @@ return { {
 
   "renerocksai/telekasten.nvim",
   dependencies = "renerocksai/calendar-vim",
-  event = "VeryLazy",
+  -- event = "VeryLazy",
   ft = "telekasten",
   config = function ()
       local notebook = vim.fn.expand("~/Documents/Notebook")

@@ -1,5 +1,6 @@
 return { {
   "gnikdroy/projections.nvim",
+  cmd = "Telescope projections",
   event = "VeryLazy",
   config = function()
     --- exports table of dirs in "~/src/"
@@ -17,6 +18,7 @@ return { {
     local workspaces = yankworkspaces()
     table.insert(workspaces, "~/.local/share")
 
+    -- TODO: Integrate with https://github.com/folke/persistence.nvim
     require("projections").setup({
       workspaces = workspaces,
       -- workspaces = {

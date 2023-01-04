@@ -17,9 +17,12 @@ return {
         event = "VeryLazy"
       },
       -- {
-      --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      --   config = true,
-      --   event = "VeryLazy"
+      --   "~whynothugo/lsp_lines.nvim",
+      --   url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      --   event = "VeryLazy",
+      --   config = function ()
+      --     require("lsp_lines").setup()
+      --   end,
       -- },
       {
         "simrat39/symbols-outline.nvim",
@@ -47,4 +50,6 @@ return {
     },
   },
   { "b0o/schemastore.nvim" },
+  -- TODO: Configure Navic
+  { "SmiteshP/nvim-navic" },
 }

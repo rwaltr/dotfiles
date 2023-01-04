@@ -120,12 +120,13 @@ return {
         },
 
         p = {
-          name = "Packer",
-          c = { "<cmd>PackerCompile<cr>", "Compile" },
-          i = { "<cmd>PackerInstall<cr>", "Install" },
-          s = { "<cmd>PackerSync<cr>", "Sync" },
-          S = { "<cmd>PackerStatus<cr>", "Status" },
-          u = { "<cmd>PackerUpdate<cr>", "Update" },
+          name = "Lazy",
+          i = { "<cmd>Lazy install<cr>", "Install" },
+          s = { "<cmd>Lazy sync<cr>", "Sync" },
+          S = { "<cmd>Lazy show<cr>", "Show" },
+          u = { "<cmd>Lazy update<cr>", "Update" },
+          h = { "<cmd>Lazy home<cr>", "Home" },
+          r = { "<cmd>Lazy restore<cr>", "Restore" },
         },
 
         g = {
@@ -142,7 +143,7 @@ return {
           o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
           b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
           c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-          C = { "<cmd>G commit<cr>", "Create commit" },
+          -- C = { "<cmd>G commit<cr>", "Create commit" },
           d = {
             "<cmd>Gitsigns diffthis HEAD<cr>",
             "Diff",
