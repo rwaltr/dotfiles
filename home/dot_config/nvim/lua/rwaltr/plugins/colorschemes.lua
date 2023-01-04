@@ -1,3 +1,5 @@
+-- TODO: Check out https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-base16.md
+-- TODO: Check out https://github.com/folke/styler.nvim
 return {
   {
     "LunarVim/ColorSchemes",

@@ -1,10 +1,12 @@
+-- TODO: Compare with https://github.com/nvim-neo-tree/neo-tree.nvim
 return { {
 
   "kyazdani42/nvim-tree.lua",
   dependencies = {
     "kyazdani42/nvim-web-devicons", -- optional, for file icon
   },
-  event = "VeryLazy",
+  -- event = "VeryLazy",
+  cmd = "NvimTreeToggle",
   config = function()
     local status_ok, nvim_tree = pcall(require, "nvim-tree")
     if not status_ok then

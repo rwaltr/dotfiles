@@ -1,6 +1,6 @@
 return {{
   "Saecki/crates.nvim",
-  event = "VeryLazy",
+  ft = "rust",
   config = {
     popup = {
       -- autofocus = true,

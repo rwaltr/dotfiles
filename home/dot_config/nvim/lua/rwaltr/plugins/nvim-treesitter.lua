@@ -4,7 +4,6 @@ return {
     build = ":TSUpdate",
     event = "BufReadPost",
     dependencies = {
-      "nvim-treesitter/playground",
       "JoosepAlviste/nvim-ts-context-commentstring",
       {
         "lewis6991/nvim-treesitter-context",
@@ -25,7 +24,6 @@ return {
           "hcl",
           "help",
           "html",
-          "javascript",
           "json",
           "lua",
           "markdown",
@@ -33,8 +31,6 @@ return {
           "python",
           "query",
           "regex",
-          "tsx",
-          "typescript",
           "vim",
           "yaml",
         },
@@ -48,5 +44,10 @@ return {
         context_commentstring = { enable = true, enable_autocmd = false },
       })
     end,
+  },
+  { 
+    "nvim-treesitter/playground",
+    cmd = "TSPlaygroundToggle",
+    build = ":TSInstall query",
   },
 }

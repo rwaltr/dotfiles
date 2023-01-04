@@ -1,3 +1,4 @@
+-- TODO: Compare to https://github.com/echasnovski/mini.comment
 return { {
   "numToStr/Comment.nvim",
   event = "VeryLazy",

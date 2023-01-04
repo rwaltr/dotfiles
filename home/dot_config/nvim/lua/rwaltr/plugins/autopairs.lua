@@ -1,3 +1,4 @@
+-- TODO: Compare with https://github.com/echasnovski/mini.pairs
 return { {
   "windwp/nvim-autopairs",
   event = "VeryLazy",

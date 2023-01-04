@@ -1,3 +1,4 @@
+-- TODO: Separate unsorted into sorted category
 return {
   {
     "stevearc/dressing.nvim",
@@ -27,9 +28,10 @@ return {
   {
     "kylechui/nvim-surround",
     config = true,
-    event = "VeryLazy"
+    event = "InsertEnter"
   },
   {
+    -- TODO: Compare with https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
     enabled = true,
     "anuvyklack/windows.nvim",
     event = "WinNew",
@@ -56,7 +58,9 @@ return {
   },
   { "nacro90/numb.nvim" },
   {
+    -- TODO: Check out https://github.com/toppair/peek.nvim
     "iamcco/markdown-preview.nvim",
+    ft = { "markdown", "telekasten" },
     build = function()
       vim.fn["mkdp#util#install"]()
     end
@@ -64,12 +68,12 @@ return {
   -- TODO: Compare with https://github.com/echasnovski/mini.bufremove
   {
     "moll/vim-bbye",
-    event = "VeryLazy"
+    cmd = "Bdelete",
   },
   {
-    "norcalli/nvim-colorizer.lua",
+    "NvChad/nvim-colorizer.lua",
     config = true,
-    event = "VeryLazy"
+    event = "BufReadPost"
   },
 
   -- TODO: Replace with numToStr/Navigator.nvim
@@ -100,13 +104,13 @@ return {
   {
     "akinsho/git-conflict.nvim",
     config = true,
-    event = "VeryLazy"
+    event = "BufReadPre"
   },
   {
     "mickael-menu/zk-nvim",
-    event = "VeryLazy",
-    config = function ()
-     require("zk").setup() 
+    ft = "markdown",
+    config = function()
+      require("zk").setup()
     end
   },
   {
@@ -115,7 +119,7 @@ return {
   },
   {
     "jghauser/mkdir.nvim",
-    event = "VeryLazy",
+    event = "BufWritePre",
   },
   {
     "gpanders/editorconfig.nvim",
@@ -126,6 +130,12 @@ return {
     event = "VeryLazy",
     dependencies = "nvim-lua/plenary.nvim",
   },
+  {
+    -- TODO: Configure
+    "pwntester/octo.nvim",
+    cmd = "Octo",
+    config = true,
+  }
 }
 
 
@@ -134,14 +144,13 @@ return {
 -- https://github.com/jbyuki/instant.nvim
 -- https://github.com/jamestthompson3/nvim-remote-containers
 -- https://github.com/nvim-neorg/neorg
--- https://github.com/x-motemen/ghq
 -- https://github.com/jackMort/ChatGPT.nvim
 -- https://github.com/dense-analysis/neural
--- https://github.com/iamcco/markdown-preview.nvim
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
 -- https://github.com/phaazon/mind.nvim
 -- https://github.com/roobert/search-replace.nvim
 -- https://github.com/shortcuts/no-neck-pain.nvim
--- https://github.com/folke/dot/tree/master/config/nvim
 -- https://github.com/glacambre/firenvim again..
--- TODO: Install https://github.com/monaqa/dial.nvim
+-- https://github.com/TimUntersberger/neogit
+-- https://github.com/nvim-pack/nvim-spectre
+-- https://github.com/smjonas/inc-rename.nvim
+-- https://github.com/monaqa/dial.nvim
