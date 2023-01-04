@@ -1,12 +1,3 @@
-local function configlsp()
-  local status_ok, _ = pcall(require, "lspconfig")
-  if not status_ok then
-    return
-  end
-
-
-end
-
 return {
   {
     "neovim/nvim-lspconfig",
@@ -25,11 +16,11 @@ return {
         config = true,
         event = "VeryLazy"
       },
-      {
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = true,
-        event = "VeryLazy"
-      },
+      -- {
+      --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      --   config = true,
+      --   event = "VeryLazy"
+      -- },
       {
         "simrat39/symbols-outline.nvim",
         config = true,
@@ -42,7 +33,8 @@ return {
     },
     config = function()
       require("rwaltr.plugins.lsp.mason")
-      require("rwaltr.plugins.lsp.handlers").setup()
+      require("rwaltr.config.handlers").setup()
+      require("rwaltr.plugins.lsp.null-ls")
     end,
   },
   {
@@ -53,8 +45,6 @@ return {
       "williamboman/mason.nvim",
       "jayp0521/mason-null-ls.nvim",
     },
-    config = function()
-      require("rwaltr.plugins.lsp.null-ls")
-    end
-  }
+  },
+  { "b0o/schemastore.nvim" },
 }
