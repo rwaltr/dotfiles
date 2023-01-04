@@ -33,44 +33,12 @@ return { {
 
     local kind_icons = require("rwaltr.util.icons").kind
 
-    --   פּ ﯟ   some other good icons
-    --[[ local kind_icons = { ]]
-    --[[ 	Text = "", ]]
-    --[[ 	Method = "m", ]]
-    --[[ 	Function = "", ]]
-    --[[ 	Constructor = "", ]]
-    --[[ 	Field = "", ]]
-    --[[ 	Variable = "", ]]
-    --[[ 	Class = "", ]]
-    --[[ 	Interface = "", ]]
-    --[[ 	Module = "", ]]
-    --[[ 	Property = "", ]]
-    --[[ 	Unit = "", ]]
-    --[[ 	Value = "", ]]
-    --[[ 	Enum = "", ]]
-    --[[ 	Keyword = "", ]]
-    --[[ 	Snippet = "", ]]
-    --[[ 	Color = "", ]]
-    --[[ 	File = "", ]]
-    --[[ 	Reference = "", ]]
-    --[[ 	Folder = "", ]]
-    --[[ 	EnumMember = "", ]]
-    --[[ 	Constant = "", ]]
-    --[[ 	Struct = "", ]]
-    --[[ 	Event = "", ]]
-    --[[ 	Operator = "", ]]
-    --[[ 	TypeParameter = "", ]]
-    --[[ } ]]
 
     -- find more here: https://www.nerdfonts.com/cheat-sheet
     cmp.setup({
       snippet = {
-        -- REQUIRED - you must specify a snippet engine
         expand = function(args)
-          -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
           require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-          -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-          -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
         end,
       },
       mapping = cmp.mapping.preset.insert {
@@ -85,10 +53,8 @@ return { {
           c = cmp.mapping.close(),
         }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expandable() then
+        ["<C-CR>"] = cmp.mapping(function(fallback)
+          if luasnip.expandable() then
             luasnip.expand()
           elseif luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
@@ -101,10 +67,8 @@ return { {
           "i",
           "s",
         }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
+        ["<S-CR>"] = cmp.mapping(function(fallback)
+          if luasnip.jumpable(-1) then
             luasnip.jump(-1)
           else
             fallback()
@@ -113,6 +77,12 @@ return { {
           "i",
           "s",
         }),
+      },
+      experimental = {
+        ghost_text = {
+          enabled = true,
+          hl_group = "LspCodeLens",
+        },
       },
       formatting = {
         fields = { "kind", "abbr", "menu" },
@@ -154,10 +124,20 @@ return { {
       }),
     })
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline("/", {
+    cmp.setup.cmdline({ "/", "?" }, {
       sources = {
         { name = "buffer" },
       },
+    })
+
+    cmp.setup.filetype({ 'gitcommit', 'octo' }, {
+      sources = cmp.config.sources({
+        { name = 'git' },
+        { name = 'buffer' },
+        { name = 'luasnip' },
+        { name = 'emoji' },
+        { name = 'spell' },
+      })
     })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
