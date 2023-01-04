@@ -1,20 +1,28 @@
-local ls = require("luasnip")
-
-require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippits/"})
-require("luasnip.loaders.from_vscode").lazy_load()
-
 -- TODO: https://github.com/garcia5/dotfiles/blob/master/files/nvim/lua/ag/plugin-conf/luasnip.lua
 
-ls.config.set_config({
-  history = true, -- Keeps last snippit local to jump back
-  updateevents = "TextChanged,TextChangedI", --update changes as you type
-  enable_autosnippets = true, -- enables autosnippets?
-  ext_opts = {
-    [require("luasnip.util.types").choiceNode] = {
-      active = {
-        virt_text = { { "", "Orange" } },
-      },
+return {
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      config = function()
+        require("luasnip.loaders.from_vscode").lazy_load()
+      end,
     },
-  },
-})
-
+    config = {
+      history = true, -- Keeps last snippit local to jump back
+      updateevents = "TextChanged,TextChangedI", --update changes as you type
+      enable_autosnippets = true, -- enables autosnippets?
+      ext_opts = {
+        [require("luasnip.util.types").choiceNode] = {
+          active = {
+            virt_text = { { "", "Orange" } },
+          },
+        },
+      },
+      init = function()
+        require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippits/" })
+      end
+    }
+  }
+}
