@@ -1,3 +1,4 @@
+local function configneorg()
 require("neorg").setup({
 	-- Tell Neorg what modules to load
 	load = {
@@ -43,3 +44,10 @@ neorg_callbacks.on_event("core.keybinds.events.enable_keybinds", function(_, key
 		noremap = true,
 	})
 end)
+end
+
+return {{
+    "nvim-neorg/neorg",
+    ft = "norg",
+    config = configneorg()
+}}

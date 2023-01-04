@@ -1,3 +1,4 @@
+local function configgh()
 require('litee.lib').setup()
 require('litee.gh').setup({
   -- deprecated, around for compatibility for now.
@@ -96,3 +97,7 @@ if w_ok then
     },
   }, { prefix = "<leader>" })
 end
+end
+
+-- Never really used this much
+-- return{}
