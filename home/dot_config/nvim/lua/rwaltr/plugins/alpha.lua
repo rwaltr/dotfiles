@@ -1,4 +1,8 @@
-local function configalpha()
+return { {
+  "goolord/alpha-nvim",
+  dependencies = { "kyazdani42/nvim-web-devicons" },
+  event = "VimEnter",
+  config = function ()
   local alpha = require("alpha")
   local icons = require("rwaltr.util.icons")
 
@@ -43,11 +47,5 @@ local function configalpha()
   dashboard.opts.opts.noautocmd = true
   -- vim.cmd([[autocmd User AlphaReady echo 'ready']])
   alpha.setup(dashboard.opts)
-end
-
-return { {
-  "goolord/alpha-nvim",
-  dependencies = { "kyazdani42/nvim-web-devicons" },
-  event = "VimEnter",
-  config = configalpha()
+  end
 } }

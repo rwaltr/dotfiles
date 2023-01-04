@@ -1,11 +1,7 @@
-local function configbufferline()
-
-  local status_ok, bufferline = pcall(require, "bufferline")
-  if not status_ok then
-    return
-  end
-
-  bufferline.setup {
+return { {
+  "akinsho/nvim-bufferline.lua",
+  event = "BufAdd",
+  config = {
     options = {
       numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
       close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
@@ -176,10 +172,4 @@ local function configbufferline()
       },
     },
   }
-end
-
-return {{
-  "akinsho/nvim-bufferline.lua",
-  event = "BufAdd",
-  config = configbufferline(),
-}}
+} }
