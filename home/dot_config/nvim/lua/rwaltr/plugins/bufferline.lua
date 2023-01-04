@@ -1,6 +1,6 @@
 return { {
   "akinsho/nvim-bufferline.lua",
-  event = "BufAdd",
+  event = "VimEnter",
   config = {
     options = {
       numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
