@@ -1,3 +1,4 @@
+local function configindentline()
 local status_ok, indent_blankline = pcall(require, "indent_blankline")
 if not status_ok then
 	return
@@ -9,6 +10,7 @@ vim.g.indent_blankline_filetype_exclude = {
 	"startify",
 	"dashboard",
 	"packer",
+  "lazy",
 	"neogitstatus",
 	"NvimTree",
 	"Trouble",
@@ -68,3 +70,10 @@ indent_blankline.setup({
 	--   "IndentBlanklineIndent3",
 	-- },
 })
+end
+
+return{{
+    "lukas-reineke/indent-blankline.nvim",
+    event = "BufReadPre",
+    config = configindentline()
+}}

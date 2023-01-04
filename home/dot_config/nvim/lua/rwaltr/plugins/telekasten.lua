@@ -1,3 +1,4 @@
+local function configtelekasten()
 local notebook = vim.fn.expand("~/Documents/Notebook")
 
 local extension = ".md"
@@ -115,3 +116,12 @@ require("telekasten").setup({
 	-- should all links be updated when a file is renamed
 	rename_update_links = true,
 })
+end
+
+return {{
+
+    "renerocksai/telekasten.nvim",
+    dependencies = "renerocksai/calendar-vim",
+    config = configtelekasten(),
+    event = "VeryLazy",
+}}

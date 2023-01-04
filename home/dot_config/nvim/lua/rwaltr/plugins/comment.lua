@@ -1,3 +1,4 @@
+local function configcomment()
 local status_ok, comment = pcall(require, "Comment")
 if not status_ok then
   return
@@ -27,3 +28,11 @@ if status_ok then
     },
   })
 end
+end
+
+
+return {{
+    "numToStr/Comment.nvim",
+    event = "VeryLazy",
+    config = configcomment(),
+}}

@@ -1,3 +1,4 @@
+local function confignvimtree()
 local status_ok, nvim_tree = pcall(require, "nvim-tree")
 if not status_ok then
   return
@@ -161,3 +162,14 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
     },
   },
 } -- END_DEFAULT_OPTS
+end
+
+return{{
+
+    "kyazdani42/nvim-tree.lua",
+    dependencies = {
+      "kyazdani42/nvim-web-devicons", -- optional, for file icon
+    },
+    config = confignvimtree(),
+    event = "VeryLazy"
+}}
