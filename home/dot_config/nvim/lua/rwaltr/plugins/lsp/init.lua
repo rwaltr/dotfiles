@@ -33,7 +33,7 @@ return {
     },
     config = function()
       require("rwaltr.plugins.lsp.mason")
-      require("rwaltr.config.handlers").setup()
+      require("rwaltr.plugins.lsp.handlers").setup()
       require("rwaltr.plugins.lsp.null-ls")
     end,
   },
