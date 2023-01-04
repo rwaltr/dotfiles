@@ -1,4 +1,3 @@
--- Refactor LSP Interface and Keybinds
 return {
   {
     "neovim/nvim-lspconfig",
@@ -37,6 +36,8 @@ return {
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
+
+      -- TODO: Refactor LSP Interface and Keybinds
       require("rwaltr.plugins.lsp.mason")
       require("rwaltr.plugins.lsp.handlers").setup()
       require("rwaltr.plugins.lsp.null-ls")
