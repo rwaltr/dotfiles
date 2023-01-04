@@ -1,4 +1,3 @@
--- TODO: Maybe use https://github.com/vigoux/notifier.nvim
 return { {
   "rcarriga/nvim-notify",
   lazy = false,
