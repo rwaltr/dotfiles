@@ -3,22 +3,24 @@
 return {
   {
     "LunarVim/ColorSchemes",
-    enabled = false,
-    lazy = false,
+    enabled = true,
+    lazy = true,
+    event   = "VeryLazy",
     priority = 1000,
-    config = function ()
-      vim.cmd("colorscheme tomorrow")
-    end
+    -- config = function ()
+    --   vim.cmd("colorscheme tomorrow")
+    -- end
   },
- {
+  {
     "folke/tokyonight.nvim",
     lazy = false,
+    enabled = true,
     priority = 1000,
 
     config = function()
       local tokyonight = require("tokyonight")
       tokyonight.setup({
-        style = "moon",
+        style = "night",
         sidebars = {
           "qf",
           "vista_kind",
@@ -41,5 +43,19 @@ return {
       })
       tokyonight.load()
     end,
+  },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    event   = "VeryLazy",
+    priority = 1000,
+  },
+  { "shaunsingh/oxocarbon.nvim",
+    event   = "VeryLazy",
+    priority = 1000,
+  },
+  { "ellisonleao/gruvbox.nvim",
+    event   = "VeryLazy",
+    priority = 1000,
   },
 }
