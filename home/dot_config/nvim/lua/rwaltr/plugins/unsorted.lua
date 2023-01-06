@@ -109,7 +109,7 @@ return {
   },
   {
     "toppair/peek.nvim",
-    enabled = false,
+    enabled = true,
     ft = { "markdown", "telekasten" },
     cmd = {"PeekOpen", "PeekClose", "PeekToggle"},
     config = function()
@@ -128,7 +128,7 @@ return {
         end
       end
 
-      vim.api.nvim_create_user_command('PeekToggle', peektoggle(), {})
+      -- vim.api.nvim_create_user_command("PeekToggle", peektoggle(), {})
 
     end,
   },

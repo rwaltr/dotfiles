@@ -14,7 +14,7 @@ M.setup = function()
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
   end
 
-  local config = {
+  local diagnosticConfig = {
     -- disable virtual text
     virtual_text = true,
     -- show signs
@@ -34,15 +34,7 @@ M.setup = function()
     },
   }
 
-  vim.diagnostic.config(config)
-  --
-  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  --   border = "rounded",
-  -- })
-  --
-  -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  --   border = "rounded",
-  -- })
+  vim.diagnostic.config(diagnosticConfig)
 end
 
 ---Sets Document Highlighting
@@ -73,9 +65,9 @@ local function lsp_keymaps(bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
   vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 
-  local status_ok, which_key = pcall(require, "which-key")
+  local status_ok, wk = pcall(require, "which-key")
   if status_ok then
-    which_key.register({
+    wk.register({
       g = {
         D = "LSP Declaration",
         d = "LSP Definition",
@@ -87,7 +79,6 @@ local function lsp_keymaps(bufnr)
     })
   end
 end
-
 
 M.on_attach = function(client, bufnr)
   if client.name == "tsserver" then
@@ -101,18 +92,15 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local ufo_ok = pcall(require, "ufo")
 if ufo_ok then
- capabilities.textDocument.foldingRange = {
+  capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
 end
 
-local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_ok then
-  return
-end
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
--- M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+
 M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 return M
