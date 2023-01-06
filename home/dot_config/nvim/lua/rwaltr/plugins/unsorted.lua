@@ -216,7 +216,12 @@ return {
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
-    config = true,
+    config = {
+      plugins = {
+        gitsigns = true,
+        tmux = true,
+      }
+    },
   },
   {
     "echasnovski/mini.align",
