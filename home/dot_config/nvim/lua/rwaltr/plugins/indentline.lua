@@ -57,7 +57,6 @@ return { {
     -- vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
     -- vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
     -- vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-    vim.opt.list = true
     -- vim.opt.listchars:append("space:⋅")
     -- vim.opt.listchars:append "space:"
     -- vim.opt.listchars:append("eol:↴")
@@ -74,4 +73,24 @@ return { {
       -- },
     })
   end
-} }
+},
+  {
+    "echasnovski/mini.indentscope",
+    version = false, -- wait till new 0.7.0 release to put it back on semver
+    event = "BufReadPre",
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy" },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+      require("mini.indentscope").setup({
+        -- symbol = "▏",
+        symbol = "▏",
+        options = { try_as_border = true },
+      })
+    end,
+
+  },
+}

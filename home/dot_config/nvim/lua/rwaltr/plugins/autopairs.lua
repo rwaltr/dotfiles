@@ -2,6 +2,7 @@
 return { {
   "windwp/nvim-autopairs",
   event = "VeryLazy",
+  enabled = false,
   config = function()
     -- Setup nvim-cmp.
     local status_ok, npairs = pcall(require, "nvim-autopairs")
@@ -37,4 +38,13 @@ return { {
     end
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
   end
-} }
+},
+  {
+    "echasnovski/mini.pairs",
+    event = "VeryLazy",
+    config = function()
+      require("mini.pairs").setup({})
+    end,
+
+  },
+}

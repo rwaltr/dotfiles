@@ -9,6 +9,7 @@ return {
   },
   {
     "folke/which-key.nvim",
+    name = "which-key.nvim",
     event = "VeryLazy",
     config = function()
       local setup = {
@@ -90,10 +91,10 @@ return {
         ["A"] = { "<cmd>Alpha<cr>", "Alpha" },
         ["a"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
         ["b"] = { "<cmd>Telescope buffers<cr>", "Buffers" },
-        ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+        ["e"] = { "<cmd>Neotree toggle<cr>", "Explorer" },
         ["w"] = { "<cmd>w!<CR>", "Save" },
         ["q"] = { "<cmd>q!<CR>", "Quit" },
-        ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+        ["c"] = { "<cmd>bdelete!<CR>", "Close Buffer" },
         ["v"] = { "<cmd>vsplit<CR>", "Vsplit" },
         ["h"] = { "<cmd>split<CR>", "Split" },
 

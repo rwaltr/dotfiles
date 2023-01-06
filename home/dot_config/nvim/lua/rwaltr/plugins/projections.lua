@@ -19,6 +19,7 @@ return { {
     table.insert(workspaces, "~/.local/share")
 
     -- TODO: Integrate with https://github.com/folke/persistence.nvim
+    -- or https://github.com/echasnovski/mini.sessions
     require("projections").setup({
       workspaces = workspaces,
       -- workspaces = {

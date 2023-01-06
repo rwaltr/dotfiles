@@ -1,37 +1,32 @@
--- TODO: Compare to https://github.com/echasnovski/mini.comment
 return { {
   "numToStr/Comment.nvim",
-  event = "VeryLazy",
+  event = "InsertEnter",
+  dependencies = "which-key.nvim",
   config = function()
-    local status_ok, comment = pcall(require, "Comment")
-    if not status_ok then
-      return
-    end
+    local comment = require("Comment")
 
     comment.setup({
       pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
     })
 
-    local status_ok, which_key = pcall(require, "which-key")
-    if status_ok then
-      which_key.register({
-        g = {
-          c = {
-            name = "Line comment",
-            c = "Toggle comment",
-            o = "Add comment after line",
-            O = "Add comment before line",
-            A = "Add comment at the end of the line",
-          },
-          b = {
-            name = "Block comment",
-            c = "Toggle comment",
-            o = "Add comment after line",
-            O = "Add comment before line",
-          },
+    local wk = require("which-key")
+    wk.register({
+      g = {
+        c = {
+          name = "Line comment",
+          c = "Toggle comment",
+          o = "Add comment after line",
+          O = "Add comment before line",
+          A = "Add comment at the end of the line",
         },
-      })
-    end
+        b = {
+          name = "Block comment",
+          c = "Toggle comment",
+          o = "Add comment after line",
+          O = "Add comment before line",
+        },
+      },
+    })
 
   end
 } }

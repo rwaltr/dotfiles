@@ -2,6 +2,7 @@
 return { {
 
   "kyazdani42/nvim-tree.lua",
+  enabled = false,
   dependencies = {
     "kyazdani42/nvim-web-devicons", -- optional, for file icon
   },
@@ -172,4 +173,20 @@ return { {
       },
     } -- END_DEFAULT_OPTS
   end
-} }
+},
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    enabled = true,
+    cmd = "Neotree",
+    init = function()
+      vim.g.neo_tree_remove_legacy_commands = 1
+    end,
+    config = {
+      filesystem = {
+        follow_current_file = true,
+        hijack_netrw_behavior = "open_current",
+      },
+    },
+  },
+}

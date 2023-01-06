@@ -1,8 +1,7 @@
 -- Keybindings
 
-local keymap = vim.api.nvim_set_keymap
-
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap.set
+local opts = { silent = true }
 
 keymap("n", "<Space>", "", opts)
 vim.g.mapleader = " "
@@ -14,6 +13,8 @@ vim.g.maplocalleader = " "
 --   visual_block_mode = "x",
 --   term_mode = "t",
 --   command_mode = "c",
+
+
 
 -- Window navigation
 keymap("n", "<C-J>", "<C-W><C-J>", opts)
@@ -48,3 +49,28 @@ keymap("n", "<C-p>", ":lua require('telescope.builtin').git_files()<CR>", opts)
 
 --- Why didn't I think of this?
 keymap("n", ";", ":", opts)
+
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+keymap("n", "n", "'Nn'[v:searchforward]", { expr = true })
+keymap("x", "n", "'Nn'[v:searchforward]", { expr = true })
+keymap("o", "n", "'Nn'[v:searchforward]", { expr = true })
+keymap("n", "N", "'nN'[v:searchforward]", { expr = true })
+keymap("x", "N", "'nN'[v:searchforward]", { expr = true })
+keymap("o", "N", "'nN'[v:searchforward]", { expr = true })
+
+-- cntl S is always an option
+keymap({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>")
+
+-- Move Lines
+keymap("n", "<A-j>", ":m .+1<CR>==")
+keymap("v", "<A-j>", ":m '>+1<CR>gv=gv")
+keymap("i", "<A-j>", "<Esc>:m .+1<CR>==gi")
+keymap("n", "<A-k>", ":m .-2<CR>==")
+keymap("v", "<A-k>", ":m '<-2<CR>gv=gv")
+keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi")
+
+-- better indenting
+keymap("v", "<", "<gv")
+keymap("v", ">", ">gv")
+
+
