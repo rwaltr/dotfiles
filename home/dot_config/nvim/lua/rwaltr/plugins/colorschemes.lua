@@ -3,10 +3,8 @@
 return {
   {
     "LunarVim/ColorSchemes",
-    enabled = true,
-    lazy = true,
-    event   = "VeryLazy",
     priority = 1000,
+    lazy = false,
     -- config = function ()
     --   vim.cmd("colorscheme tomorrow")
     -- end
@@ -14,7 +12,6 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = false,
-    enabled = true,
     priority = 1000,
 
     config = function()
@@ -47,15 +44,42 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    event   = "VeryLazy",
+    lazy = false,
     priority = 1000,
   },
   { "shaunsingh/oxocarbon.nvim",
-    event   = "VeryLazy",
+    lazy = false,
     priority = 1000,
   },
   { "ellisonleao/gruvbox.nvim",
-    event   = "VeryLazy",
+    lazy = false,
     priority = 1000,
   },
+  { "Mofiqul/vscode.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  { "rockyzhang24/arctic.nvim",
+    lazy = false,
+    priority = 1000,
+    dependencies = "rktjmp/lush.nvim",
+  },
+  { "ray-x/starry.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  { "andersevenrud/nordic.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+  { "projekt0n/github-nvim-theme",
+    lazy = false,
+    priority = 1000,
+  },
+  { "EdenEast/nightfox.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+
+
 }
