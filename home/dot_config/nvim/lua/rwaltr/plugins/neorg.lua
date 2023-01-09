@@ -1,7 +1,7 @@
 return { {
     "nvim-neorg/neorg",
     ft = "norg",
-    config = {
+    opts = {
       load = {
         ["core.defaults"] = {},
         ["core.norg.concealer"] = {},

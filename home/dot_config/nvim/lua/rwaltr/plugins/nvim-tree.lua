@@ -182,7 +182,7 @@ return { {
     init = function()
       vim.g.neo_tree_remove_legacy_commands = 1
     end,
-    config = {
+    opts = {
       filesystem = {
         follow_current_file = true,
         hijack_netrw_behavior = "open_current",

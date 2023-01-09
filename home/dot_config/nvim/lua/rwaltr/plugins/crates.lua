@@ -1,7 +1,7 @@
 return {{
   "Saecki/crates.nvim",
   ft = "rust",
-  config = {
+  opts = {
     popup = {
       -- autofocus = true,
       style = "minimal",

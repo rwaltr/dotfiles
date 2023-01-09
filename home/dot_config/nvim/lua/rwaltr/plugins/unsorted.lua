@@ -21,13 +21,13 @@ return {
   -- TODO: Define Keymaps
   {
     "ziontee113/icon-picker.nvim",
-    config = { disable_legacy_commands = true },
+    opts = { disable_legacy_commands = true },
     cmd = { "IconPickerYank", "IconPickerInsert", "IconPickerNormal" },
   },
   {
     "danymat/neogen",
     cmd = "Neogen",
-    config = {
+    opts = {
       snippit_engine = "luasnip",
     },
   },
@@ -171,7 +171,7 @@ return {
     event = "VeryLazy",
     dependencies =
     {
-      { "ggandor/flit.nvim", config = { labeled_modes = "nv" } },
+      { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } },
     },
     config = function()
       require("leap").add_default_mappings()
@@ -216,7 +216,7 @@ return {
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
-    config = {
+    opts = {
       plugins = {
         gitsigns = true,
         tmux = true,
