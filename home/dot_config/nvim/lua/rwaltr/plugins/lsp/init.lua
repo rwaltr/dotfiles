@@ -4,7 +4,6 @@ return {
 		event = "BufReadPre",
 		dependencies = {
 			{ "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-			"tamago324/nlsp-settings.nvim",
 			"mason.nvim",
 			"folke/lsp-colors.nvim",
 			{
