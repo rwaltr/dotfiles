@@ -111,7 +111,7 @@ return {
     "toppair/peek.nvim",
     enabled = true,
     ft = { "markdown", "telekasten" },
-    cmd = {"PeekOpen", "PeekClose", "PeekToggle"},
+    cmd = { "PeekOpen", "PeekClose", "PeekToggle" },
     config = function()
 
       require("peek").setup()
@@ -201,6 +201,12 @@ return {
   {
     "gpanders/editorconfig.nvim",
     event = "BufReadPre",
+    conf = function()
+      if vim.fn.has("nvim-0.9") then
+        return false
+      end
+      return true
+    end
   },
   {
     "cbochs/grapple.nvim",
