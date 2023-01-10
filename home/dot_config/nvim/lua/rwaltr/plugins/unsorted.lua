@@ -65,7 +65,6 @@ return {
     end,
   },
   {
-    -- TODO: Compare with https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
     enabled = true,
     "anuvyklack/windows.nvim",
     event = "WinNew",
