@@ -47,7 +47,7 @@ packages:
 - name: budimanjojo/talhelper@v1.5.6
 - name: tsenart/vegeta@v12.8.4
 - name: fluxcd/flux2@v0.38.2
-- name: ankitpokhrel/jira-cli@v1.2.0
+- name: ankitpokhrel/jira-cli@v1.3.0
 - name: weaveworks/tf-controller/tfctl@v3.31.0
 - name: kyverno/kyverno@v1.8.5
 - name: charmbracelet/vhs@v0.2.0
