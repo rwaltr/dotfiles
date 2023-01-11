@@ -75,6 +75,7 @@ return {
     ArrowClosed = "",
     ArrowOpen = "",
     ArrowRight = "➛",
+    ArrowLeft = "⬅️",
     Lock = "",
     Circle = "",
     BigCircle = "",

@@ -15,17 +15,25 @@ return {
         end,
       },
     },
-    config =
-    {
+    config = function()
+      local ls = require("luasnip")
+      local types = require("luasnip.util.types")
+      local icons = require("rwaltr.util.icons")
+      ls.setup({
       history = true, -- Keeps last snippit local to jump back
       updateevents = "TextChanged,TextChangedI", --update changes as you type
       enable_autosnippets = true, -- enables autosnippets?
-      -- ext_opts = {
-      --   [require("luasnip.util.types").choiceNode] = {
-      --     active = {
-      --       virt_text = { { "", "Orange" } },
-      --     },
-        -- },
-      },
-    },
-  }
+      ext_opts = {
+          [types.choiceNode] = {
+            active = {
+              virt_text = {{ icons.ui.ArrowLeft, "Error"}}
+            }
+          }
+
+        }
+      }
+)
+    end,
+
+  },
+}
