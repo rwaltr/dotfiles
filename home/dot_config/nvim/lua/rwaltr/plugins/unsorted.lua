@@ -148,8 +148,10 @@ return {
   },
   {
     "NvChad/nvim-colorizer.lua",
-    config = true,
-    event = "BufReadPost"
+    event = "BufReadPost",
+    config = function ()
+     require("colorizer").setup() 
+    end,
   },
 
   -- TODO: Replace with numToStr/Navigator.nvim
@@ -286,3 +288,6 @@ return {
 -- https://github.com/glacambre/firenvim again..
 -- https://github.com/TimUntersberger/neogit
 -- https://github.com/monaqa/dial.nvim
+-- https://github.com/rhysd/committia.vim
+-- https://github.com/ThePrimeagen/git-worktree.nvim
+-- rhysd/git-messenger.vim

@@ -19,7 +19,7 @@ require("lazy").setup({
   -- see https://github.com/folke/lazy.nvim#-structuring-your-plugins
   spec = "rwaltr.plugins",
   defaults = { lazy = true, version = "*" }, -- attempts to install the latest of a tag, more stability hopefully
-  install = { colorscheme = { "tomorrow","habamax" } }, -- Attempts to load colorscheme, otherwise loads build in habamax
+  install = { colorscheme = { "noirbuddy","habamax" } }, -- Attempts to load colorscheme, otherwise loads build in habamax
   checker = { enabled = true }, -- Lazy checks for new versions
   -- Not sure why these are disabled will need to look more
 -- performance = {

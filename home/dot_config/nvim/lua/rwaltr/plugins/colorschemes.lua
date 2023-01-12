@@ -11,7 +11,7 @@ return {
   },
   {
     "folke/tokyonight.nvim",
-    lazy = false,
+    lazy = true,
     priority = 1000,
 
     config = function()
@@ -79,6 +79,15 @@ return {
   { "EdenEast/nightfox.nvim",
     lazy = false,
     priority = 1000,
+  },
+  {
+    "jesseleite/nvim-noirbuddy",
+    dependencies = { "tjdevries/colorbuddy.nvim", branch = "dev" },
+    lazy = false,
+    priority = 1000,
+    opts = {
+      preset = 'slate'
+    }
   },
 
 
