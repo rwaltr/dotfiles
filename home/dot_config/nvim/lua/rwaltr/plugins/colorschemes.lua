@@ -86,7 +86,12 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      preset = 'slate'
+      colors = {
+        -- new colortheme based on my logo colors
+        primary = '#B07b12',
+        secondary = '#3b4252',
+        background = '#19191F',
+      }
     }
   },
 

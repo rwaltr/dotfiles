@@ -29,7 +29,7 @@ return { {
 
     local diff = {
       "diff",
-      colored = false,
+      colored = true,
       symbols = {
         added = icons.git.Add .. " ",
         modified = icons.git.Mod .. " ",
@@ -43,11 +43,8 @@ return { {
     local mode = {
       -- mode component
       function()
-        return ""
+        return "🦌"
       end,
-      -- color = function ()
-      --   return { fg = mode_color[vim.fn.mode()], bg = gray }
-      -- end,
       padding = 1,
     }
 
@@ -55,6 +52,7 @@ return { {
       "filetype",
       icons_enabled = true,
       icon = icons.documents.File,
+      colored = false
     }
 
     local branch = {
@@ -83,6 +81,7 @@ return { {
 
     local progress = {
       "progress",
+      ---@diagnostic disable-next-line: unused-local
       fmt = function(str)
         return "%P/%L"
       end,
@@ -93,28 +92,30 @@ return { {
       return " " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
     end
 
+    local nbll = require("noirbuddy.plugins.lualine")
+
     lualine.setup({
       options = {
-        globalstatus = false,
+        globalstatus = true,
         icons_enabled = true,
-        theme = "auto",
-        component_separators = { left = "|", right = "|" },
-        section_separators = { left = "", right = "" },
+        theme = nbll.theme,
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
         disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline", "lazy", "neo-tree" },
         always_divide_middle = true,
       },
       sections = {
-        lualine_a = { mode, branch },
-        lualine_b = { diff, diagnostics },
+        lualine_a = { mode },
+        lualine_b = { branch, diff, diagnostics },
         lualine_c = {},
-        lualine_x = { spaces },
-        lualine_y = { filetype },
+        lualine_x = {},
+        lualine_y = { spaces, filetype },
         lualine_z = { location, progress },
       },
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = {},
+        lualine_c = { "filename" },
         lualine_x = { "location" },
         lualine_y = {},
         lualine_z = {},
