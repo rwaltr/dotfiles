@@ -1,6 +1,6 @@
 return { {
   "kevinhwang91/nvim-ufo",
-  enabled = false,
+  enabled = true,
   dependencies = "kevinhwang91/promise-async",
   event = "BufReadPre",
   config = function()
