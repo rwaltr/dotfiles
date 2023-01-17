@@ -149,8 +149,8 @@ return {
   {
     "NvChad/nvim-colorizer.lua",
     event = "BufReadPost",
-    config = function ()
-     require("colorizer").setup() 
+    config = function()
+      require("colorizer").setup()
     end,
   },
 
@@ -274,20 +274,23 @@ return {
       { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
     },
   },
+  {
+    "TimUntersberger/neogit",
+    cmd = "Neogit",
+    config = true,
+  },
+  {
+    "phaazon/mind.nvim",
+    config = true,
+    cmd = { "MindOpenMain", "MindOpenProject", "MineOpenSmartProject", "MindReloadState" },
+  },
 }
 
 
 -- TODO: Check out the following items
 -- https://github.com/nvim-neotest/neotest -- look deeper into this when its time for DAP
--- https://github.com/jbyuki/instant.nvim
--- https://github.com/nvim-neorg/neorg
 -- https://github.com/jackMort/ChatGPT.nvim
 -- https://github.com/dense-analysis/neural
--- https://github.com/phaazon/mind.nvim
--- https://github.com/roobert/search-replace.nvim
 -- https://github.com/glacambre/firenvim again..
--- https://github.com/TimUntersberger/neogit
 -- https://github.com/monaqa/dial.nvim
--- https://github.com/rhysd/committia.vim
 -- https://github.com/ThePrimeagen/git-worktree.nvim
--- rhysd/git-messenger.vim
