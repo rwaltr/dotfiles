@@ -284,6 +284,18 @@ return {
     config = true,
     cmd = { "MindOpenMain", "MindOpenProject", "MineOpenSmartProject", "MindReloadState" },
   },
+  {
+    'Pocco81/AbbrevMan.nvim',
+    event = "BufReadPre",
+    cmd = { "AMLoad", "AMUnload" },
+    config = true,
+  },
+  {
+    '0styx0/abbreinder.nvim',
+    dependencies = { "0styx0/abbremand.nvim" },
+    event = "BufRead",
+    config = true,
+  },
 }
 
 
@@ -292,5 +304,3 @@ return {
 -- https://github.com/jackMort/ChatGPT.nvim
 -- https://github.com/dense-analysis/neural
 -- https://github.com/glacambre/firenvim again..
--- https://github.com/monaqa/dial.nvim
--- https://github.com/ThePrimeagen/git-worktree.nvim
