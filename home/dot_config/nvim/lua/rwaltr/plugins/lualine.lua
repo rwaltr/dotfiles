@@ -92,13 +92,13 @@ return { {
       return " " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
     end
 
-    local nbll = require("noirbuddy.plugins.lualine")
+    -- local nbll = require("noirbuddy.plugins.lualine")
 
     lualine.setup({
       options = {
         globalstatus = true,
         icons_enabled = true,
-        theme = nbll.theme,
+        theme = "auto",
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline", "lazy", "neo-tree" },

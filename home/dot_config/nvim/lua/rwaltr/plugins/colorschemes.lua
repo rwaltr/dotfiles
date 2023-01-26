@@ -1,19 +1,14 @@
 -- TODO: Check out https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-base16.md
 -- TODO: Check out https://github.com/folke/styler.nvim
+if 1 > 2 then
+  
+end
 return {
-  {
-    "LunarVim/ColorSchemes",
-    priority = 1000,
-    lazy = false,
-    -- config = function ()
-    --   vim.cmd("colorscheme tomorrow")
-    -- end
-  },
   {
     "folke/tokyonight.nvim",
     lazy = true,
     priority = 1000,
-
+    enabled = false,
     config = function()
       local tokyonight = require("tokyonight")
       tokyonight.setup({
@@ -42,47 +37,9 @@ return {
     end,
   },
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    lazy = false,
-    priority = 1000,
-  },
-  { "shaunsingh/oxocarbon.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  { "ellisonleao/gruvbox.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  { "Mofiqul/vscode.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  { "rockyzhang24/arctic.nvim",
-    lazy = false,
-    priority = 1000,
-    dependencies = "rktjmp/lush.nvim",
-  },
-  { "ray-x/starry.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  { "andersevenrud/nordic.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  { "projekt0n/github-nvim-theme",
-    lazy = false,
-    priority = 1000,
-  },
-  { "EdenEast/nightfox.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  {
     "jesseleite/nvim-noirbuddy",
     dependencies = { "tjdevries/colorbuddy.nvim", branch = "dev" },
+    enabled = false,
     lazy = false,
     priority = 1000,
     opts = {
@@ -91,9 +48,26 @@ return {
         primary = '#B07b12',
         secondary = '#3b4252',
         background = '#19191F',
+        diagnostic_error = '#7b0b0b',
+        diagnostic_warning = '#c07b12',
+        diagnostic_hint = '#1d3b29',
+        diagnostic_info = '#7371fc',
+        diff_add = '#1d3b29',
+        diff_change = '#909590',
+        diff_delete = '#7b0b0b',
       }
     }
   },
-
-
+  { "tjdevries/colorbuddy.nvim",
+    branch = "dev" },
+  {
+    -- 'rwaltr/goldenstag.nvim',
+    name = "goldenstag.nvim",
+    lazy = false,
+    enabled = true,
+    dir = "~/src/rwaltr/goldenstag.nvim",
+    config = function()
+      require("goldenstag").setup()
+    end,
+  },
 }
