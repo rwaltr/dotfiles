@@ -1,14 +1,11 @@
 -- TODO: Check out https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-base16.md
 -- TODO: Check out https://github.com/folke/styler.nvim
-if 1 > 2 then
-  
-end
 return {
   {
     "folke/tokyonight.nvim",
-    lazy = true,
+    lazy = false,
     priority = 1000,
-    enabled = false,
+    enabled = true,
     config = function()
       local tokyonight = require("tokyonight")
       tokyonight.setup({
@@ -64,7 +61,7 @@ return {
     -- 'rwaltr/goldenstag.nvim',
     name = "goldenstag.nvim",
     lazy = false,
-    enabled = true,
+    enabled = false,
     dir = "~/src/rwaltr/goldenstag.nvim",
     config = function()
       require("goldenstag").setup()
