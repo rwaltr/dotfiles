@@ -28,3 +28,18 @@
   url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Monoid.zip
   refreshPeriod: 169h
   exact: false
+".local/share/fonts/ShureTechMono":
+  type: archive
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/ShareTechMono.zip
+  refreshPeriod: 169h
+  exact: false
+".local/share/fonts/VictorMono":
+  type: archive
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/VictorMono.zip
+  refreshPeriod: 169h
+  exact: false
+".local/share/fonts/Terminus":
+  type: archive
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Terminus.zip
+  refreshPeriod: 169h
+  exact: false
