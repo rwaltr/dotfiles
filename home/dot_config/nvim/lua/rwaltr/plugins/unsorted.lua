@@ -318,6 +318,7 @@ return {
     ft = "markdown",
   },
   {"jakewvincent/mkdnflow.nvim",
+    enabled = false,
   config = true,
     ft = "markdown",
   },
