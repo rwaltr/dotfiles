@@ -303,6 +303,25 @@ return {
       require("color-picker")
     end,
   },
+  -- Notetaking
+  {
+    'ekickx/clipboard-image.nvim',
+    config = true,
+    event = "InsertEnter",
+  },
+  {
+    "jubnzv/mdeval.nvim",
+    config = true,
+    enabled = false,
+    opts = {},
+    cmd = { "MdEval" },
+    ft = "markdown",
+  },
+  {"jakewvincent/mkdnflow.nvim",
+  config = true,
+    ft = "markdown",
+  },
+
 }
 
 
