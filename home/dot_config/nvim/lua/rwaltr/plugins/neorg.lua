@@ -1,6 +1,10 @@
-return { {
+return {
+  {
     "nvim-neorg/neorg",
+    build = ":Neorg sync-parsers",
+    cmd = "Neorg",
     ft = "norg",
+    dependencies = { { "nvim-lua/plenary.nvim" } },
     opts = {
       load = {
         ["core.defaults"] = {},
@@ -10,4 +14,6 @@ return { {
         },
         ["core.integrations.nvim-cmp"] = {},
       },
-    },} }
+    },
+  },
+}

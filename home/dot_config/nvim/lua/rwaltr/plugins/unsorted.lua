@@ -331,3 +331,6 @@ return {
 -- https://github.com/jackMort/ChatGPT.nvim
 -- https://github.com/dense-analysis/neural
 -- https://github.com/glacambre/firenvim again..
+-- telescope-lazy.nvim
+-- wpm.nvim
+-- Neozoom.la
