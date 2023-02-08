@@ -56,7 +56,7 @@ return { {
       --     return true
       --   end
       -- end,
-      offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+      offsets = { { filetype = "neo-tree", text = "", padding = 1 } },
       show_buffer_icons = true,
       show_buffer_close_icons = true,
       show_close_icon = true,
@@ -195,7 +195,12 @@ return { {
     },
     opts = {
       attach_navic = false, -- TODO: Configure Navic
-      exclude_filetypes = { "gitcommit", "toggleterm", "Neotree" },
+      exclude_filetypes = { "gitcommit", "toggleterm", "neo-tree" },
+      show_modified = true,
+      symbols = {
+        separator = require("rwaltr.util.icons").ui.ArrowClosed
+      },
+
       kinds = require("rwaltr.util.icons").kind,
     },
   }
