@@ -178,7 +178,8 @@ return {
       require("leap").add_default_mappings()
     end,
   },
-  { "kyazdani42/nvim-web-devicons" },
+  { "nvim-tree/nvim-web-devicons",
+     name = "nvim-web-devicons"},
   {
     "akinsho/git-conflict.nvim",
     config = true,

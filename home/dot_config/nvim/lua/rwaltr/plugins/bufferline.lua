@@ -67,6 +67,11 @@ return { {
       separator_style = "thin", -- | "thick" | "thin" | { 'any', 'any' },
       enforce_regular_tabs = true,
       always_show_bufferline = false,
+      hover = {
+        enabled = true,
+        delay = 200,
+        reveal = { "close" }
+      }
       -- sort_by = 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
       --   -- add custom logic
       --   return buffer_a.modified > buffer_b.modified
@@ -172,4 +177,26 @@ return { {
       },
     },
   }
-} }
+},
+  {
+    "tiagovla/scope.nvim",
+    event = "VimEnter",
+    config = true,
+  },
+  {
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    cmd = "Barbecue",
+    event = "BufEnter",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-web-devicons", -- optional dependency
+    },
+    opts = {
+      attach_navic = false, -- TODO: Configure Navic
+      exclude_filetypes = { "gitcommit", "toggleterm", "Neotree" },
+      kinds = require("rwaltr.util.icons").kind,
+    },
+  }
+}

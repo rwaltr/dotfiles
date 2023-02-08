@@ -4,7 +4,7 @@ return { {
   "kyazdani42/nvim-tree.lua",
   enabled = false,
   dependencies = {
-    "kyazdani42/nvim-web-devicons", -- optional, for file icon
+    "nvim-web-devicons", -- optional, for file icon
   },
   -- event = "VeryLazy",
   cmd = "NvimTreeToggle",

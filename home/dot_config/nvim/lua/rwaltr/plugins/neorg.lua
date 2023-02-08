@@ -13,6 +13,13 @@ return {
           config = { engine = "nvim-cmp" },
         },
         ["core.integrations.nvim-cmp"] = {},
+        ["core.norg.dirman"] = {
+          config = {
+            workspaces = {
+              notebook = "~/Documents/Notebook"
+            }
+          }
+        }
       },
     },
   },
