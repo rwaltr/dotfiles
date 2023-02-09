@@ -178,10 +178,7 @@ return {
       require("color-picker")
     end,
   },
-},
-
-
-
+}
 
 -- TODO: Check out the following items
 -- https://github.com/nvim-neotest/neotest -- look deeper into this when its time for DAP
