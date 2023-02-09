@@ -37,7 +37,6 @@ return {
     cmd = "Precommit"
   },
   {
-    -- TODO: Check out https://github.com/toppair/peek.nvim
     "iamcco/markdown-preview.nvim",
     ft = { "markdown", "telekasten" },
     build = function()
@@ -52,13 +51,6 @@ return {
       require("mini.bufremove").setup()
     end
   },
-  {
-    "NvChad/nvim-colorizer.lua",
-    event = "BufReadPost",
-    config = function()
-      require("colorizer").setup()
-    end,
-  },
   -- TODO: Replace with numToStr/Navigator.nvim
   {
     "christoomey/vim-tmux-navigator",
@@ -68,22 +60,6 @@ return {
     "folke/trouble.nvim",
     config = true,
     cmd = { "Trouble", "TroubleToggle" }
-  },
-  {
-    "ggandor/leap.nvim",
-    event = "VeryLazy",
-    dependencies =
-    {
-      { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } },
-    },
-    config = function()
-      require("leap").add_default_mappings()
-    end,
-  },
-  {
-    "akinsho/git-conflict.nvim",
-    config = true,
-    event = "BufReadPre"
   },
   {
     "jghauser/mkdir.nvim",
@@ -103,12 +79,6 @@ return {
     "cbochs/grapple.nvim",
     event = "VeryLazy",
     dependencies = "nvim-lua/plenary.nvim",
-  },
-  {
-    -- TODO: Configure
-    "pwntester/octo.nvim",
-    cmd = "Octo",
-    config = true,
   },
   {
     "echasnovski/mini.align",
@@ -153,11 +123,6 @@ return {
     keys = {
       { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
     },
-  },
-  {
-    "TimUntersberger/neogit",
-    cmd = "Neogit",
-    config = true,
   },
   {
     'Pocco81/AbbrevMan.nvim',

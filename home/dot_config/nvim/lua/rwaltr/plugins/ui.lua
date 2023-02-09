@@ -1,7 +1,14 @@
 return {
-  { 
+  {
     "nvim-tree/nvim-web-devicons",
-    name = "nvim-web-devicons" 
+    name = "nvim-web-devicons"
+  },
+  {
+    "NvChad/nvim-colorizer.lua",
+    event = "BufReadPost",
+    config = function()
+      require("colorizer").setup()
+    end,
   },
   {
     "rcarriga/nvim-notify",
@@ -47,9 +54,28 @@ return {
         },
       })
       vim.notify = require("notify")
-
-
     end
+  },
+  {
+    "ggandor/leap.nvim",
+    event = "VeryLazy",
+    dependencies =
+    {
+      { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } },
+    },
+    config = function()
+      require("leap").add_default_mappings()
+    end,
+  },
+  {
+    "nacro90/numb.nvim",
+    event = "BufEnter",
+    config = true,
+  },
+  {
+    "stevearc/dressing.nvim",
+    event = "UIEnter",
+    config = true,
   },
   {
     "folke/noice.nvim",
@@ -81,6 +107,8 @@ return {
       },
     },
   },
+
+
   {
     "goolord/alpha-nvim",
     dependencies = { "nvim-web-devicons" },

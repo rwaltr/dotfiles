@@ -6,6 +6,22 @@ return {
     event = "BufReadPre"
   },
   {
+    "akinsho/git-conflict.nvim",
+    config = true,
+    event = "BufReadPre"
+  },
+  {
+    -- TODO: Configure
+    "pwntester/octo.nvim",
+    cmd = "Octo",
+    config = true,
+  },
+  {
+    "TimUntersberger/neogit",
+    cmd = "Neogit",
+    config = true,
+  },
+  {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPre",
     opts = {
