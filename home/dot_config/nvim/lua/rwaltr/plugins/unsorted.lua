@@ -82,7 +82,7 @@ return {
   },
   {
     "echasnovski/mini.align",
-    event = "BufEnter",
+    event = "InsertEnter",
     config = function()
       require("mini.align").setup({})
     end,

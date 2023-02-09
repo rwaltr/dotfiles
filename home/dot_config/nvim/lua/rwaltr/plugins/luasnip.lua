@@ -3,7 +3,7 @@
 return {
   {
     "L3MON4D3/LuaSnip",
-    event = "BufReadPre",
+    event = "InsertEnter",
     init = function()
       require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippits/" })
     end,

@@ -58,7 +58,7 @@ return {
   },
   {
     "ggandor/leap.nvim",
-    event = "VeryLazy",
+    event = "BufReadPost",
     dependencies =
     {
       { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } },
@@ -69,7 +69,7 @@ return {
   },
   {
     "nacro90/numb.nvim",
-    event = "BufEnter",
+    event = "BufReadPost",
     config = true,
   },
   {

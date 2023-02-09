@@ -1,6 +1,6 @@
 return { {
   "nvim-lualine/lualine.nvim",
-  event = "VeryLazy",
+  event = "UIEnter",
   config = function()
     local status_ok, lualine = pcall(require, "lualine")
     if not status_ok then

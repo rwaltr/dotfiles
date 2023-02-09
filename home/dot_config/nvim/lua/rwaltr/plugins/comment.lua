@@ -33,7 +33,7 @@ return {
   },
   {
     "folke/todo-comments.nvim",
-    event = "VeryLazy",
+    event = "BufReadPost",
     config = function()
       local icon = require("rwaltr.util.icons")
       require("todo-comments").setup({

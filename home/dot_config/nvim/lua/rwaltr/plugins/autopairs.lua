@@ -1,7 +1,7 @@
 return {
   {
     "echasnovski/mini.pairs",
-    event = "VeryLazy",
+    event = "InsertEnter",
     config = function()
       require("mini.pairs").setup({})
     end,
