@@ -1,7 +1,5 @@
 -- TODO: Separate unsorted into sorted category
 return {
-
-
   -- TODO: Define Keymaps
   {
     "ziontee113/icon-picker.nvim",
@@ -15,7 +13,6 @@ return {
       snippit_engine = "luasnip",
     },
   },
- },
   {
     "echasnovski/mini.surround",
     keys = { "gz" },
@@ -181,8 +178,9 @@ return {
       require("color-picker")
     end,
   },
+},
 
-}
+
 
 
 -- TODO: Check out the following items
