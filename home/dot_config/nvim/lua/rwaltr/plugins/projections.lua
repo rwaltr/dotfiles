@@ -21,9 +21,6 @@ return { {
     local workspaces = yankworkspaces()
     table.insert(workspaces, "~/.local/share")
 
-    -- TODO: Integrate with 
-    -- https://github.com/olimorris/persisted.nvim
-    -- or https://github.com/echasnovski/mini.sessions
     require("projections").setup({
       workspaces = workspaces,
 
@@ -34,4 +31,21 @@ return { {
     vim.opt.sessionoptions:append("localoptions")
 
   end
-} }
+},
+{
+  "olimorris/persisted.nvim",
+  cmd = {
+      "SessionToggle",
+      "SessionStart",
+      "SessionStop",
+      "SessionSave",
+      "SessionLoad",
+      "SessionLoadLast",
+      "SessionDelete",
+    },
+  config = function()
+    require("persisted").setup()
+    require("telescope").load_extension("persisted") -- To load the telescope extension
+  end,
+}
+}
