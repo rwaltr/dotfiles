@@ -1,3 +1,6 @@
+-- TODO: Replace with either..
+-- https://github.com/nvim-telescope/telescope-project.nvim
+-- https://github.com/ahmedkhalf/project.nvim
 return { {
   "gnikdroy/projections.nvim",
   cmd = "Telescope projections",
@@ -18,7 +21,8 @@ return { {
     local workspaces = yankworkspaces()
     table.insert(workspaces, "~/.local/share")
 
-    -- TODO: Integrate with https://github.com/folke/persistence.nvim
+    -- TODO: Integrate with 
+    -- https://github.com/olimorris/persisted.nvim
     -- or https://github.com/echasnovski/mini.sessions
     require("projections").setup({
       workspaces = workspaces,

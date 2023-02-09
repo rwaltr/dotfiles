@@ -151,5 +151,5 @@ return {
 -- https://github.com/dense-analysis/neural
 -- https://github.com/glacambre/firenvim again..
 -- telescope-lazy.nvim
--- wpm.nvim
--- Neozoom.la
+-- https://github.com/stevearc/oil.nvim
+-- https://github.com/kevinhwang91/nvim-bqf
