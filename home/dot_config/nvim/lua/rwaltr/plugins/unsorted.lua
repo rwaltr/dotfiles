@@ -1,22 +1,6 @@
 -- TODO: Separate unsorted into sorted category
 return {
-  {
-    "stevearc/dressing.nvim",
-    config = true,
-    event = "VeryLazy",
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.select(...)
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.input(...)
-      end
-    end
-  },
+
 
   -- TODO: Define Keymaps
   {
@@ -31,20 +15,7 @@ return {
       snippit_engine = "luasnip",
     },
   },
-  {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
-  },
-  {
-    "RRethy/vim-illuminate",
-    event = "BufReadPost",
-  },
-  {
-    "kylechui/nvim-surround",
-    enabled = false,
-    config = true,
-    event = "InsertEnter"
-  },
+ },
   {
     "echasnovski/mini.surround",
     keys = { "gz" },
@@ -65,39 +36,9 @@ return {
     end,
   },
   {
-    enabled = true,
-    "anuvyklack/windows.nvim",
-    event = "WinNew",
-    dependencies = {
-      { "anuvyklack/middleclass" },
-      { "anuvyklack/animation.nvim", enabled = true },
-    },
-    config = function()
-      vim.o.winwidth = 10
-      vim.o.winminwidth = 10
-      vim.o.equalalways = false
-      require("windows").setup({
-        animation = { enable = true, duration = 150 },
-      })
-    end,
-  },
-  {
-    "echasnovski/mini.animate",
-    enabled = false,
-    event = "UIEnter",
-    config = function()
-      require("mini.animate").setup()
-    end
-  },
-  {
-    "ellisonleao/glow.nvim",
-    cmd = "Glow"
-  },
-  {
     "ttibsi/pre-commit.nvim",
     cmd = "Precommit"
   },
-  { "nacro90/numb.nvim" },
   {
     -- TODO: Check out https://github.com/toppair/peek.nvim
     "iamcco/markdown-preview.nvim",
@@ -105,38 +46,6 @@ return {
     build = function()
       vim.fn["mkdp#util#install"]()
     end
-  },
-  {
-    "toppair/peek.nvim",
-    enabled = true,
-    ft = { "markdown", "telekasten" },
-    cmd = { "PeekOpen", "PeekClose", "PeekToggle" },
-    config = function()
-
-      require("peek").setup()
-
-      vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
-      vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
-
-      local function peektoggle()
-        local peek = require("peek")
-        if peek.is_open() then
-          peek.close()
-        else
-          peek.open()
-        end
-      end
-
-      -- vim.api.nvim_create_user_command("PeekToggle", peektoggle(), {})
-
-    end,
-  },
-
-  -- TODO: Compare with https://github.com/echasnovski/mini.bufremove
-  {
-    "moll/vim-bbye",
-    enabled = false,
-    cmd = "Bdelete",
   },
   {
     "echasnovski/mini.bufremove",
@@ -153,14 +62,10 @@ return {
       require("colorizer").setup()
     end,
   },
-
   -- TODO: Replace with numToStr/Navigator.nvim
   {
     "christoomey/vim-tmux-navigator",
     event = "VeryLazy"
-  },
-  {
-    "nvim-lua/popup.nvim"
   },
   {
     "folke/trouble.nvim",
@@ -178,23 +83,10 @@ return {
       require("leap").add_default_mappings()
     end,
   },
-  { "nvim-tree/nvim-web-devicons",
-     name = "nvim-web-devicons"},
   {
     "akinsho/git-conflict.nvim",
     config = true,
     event = "BufReadPre"
-  },
-  {
-    "mickael-menu/zk-nvim",
-    ft = "markdown",
-    config = function()
-      require("zk").setup()
-    end
-  },
-  {
-    "nullchilly/fsread.nvim",
-    cmd = { "FSRead", "FSToggle", "FSClear" }
   },
   {
     "jghauser/mkdir.nvim",
@@ -220,16 +112,6 @@ return {
     "pwntester/octo.nvim",
     cmd = "Octo",
     config = true,
-  },
-  {
-    "folke/zen-mode.nvim",
-    cmd = "ZenMode",
-    opts = {
-      plugins = {
-        gitsigns = true,
-        tmux = true,
-      }
-    },
   },
   {
     "echasnovski/mini.align",
@@ -281,11 +163,6 @@ return {
     config = true,
   },
   {
-    "phaazon/mind.nvim",
-    config = true,
-    cmd = { "MindOpenMain", "MindOpenProject", "MineOpenSmartProject", "MindReloadState" },
-  },
-  {
     'Pocco81/AbbrevMan.nvim',
     event = "BufReadPre",
     cmd = { "AMLoad", "AMUnload" },
@@ -303,25 +180,6 @@ return {
     config = function()
       require("color-picker")
     end,
-  },
-  -- Notetaking
-  {
-    'ekickx/clipboard-image.nvim',
-    config = true,
-    event = "InsertEnter",
-  },
-  {
-    "jubnzv/mdeval.nvim",
-    config = true,
-    enabled = false,
-    opts = {},
-    cmd = { "MdEval" },
-    ft = "markdown",
-  },
-  {"jakewvincent/mkdnflow.nvim",
-    enabled = false,
-  config = true,
-    ft = "markdown",
   },
 
 }

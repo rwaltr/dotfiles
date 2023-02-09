@@ -1,3 +1,4 @@
+-- This is where we keep the snippits https://youtu.be/ct1-zq8gf_0?t=19
 -- TODO: https://github.com/garcia5/dotfiles/blob/master/files/nvim/lua/ag/plugin-conf/luasnip.lua
 return {
   {
@@ -20,19 +21,19 @@ return {
       local types = require("luasnip.util.types")
       local icons = require("rwaltr.util.icons")
       ls.setup({
-      history = true, -- Keeps last snippit local to jump back
-      updateevents = "TextChanged,TextChangedI", --update changes as you type
-      enable_autosnippets = true, -- enables autosnippets?
-      ext_opts = {
+        history = true, -- Keeps last snippit local to jump back
+        updateevents = "TextChanged,TextChangedI", --update changes as you type
+        enable_autosnippets = true, -- enables autosnippets?
+        ext_opts = {
           [types.choiceNode] = {
             active = {
-              virt_text = {{ icons.ui.ArrowLeft, "Error"}}
+              virt_text = { { icons.ui.ArrowLeft, "Error" } }
             }
           }
 
         }
       }
-)
+      )
     end,
 
   },

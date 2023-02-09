@@ -59,7 +59,6 @@ return {
         "gopls",
         "golangci_lint_ls",
         "rust_analyzer",
-        "zk@v0.11.1",
       }
 
       mason_lspconfig.setup({

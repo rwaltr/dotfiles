@@ -22,10 +22,7 @@ return { {
     -- or https://github.com/echasnovski/mini.sessions
     require("projections").setup({
       workspaces = workspaces,
-      -- workspaces = {
-      -- "~/src/rwaltr",
-      -- { "~/.local/share", { ".git" } }, -- My dotfiles are normally here
-      -- },
+
       patterns = { ".git", ".svn", ".hg", ".zk" },
     })
 
