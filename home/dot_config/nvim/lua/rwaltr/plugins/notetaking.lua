@@ -25,6 +25,7 @@ return {
           config = {
             workspaces = {
               notebook = "~/Documents/Notebook",
+              work = "~/Documents/Notebook/work"
             }
           }
         },
