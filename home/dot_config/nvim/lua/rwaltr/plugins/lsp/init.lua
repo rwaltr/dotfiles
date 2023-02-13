@@ -24,14 +24,15 @@ return {
       -- },
       { "simrat39/symbols-outline.nvim", config = true },
       {
-        "someone-stole-my-name/yaml-companion.nvim", ft = "yaml",
+        "someone-stole-my-name/yaml-companion.nvim",
+        ft = "yaml",
         config = function()
           require("telescope").load_extension("yaml_schema")
-        end
+        end,
       },
       { "folke/neodev.nvim", config = true },
       { "williamboman/mason-lspconfig.nvim" },
-      "hrsh7th/cmp-nvim-lsp",
+      { "hrsh7th/cmp-nvim-lsp" },
     },
     -- region LSP config
     config = function()
@@ -166,6 +167,11 @@ return {
           format.stylua,
           hvr.dictionary,
         },
+      })
+      require("mason-null-ls").setup({
+        ensure_installed = { "stylua, jq" },
+        automatic_setup = false,
+        automatic_installation = true,
       })
     end,
     --#endregion
