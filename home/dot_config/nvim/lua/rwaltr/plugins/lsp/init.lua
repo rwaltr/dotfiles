@@ -50,7 +50,7 @@ return {
         "terraformls",
         "jsonls",
         "yamlls",
-        "sumneko_lua",
+        "lua_ls",
         "tflint",
         "bashls",
         "marksman",
@@ -85,8 +85,8 @@ return {
           lspconfig.yamlls.setup({ extended_opts })
         end,
         -- Lua Settings
-        ["sumneko_lua"] = function()
-          lspconfig.sumneko_lua.setup({
+        ["lua_ls"] = function()
+          lspconfig.lua_ls.setup({
             settings = {
               -- on_attach = opts.on_attach,
               -- capabilities = opts.capabilities,
