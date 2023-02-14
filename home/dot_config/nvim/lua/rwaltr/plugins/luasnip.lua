@@ -6,15 +6,12 @@ return {
     event = "InsertEnter",
     init = function()
       require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippits/" })
+      require("luasnip.loaders.from_vscode").lazy_load()
     end,
     dependencies =
     {
-      {
-        "rafamadriz/friendly-snippets",
-        config = function()
-          require("luasnip.loaders.from_vscode").lazy_load()
-        end,
-      },
+      { "rafamadriz/friendly-snippets" },
+      { "budimanjojo/k8s-snippets" },
     },
     config = function()
       local ls = require("luasnip")
