@@ -1,7 +1,7 @@
 local options = {
   -- numberwidth = 3, -- set number column width to 2 {default 4}
   -- showtabline = 2, -- always show tabs
-  autochdir = true, --Auto change dir
+  autochdir = false, --Auto change dir
   autoindent = true, --- Good auto indent
   backup = false, -- creates a backup file
   clipboard = "unnamedplus",
