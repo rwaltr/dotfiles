@@ -8,7 +8,7 @@ return { {
       return
     end
 
-    vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
+    vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile", "alpha", "neo-tree", "mind" }
     vim.g.indent_blankline_filetype_exclude = {
       "help",
       "startify",
@@ -64,7 +64,7 @@ return { {
     event = "BufReadPre",
     config = function()
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy" },
+        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mind" },
         callback = function()
           vim.b.miniindentscope_disable = true
         end,

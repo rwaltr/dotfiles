@@ -148,6 +148,13 @@ return {
           r = { "<cmd>TSToggle rainbow<cr>", "Rainbow" },
         },
         L = { "<cmd> lua require('lsp_lines').toggle() <cr>", "Toggle LSP lines" },
+        n = {
+          name = "Neorg",
+          i = {"<cmd> Neorg index<cr>", "Index"},
+          j = {"<cmd> Neorg journal today<cr>", "Today's Journal"},
+          J = {"<cmd> Neorg journal<cr>", "Journal"},
+          r = {"<cmd> Neorg return<cr>", "Return"},
+        },
       }
 
       wk.setup(setup)

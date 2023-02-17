@@ -39,11 +39,6 @@ return {
     },
   },
   {
-    "phaazon/mind.nvim",
-    config = true,
-    cmd = { "MindOpenMain", "MindOpenProject", "MineOpenSmartProject", "MindReloadState" },
-  },
-  {
     "jubnzv/mdeval.nvim",
     config = true,
     enabled = false,
@@ -56,6 +51,4 @@ return {
     config = true,
     ft = "markdown",
   },
-
-
 }

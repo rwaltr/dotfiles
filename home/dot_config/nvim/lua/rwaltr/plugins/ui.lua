@@ -136,6 +136,8 @@ return {
         dashboard.button("p", icons.git.Repo .. " Find project", ":Telescope projections <CR>"),
         dashboard.button("r", icons.ui.History .. " Recently used files", ":Telescope oldfiles <CR>"),
         dashboard.button("t", icons.type.String .. " Find text", ":Telescope live_grep <CR>"),
+        dashboard.button("w", icons.ui.Journal .. " Open Notebook", ":Neorg workspace notebook <CR>"),
+        dashboard.button("j", icons.ui.Pencil .. " Open Today's Journal", ":Neorg journal today <CR>"),
         dashboard.button("c", icons.ui.Gear .. " Configuration",
           ":e ~/.local/share/chezmoi/home/dot_config/nvim/init.lua <CR>"),
         dashboard.button("q", icons.ui.SignOut .. " Quit Neovim", ":qa<CR>"),
