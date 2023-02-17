@@ -68,7 +68,7 @@ return { {
       enforce_regular_tabs = true,
       always_show_bufferline = false,
       hover = {
-        enabled = true,
+        enabled = false,
         delay = 200,
         reveal = { "close" }
       }

@@ -1,6 +1,7 @@
 -- Autocompletion
 return { {
   "hrsh7th/nvim-cmp",
+  name = "nvim-cmp",
   event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-buffer",
@@ -101,6 +102,7 @@ return { {
             calc = "[Calc]",
             git = "[Git]",
             nvim_lua = "[NvimLua]",
+            codium = "[Codium]"
           })[entry.source.name]
           return vim_item
         end,
@@ -110,6 +112,7 @@ return { {
         { name = "luasnip" }, -- For luasnip users.
         { name = "git" },
         { name = "path" },
+        { name = "codium" },
         {
           name = "buffer",
           option = {
@@ -150,4 +153,11 @@ return { {
     })
 
   end,
-} }
+},
+  {
+    "jcdickinson/codeium.nvim",
+    config = true,
+    cmd = { "Codeium" },
+    before = "nvim-cmp"
+  },
+}

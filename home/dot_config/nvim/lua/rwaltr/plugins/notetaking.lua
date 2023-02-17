@@ -26,7 +26,8 @@ return {
             workspaces = {
               notebook = "~/Documents/Notebook",
               work = "~/Documents/Notebook/work"
-            }
+            },
+            default_workspace = "notebook"
           }
         },
         ["core.norg.journal"] = {

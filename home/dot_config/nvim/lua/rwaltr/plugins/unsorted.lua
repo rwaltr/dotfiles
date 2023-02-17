@@ -34,14 +34,14 @@ return {
   },
   {
     "ttibsi/pre-commit.nvim",
-    cmd = "Precommit"
+    cmd = "Precommit",
   },
   {
     "iamcco/markdown-preview.nvim",
     ft = { "markdown" },
     build = function()
       vim.fn["mkdp#util#install"]()
-    end
+    end,
   },
   {
     "echasnovski/mini.bufremove",
@@ -49,17 +49,17 @@ return {
     event = "BufEnter",
     config = function()
       require("mini.bufremove").setup()
-    end
+    end,
   },
   -- TODO: Replace with numToStr/Navigator.nvim
   {
     "christoomey/vim-tmux-navigator",
-    event = "VeryLazy"
+    event = "VeryLazy",
   },
   {
     "folke/trouble.nvim",
     config = true,
-    cmd = { "Trouble", "TroubleToggle" }
+    cmd = { "Trouble", "TroubleToggle" },
   },
   {
     "jghauser/mkdir.nvim",
@@ -73,7 +73,7 @@ return {
         return false
       end
       return true
-    end
+    end,
   },
   {
     "cbochs/grapple.nvim",
@@ -125,13 +125,13 @@ return {
     },
   },
   {
-    'Pocco81/AbbrevMan.nvim',
+    "Pocco81/AbbrevMan.nvim",
     event = "BufReadPre",
     cmd = { "AMLoad", "AMUnload" },
     config = true,
   },
   {
-    '0styx0/abbreinder.nvim',
+    "0styx0/abbreinder.nvim",
     dependencies = { "0styx0/abbremand.nvim" },
     event = "BufRead",
     config = true,
@@ -143,13 +143,22 @@ return {
       require("color-picker")
     end,
   },
+  {
+    "stevearc/oil.nvim",
+    config = true,
+    event = "BufReadPre",
+  },
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qt",
+  },
+
 }
 
 -- TODO: Check out the following items
 -- https://github.com/nvim-neotest/neotest -- look deeper into this when its time for DAP
+-- AI
 -- https://github.com/jackMort/ChatGPT.nvim
 -- https://github.com/dense-analysis/neural
--- https://github.com/glacambre/firenvim again..
--- telescope-lazy.nvim
--- https://github.com/stevearc/oil.nvim
--- https://github.com/kevinhwang91/nvim-bqf
+
+-- https://github.com/glacambre/firenvim
