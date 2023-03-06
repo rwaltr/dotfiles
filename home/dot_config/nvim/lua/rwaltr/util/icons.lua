@@ -126,5 +126,6 @@ return {
     Smiley = "ﲃ",
     Package = "",
     CircuitBoard = "",
+    Vim = "",
   },
 }
