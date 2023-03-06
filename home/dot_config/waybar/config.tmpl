@@ -211,28 +211,28 @@
         "spacing": 10
     },
     "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ",
+        "format": "[{stateIcon}{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}] {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ",
         "format-disconnected": "Disconnected ",
         "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ﱙ",
         "interval": 2,
         "consume-icons": {
-            "on": " " // Icon shows only when "consume" is on
+            "on": "  " // Icon shows only when "consume" is on
         },
         "random-icons": {
             "off": "", // Icon grayed out when "random" is off
-            "on": " "
+            "on": "  "
         },
         "repeat-icons": {
-            "on": " "
+            "on": "  "
         },
         "single-icons": {
-            "on": "1 "
+            "on": "1"
         },
         "state-icons": {
             "paused": "",
             "playing": ""
         },
-        "tooltip-format": "MPD (connected)",
+        "tooltip-format": "{artist} - {title}",
         "tooltip-format-disconnected": "MPD (disconnected)",
         "on-click": "mpc -q toggle",
         "on-scroll-up": "mpc volume +2",
