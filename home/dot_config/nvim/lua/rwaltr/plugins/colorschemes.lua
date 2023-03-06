@@ -1,18 +1,35 @@
--- TODO: Check out https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-base16.md
 -- TODO: Check out https://github.com/folke/styler.nvim
 return {
+  {
+    'uloco/bluloco.nvim',
+    lazy = false,
+    enabled = true,
+    priority = 1000,
+    dependencies = { 'rktjmp/lush.nvim' },
+    config = function()
+      require("bluloco").setup({
+        style       = "dark", -- "auto" | "dark" | "light"
+        transparent = false,
+        italics     = false,
+        terminal    = vim.fn.has("gui_running") == 1, -- bluoco colors are enabled in gui terminals per default.
+        guicursor   = true,
+      })
+
+      vim.cmd('colorscheme bluloco')
+    end,
+  },
   {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    enabled = true,
+    enabled = false,
     config = function()
       local tokyonight = require("tokyonight")
       tokyonight.setup({
         style = "night",
         styles = {
-          comments = { italic = false},
-          keywords = { italic = false},
+          comments = { italic = false },
+          keywords = { italic = false },
         },
         sidebars = {
           "qf",

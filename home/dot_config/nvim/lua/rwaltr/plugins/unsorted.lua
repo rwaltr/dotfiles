@@ -160,5 +160,11 @@ return {
 -- AI
 -- https://github.com/jackMort/ChatGPT.nvim
 -- https://github.com/dense-analysis/neural
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
+-- https://github.com/mrjones2014/smart-splits.nvim
+-- https://github.com/miversen33/netman.nvim
+-- https://github.com/m4xshen/smartcolumn.nvim
+-- https://github.com/gennaro-tedesco/nvim-jqx
+-- https://github.com/jay-babu/mason-nvim-dap.nvim
 
 -- https://github.com/glacambre/firenvim
