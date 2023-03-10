@@ -151,7 +151,7 @@ return {
           diag.fish,
           diag.proselint,
           diag.shellcheck,
-          diag.yamllint,
+          -- diag.yamllint,
           format.codespell,
           format.jq,
           format.fish_indent,
