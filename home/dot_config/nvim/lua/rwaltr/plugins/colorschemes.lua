@@ -54,28 +54,6 @@ return {
       tokyonight.load()
     end,
   },
-  {
-    "jesseleite/nvim-noirbuddy",
-    dependencies = { "tjdevries/colorbuddy.nvim", branch = "dev" },
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    opts = {
-      colors = {
-        -- new colortheme based on my logo colors
-        primary = '#B07b12',
-        secondary = '#3b4252',
-        background = '#19191F',
-        diagnostic_error = '#7b0b0b',
-        diagnostic_warning = '#c07b12',
-        diagnostic_hint = '#1d3b29',
-        diagnostic_info = '#7371fc',
-        diff_add = '#1d3b29',
-        diff_change = '#909590',
-        diff_delete = '#7b0b0b',
-      }
-    }
-  },
   { "tjdevries/colorbuddy.nvim",
     branch = "dev" },
   {

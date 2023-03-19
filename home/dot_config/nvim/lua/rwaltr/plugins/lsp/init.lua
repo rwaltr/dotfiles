@@ -13,15 +13,6 @@ return {
         end,
         enabled = false,
       },
-      { "j-hui/fidget.nvim", enabled = false, config = true, event = "VeryLazy" },
-      -- {
-      --   "~whynothugo/lsp_lines.nvim",
-      --   url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      --   event = "VeryLazy",
-      --   config = function ()
-      --     require("lsp_lines").setup()
-      --   end,
-      -- },
       { "simrat39/symbols-outline.nvim", config = true },
       {
         "someone-stole-my-name/yaml-companion.nvim",
