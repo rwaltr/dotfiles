@@ -37,13 +37,6 @@ return {
     cmd = "Precommit",
   },
   {
-    "iamcco/markdown-preview.nvim",
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
-  {
     "echasnovski/mini.bufremove",
     enabled = true,
     event = "BufEnter",
@@ -55,11 +48,6 @@ return {
   {
     "christoomey/vim-tmux-navigator",
     event = "VeryLazy",
-  },
-  {
-    "folke/trouble.nvim",
-    config = true,
-    cmd = { "Trouble", "TroubleToggle" },
   },
   {
     "jghauser/mkdir.nvim",

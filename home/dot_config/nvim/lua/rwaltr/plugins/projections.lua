@@ -32,9 +32,9 @@ return { {
 
   end
 },
-{
-  "olimorris/persisted.nvim",
-  cmd = {
+  {
+    "olimorris/persisted.nvim",
+    cmd = {
       "SessionToggle",
       "SessionStart",
       "SessionStop",
@@ -43,9 +43,9 @@ return { {
       "SessionLoadLast",
       "SessionDelete",
     },
-  config = function()
-    require("persisted").setup()
-    require("telescope").load_extension("persisted") -- To load the telescope extension
-  end,
-}
+    config = function()
+      require("persisted").setup()
+      require("telescope").load_extension("persisted") -- To load the telescope extension
+    end,
+  }
 }

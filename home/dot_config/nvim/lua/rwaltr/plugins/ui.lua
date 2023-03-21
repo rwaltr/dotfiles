@@ -7,6 +7,7 @@ return {
     "NvChad/nvim-colorizer.lua",
     event = "BufReadPost",
     config = function()
+      ---@diagnostic disable-next-line: missing-parameter
       require("colorizer").setup()
     end,
   },
@@ -21,9 +22,11 @@ return {
         stages = "fade_in_slide_out",
 
         -- Function called when a new window is opened, use for changing win settings/config
+        ---@diagnostic disable-next-line: assign-type-mismatch
         on_open = nil,
 
         -- Function called when a window is closed
+        ---@diagnostic disable-next-line: assign-type-mismatch
         on_close = nil,
 
         -- Render function for notifications. See notify-render()
@@ -147,8 +150,6 @@ return {
         dashboard.button("t", icons.type.String .. " Find text", ":Telescope live_grep <CR>"),
         dashboard.button("w", icons.ui.Journal .. " Open Notebook", ":Neorg workspace notebook <CR>"),
         dashboard.button("j", icons.ui.Pencil .. " Open Today's Journal", ":Neorg journal today <CR>"),
-        dashboard.button("c", icons.ui.Gear .. " Configuration",
-          ":e ~/.local/share/chezmoi/home/dot_config/nvim/init.lua <CR>"),
         dashboard.button("q", icons.ui.SignOut .. " Quit Neovim", ":qa<CR>"),
       }
 
@@ -188,5 +189,31 @@ return {
         end,
       })
     end
+  },
+  {
+    "folke/trouble.nvim",
+    config = true,
+    cmd = { "Trouble", "TroubleToggle" },
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = { "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    enabled = true,
+    cmd = "Neotree",
+    init = function()
+      vim.g.neo_tree_remove_legacy_commands = 1
+    end,
+    opts = {
+      filesystem = {
+        follow_current_file = true,
+        hijack_netrw_behavior = "open_current",
+      },
+    },
   },
 }
