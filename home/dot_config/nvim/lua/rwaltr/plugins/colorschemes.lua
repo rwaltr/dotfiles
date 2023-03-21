@@ -5,6 +5,12 @@ return {
     lazy = false,
     enabled = true,
     priority = 1000,
+    config = function ()
+     vim.cmd("colorscheme carbonfox") 
+    end,
+    init = function ()
+     require("nightfox").setup() 
+    end,
   },
   {
     'uloco/bluloco.nvim',
