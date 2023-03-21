@@ -1,9 +1,15 @@
 -- TODO: Check out https://github.com/folke/styler.nvim
 return {
   {
-    'uloco/bluloco.nvim',
+    'EdenEast/nightfox.nvim',
     lazy = false,
     enabled = true,
+    priority = 1000,
+  },
+  {
+    'uloco/bluloco.nvim',
+    lazy = false,
+    enabled = false,
     priority = 1000,
     dependencies = { 'rktjmp/lush.nvim' },
     config = function()
