@@ -24,7 +24,7 @@ return { {
     require("projections").setup({
       workspaces = workspaces,
 
-      patterns = { ".git", ".svn", ".hg", ".zk" },
+      patterns = { ".git", ".svn", ".hg", },
     })
 
     require("telescope").load_extension("projections")
@@ -34,6 +34,7 @@ return { {
 },
   {
     "olimorris/persisted.nvim",
+    event = { "VeryLazy" },
     cmd = {
       "SessionToggle",
       "SessionStart",

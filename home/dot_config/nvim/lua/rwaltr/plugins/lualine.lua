@@ -109,15 +109,15 @@ return { {
         lualine_b = { branch, diff, diagnostics },
         lualine_c = {},
         lualine_x = {
-          {
-            require("noice").api.status.message.get_hl,
-            cond = require("noice").api.status.message.has,
-          },
-          {
-            require("noice").api.status.command.get,
-            cond = require("noice").api.status.command.has,
-            color = { fg = "#ff9e64" },
-          },
+          -- {
+          --   require("noice").api.status.message.get_hl,
+          --   cond = require("noice").api.status.message.has,
+          -- },
+          -- {
+          --   require("noice").api.status.command.get,
+          --   cond = require("noice").api.status.command.has,
+          --   color = { fg = "#ff9e64" },
+          -- },
           {
             require("noice").api.status.mode.get,
             cond = require("noice").api.status.mode.has,
@@ -127,6 +127,10 @@ return { {
             require("noice").api.status.search.get,
             cond = require("noice").api.status.search.has,
             color = { fg = "#ff9e64" },
+          },
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
           },
         },
         lualine_y = { spaces, filetype },

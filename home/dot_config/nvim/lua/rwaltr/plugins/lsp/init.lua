@@ -1,18 +1,11 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    event = "BufReadPre",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
       "mason.nvim",
       "folke/lsp-colors.nvim",
-      {
-        "ray-x/lsp_signature.nvim",
-        config = function()
-          require("rwaltr.plugins.lsp.signature")
-        end,
-        enabled = false,
-      },
       { "simrat39/symbols-outline.nvim", config = true },
       {
         "someone-stole-my-name/yaml-companion.nvim",
@@ -50,7 +43,6 @@ return {
         "dockerls",
         "gopls",
         "golangci_lint_ls",
-        "rust_analyzer",
       }
 
       mason_lspconfig.setup({
@@ -93,22 +85,6 @@ return {
             },
           })
         end,
-        -- Rust Tooling
-        ["rust_analyzer"] = function()
-          local rust_opts = require("rwaltr.plugins.lsp.settings.rust")
-          local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
-          if not rust_tools_status_ok then
-            return
-          end
-          rust_tools.setup(rust_opts)
-        end,
-        -- ZK notetaker
-        ["zk"] = function()
-          local zk_opts = require("rwaltr.plugins.lsp.settings.zk")
-          local extented_opts = vim.tbl_deep_extend("force", zk_opts, opts)
-          lspconfig.zk.setup(extented_opts)
-        end,
-        -- insert more here
       })
       --#endregion
 
@@ -118,7 +94,7 @@ return {
 
   {
     "jose-elias-alvarez/null-ls.nvim",
-    event = "BufReadPre",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "mason.nvim",
       "jayp0521/mason-null-ls.nvim",
@@ -131,7 +107,7 @@ return {
       local ca = nls.builtins.code_actions
       local hvr = nls.builtins.hover
       nls.setup({
-        root_dir = require("null-ls.utils").root_pattern(".null-ls.root", ".neoconf.json", ".git"),
+        root_dir = require("null-ls.utils").root_pattern(".null-ls.root", ".neoconf.json", ".git", "Makefile"),
         on_attach = require("rwaltr.plugins.lsp.handlers").on_attach,
         sources = {
           ca.gitrebase,
@@ -162,7 +138,7 @@ return {
       require("mason-null-ls").setup({
         ensure_installed = { "stylua, jq" },
         automatic_setup = false,
-        automatic_installation = true,
+        automatic_installation = false,
       })
     end,
     --#endregion
@@ -176,28 +152,43 @@ return {
     "williamboman/mason.nvim",
     name = "mason.nvim",
     cmd = "Mason",
-    ensure_installed = {
-      "deno",
-      "jq",
-      "prettierd",
-      "selene",
-      "shellcheck",
-      "shfmt",
-      "stylua",
-      "yamllint",
-      "proselint",
-      "shellharden",
-      "codespell",
+    opts = {
+      ensure_installed = {
+        "jq",
+        "prettierd",
+        "shellcheck",
+        "shfmt",
+        "stylua",
+        "yamllint",
+        "proselint",
+        "codespell",
+      },
     },
-    config = function(plugin)
+    -- @params opts MasonSettings | {ensure_installed: string[]}
+    config = function(_, opts)
       require("mason").setup()
       local mr = require("mason-registry")
-      for _, tool in ipairs(plugin.ensure_installed) do
-        local p = mr.get_package(tool)
-        if not p:is_installed() then
-          p:install()
+      local function ensure_installed()
+        for _, tool in ipairs(opts.ensure_installed) do
+          local p = mr.get_package(tool)
+          if not p:is_installed() then
+            p:install()
+          end
         end
       end
+
+      if mr.refresh then
+        mr.refresh(ensure_installed)
+      else
+        ensure_installed()
+      end
     end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require("rwaltr.plugins.lsp.signature")
+    end,
+    enabled = false,
   },
 }

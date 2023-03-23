@@ -11,10 +11,7 @@ return { {
     "f3fora/cmp-spell",
     "hrsh7th/cmp-emoji",
     "hrsh7th/cmp-calc",
-    {
-      "petertriho/cmp-git",
-      config = true
-    },
+    { "petertriho/cmp-git", config = true },
   },
   config = function()
 

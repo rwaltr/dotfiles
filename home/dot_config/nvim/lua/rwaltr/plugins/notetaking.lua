@@ -1,7 +1,7 @@
 return {
   {
     "nullchilly/fsread.nvim",
-    cmd = { "FSRead", "FSToggle", "FSClear" }
+    cmd = { "FSRead", "FSToggle", "FSClear" },
   },
   {
     "nvim-neorg/neorg",
@@ -10,7 +10,7 @@ return {
     ft = "norg",
     dependencies = {
       { "nvim-lua/plenary.nvim" },
-      { "nvim-neorg/neorg-telescope" }
+      { "nvim-neorg/neorg-telescope" },
     },
     opts = {
       load = {
@@ -25,20 +25,21 @@ return {
           config = {
             workspaces = {
               notebook = "~/Documents/Notebook",
-              work = "~/Documents/Notebook/work"
+              work = "~/Documents/Notebook/work",
             },
-            default_workspace = "notebook"
-          }
+            default_workspace = "notebook",
+          },
         },
         ["core.norg.journal"] = {
           config = {
-            workspace = "notebook"
-          }
+            workspace = "notebook",
+          },
         },
       },
     },
   },
-  { "jakewvincent/mkdnflow.nvim",
+  {
+    "jakewvincent/mkdnflow.nvim",
     enabled = true,
     config = true,
     ft = "markdown",
