@@ -154,5 +154,5 @@ return {
 -- https://github.com/m4xshen/smartcolumn.nvim
 -- https://github.com/gennaro-tedesco/nvim-jqx
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
-
+-- https://github.com/gbprod/yanky.nvim
 -- https://github.com/glacambre/firenvim
