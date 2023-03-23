@@ -42,7 +42,7 @@ return {
         "terraformls",
         "jsonls",
         "yamlls",
-        "lua_ls",
+        -- "lua_ls",
         "tflint",
         "bashls",
         "marksman",
