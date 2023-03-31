@@ -97,7 +97,6 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "mason.nvim",
-      "jayp0521/mason-null-ls.nvim",
     },
     --#region Null LS Config
     config = function()
@@ -134,11 +133,6 @@ return {
           format.stylua,
           hvr.dictionary,
         },
-      })
-      require("mason-null-ls").setup({
-        ensure_installed = { "stylua, jq" },
-        automatic_setup = false,
-        automatic_installation = false,
       })
     end,
     --#endregion

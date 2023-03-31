@@ -2,6 +2,7 @@ local M = {}
 
 local icons = require("rwaltr.util.icons")
 
+--- Sets up vim.diagnostics.config
 M.setup = function()
   local signs = {
     { name = "DiagnosticSignError", text = icons.diagnostics.Error },
@@ -38,7 +39,7 @@ M.setup = function()
 end
 
 ---Sets Document Highlighting
----@param client any
+---@param client vim.lsp.client
 local function lsp_highlight_document(client)
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
@@ -50,20 +51,22 @@ local function lsp_highlight_document(client)
   end
 end
 
---- Sets Keymaps for LSP and adds them to which key
----@param bufnr any
+--- Sets Keymaps for LSP and notifies which-key
+---@param bufnr buffer
 local function lsp_keymaps(bufnr)
-  local opts = { noremap = true, silent = true }
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>Telescope lsp_declarations<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-  vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+-- Inspired by https://github.com/ThePrimeagen/init.lua/blob/249f3b14cc517202c80c6babd0f9ec548351ec71/after/plugin/lsp.lua#L51
+
+  local opts = { remap = false, buffer = bufnr }
+
+  vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
+  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+  vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
+  vim.keymap.set("n", "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
+  vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
+  vim.keymap.set("n", "gl", function() vim.diagnostic.open_float() end, opts)
+  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev(opts) end, opts)
+  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev(opts) end, opts)
 
   local status_ok, wk = pcall(require, "which-key")
   if status_ok then
@@ -80,6 +83,9 @@ local function lsp_keymaps(bufnr)
   end
 end
 
+--- Calls Keymaps and highlights for buffer and client
+---@param client vim.lsp.client LSP Client in use
+---@param bufnr buffer Buffer number
 M.on_attach = function(client, bufnr)
   if client.name == "tsserver" then
     client.server_capabilities.documentFormattingProvider = false
