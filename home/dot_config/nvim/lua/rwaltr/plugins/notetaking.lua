@@ -15,7 +15,9 @@ return {
     opts = {
       load = {
         ["core.defaults"] = {},
-        ["core.norg.concealer"] = {},
+        ["core.norg.concealer"] = {
+          icon_preset = "diamond",
+        },
         ["core.integrations.telescope"] = {},
         ["core.norg.completion"] = {
           config = { engine = "nvim-cmp" },
