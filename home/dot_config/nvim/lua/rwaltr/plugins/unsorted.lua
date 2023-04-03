@@ -14,36 +14,10 @@ return {
     },
   },
   {
-    "echasnovski/mini.surround",
-    keys = { "gz" },
-    version = false,
-    config = function()
-      -- use gz mappings instead of s to prevent conflict with leap
-      require("mini.surround").setup({
-        mappings = {
-          add = "gza", -- Add surrounding in Normal and Visual modes
-          delete = "gzd", -- Delete surrounding
-          find = "gzf", -- Find surrounding (to the right)
-          find_left = "gzF", -- Find surrounding (to the left)
-          highlight = "gzh", -- Highlight surrounding
-          replace = "gzr", -- Replace surrounding
-          update_n_lines = "gzn", -- Update `n_lines`
-        },
-      })
-    end,
-  },
-  {
     "ttibsi/pre-commit.nvim",
     cmd = "Precommit",
   },
-  {
-    "echasnovski/mini.bufremove",
-    enabled = true,
-    event = "BufEnter",
-    config = function()
-      require("mini.bufremove").setup()
-    end,
-  },
+
   -- TODO: Replace with numToStr/Navigator.nvim
   {
     "christoomey/vim-tmux-navigator",
@@ -61,48 +35,6 @@ return {
         return false
       end
       return true
-    end,
-  },
-  {
-    "cbochs/grapple.nvim",
-    event = "VeryLazy",
-    dependencies = "nvim-lua/plenary.nvim",
-  },
-  {
-    "echasnovski/mini.align",
-    event = "InsertEnter",
-    config = function()
-      require("mini.align").setup({})
-    end,
-  },
-  {
-    "echasnovski/mini.ai",
-    keys = {
-      { "a", mode = { "x", "o" } },
-      { "i", mode = { "x", "o" } },
-    },
-    dependencies = {
-      {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        init = function()
-          -- no need to load the plugin, since we only need its queries
-          require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
-        end,
-      },
-    },
-    config = function()
-      local ai = require("mini.ai")
-      ai.setup({
-        n_lines = 500,
-        custom_textobjects = {
-          o = ai.gen_spec.treesitter({
-            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-          }, {}),
-          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
-          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
-        },
-      })
     end,
   },
   {
@@ -144,16 +76,28 @@ return {
 }
 
 -- TODO: Check out the following items
--- https://github.com/nvim-neotest/neotest -- look deeper into this when its time for DAP
--- AI
--- https://github.com/jackMort/ChatGPT.nvim
--- https://github.com/dense-analysis/neural
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
--- https://github.com/mrjones2014/smart-splits.nvim
--- https://github.com/miversen33/netman.nvim
--- https://github.com/m4xshen/smartcolumn.nvim
--- https://github.com/gennaro-tedesco/nvim-jqx
+-- Programming
+-- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
--- https://github.com/gbprod/yanky.nvim
+-- https://github.com/michaelb/sniprun -- THIS ONE BIG GOOD
+-- https://github.com/nvim-neotest/neotest -- look deeper into this when its time for DAP
+-- https://github.com/stevearc/overseer.nvim
+-- AI
+-- https://github.com/dense-analysis/neural
+-- https://github.com/jackMort/ChatGPT.nvim
+-- https://github.com/zbirenbaum/copilot.lua
+-- Editing
+-- https://github.com/jghauser/papis.nvim
+-- https://github.com/potamides/pantran.nvim
+-- UI
 -- https://github.com/glacambre/firenvim
+-- https://github.com/m4xshen/smartcolumn.nvim
+-- https://github.com/miversen33/netman.nvim
+-- https://github.com/mrjones2014/smart-splits.nvim
+-- MISC
+-- https://github.com/NFrid/due.nvim
+-- https://github.com/bennypowers/nvim-regexplainer
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
+-- https://github.com/monaqa/dial.nvim
 -- https://github.com/mrjones2014/legendary.nvim
+-- https://github.com/shortcuts/no-neck-pain.nvim

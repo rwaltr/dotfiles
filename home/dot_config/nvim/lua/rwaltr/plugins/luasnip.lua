@@ -27,11 +27,9 @@ return {
               virt_text = { { icons.ui.ArrowLeft, "Error" } }
             }
           }
-
         }
       }
       )
     end,
-
   },
 }
