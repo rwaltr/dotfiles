@@ -156,3 +156,4 @@ return {
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
 -- https://github.com/gbprod/yanky.nvim
 -- https://github.com/glacambre/firenvim
+-- https://github.com/mrjones2014/legendary.nvim
