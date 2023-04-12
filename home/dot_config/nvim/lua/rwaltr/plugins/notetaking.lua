@@ -16,7 +16,7 @@ return {
       load = {
         ["core.defaults"] = {},
         ["core.norg.concealer"] = {
-          icon_preset = "diamond",
+          config = { icon_preset = "diamond" },
         },
         ["core.integrations.telescope"] = {},
         ["core.norg.completion"] = {
@@ -33,9 +33,7 @@ return {
           },
         },
         ["core.norg.journal"] = {
-          config = {
-            workspace = "notebook",
-          },
+          config = { workspace = "notebook" },
         },
       },
     },
