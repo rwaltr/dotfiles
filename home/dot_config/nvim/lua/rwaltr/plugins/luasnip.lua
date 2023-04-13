@@ -11,7 +11,7 @@ return {
     dependencies =
     {
       { "rafamadriz/friendly-snippets" },
-      { "budimanjojo/k8s-snippets" },
+      -- { "budimanjojo/k8s-snippets" },
     },
     config = function()
       local ls = require("luasnip")
