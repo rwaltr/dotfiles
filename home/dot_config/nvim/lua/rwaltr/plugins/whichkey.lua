@@ -5,10 +5,13 @@ return {
     -- dependencies = "kkharji/sqlite.lua",
     name = "legendary.nvim",
     opts = {
-      whichkey = { auto_register = true }
+      whichkey = { auto_register = true },
+      extensions = {
+        smart_splits = {}
+      }
     },
   },
-    {
+  {
     "folke/which-key.nvim",
     name = "which-key.nvim",
     dependencies = "legendary.nvim",
@@ -25,7 +28,7 @@ return {
           ["<tab>"] = "TAB",
         },
         window = {
-          border = "rounded", -- none, single, double, shadow
+          border = "single", -- none, single, double, shadow
         },
       }
 
@@ -154,10 +157,10 @@ return {
         L = { "<cmd> lua require('lsp_lines').toggle() <cr>", "Toggle LSP lines" },
         n = {
           name = "Neorg",
-          i = {"<cmd> Neorg index<cr>", "Index"},
-          j = {"<cmd> Neorg journal today<cr>", "Today's Journal"},
-          J = {"<cmd> Neorg journal<cr>", "Journal"},
-          r = {"<cmd> Neorg return<cr>", "Return"},
+          i = { "<cmd> Neorg index<cr>", "Index" },
+          j = { "<cmd> Neorg journal today<cr>", "Today's Journal" },
+          J = { "<cmd> Neorg journal<cr>", "Journal" },
+          r = { "<cmd> Neorg return<cr>", "Return" },
         },
       }
 

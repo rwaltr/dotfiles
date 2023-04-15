@@ -220,4 +220,5 @@ return {
     "gennaro-tedesco/nvim-jqx",
     ft = { "json", "yaml" },
   },
+  {"mrjones2014/smart-splits.nvim"},
 }

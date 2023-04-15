@@ -17,12 +17,6 @@ return {
     "ttibsi/pre-commit.nvim",
     cmd = "Precommit",
   },
-
-  -- TODO: Replace with https://github.com/mrjones2014/smart-splits.nvim
-  {
-    "christoomey/vim-tmux-navigator",
-    event = "VeryLazy",
-  },
   {
     "jghauser/mkdir.nvim",
     event = "BufWritePre",
