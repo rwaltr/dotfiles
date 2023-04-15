@@ -1,7 +1,17 @@
 return {
+  {
+    -- TODO: Migrate to LEGENDARY
+    "mrjones2014/legendary.nvim",
+    -- dependencies = "kkharji/sqlite.lua",
+    name = "legendary.nvim",
+    opts = {
+      whichkey = { auto_register = true }
+    },
+  },
     {
     "folke/which-key.nvim",
     name = "which-key.nvim",
+    dependencies = "legendary.nvim",
     event = "VeryLazy",
     config = function()
 

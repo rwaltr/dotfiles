@@ -85,5 +85,5 @@ return {
     "gbprod/yanky.nvim",
     event = { "BufEnter" },
     config = true,
-  }
+  },
 }
