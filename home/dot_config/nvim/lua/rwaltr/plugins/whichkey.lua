@@ -1,11 +1,5 @@
 return {
-  {
-    "Nexmean/caskey.nvim",
-    dependencies = {
-      "folke/which-key.nvim",
-    }
-  },
-  {
+    {
     "folke/which-key.nvim",
     name = "which-key.nvim",
     event = "VeryLazy",

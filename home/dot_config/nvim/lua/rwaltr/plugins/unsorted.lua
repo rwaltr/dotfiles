@@ -18,7 +18,7 @@ return {
     cmd = "Precommit",
   },
 
-  -- TODO: Replace with numToStr/Navigator.nvim
+  -- TODO: Replace with https://github.com/mrjones2014/smart-splits.nvim
   {
     "christoomey/vim-tmux-navigator",
     event = "VeryLazy",
@@ -101,3 +101,4 @@ return {
 -- https://github.com/monaqa/dial.nvim
 -- https://github.com/mrjones2014/legendary.nvim
 -- https://github.com/shortcuts/no-neck-pain.nvim
+-- https://github.com/cpea2506/relative-toggle.nvim
