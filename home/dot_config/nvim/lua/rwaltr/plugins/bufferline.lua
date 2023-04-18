@@ -1,6 +1,7 @@
 return { {
-  "akinsho/nvim-bufferline.lua",
-  event = "VimEnter",
+  "akinsho/bufferline.nvim",
+  -- event = "UIEnter",
+  enabled = false, -- Broke in .9 due to autocommand stuff. need to see why
   opts = {
     options = {
       numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
