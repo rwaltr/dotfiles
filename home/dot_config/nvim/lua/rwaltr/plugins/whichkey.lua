@@ -17,7 +17,6 @@ return {
     dependencies = "legendary.nvim",
     event = "VeryLazy",
     config = function()
-
       local wk = require("which-key")
       local setup = {
         plugins = {
@@ -34,12 +33,12 @@ return {
 
 
       local opts = {
-        mode = "n", -- NORMAL mode
+        mode = "n",     -- NORMAL mode
         prefix = "<leader>",
-        buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-        silent = true, -- use `silent` when creating keymaps
+        buffer = nil,   -- Global mappings. Specify a buffer number for buffer local mappings
+        silent = true,  -- use `silent` when creating keymaps
         noremap = true, -- use `noremap` when creating keymaps
-        nowait = true, -- use `nowait` when creating keymaps
+        nowait = true,  -- use `nowait` when creating keymaps
       }
 
       local mappings = {
@@ -52,7 +51,6 @@ return {
         ["c"] = { "<cmd>bdelete!<CR>", "Close Buffer" },
         ["v"] = { "<cmd>vsplit<CR>", "Vsplit" },
         ["h"] = { "<cmd>split<CR>", "Split" },
-
         f = {
           name = "Find",
           b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
@@ -74,7 +72,6 @@ return {
           p = { "<cmd>Telescope projections<cr>", "Projects" },
           n = { "<cmd>Telescope notify<cr>", "Notification History" },
         },
-
         p = {
           name = "Lazy",
           i = { "<cmd>Lazy install<cr>", "Install" },
@@ -84,7 +81,6 @@ return {
           h = { "<cmd>Lazy home<cr>", "Home" },
           r = { "<cmd>Lazy restore<cr>", "Restore" },
         },
-
         g = {
           name = "Git",
           j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
@@ -105,7 +101,6 @@ return {
             "Diff",
           },
         },
-
         l = {
           name = "LSP",
           a = { "<cmd>Telescope lsp_code_actions<cr>", "Code Action" },
@@ -117,7 +112,7 @@ return {
             "<cmd>Telescope lsp_workspace_diagnostics<cr>",
             "Workspace Diagnostics",
           },
-          f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
+          f = { "<cmd>lua vim.lsp.buf.format()<cr>", "Format" },
           i = { "<cmd>LspInfo<cr>", "Info" },
           I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
           j = {
@@ -137,7 +132,6 @@ return {
             "Workspace Symbols",
           },
         },
-
         t = {
           name = "Terminal",
           n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },

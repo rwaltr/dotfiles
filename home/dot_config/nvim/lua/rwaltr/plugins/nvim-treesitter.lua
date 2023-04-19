@@ -7,7 +7,7 @@ return {
       "JoosepAlviste/nvim-ts-context-commentstring",
       {
         "lewis6991/nvim-treesitter-context",
-        config = true
+        config = true,
       },
       {
         "lewis6991/spellsitter.nvim",
@@ -22,7 +22,7 @@ return {
           "bash",
           "go",
           "hcl",
-          "help",
+          "vimdoc",
           "html",
           "json",
           "lua",
@@ -43,6 +43,7 @@ return {
         indent = { enable = true, disable = { "yaml" } },
         context_commentstring = { enable = true, enable_autocmd = false },
       })
+      vim.treesitter.language.register("markdown", "octo")
     end,
   },
   {
@@ -54,5 +55,5 @@ return {
     "folke/twilight.nvim",
     cmd = { "Twilight", "TwilightEnable" },
     config = true,
-  }
+  },
 }

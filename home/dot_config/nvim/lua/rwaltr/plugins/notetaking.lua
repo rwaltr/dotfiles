@@ -15,15 +15,15 @@ return {
     opts = {
       load = {
         ["core.defaults"] = {},
-        ["core.norg.concealer"] = {
+        ["core.concealer"] = {
           config = { icon_preset = "diamond" },
         },
         ["core.integrations.telescope"] = {},
-        ["core.norg.completion"] = {
+        ["core.completion"] = {
           config = { engine = "nvim-cmp" },
         },
         ["core.integrations.nvim-cmp"] = {},
-        ["core.norg.dirman"] = {
+        ["core.dirman"] = {
           config = {
             workspaces = {
               notebook = "~/Documents/Notebook",
@@ -32,7 +32,7 @@ return {
             default_workspace = "notebook",
           },
         },
-        ["core.norg.journal"] = {
+        ["core.journal"] = {
           config = { workspace = "notebook" },
         },
       },
