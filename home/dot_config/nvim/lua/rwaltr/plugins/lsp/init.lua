@@ -146,6 +146,7 @@ return {
     "williamboman/mason.nvim",
     name = "mason.nvim",
     cmd = "Mason",
+    build = ":MasonUpdate",
     opts = {
       ensure_installed = {
         "jq",
