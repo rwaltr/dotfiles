@@ -87,7 +87,6 @@ return {
 -- https://github.com/glacambre/firenvim
 -- https://github.com/m4xshen/smartcolumn.nvim
 -- https://github.com/miversen33/netman.nvim
--- https://github.com/mrjones2014/smart-splits.nvim
 -- https://github.com/b0o/incline.nvim
 -- https://github.com/anuvyklack/windows.nvim
 -- MISC
