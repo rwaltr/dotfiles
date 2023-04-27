@@ -41,7 +41,14 @@ return {
         -- },
       },
       -- add any global capabilities here
-      capabilities = {},
+      capabilities = {
+        textDocument = {
+          foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true,
+          },
+        },
+      },
       -- Automatically format on save
       autoformat = true,
       -- options for vim.lsp.buf.format
@@ -58,8 +65,8 @@ return {
           settings = {
             yaml = {
               keyOrdering = false,
-            }
-          }
+            },
+          },
         },
         jsonls = {
           settings = {
@@ -119,8 +126,8 @@ return {
       --
       -- Setup on_attach
       local util = require("rwaltr.util")
-      util.on_attach(function (client, buffer)
-      -- TODO: Refactor LSP Interface and Keybinds
+      util.on_attach(function(client, buffer)
+        -- TODO: Refactor LSP Interface and Keybinds
         require("rwaltr.plugins.lsp.handlers").on_attach(client, buffer)
       end)
 
@@ -140,7 +147,6 @@ return {
         require("cmp_nvim_lsp").default_capabilities(),
         opts.capabilities or {}
       )
-
 
       -- Server Setup
       local function setup(server)
@@ -241,8 +247,25 @@ return {
       require("telescope").load_extension("yaml_schema")
     end,
   },
-  -- TODO: Configure Navic
-  { "SmiteshP/nvim-navic" },
+  {
+    "SmiteshP/nvim-navic",
+    init = function()
+      vim.g.navic_silence = true
+      require("rwaltr.util").on_attach(function(client, buffer)
+        if client.server_capabilities.documentSymbolProvider then
+          require("nvim-navic").attach(client, buffer)
+        end
+      end)
+    end,
+    opts = function()
+      return {
+        separator = " ",
+        highlight = true,
+        depth_limit = 5,
+        icons = require("rwaltr.util.icons").kind,
+      }
+    end,
+  },
 
   {
     "williamboman/mason.nvim",

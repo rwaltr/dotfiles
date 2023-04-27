@@ -1,7 +1,7 @@
 return {
   {
     "numToStr/Comment.nvim",
-    event = "InsertEnter",
+    event = "BufEnter",
     dependencies = "which-key.nvim",
     config = function()
       local comment = require("Comment")
