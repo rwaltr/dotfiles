@@ -9,10 +9,6 @@ return {
         "lewis6991/nvim-treesitter-context",
         config = true,
       },
-      {
-        "lewis6991/spellsitter.nvim",
-        config = true,
-      },
     },
     config = function()
       require("nvim-treesitter.configs").setup({
