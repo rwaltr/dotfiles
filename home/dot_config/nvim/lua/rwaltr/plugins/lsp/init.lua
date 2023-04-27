@@ -4,91 +4,186 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-      "mason.nvim",
-      "folke/lsp-colors.nvim",
+      { "mason.nvim" },
+      { "folke/lsp-colors.nvim" },
       { "simrat39/symbols-outline.nvim", config = true },
-      {
-        "someone-stole-my-name/yaml-companion.nvim",
-        ft = "yaml",
-        config = function()
-          require("telescope").load_extension("yaml_schema")
-        end,
-      },
       { "folke/neodev.nvim", config = true },
       { "williamboman/mason-lspconfig.nvim" },
       { "hrsh7th/cmp-nvim-lsp" },
     },
-    -- region LSP config
-    config = function()
-      -- TODO: Refactor LSP Interface and Keybinds
-      -- init ops
-      local opts = {
-        on_attach = require("rwaltr.plugins.lsp.handlers").on_attach,
-        capabilities = require("rwaltr.plugins.lsp.handlers").capabilities,
-      }
-      -- Import mason_lspconfig
-      local mason_lspconfig = require("mason-lspconfig")
-      local lspconfig = require("lspconfig")
 
-      -- Define Mason settings
-      local servers = {
-        "terraformls",
-        "jsonls",
-        "yamlls",
-        -- "lua_ls",
-        "tflint",
-        "bashls",
-        "marksman",
-        "prosemd_lsp",
-        "dockerls",
-        "gopls",
-        "golangci_lint_ls",
-      }
-
-      mason_lspconfig.setup({
-        ensure_installed = servers,
-        automatic_installation = true,
-      })
-
-      -- Mason setup_handlers expects the first key to be the "default function"
-      mason_lspconfig.setup_handlers({
-        -- Default Function
-        function(server_name)
-          lspconfig[server_name].setup({ opts })
-        end,
-        -- JsonLS settings
-        ["jsonls"] = function()
-          local jsonls_opts = require("rwaltr.plugins.lsp.settings.jsonls")
-          local extended_opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
-          lspconfig.jsonls.setup({ extended_opts })
-        end,
-        -- Yamlls settings
-        ["yamlls"] = function()
-          local yamls_opts = require("rwaltr.plugins.lsp.settings.yamlls")
-          local extended_opts = vim.tbl_deep_extend("force", yamls_opts, opts)
-          lspconfig.yamlls.setup({ extended_opts })
-        end,
-        -- Lua Settings
-        ["lua_ls"] = function()
-          lspconfig.lua_ls.setup({
-            settings = {
-              -- on_attach = opts.on_attach,
-              -- capabilities = opts.capabilities,
-              Lua = {
-                diagnostics = {
-                  globals = { "vim" },
-                },
-                completion = {
-                  callSnippet = "Replace",
-                },
+    ---@class PluginLspOpts
+    opts = {
+      diagnostics = {
+        -- disable virtual text
+        virtual_text = {
+          spacing = 4,
+          source = "if_many",
+          prefix = "● ",
+          -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+          -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
+          -- prefix = "icons",
+        },
+        -- -- show signs
+        -- signs = {
+        --   active = signs,
+        -- },
+        update_in_insert = false,
+        underline = true,
+        severity_sort = true,
+        -- float = {
+        --   focusable = false,
+        --   style = "minimal",
+        --   border = "rounded",
+        --   source = "if_many",
+        --   header = "",
+        --   prefix = "",
+        -- },
+      },
+      -- add any global capabilities here
+      capabilities = {},
+      -- Automatically format on save
+      autoformat = true,
+      -- options for vim.lsp.buf.format
+      -- `bufnr` and `filter` is handled by the LazyVim formatter,
+      -- but can be also overridden when specified
+      format = {
+        formatting_options = nil,
+        timeout_ms = nil,
+      },
+      -- LSP server settings
+      ---@type lspconfig.options
+      servers = {
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            }
+          }
+        },
+        jsonls = {
+          settings = {
+            json = {
+              -- schemas = require("schemastore").json.schemas(),
+            },
+          },
+        },
+        lua_ls = {
+          -- mason = false, -- set to false if you don't want this server to be installed with mason
+          settings = {
+            -- on_attach = opts.on_attach,
+            -- capabilities = opts.capabilities,
+            Lua = {
+              diagnostics = {
+                globals = { "vim" },
+              },
+              completion = {
+                callSnippet = "Replace",
               },
             },
-          })
+          },
+        },
+        bashls = {},
+        dockerls = {},
+        gopls = {},
+        marksman = {},
+        terraformls = {},
+        tflint = {},
+      },
+      -- you can do any additional lsp server setup here
+      -- return true if you don't want this server to be setup with lspconfig
+      ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
+      setup = {
+        yamlls = function(_, opts)
+          local cfg = require("yaml-companion").setup()
+          require("lspconfig")["yamlls"].setup(vim.tbl_deep_extend("force", opts, cfg))
+          return true
         end,
-      })
-      --#endregion
+        jsonls = function(_, opts)
+          local cfg = {
+            settings = {
+              json = {
+                schemas = require("schemastore").json.schemas(),
+                validate = { enable = true },
+              },
+            },
+          }
+          require("lspconfig")["jsonls"].setup(vim.tbl_deep_extend("force", opts, cfg))
+          return true
+        end,
+      },
+    },
 
-      require("rwaltr.plugins.lsp.handlers").setup()
+    ---@param opts PluginLspOpts
+    config = function(_, opts)
+      --
+      -- Setup on_attach
+      local util = require("rwaltr.util")
+      util.on_attach(function (client, buffer)
+      -- TODO: Refactor LSP Interface and Keybinds
+        require("rwaltr.plugins.lsp.handlers").on_attach(client, buffer)
+      end)
+
+      -- Diagnostics
+      for name, icon in pairs(require("rwaltr.util.icons").diagnostics) do
+        name = "DiagnosticSigns" .. name
+        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+      end
+
+      vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+      local servers = opts.servers
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        {},
+        vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities(),
+        opts.capabilities or {}
+      )
+
+
+      -- Server Setup
+      local function setup(server)
+        local server_opts = vim.tbl_deep_extend("force", {
+          capabilities = vim.deepcopy(capabilities),
+        }, servers[server] or {})
+
+        if opts.setup[server] then
+          if opts.setup[server](server, server_opts) then
+            return
+          end
+        elseif opts.setup["*"] then
+          if opts.setup["*"](server, server_opts) then
+            return
+          end
+        end
+        require("lspconfig")[server].setup(server_opts)
+      end
+
+      -- Grab all Mason packages
+      local have_mason, mlsp = pcall(require, "mason-lspconfig")
+      local all_mslp_servers = {}
+      if have_mason then
+        all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
+      end
+
+      local ensure_installed = {} ---@type string[]
+      for server, server_opts in pairs(servers) do
+        if server_opts then
+          server_opts = server_opts == true and {} or server_opts
+          -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
+          if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
+            setup(server)
+          else
+            ensure_installed[#ensure_installed + 1] = server
+          end
+        end
+      end
+
+      if have_mason then
+        mlsp.setup({ ensure_installed = ensure_installed })
+        mlsp.setup_handlers({ setup })
+      end
     end,
   },
 
@@ -107,7 +202,7 @@ return {
       local hvr = nls.builtins.hover
       nls.setup({
         root_dir = require("null-ls.utils").root_pattern(".null-ls.root", ".neoconf.json", ".git", "Makefile"),
-        on_attach = require("rwaltr.plugins.lsp.handlers").on_attach,
+        -- on_attach = require("rwaltr.plugins.lsp.handlers").on_attach,
         sources = {
           ca.gitrebase,
           ca.gitsigns,
@@ -139,6 +234,13 @@ return {
   },
 
   { "b0o/schemastore.nvim" },
+  {
+    "someone-stole-my-name/yaml-companion.nvim",
+    ft = "yaml",
+    config = function()
+      require("telescope").load_extension("yaml_schema")
+    end,
+  },
   -- TODO: Configure Navic
   { "SmiteshP/nvim-navic" },
 
