@@ -95,3 +95,4 @@ return {
 -- https://github.com/monaqa/dial.nvim
 -- https://github.com/shortcuts/no-neck-pain.nvim
 -- https://github.com/cpea2506/relative-toggle.nvim
+-- https://github.com/LintaoAmons/scratch.nvim
