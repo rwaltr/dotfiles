@@ -1,14 +1,29 @@
 return {
   {
+    "tpope/vim-fugitive",
+    cmd = {
+      "Git",
+      "Gedit",
+      "Gread",
+      "Gwrite",
+      "Ggrep",
+      "GMove",
+      "GDelete",
+      "GBrowse",
+      "Gdiffsplit",
+      "Gvdiffsplit",
+    },
+  },
+  {
     "sindrets/diffview.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = true,
-    event = "BufReadPre"
+    event = "BufReadPre",
   },
   {
     "akinsho/git-conflict.nvim",
     config = true,
-    event = "BufReadPre"
+    event = "BufReadPre",
   },
   {
     -- TODO: Configure
@@ -53,7 +68,7 @@ return {
         delay = 1500,
         ignore_whitespace = false,
       },
-      current_line_blame_formatter = ' <author>, <author_time:%Y-%m-%d> - <summary>',
+      current_line_blame_formatter = " <author>, <author_time:%Y-%m-%d> - <summary>",
       sign_priority = 6,
       update_debounce = 100,
       status_formatter = nil, -- Use default
@@ -69,6 +84,6 @@ return {
       yadm = {
         enable = false,
       },
-    }
-  }
+    },
+  },
 }
