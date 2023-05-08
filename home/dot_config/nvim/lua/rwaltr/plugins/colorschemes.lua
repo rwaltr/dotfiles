@@ -1,13 +1,19 @@
 -- TODO: Check out https://github.com/folke/styler.nvim
 return {
   {
-    'EdenEast/nightfox.nvim',
+    "nyoom-engineering/oxocarbon.nvim",
     lazy = false,
     enabled = true,
     priority = 1000,
     config = function ()
-     vim.cmd("colorscheme carbonfox") 
-    end,
+      vim.cmd.colorscheme("oxocarbon")
+    end
+  },
+  {
+    'EdenEast/nightfox.nvim',
+    lazy = false,
+    enabled = true,
+    priority = 1000,
     init = function ()
      require("nightfox").setup() 
     end,
@@ -15,7 +21,7 @@ return {
   {
     'uloco/bluloco.nvim',
     lazy = false,
-    enabled = false,
+    enabled = true,
     priority = 1000,
     dependencies = { 'rktjmp/lush.nvim' },
     config = function()
@@ -26,8 +32,6 @@ return {
         terminal    = vim.fn.has("gui_running") == 1, -- bluoco colors are enabled in gui terminals per default.
         guicursor   = true,
       })
-
-      vim.cmd('colorscheme bluloco')
     end,
   },
   {
@@ -68,14 +72,4 @@ return {
   },
   { "tjdevries/colorbuddy.nvim",
     branch = "dev" },
-  {
-    -- 'rwaltr/goldenstag.nvim',
-    name = "goldenstag.nvim",
-    lazy = false,
-    enabled = false,
-    dir = "~/src/rwaltr/goldenstag.nvim",
-    config = function()
-      require("goldenstag").setup()
-    end,
-  },
 }

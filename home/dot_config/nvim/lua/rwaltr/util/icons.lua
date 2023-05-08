@@ -113,8 +113,8 @@ return {
   },
   diagnostics = {
     Error = "",
-    Warning = "",
-    Information = "",
+    Warn = "",
+    Info = "",
     Question = "",
     Hint = "",
   },

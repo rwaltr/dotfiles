@@ -20,7 +20,7 @@ return {
         sections = { "error", "warn" },
         symbols = {
           error = icons.diagnostics.Error .. " ",
-          warn = icons.diagnostics.Warning .. " ",
+          warn = icons.diagnostics.Warn .. " ",
         },
         colored = false,
         update_in_insert = false,
@@ -98,7 +98,7 @@ return {
 
       local filename = {
         "filename",
-        path = 1,
+        path = 0,
       }
 
       local spaces = function()
@@ -118,7 +118,7 @@ return {
         sections = {
           lualine_a = { mode },
           lualine_b = { branch },
-          lualine_c = { diagnostics, filetype, filename, navic },
+          lualine_c = { diagnostics, filetype, filename, },
           lualine_x = {
             {
               require("noice").api.status.mode.get,
