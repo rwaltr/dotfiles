@@ -10,8 +10,5 @@ userdirs=(
 	src
 )
 for i in "${userdirs[@]}"; do
-	if [ ! -d "$i" ]; then
-		echo "Creating $i"
-		mkdir ~/"$i"
-	fi
+		mkdir -p ~/"$i"
 done
