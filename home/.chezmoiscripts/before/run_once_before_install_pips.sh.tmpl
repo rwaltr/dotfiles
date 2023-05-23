@@ -1,6 +1,0 @@
-{{- if (and (eq .chezmoi.os "linux") ( ne .osid "linux-nixos")) -}}
-#!{{ lookPath "sh" }}
-pip install autotiling
-pip install pywal
-
-{{- end }}
