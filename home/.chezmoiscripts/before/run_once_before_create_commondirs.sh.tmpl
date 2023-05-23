@@ -1,3 +1,17 @@
 #!{{ lookPath "bash"}}
+# vi: ft=bash
 # Create basic User dirs
-mkdir ~/Documents ~/Downloads ~/Pictures ~/Videos ~/Music ~/src
+userdirs=(
+	Documents
+	Downloads
+	Pictures
+	Videos
+	Music
+	src
+)
+for i in "${userdirs[@]}"; do
+	if [ ! -d "$i" ]; then
+		echo "Creating $i"
+		mkdir ~/"$i"
+	fi
+done
