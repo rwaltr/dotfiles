@@ -1,11 +1,11 @@
 # RWALTR Bash Config
+# vi: ft=bash
 # .bashrc
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
-{{- $theme:= fromYaml (output "chezmoi" "execute-template" ( include  ".chezmoitemplates/theme" | trim )) }}
 
 # Source modular Bash files
 # TODO: move bash.d to shell.d/bash
@@ -15,43 +15,3 @@ if [ -d $HOME/.config/bash.d ]; then
 	  source $i;
 	done
 fi
-# Custom Local PATHs
-
-if [ -d ~/.krew/bin ]
-	then
-		export PATH="${PATH}:${HOME}/.krew/bin"
-fi
-
-
-shopt -s autocd # change to named directory
-shopt -s cdspell # autocorrects cd misspellings
-shopt -s cmdhist # save multi-line commands in history as single line
-shopt -s dotglob
-shopt -s histappend # do not overwrite history
-shopt -s expand_aliases # expand aliases
-shopt -s checkwinsize # checks term size when bash regains control
-bind "set completion-ignore-case on"
-# Treat hyphens and underscores as equivalent
-bind "set completion-map-case on"
-# Display matches for ambiguous patterns at first tab press
-bind "set show-all-if-ambiguous on"
-# Immediately add a trailing slash when autocompleting symlinks to directories
-bind "set mark-symlinked-directories on"
-
-export HISTSIZE=10000
-
-# This defines where cd looks for targets
-# Add the directories you want to have fast access to, separated by colon
-# Ex: CDPATH=".:~:~/projects" will look for targets in the current working directory, in home and in the ~/projects folder
-CDPATH=".:~:~/src/rwaltr:~/src/"
-
-# Custom bookmarks
-shopt -s cdable_vars
-# export dotfiles="$HOME/dotfiles"
-# export projects="$HOME/projects"
-# export documents="$HOME/Documents"
-# export dropbox="$HOME/Dropbox"
-
-export AQUA_GLOBAL_CONFIG=$HOME/.config/aqua/config.yaml
-export AQUA_ROOT_DIR=$HOME/.local/share/aqua
-export PATH="${PATH}:$AQUA_ROOT_DIR/bin"
