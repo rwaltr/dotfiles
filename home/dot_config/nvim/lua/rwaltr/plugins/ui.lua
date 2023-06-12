@@ -1,7 +1,7 @@
 return {
   {
     "nvim-tree/nvim-web-devicons",
-    name = "nvim-web-devicons"
+    name = "nvim-web-devicons",
   },
   {
     "NvChad/nvim-colorizer.lua",
@@ -20,25 +20,19 @@ return {
       require("notify").setup({
         -- Animation style (see below for details)
         stages = "fade_in_slide_out",
-
         -- Function called when a new window is opened, use for changing win settings/config
         ---@diagnostic disable-next-line: assign-type-mismatch
         on_open = nil,
-
         -- Function called when a window is closed
         ---@diagnostic disable-next-line: assign-type-mismatch
         on_close = nil,
-
         -- Render function for notifications. See notify-render()
         render = "default",
-
         -- Default timeout for notifications
         timeout = 3000,
-
         -- For stages that change opacity this is treated as the highlight behind the window
         -- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
         background_colour = "Normal",
-
         -- Minimum width for notification windows
         maximum_width = function()
           return math.floor(vim.o.columns * 0.75)
@@ -46,7 +40,6 @@ return {
         maximum_height = function()
           return math.floor(vim.o.lines * 0.75)
         end,
-
         -- Icons for the different levels
         icons = {
           ERROR = icons.diagnostics.Error,
@@ -57,13 +50,12 @@ return {
         },
       })
       vim.notify = require("notify")
-    end
+    end,
   },
   {
     "ggandor/leap.nvim",
     event = "BufReadPost",
-    dependencies =
-    {
+    dependencies = {
       { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } },
     },
     config = function()
@@ -107,19 +99,18 @@ return {
         },
       },
       cmdline = {
-        view = "cmdline"
+        view = "cmdline",
       },
       -- you can enable a preset for easier configuration
       presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
-        command_palette = false, -- position the cmdline and popupmenu together
+        bottom_search = true,         -- use a classic bottom cmdline for search
+        command_palette = false,      -- position the cmdline and popupmenu together
         long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
+        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false,       -- add a border to hover docs and signature help
       },
     },
   },
-
 
   {
     "goolord/alpha-nvim",
@@ -178,7 +169,6 @@ return {
 
       alpha.setup(dashboard.opts)
 
-
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyVimStarted",
         callback = function()
@@ -188,7 +178,7 @@ return {
           pcall(vim.cmd.AlphaRedraw)
         end,
       })
-    end
+    end,
   },
   {
     "folke/trouble.nvim",
@@ -220,5 +210,15 @@ return {
     "gennaro-tedesco/nvim-jqx",
     ft = { "json", "yaml" },
   },
-  {"mrjones2014/smart-splits.nvim"},
+  { "mrjones2014/smart-splits.nvim" },
+  {
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
+  { "shortcuts/no-neck-pain.nvim",  version = "*", cmd = "NoNeckPain" },
 }
