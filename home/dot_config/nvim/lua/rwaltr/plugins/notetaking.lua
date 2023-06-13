@@ -35,6 +35,7 @@ return {
         ["core.journal"] = {
           config = { workspace = "notebook" },
         },
+        ["core.summary"] = {}
       },
     },
   },
