@@ -29,9 +29,4 @@ host router
 	user blackphidora
 
 {{- end}}
-
-{{- if eq .is.work true }}
-
-Include config.d/work.conf
-
-{{- end}}
+Include config.d/*

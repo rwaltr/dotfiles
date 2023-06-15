@@ -44,9 +44,3 @@ output $rightmon {
 output * bg {{ $bgSetting }}
 # output * bg $wallpaper fill $background
 {{ end -}}
-
-{{ if eq .chezmoi.hostname "teletran1-work" -}}
-# Detect Laptop Lid
-  bindswitch lid:on output eDP-1 disable
-  bindswitch lid:off output eDP-1 enable
-{{ end -}}

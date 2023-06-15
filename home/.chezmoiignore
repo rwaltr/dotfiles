@@ -8,9 +8,6 @@ Music
 Videos
 {{- end -}}
 {{- if eq .is.work false -}}
-.ssh/config.d/work.conf
-.config/fish/conf.d/jira.fish
-.subversion/
 .local/share/applications/cteams.desktop
 {{- end -}}
 {{- if eq .is.work true -}}
