@@ -4,6 +4,7 @@
 return { {
   "gnikdroy/projections.nvim",
   cmd = "Telescope projections",
+  branch = "pre_release",
   event = "VeryLazy",
   config = function()
     --- exports table of dirs in "~/src/"
