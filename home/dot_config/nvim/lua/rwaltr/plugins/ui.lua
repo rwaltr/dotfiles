@@ -54,6 +54,7 @@ return {
   },
   {
     "ggandor/leap.nvim",
+    enabled = false,
     event = "BufReadPost",
     dependencies = {
       { "ggandor/flit.nvim", opts = { labeled_modes = "nv" } },
@@ -61,6 +62,21 @@ return {
     config = function()
       require("leap").add_default_mappings()
     end,
+  },
+  {
+    -- TODO: Test out flash
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
   },
   {
     "nacro90/numb.nvim",
@@ -103,11 +119,11 @@ return {
       },
       -- you can enable a preset for easier configuration
       presets = {
-        bottom_search = true,         -- use a classic bottom cmdline for search
-        command_palette = false,      -- position the cmdline and popupmenu together
+        bottom_search = true, -- use a classic bottom cmdline for search
+        command_palette = false, -- position the cmdline and popupmenu together
         long_message_to_split = true, -- long messages will be sent to a split
-        inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false,       -- add a border to hover docs and signature help
+        inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        lsp_doc_border = false, -- add a border to hover docs and signature help
       },
     },
   },
@@ -220,5 +236,5 @@ return {
       },
     },
   },
-  { "shortcuts/no-neck-pain.nvim",  version = "*", cmd = "NoNeckPain" },
+  { "shortcuts/no-neck-pain.nvim", version = "*", cmd = "NoNeckPain" },
 }

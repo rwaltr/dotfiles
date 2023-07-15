@@ -1,9 +1,10 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    name = "nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
       { "mason.nvim" },
       { "folke/lsp-colors.nvim" },
       { "simrat39/symbols-outline.nvim", config = true },
@@ -121,7 +122,11 @@ return {
 
     ---@param opts PluginLspOpts
     config = function(_, opts)
-      --
+
+      -- Set up NeoConf
+      local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
+      require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
+
       -- Setup on_attach
       local util = require("rwaltr.util")
       util.on_attach(function(client, buffer)
