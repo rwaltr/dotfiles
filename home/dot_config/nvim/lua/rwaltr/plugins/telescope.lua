@@ -6,6 +6,9 @@ return {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
+        config = function ()
+          require("telescope").load_extension("fzf")
+        end
       },
       {
         "debugloop/telescope-undo.nvim",
@@ -174,7 +177,6 @@ return {
           -- please take a look at the readme of the extension you want to configure
         },
 
-          require("telescope").load_extension("fzf")
       })
     end
   }
