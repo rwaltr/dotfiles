@@ -1,27 +1,18 @@
 # vi: set ft=yaml
 {{- $email := "rwalt@pm.me" -}}
 {{/* boolean feature tags */}}
-{{- $battlestation := false -}}{{/* true if this machine does not have a screen and keyboard */}}
-{{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
+{{- $battlestation := false -}}{{/* Special workstation... */}}
 {{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
-{{- $work := false -}}{{/* true if this machine should have work secrets from BitWarden */}}
 
-{{- $work := contains "-work" (lower .chezmoi.hostname) -}}
-{{- $personal := not $work -}}
 
 {{- /* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */ -}}
 {{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "vagrant" "vscode") -}}
 {{-   $headless = true -}}
-{{-   $ephemeral = true -}}
 {{- end -}}
 
-{{- if eq .chezmoi.os "windows" -}}
-{{-   $ephemeral = true -}}
-{{- end -}}
 
 {{- $hostname := .chezmoi.hostname -}}
-{{- if not $ephemeral -}}
 {{-   if eq $hostname "monolith" -}}
 {{-     $headless = false -}}
 {{-     $personal = true -}}
@@ -32,7 +23,6 @@
 {{-     else -}}
 {{-       $headless = promptBool "headless" -}}
 {{-     end -}}
-{{-   end -}}
 
 {{-     if hasKey . ".is.personal" -}}
 {{-       $personal = .is.personal -}}
@@ -40,19 +30,6 @@
 {{-       $personal = promptBool "personal" -}}
 {{-     end -}}
 
-{{-     if hasKey . "work" -}}
-{{-       $work = .work -}}
-{{-     else -}}
-{{-       $work = promptBool "work" -}}
-{{-     end -}}
-
-{{-     if hasKey . "ephemeral" -}}
-{{-       $ephemeral = .ephemeral -}}
-{{-     else -}}
-{{-       $ephemeral = promptBool "ephemeral" -}}
-{{-     end -}}
-
-{{-     if hasKey . "battlestation" -}}{{/* True if this machine is attached to the battlestation workstation */}}
 {{-       $battlestation = .battlestation -}}
 {{-     else -}}
 {{-       $battlestation = promptBool "battlestation" -}}
@@ -60,7 +37,6 @@
 
 {{-   else -}}
 {{-     $headless = true -}}
-{{-     $ephemeral = true -}}
 {{-   end -}}
 
 {{- $osid := .chezmoi.os -}}
@@ -104,15 +80,13 @@
 {{- end -}}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 
-# TODO: Add Tmux Mod, GUI Mod config
 data:
   name: "Ryan Walter"
   email: {{ $email | quote }}
   is:
     personal: {{ $personal }}
-    work: {{ $work }}
+    work: false
     battlestation: {{ $battlestation }}
-    ephemeral: {{ $ephemeral }}
     headless: {{ $headless }}
   osid: {{ $osid | quote }}
   osidlike: {{ $osIDLike | quote }}
@@ -122,8 +96,6 @@ data:
     editor: {{ $editor | quote }}
     visual: {{ $visual | quote }}
     browser: "firefox"
-    vault:
-      addr: "https://vault.waltr.tech"
   font:
     gui:
       name: "Lekton Nerd Font"
@@ -139,7 +111,9 @@ data:
     server: "localhost"
     port: 6600
     timeout: 15
+encryption = "age"
 gpg:
-  {{- if $personal }}
-  recipient: "4186BF653F777F6190DAF3C469977470B0541C75"
-  {{- end}}
+  recipient: ""
+age:
+  recipient = "age189npag0lz2hl425ldurk8czrpyv69tg4cgqgzl7wjh60w39sysesazu4u6"
+  identity = "~/.config/sops/keys.txt"

@@ -2,21 +2,13 @@
 [user]
 name = {{ .name }}
 email = {{ .email | lower }}
-{{ if eq .is.personal true -}}
-signingkey = 4186BF653F777F6190DAF3C469977470B0541C75
-{{ else if eq .is.work true -}}
-signingkey = C1BF6CF20AAD404CE1BD2E7F322A5DF2482A037D
-{{ end -}}
+# signingkey = 
 
 [commit]
-{{ if (or (eq .is.personal true) ( eq .is.work true )) -}}
-gpgsign = true
-{{ else }}
 gpgsign = false
-{{ end -}}
 
 [format]
-signOff = true
+signOff = false
 
 [url "ssh://git@github.com/"]
 pushInsteadOf = https://github.com/
@@ -73,7 +65,6 @@ pushInsteadOf = https://github.com/
 
 [push]
   autoSetupRemote = true
-
 
 
 {{/* vim: set filetype=gitconfig: */}}
