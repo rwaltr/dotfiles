@@ -6,13 +6,13 @@ add_newline = false
 # format = "$all"
 # TODO: New format
 format = """
-[┌─╴](dimmed white)$shell$username$hostname$sudo$directory$all$status
+[┌─](dimmed white)$shell$username$hostname:$sudo$directory $git_branch $git_status
 [└](dimmed white)$character
 """
 continuation_prompt = "▶▶"
 
 [shell]
-fish_indicator = ""
+fish_indicator = ""
 powershell_indicator = ""
 bash_indicator = ""
 elvish_indicator = "λ"
@@ -20,10 +20,10 @@ style = "blue bold"
 disabled = false
 
 [fill]
-symbol = " "
+symbol = ' '
 
 [hostname]
-ssh_only = false
+ssh_only = true
 format = "[@](dimmed white)[$hostname]($style) "
 style = "blue"
 {{- if eq .osid "android"}}
@@ -34,7 +34,7 @@ disabled = false
 
 [directory]
 truncation_length = 3
-truncation_symbol = "…/"
+truncation_symbol = " …/"
 read_only = " "
 disabled = false
 
@@ -52,7 +52,8 @@ disabled = false
 
 [status]
 disabled = false
-format = "[$symbol $status]($style) "
+format = "[$symbol$status]($style) "
+symbol = "🔴"
 
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
@@ -179,14 +180,16 @@ format = '\[[$symbol$workspace]($style)\]'
 disabled = false
 
 [time]
-format = '\[🕙[$time]($style)\]'
-disabled = true
+format = '[🕙$time]($style)'
+disabled = false
 time_format = "%T"
+style = "light grey"
 
 [username]
 format = '[$user]($style)'
 show_always = true
 style_user = "purple"
+
 {{- if eq .osid "android"}}
 disabled = true
 {{- else }}
