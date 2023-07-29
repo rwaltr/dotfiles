@@ -84,9 +84,9 @@ return {
 -- https://github.com/b0o/incline.nvim
 -- https://github.com/anuvyklack/windows.nvim
 -- MISC
--- https://github.com/bennypowers/nvim-regexplainer
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
 -- https://github.com/monaqa/dial.nvim
 -- https://github.com/shortcuts/no-neck-pain.nvim
 -- https://github.com/cpea2506/relative-toggle.nvim
 -- https://github.com/LintaoAmons/scratch.nvim
+-- tope/dadbod

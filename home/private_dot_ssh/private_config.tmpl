@@ -1,24 +1,22 @@
 # Global Config Settings
-#Git SSH Creds
+host * 
+  # Reduce auth fatigue
+  ControlMaster auto
+	ControlPath ~/.ssh/control-%h-%p-%r
+	ControlPersist 600
+
+#GitLab SSH Creds
 host gitlab.com
 	User git
 	Hostname gitlab.com
-host gitlab
-	User git
-	Hostname gitlab.com
+
 #GitHub SSH Creds
 host github.com
 	User git
 	Hostname github.com
-host github
-	User git
-	Hostname github.com
 
-host * 
-  ControlMaster auto
-	ControlPath ~/.ssh/control-%h-%p-%r
-	ControlPersist 600
 {{- if eq .is.personal true }}
+
 # Personal SSH Config
 host storage2
 	hostname storage2.waltr.lab
@@ -29,4 +27,8 @@ host router
 	user blackphidora
 
 {{- end}}
+
+# Yoink encrypted and oddball configs
 Include config.d/*
+
+# vi: ft=sshconfig

@@ -1,4 +1,12 @@
 return {
+  -- Encode and decode text TODO: Setup keybinds
+  {"MisanthropicBit/decipher.nvim"},
+  -- Regex Highlighting
+  {
+    'tomiis4/Hypersonic.nvim',
+    event = "CmdlineEnter",
+    cmd = "Hypersonic",
+  },
   {
     "echasnovski/mini.pairs",
     event = "InsertEnter",
