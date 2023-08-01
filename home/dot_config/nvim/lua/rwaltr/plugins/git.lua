@@ -32,7 +32,7 @@ return {
     config = true,
   },
   {
-    "TimUntersberger/neogit",
+    "NeogitOrg/neogit",
     cmd = "Neogit",
     config = true,
   },
