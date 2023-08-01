@@ -7,10 +7,13 @@ return {
     "nvim-neorg/neorg",
     build = ":Neorg sync-parsers",
     cmd = "Neorg",
+    -- HACK Remove when https://github.com/nvim-neorg/neorg/issues/1002
+    commit = "e76f0cb6b3ae5e990052343ebb73a5c8d8cac783",
     ft = "norg",
     dependencies = {
       { "nvim-lua/plenary.nvim" },
-      { "nvim-neorg/neorg-telescope" },
+      { "nvim-neorg/neorg-telescope",
+        commit = "d24f445c912451ddbf17cbe8da36561b51b10d39", },
     },
     opts = {
       load = {
@@ -27,7 +30,6 @@ return {
           config = {
             workspaces = {
               notebook = "~/Documents/Notebook",
-              work = "~/Documents/Notebook/work",
             },
             default_workspace = "notebook",
           },
