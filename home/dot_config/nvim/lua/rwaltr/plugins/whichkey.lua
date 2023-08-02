@@ -45,7 +45,7 @@ return {
         ["A"] = { "<cmd>Alpha<cr>", "Alpha" },
         ["a"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
         ["b"] = { "<cmd>Telescope buffers<cr>", "Buffers" },
-        ["e"] = { "<cmd>Neotree toggle<cr>", "Explorer" },
+        ["e"] = { "<cmd>Neotree toggle float<cr>", "Explorer" },
         ["w"] = { "<cmd>w!<CR>", "Save" },
         ["q"] = { "<cmd>q!<CR>", "Quit" },
         ["c"] = { "<cmd>bdelete!<CR>", "Close Buffer" },
