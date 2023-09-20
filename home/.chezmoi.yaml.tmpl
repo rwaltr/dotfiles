@@ -1,43 +1,27 @@
 # vi: set ft=yaml
-{{- $email := "rwaltr@rwalt.pro" -}}
-{{/* boolean feature tags */}}
-{{- $battlestation := false -}}{{/* Special workstation... */}}
-{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
-{{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
-{{-       $headless = promptBool "headless" -}}
-{{-       $personal = promptBool "personal" -}}
-{{-       $battlestation = promptBool "battlestation" -}}
-
 {{- $osid := .chezmoi.os -}}
 {{- $osIDLike := ""}}
 {{- if hasKey .chezmoi.osRelease "id" -}}
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{-   $osIDLike = .chezmoi.osRelease.id }}
 {{- end -}}
-
-{{- if ne $personal true -}}
 {{- $email = promptString "Email" -}}
-{{- end -}}
-
-{{- $editor := "nvim" -}}
-
-{{- $terminal := "foot" -}}
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 data:
   name: "Ryan Walter"
   email: {{ $email | quote }}
   is:
-    personal: {{ $personal }}
+    personal: false
     work: false
-    battlestation: {{ $battlestation }}
-    headless: {{ $headless }}
+    battlestation: false
+    headless: false
   osid: {{ $osid | quote }}
   osidlike: {{ $osIDLike | quote }}
   theme: "rwaltr"
   programs:
-    terminal: {{ $terminal | quote }}
-    editor: {{ $editor | quote }}
+    terminal: foot
+    editor: nvim
     visual: neovide
     browser: "firefox"
   font:
