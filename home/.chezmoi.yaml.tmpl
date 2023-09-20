@@ -21,15 +21,6 @@
 
 {{- $editor := "nvim" -}}
 
-{{- $visual := "" -}}
-{{-   if lookPath "neovide" -}}
-{{-     $visual = "neovide" -}}
-{{-   else if lookPath "nvim-qt" -}}
-{{-     $visual = "nvim-qt" -}}
-{{-   else -}}
-{{-     $visual = $editor -}}
-{{-   end -}}
-
 {{- $terminal := "foot" -}}
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
@@ -47,7 +38,7 @@ data:
   programs:
     terminal: {{ $terminal | quote }}
     editor: {{ $editor | quote }}
-    visual: {{ $visual | quote }}
+    visual: neovide
     browser: "firefox"
   font:
     gui:
