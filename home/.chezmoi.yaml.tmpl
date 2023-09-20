@@ -5,7 +5,7 @@
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{-   $osIDLike = .chezmoi.osRelease.id }}
 {{- end -}}
-{{- $email = promptString "Email" -}}
+{{- $email := promptString "Email" -}}
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 data:
