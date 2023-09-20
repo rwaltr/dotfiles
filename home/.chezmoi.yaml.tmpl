@@ -30,14 +30,7 @@
 {{-     $visual = $editor -}}
 {{-   end -}}
 
-{{ $terminal := "" -}}
-{{-   if lookPath "foot" -}}
-{{-     $terminal = "foot" -}}
-{{-   else if lookPath "alacritty" -}}
-{{-     $terminal = "alacritty" -}}
-{{-   else -}}
-{{-     $terminal = "gnome-terminal" -}}
-{{- end -}}
+{{- $terminal := "foot" -}}
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 data:
