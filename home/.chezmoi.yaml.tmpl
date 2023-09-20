@@ -4,40 +4,9 @@
 {{- $battlestation := false -}}{{/* Special workstation... */}}
 {{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from BitWarden */}}
-
-
-{{- /* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */ -}}
-{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "vagrant" "vscode") -}}
-{{-   $headless = true -}}
-{{- end -}}
-
-
-{{- $hostname := .chezmoi.hostname -}}
-{{-   if eq $hostname "monolith" -}}
-{{-     $headless = false -}}
-{{-     $personal = true -}}
-{{-     $battlestation = true -}}
-{{-   else if stdinIsATTY -}}
-{{-     if hasKey . "headless" -}}
-{{-       $headless = .headless -}}
-{{-     else -}}
 {{-       $headless = promptBool "headless" -}}
-{{-     end -}}
-
-{{-     if hasKey . ".is.personal" -}}
-{{-       $personal = .is.personal -}}
-{{-     else -}}
 {{-       $personal = promptBool "personal" -}}
-{{-     end -}}
-
-{{-       $battlestation = .battlestation -}}
-{{-     else -}}
 {{-       $battlestation = promptBool "battlestation" -}}
-{{-     end -}}
-
-{{-   else -}}
-{{-     $headless = true -}}
-{{-   end -}}
 
 {{- $osid := .chezmoi.os -}}
 {{- $osIDLike := ""}}
@@ -50,16 +19,7 @@
 {{- $email = promptString "Email" -}}
 {{- end -}}
 
-{{- $editor := "" -}}
-{{-   if lookPath "nvim" -}}
-{{-     $editor = "nvim" -}}
-{{-   else if lookPath "vim" -}}
-{{-     $editor = "vim" -}}
-{{-   else if lookPath "vi" -}}
-{{-     $editor = "vi" -}}
-{{-   else if lookPath "nano" -}}
-{{-     $editor = "nano" -}}
-{{-   end -}}
+{{- $editor := "nvim" -}}
 
 {{- $visual := "" -}}
 {{-   if lookPath "neovide" -}}
@@ -78,8 +38,8 @@
 {{-   else -}}
 {{-     $terminal = "gnome-terminal" -}}
 {{- end -}}
-sourceDir: {{ .chezmoi.sourceDir | quote }}
 
+sourceDir: {{ .chezmoi.sourceDir | quote }}
 data:
   name: "Ryan Walter"
   email: {{ $email | quote }}
