@@ -1,4 +1,4 @@
-{{- if eq .osid "linux-fedora" -}}
+{{- if eq .chezmoi.osRelease.id "fedora" -}}
 #!{{ lookPath "bash"}}
 # Install Fedora Packages
 sudo dnf copr enable atim/lazygit -y
@@ -57,18 +57,4 @@ libffi-devel
 
 
 sudo dnf groupinstall -y "C Development Tools and Libraries"
-
-
-{{- end -}}
-{{- if eq .osid "android" -}}
-#!{{ lookPath "bash"}}
-# TODO: Install Termux packages
-pkg update -y
-pkg install \
-neovim \
-python3 \
-curl \
-wget \
-fish \
-git 
 {{- end -}}

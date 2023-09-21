@@ -1,16 +1,8 @@
-{{- if (and ( eq .chezmoi.os "linux") (ne .osid "linux-nixos")) -}}
+{{- if eq .chezmoi.os "linux" -}}
 #!{{ lookPath "bash"}}
 
 curl -sSfL \
   https://raw.githubusercontent.com/aquaproj/aqua-installer/v0.6.0/aqua-installer |
-  sudo bash
+  bash
 
-{{- end }}
-{{- if eq .chezmoi.os "android" -}}
-#!{{ lookPath "bash"}}
-
-curl -sSfL \
-  https://raw.githubusercontent.com/aquaproj/aqua-installer/v0.6.0/aqua-installer |
-  bash -s -- -i $HOME/.local/bin/aqua
-
-{{- end }}
+{{- end -}}

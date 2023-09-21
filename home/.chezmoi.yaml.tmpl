@@ -1,32 +1,30 @@
-# vi: set ft=yaml
+# vi: ft=yaml
 
-
-{{- $email := promptString "Email" -}}
-
-{{- $osid := .chezmoi.os -}}
-{{- $osIDLike := ""}}
-{{- if hasKey .chezmoi.osRelease "id" -}}
-{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
-{{-   $osIDLike = .chezmoi.osRelease.id }}
+{{- $personal := promptBool "Personal?"-}}
+{{- if eq $personal true -}}
+  {{- $work := false -}}
+  {{- $email := "rwaltr@rwalt.pro" -}}
+{{- else -}}
+  {{- $email := promptString "Email?" -}}
+  {{- $work := promptBool "Work?" -}}
 {{- end -}}
+
 
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 data:
   name: "Ryan Walter"
   email: {{ $email | quote }}
   is:
-    personal: false
-    work: false
+    personal: {{ $personal -}}
+    work: {{ $work -}}
     battlestation: false
-    headless: false
-  osid: {{ $osid | quote }}
-  osidlike: {{ $osIDLike | quote }}
+    headless: true
   theme: "rwaltr"
   programs:
     terminal: foot
     editor: nvim
     visual: neovide
-    browser: "firefox"
+    browser: firefox
   font:
     gui:
       name: "Lekton Nerd Font"
@@ -43,8 +41,6 @@ data:
     port: 6600
     timeout: 15
 encryption = "age"
-gpg:
-  recipient: ""
 age:
   recipient = "age189npag0lz2hl425ldurk8czrpyv69tg4cgqgzl7wjh60w39sysesazu4u6"
   identity = "~/.config/sops/keys.txt"

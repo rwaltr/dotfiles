@@ -1,4 +1,6 @@
+{{- if eq .is.personal true -}}
 {{- if lookPath "bw" -}}
 {{ (bitwardenFields "item" "personalage").public.value | comment "# public key: " }}
 {{ (bitwardenFields "item" "personalage").private.value }}
+{{- end -}}
 {{- end -}}

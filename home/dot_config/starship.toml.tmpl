@@ -26,11 +26,6 @@ symbol = ' '
 ssh_only = true
 format = "[@](dimmed white)[$hostname]($style) "
 style = "blue"
-{{- if eq .osid "android"}}
-disabled = true
-{{- else }}
-disabled = false
-{{- end}}
 
 [directory]
 truncation_length = 3
@@ -125,11 +120,6 @@ disabled = false
 [memory_usage]
 format = '\[$symbol[$ram( | $swap)]($style)\]'
 symbol = " "
-{{- if eq .osid "android"}}
-disabled = true
-{{- else }}
-disabled = false
-{{- end}}
 
 [nix_shell]
 format = '\[[$symbol$state( \($name\))]($style)\]'
@@ -190,11 +180,6 @@ format = '[$user]($style)'
 show_always = true
 style_user = "purple"
 
-{{- if eq .osid "android"}}
-disabled = true
-{{- else }}
-disabled = false
-{{- end}}
 
 [vagrant]
 format = '\[[$symbol($version)]($style)\]'

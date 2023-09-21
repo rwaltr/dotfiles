@@ -6,5 +6,7 @@
 
 # Read `man 5 sway` for a complete reference.
 
-include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+include /usr/share/sway/config.d/50-*
+include /usr/share/sway/config.d/95-*
+include /etc/sway/config.d/*.conf
 include $HOME/.config/sway/config.d/*
