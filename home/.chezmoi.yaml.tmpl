@@ -1,12 +1,11 @@
 # vi: ft=yaml
 
-{{- $email := "" -}}
 {{- $personal := promptBool "Personal?" -}}
 {{- if eq $personal true -}}
   {{- $work := false -}}
-  {{- $email := "rwaltr@rwalt.pro" -}}
+  {{- $email = "rwaltr@rwalt.pro" -}}
 {{- else -}}
-  {{- $email := promptString "Email?" -}}
+  {{- $email = promptString "Email?" -}}
   {{- $work := promptBool "Work?" -}}
 {{- end -}}
 
