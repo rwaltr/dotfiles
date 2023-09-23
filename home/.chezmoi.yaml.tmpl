@@ -1,5 +1,6 @@
 # vi: ft=yaml
 
+{{- $email := "" -}}
 {{- $personal := promptBool "Personal?" -}}
 {{- if eq $personal true -}}
   {{- $work := false -}}
