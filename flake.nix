@@ -32,7 +32,7 @@
       monolith = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
-        modules = [./nixox/nixos/configuration.nix];
+        modules = [./nixos/nixos/configuration.nix];
       };
     };
 
