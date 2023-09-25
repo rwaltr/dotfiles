@@ -17,6 +17,9 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Talhelper
+    talhelper.url = "github:budimanjojo/talhelper";
+    talhelper.inputs.nixpkgs.follows = "unstable";
 
     # deploy-rs
     # deploy-rs.url = "github:serokell/deploy-rs";
