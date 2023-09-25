@@ -1,12 +1,32 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+{
+  # Snowfall Lib provides a customized `lib` instance with access to your flake's library
+  # as well as the libraries available from your flake's inputs.
+  lib
+, # An instance of `pkgs` with your overlays and packages applied is also available.
+  pkgs
+, # You also have access to your flake's inputs.
+  inputs
+, # Additional metadata is provided by Snowfall Lib.
+  system
+, # The system architecture for this host (eg. `x86_64-linux`).
+  target
+, # The Snowfall Lib target for this system (eg. `x86_64-iso`).
+  format
+, # A normalized name for the system target (eg. `iso`).
+  virtual
+, # A boolean to determine whether this system is a virtual target using nixos-generators.
+  systems
+, # An attribute map of your defined hosts.
 
-{ config, pkgs, ... }:
+  # All other arguments come from the system system.
+  config
+, ...
+}:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -43,7 +63,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
- nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
@@ -66,17 +86,17 @@
   # hardware.pulseaudio.enable = false;
   # security.rtkit.enable = true;
   # services.pipewire = {
-    # enable = true;
-    # alsa.enable = true;
-    # alsa.support32Bit = true;
-    # pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+  # enable = true;
+  # alsa.enable = true;
+  # alsa.support32Bit = true;
+  # pulse.enable = true;
+  # If you want to use JACK applications, uncomment this
+  #jack.enable = true;
 
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
- # };
+  # use the example session manager (no others are packaged yet so this is enabled by default,
+  # no need to redefine it in your config for now)
+  #media-session.enable = true;
+  # };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -87,12 +107,12 @@
     description = "Ryan Walter";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    chezmoi
-    yq
-    jq
-    neovim
-    git
-    kubectl
+      chezmoi
+      yq
+      jq
+      neovim
+      git
+      kubectl
     ];
   };
 
