@@ -35,7 +35,7 @@
       src = ./.;
 
       snowfall = {
-        root = ./nix;
+        root = ./.;
         namespace = "rwaltr";
         meta = {
           name = "rwaltrdots";
