@@ -14,8 +14,8 @@
     # hardware.url = "github:nixos/nixos-hardware";
 
     # Generate System Images
-    # nixos-generators.url = "github:nix-community/nixos-generators";
-    # nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
 
     # deploy-rs
