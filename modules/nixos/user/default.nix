@@ -28,7 +28,7 @@ in
       home = "/home/${cfg.name}";
       group = "users";
 
-      shell = pkgs.fish;
+      # shell = pkgs.fish;
 
       uid = 1000;
 
