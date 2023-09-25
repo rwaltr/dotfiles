@@ -7,6 +7,7 @@ let
 in
 {
   options.rwaltr.user = with types; {
+    # name = mkOpt str "rwaltr" "The name to use for the user account.";
     name = mkOpt str "rwaltr" "The name to use for the user account.";
     fullName = mkOpt str "Ryan Walter" "The full name of the user.";
     email = mkOpt str "rwaltr@rwalt.pro" "The email of the user.";
