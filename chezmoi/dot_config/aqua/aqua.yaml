@@ -11,7 +11,7 @@ packages:
 - name: TheZoraiz/ascii-image-converter@v1.12.0
 - name: ahmetb/kubectl-tree@v0.4.3
 - name: ahmetb/kubectx/kubens@v0.9.4
-- name: ahmetb/kubectx@v0.9.4
+- name: ahmetb/kubectx@v0.9.5
 - name: aquasecurity/trivy@v0.36.1
 - name: cheat/cheat@4.4.0
 - name: cli/cli@v2.21.2
