@@ -101,19 +101,19 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.rwaltr = {
-    isNormalUser = true;
-    description = "Ryan Walter";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      chezmoi
-      yq
-      jq
-      neovim
-      git
-      kubectl
-    ];
-  };
+  # users.users.rwaltr = {
+  #   isNormalUser = true;
+  #   description = "Ryan Walter";
+  #   extraGroups = [ "networkmanager" "wheel" ];
+  #   packages = with pkgs; [
+  #     chezmoi
+  #     yq
+  #     jq
+  #     neovim
+  #     git
+  #     kubectl
+  #   ];
+  # };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
