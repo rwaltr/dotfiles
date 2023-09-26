@@ -69,7 +69,7 @@ return {
           R = { "<cmd>Telescope registers<cr>", "Registers" },
           k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
           C = { "<cmd>Telescope commands<cr>", "Commands" },
-          p = { "<cmd>Telescope projections<cr>", "Projects" },
+          p = { "<cmd>Telescope neovim-project discover<cr>", "Projects" },
           n = { "<cmd>Telescope notify<cr>", "Notification History" },
         },
         p = {
