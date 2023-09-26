@@ -1,5 +1,5 @@
 {
-  # Snowfall Lib provides a customized `lib` instance with access to your flake's library
+  # Snowfall Lib provides a customized `lib` instance withr access to your flake's library
   # as well as the libraries available from your flake's inputs.
   lib
 , # An instance of `pkgs` with your overlays and packages applied is also available.
@@ -27,7 +27,7 @@
   imports =
     [
       # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      ./hardware.nix
     ];
 
   # Bootloader.
