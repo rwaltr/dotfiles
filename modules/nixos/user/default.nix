@@ -39,7 +39,7 @@ in
       group = "users";
       shell = pkgs.fish;
       uid = 1000;
-      extraGroups = [ ${cfg.name} ] ++ cfg.extraGroups;
+      extraGroups = [ cfg.name ] ++ cfg.extraGroups;
     } // cfg.extraOptions;
   };
 }
