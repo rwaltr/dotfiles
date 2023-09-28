@@ -29,6 +29,7 @@
       # Include the results of the hardware scan.
       ./hardware.nix
     ];
+    users.users.rwaltr.extraGroups = ["wheel"];
 
   # Bootloader.
   boot.loader.grub.enable = true;
