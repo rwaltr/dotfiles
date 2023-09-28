@@ -20,19 +20,26 @@ in
   };
 
   config = {
+    environment.systemPackages = with pkgs; [
+      bat
+      fd
+      lsd
+      curl
+      wget
+      git
+      chezmoi
+    ];
+
+    programs.fish = enabled;
+
     users.users.${cfg.name} = {
       isNormalUser = true;
-
       inherit (cfg) name initialPassword;
-
       home = "/home/${cfg.name}";
       group = "users";
-
-      # shell = pkgs.fish;
-
+      shell = pkgs.fish;
       uid = 1000;
-
-      extraGroups = [ ] ++ cfg.extraGroups;
+      extraGroups = [ ${cfg.name} ] ++ cfg.extraGroups;
     } // cfg.extraOptions;
   };
 }
