@@ -31,6 +31,7 @@ in
     ];
 
     programs.fish = enabled;
+    programs.starship = enabled;
 
     users.users.${cfg.name} = {
       isNormalUser = true;
