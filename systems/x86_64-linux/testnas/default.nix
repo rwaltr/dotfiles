@@ -30,6 +30,10 @@
       ./hardware.nix
     ];
     rwaltr.user.extraGroups = ["wheel"];
+    
+    rwaltr.user.name = "testname";
+
+
 
   # Bootloader.
   boot.loader.grub.enable = true;
