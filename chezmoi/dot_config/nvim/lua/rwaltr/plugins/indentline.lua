@@ -2,42 +2,26 @@ local indentsymbol = "╎"
 return {
   {
     "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
     event = { "BufReadPost", "BufNewFile" },
     opts = {
-      -- char = "▏",
-      char = indentsymbol,
-      filetype_exclude = {
-        "help",
-        "alpha",
-        "dashboard",
-        "neo-tree",
-        "Trouble",
-        "lazy",
-        "mason",
-        "notify",
-        "toggleterm",
-        "lazyterm",
+      exclude = {
+        -- filetypes = {}
       },
-      show_trailing_blankline_indent = false,
-      show_current_context = false,
+      scope = {
+        exclude = {},
+        include = {
+          node_type = {
+            lua = { "return_statement", "table_constructor" },
+          },
+        },
+      },
+      indent = {
+        char = indentsymbol,
+        tab_char = "⊣",
+        smart_indent_cap = true,
+        -- highlight = {"Function", "Label"},
+      },
     },
-  },
-  {
-    "echasnovski/mini.indentscope",
-    version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = "BufReadPre",
-    config = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mind" },
-        callback = function()
-          vim.b.miniindentscope_disable = true
-        end,
-      })
-      require("mini.indentscope").setup({
-        symbol = indentsymbol,
-        options = { try_as_border = true },
-      })
-    end,
-
   },
 }

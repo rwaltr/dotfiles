@@ -7,6 +7,15 @@ return {
         "~/.local/share/*",
         "~/Documents/Notebook/"
       },
+      session_manager_opts = {
+        -- autosave_ignore_dirs = {},
+        autosave_ignore_filetypes = {
+          "neo-tree",
+          "qf",
+          "gitrebase",
+          "gitcommit",
+        }
+      }
     },
     init = function()
       -- enable saving the state of plugins in the session

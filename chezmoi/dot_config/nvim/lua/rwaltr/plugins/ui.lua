@@ -212,12 +212,10 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     enabled = true,
     cmd = "Neotree",
-    init = function()
-      vim.g.neo_tree_remove_legacy_commands = 1
-    end,
+    branch = "v3.x",
     opts = {
       filesystem = {
-        follow_current_file = true,
+        follow_current_file = {enabled = true},
         hijack_netrw_behavior = "open_current",
       },
     },

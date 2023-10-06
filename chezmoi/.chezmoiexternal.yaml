@@ -43,3 +43,8 @@
   url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Terminus.zip
   refreshPeriod: 169h
   exact: false
+".local/share/fonts/IBMPlexMono":
+  type: archive
+  url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/IBMPlexMono.zip
+  refreshPeriod: 169h
+  exact: false
