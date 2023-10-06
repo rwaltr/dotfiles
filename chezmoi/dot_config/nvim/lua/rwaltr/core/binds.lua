@@ -4,8 +4,6 @@ local keymap = vim.keymap.set
 local opts = { silent = true }
 
 keymap("n", "<Space>", "", opts)
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
