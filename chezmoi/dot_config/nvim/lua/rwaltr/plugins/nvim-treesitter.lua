@@ -4,42 +4,82 @@ return {
     build = ":TSUpdate",
     event = "BufReadPost",
     dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
+      { "nvim-treesitter/nvim-treesitter-context" },
       {
-        "lewis6991/nvim-treesitter-context",
-        config = true,
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        config = function()
+          -- Disable class keymaps in diff mode
+          vim.api.nvim_create_autocmd("BufReadPost", {
+            callback = function(event)
+              if vim.wo.diff then
+                for _, key in ipairs({ "[c", "]c", "[C", "]C" }) do
+                  pcall(vim.keymap.del, "n", key, { buffer = event.buf })
+                end
+              end
+            end,
+          })
+        end,
       },
     },
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        sync_install = false,
-        auto_install = true,
-        ensure_installed = {
-          "bash",
-          "go",
-          "hcl",
-          "vimdoc",
-          "html",
-          "json",
-          "lua",
-          "markdown",
-          "markdown_inline",
-          "python",
-          "query",
-          "regex",
-          "vim",
-          "yaml",
+    cmd = {"TSUpdateSync"},
+    ---@type TSConfig
+    opts = {
+      highlight = { enable = true },
+      indent = { enable = true },
+      ensure_installed = {
+        "bash",
+        "c",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "lua",
+        "luadoc",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "regex",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "yaml",
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = false,
+          node_decremental = "<bs>",
         },
-        autopairs = { enable = true },
-        highlight = {
-          enable = true, -- false will disable the whole extension
-          disable = { "" }, -- list of language that will be disabled
-          additional_vim_regex_highlighting = false, --[[ Disabled for spellsitter ]]
+      },
+      textobjects = {
+        move = {
+          enable = true,
+          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
+          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
+          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
+          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
         },
-        indent = { enable = true, disable = { "yaml" } },
-        context_commentstring = { enable = true, enable_autocmd = false },
-      })
-      vim.treesitter.language.register("markdown", "octo")
+      },
+    },
+     ---@param opts TSConfig
+    config = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        ---@type table<string, boolean>
+        local added = {}
+        opts.ensure_installed = vim.tbl_filter(function(lang)
+          if added[lang] then
+            return false
+          end
+          added[lang] = true
+          return true
+        end, opts.ensure_installed)
+      end
+      require("nvim-treesitter.configs").setup(opts)
     end,
   },
   {
