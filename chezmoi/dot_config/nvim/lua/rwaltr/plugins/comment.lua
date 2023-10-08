@@ -3,6 +3,7 @@ return {
     "numToStr/Comment.nvim",
     event = "BufEnter",
     dependencies = "which-key.nvim",
+    enabled = false,
     config = function()
       local comment = require("Comment")
 

@@ -6,6 +6,7 @@ return {
     name = "legendary.nvim",
     opts = {
       whichkey = { auto_register = true },
+      lazy_nvim = { auto_register = true },
       extensions = {
         smart_splits = {}
       }
@@ -33,12 +34,12 @@ return {
 
 
       local opts = {
-        mode = "n",     -- NORMAL mode
+        mode = "n", -- NORMAL mode
         prefix = "<leader>",
-        buffer = nil,   -- Global mappings. Specify a buffer number for buffer local mappings
-        silent = true,  -- use `silent` when creating keymaps
+        buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+        silent = true, -- use `silent` when creating keymaps
         noremap = true, -- use `noremap` when creating keymaps
-        nowait = true,  -- use `nowait` when creating keymaps
+        nowait = true, -- use `nowait` when creating keymaps
       }
 
       local mappings = {
@@ -53,7 +54,7 @@ return {
         ["h"] = { "<cmd>split<CR>", "Split" },
         f = {
           name = "Find",
-          b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+          b = { "<cmd>Telescope buffers<cr>", "Checkout branch" },
           c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
           f = { "<cmd>Telescope find_files<cr>", "Find files" },
           F = { "<cmd>Telescope file_browser<cr>", "File Browser" },

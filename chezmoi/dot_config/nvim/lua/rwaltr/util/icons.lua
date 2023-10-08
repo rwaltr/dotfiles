@@ -110,6 +110,7 @@ return {
     Selection = "",
     CloudDownload = "",
     Performance = "",
+    Indent = "╎",
   },
   diagnostics = {
     Error = "",

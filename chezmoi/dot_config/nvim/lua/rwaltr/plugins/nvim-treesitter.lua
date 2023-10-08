@@ -2,7 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    event = "BufReadPost",
+    event = { "BufReadPost", "VeryLazy" },
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-context" },
       {
@@ -21,7 +21,11 @@ return {
         end,
       },
     },
-    cmd = {"TSUpdateSync"},
+    cmd = { "TSUpdateSync" },
+    keys = {
+      { "<c-space>", desc = "Increment Selection" },
+      { "<bs>", desc = "Decrement selection", mode = "x" },
+    },
     ---@type TSConfig
     opts = {
       highlight = { enable = true },
@@ -66,7 +70,7 @@ return {
         },
       },
     },
-     ---@param opts TSConfig
+    ---@param opts TSConfig
     config = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         ---@type table<string, boolean>
@@ -91,8 +95,5 @@ return {
     "folke/twilight.nvim",
     cmd = { "Twilight", "TwilightEnable" },
     config = true,
-  },
-  {
-
   },
 }

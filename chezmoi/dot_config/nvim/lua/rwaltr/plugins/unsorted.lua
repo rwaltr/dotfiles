@@ -32,13 +32,6 @@ return {
     end,
   },
   {
-    "windwp/nvim-spectre",
-    -- stylua: ignore
-    keys = {
-      { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
-    },
-  },
-  {
     "0styx0/abbreinder.nvim",
     dependencies = { "0styx0/abbremand.nvim" },
     event = "BufRead",

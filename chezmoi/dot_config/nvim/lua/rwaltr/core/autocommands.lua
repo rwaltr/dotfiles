@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 })
 
 -- Go to last location when opening file
-vim.api.nvim_create_autocmd("BufWritePost", {
+vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup("last_loc"),
   callback = function(event)
     local exclude = { "gitcommit" }

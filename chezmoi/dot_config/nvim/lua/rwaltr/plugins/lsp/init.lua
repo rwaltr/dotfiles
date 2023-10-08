@@ -250,25 +250,6 @@ return {
       require("telescope").load_extension("yaml_schema")
     end,
   },
-  {
-    "SmiteshP/nvim-navic",
-    init = function()
-      vim.g.navic_silence = true
-      require("rwaltr.util").on_attach(function(client, buffer)
-        if client.server_capabilities.documentSymbolProvider then
-          require("nvim-navic").attach(client, buffer)
-        end
-      end)
-    end,
-    opts = function()
-      return {
-        separator = " ",
-        highlight = true,
-        depth_limit = 5,
-        icons = require("rwaltr.util.icons").kind,
-      }
-    end,
-  },
 
   {
     "williamboman/mason.nvim",
@@ -306,12 +287,5 @@ return {
         ensure_installed()
       end
     end,
-  },
-  {
-    "ray-x/lsp_signature.nvim",
-    config = function()
-      require("rwaltr.plugins.lsp.signature")
-    end,
-    enabled = false,
   },
 }

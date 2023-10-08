@@ -1,6 +1,11 @@
 return {
   {
     "coffebar/neovim-project",
+    event = "BufReadPre",
+    keys = {
+      {"<leader>fp", ":Telescope neovim-project discover", desc = "Find project"},
+      {"<leader>fP", ":NeovimProjectLoadRecent", desc = "open last project"},
+    },
     opts = {
       projects = { -- define project roots
         "~/src/*/*",
@@ -14,8 +19,10 @@ return {
           "qf",
           "gitrebase",
           "gitcommit",
-        }
-      }
+          "lazy",
+          "help",
+        },
+      },
     },
     init = function()
       -- enable saving the state of plugins in the session
@@ -28,4 +35,5 @@ return {
     },
     priority = 100,
   },
+
 }
