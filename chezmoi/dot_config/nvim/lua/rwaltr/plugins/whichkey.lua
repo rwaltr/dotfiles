@@ -2,6 +2,7 @@ return {
   {
     -- TODO: Migrate to LEGENDARY
     "mrjones2014/legendary.nvim",
+    enabled = false,
     -- dependencies = "kkharji/sqlite.lua",
     name = "legendary.nvim",
     opts = {
