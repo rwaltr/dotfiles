@@ -26,14 +26,12 @@ in
       kubectx
       kubelogic-oidc
       kubernetes-helm
-      kubeseal
       kubevirt
       kubie
       kustomize
       minikube
       stern
       talos
-      vault
       yq
     ];
   };
