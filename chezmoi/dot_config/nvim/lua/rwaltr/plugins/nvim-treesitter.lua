@@ -4,7 +4,12 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPost", "VeryLazy" },
     dependencies = {
-      { "nvim-treesitter/nvim-treesitter-context" },
+      {
+        "nvim-treesitter/nvim-treesitter-context",
+        opts = {
+          max_lines = 15
+        },
+      },
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
         config = function()

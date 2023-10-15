@@ -32,12 +32,6 @@ return {
     end,
   },
   {
-    "0styx0/abbreinder.nvim",
-    dependencies = { "0styx0/abbremand.nvim" },
-    event = "BufRead",
-    config = true,
-  },
-  {
     "ziontee113/color-picker.nvim",
     cmd = { "PickColor", "PickColorInsert" },
     config = function()
@@ -47,7 +41,7 @@ return {
   {
     "stevearc/oil.nvim",
     config = true,
-    event = "BufReadPre",
+    cmd = "Oil"
   },
   {
     "kevinhwang91/nvim-bqf",
