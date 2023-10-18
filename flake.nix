@@ -40,19 +40,8 @@
   };
 
 
-  outputs = inputs:
-    inputs.snowfall-lib.mkFlake {
-      inherit inputs;
-      src = ./.;
-
-      snowfall = {
-        root = ./.;
-        namespace = "rwaltr";
-        meta = {
-          name = "rwaltrdots";
-          title = "Rwaltr's Flake";
-        };
-      };
-    };
-
+outputs = {self, nixpkgs, nixos-generators, ...}:
+let
+  
+in {}; 
 }
