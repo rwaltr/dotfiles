@@ -21,9 +21,12 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Formatting
-    nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
-    nix-formatter-pack.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
 
     # Talhelper
     # talhelper.url = "github:budimanjojo/talhelper";
@@ -39,9 +42,28 @@
     # };
   };
 
+  outputs = inputs @ { flake-parts, ... }:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
+      imports = [
+        inputs.treefmt-nix.flakeModule
+        # .nix/lib
+      ];
 
-outputs = {self, nixpkgs, nixos-generators, ...}:
-let
-  
-in {}; 
+      perSystem = { pkgs, ... }: {
+        devShells.default = pkgs.mkShell {
+          name = "minimal";
+          packages = with pkgs; [
+            nix
+            home-manager
+            git
+          ];
+        };
+        treefmt = {
+          projectRootFile = "flake.nix";
+          programs.alejandra.enable = true;
+          programs.deadnix.enable = true;
+        };
+      };
+    };
 }
