@@ -9,9 +9,9 @@ return {
     opts = {
       projects = { -- define project roots
         "~/src/*/*",
-        "~/.local/share/*",
-        "~/Documents/Notebook/"
-      },
+        "~/.local/share/chezmoi",
+        "~/Documents/Notebook"
+        },
       session_manager_opts = {
         -- autosave_ignore_dirs = {},
         autosave_ignore_filetypes = {
