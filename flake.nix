@@ -65,5 +65,6 @@
           programs.deadnix.enable = true;
         };
       };
+      flake.nixosConfiguations = import ./nix/systems/systems.nix;
     };
 }
