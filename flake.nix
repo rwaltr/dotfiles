@@ -47,8 +47,9 @@
       systems = [ "x86_64-linux" "aarch64-darwin" ];
       imports = [
         inputs.treefmt-nix.flakeModule
+        # ./nix/lib
+        # ./nix/modules
         ./nix/systems
-        # .nix/lib
       ];
 
       perSystem = { pkgs, ... }: {
