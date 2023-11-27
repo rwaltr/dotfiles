@@ -47,6 +47,7 @@
       systems = [ "x86_64-linux" "aarch64-darwin" ];
       imports = [
         inputs.treefmt-nix.flakeModule
+        ./nix/systems
         # .nix/lib
       ];
 
@@ -65,6 +66,5 @@
           programs.deadnix.enable = true;
         };
       };
-      flake.nixosConfiguations = import ./nix/systems/systems.nix;
     };
 }
