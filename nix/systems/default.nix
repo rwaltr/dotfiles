@@ -1,10 +1,14 @@
 { inputs, ... }:
 {
-  flake.nixosConfigutions =
+  flake.nixosConfigurations =
     let
       inherit (inputs.nixpkgs.lib) nixosSystem;
     in
     {
-      # testvm = import ./x86_64-linux/testvm;
+      testvm = nixosSystem {
+        modules = [
+          ./x86_64-linux/testvm
+        ];
+      };
     };
 }
