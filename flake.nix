@@ -56,6 +56,7 @@
           name = "minimal";
           packages = with pkgs; [
             nix
+            nixos-rebuild
             home-manager
             git
           ];
