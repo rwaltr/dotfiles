@@ -1,14 +1,9 @@
-local function enable_ai()
-  return true
-end
-
 return {
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     build = ":Copilot auth",
     event = "InsertEnter",
-    enable = enable_ai(),
     opts = {
       panel = {
         enabled = true,
@@ -35,5 +30,21 @@ return {
         end)
       end
     end,
+  },
+  {
+    "jackMort/ChatGPT.nvim",
+    cmd = { "ChatGPT", "ChatGTPActAs", "ChatGPTEditWithInstructions" ,"ChatGPTRun" },
+    config = true,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
+  },
+  {
+    "David-Kunz/gen.nvim",
+    event = "InsertEnter",
+    cmd = "Gen",
+    config = true,
   },
 }
