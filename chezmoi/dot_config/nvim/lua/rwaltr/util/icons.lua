@@ -1,5 +1,12 @@
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 return {
+  dap = {
+    Stopped             = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
+    Breakpoint          = " ",
+    BreakpointCondition = " ",
+    BreakpointRejected  = { " ", "DiagnosticError" },
+    LogPoint            = ".>",
+  },
   kind = {
     Text = "",
     -- Method = "m",
