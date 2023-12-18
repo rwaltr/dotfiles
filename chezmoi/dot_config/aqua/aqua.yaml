@@ -32,7 +32,7 @@ packages:
 - name: rclone/rclone@v1.61.1
 - name: restic/restic@v0.14.0
 - name: sachaos/viddy@v0.3.6
-- name: sbstp/kubie@v0.19.1
+- name: sbstp/kubie@v0.23.0
 - name: schollz/croc@v9.6.2
 - name: sharkdp/bat@v0.22.1
 - name: stern/stern@v1.22.0
