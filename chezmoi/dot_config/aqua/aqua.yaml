@@ -24,7 +24,7 @@ packages:
 - name: itchyny/gojq@v0.12.11
 - name: kubernetes-sigs/cluster-api@v1.3.2
 - name: kubernetes-sigs/krew@v0.4.3
-- name: kubernetes-sigs/kustomize@kustomize/v4.5.7
+- name: kubernetes-sigs/kustomize@kustomize/v5.3.0
 - name: kubernetes/kubectl@v1.26.0
 - name: mikefarah/yq@v4.30.8
 - name: kubernetes/minikube@v1.28.0
