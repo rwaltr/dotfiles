@@ -2,20 +2,37 @@
   # Snowfall Lib provides a customized `lib` instance withr access to your flake's library
   # as well as the libraries available from your flake's inputs.
   # An instance of `pkgs` with your overlays and packages applied is also available.
-  pkgs,
-  # You also have access to your flake's inputs.
+  pkgs
+, # You also have access to your flake's inputs.
   # Additional metadata is provided by Snowfall Lib.
-  system,
-  # The system architecture for this host (eg. `x86_64-linux`).
+  system
+, # The system architecture for this host (eg. `x86_64-linux`).
   # The Snowfall Lib target for this system (eg. `x86_64-iso`).
   # A normalized name for the system target (eg. `iso`).
   # A boolean to determine whether this system is a virtual target using nixos-generators.
   # An attribute map of your defined hosts.
   # All other arguments come from the system system.
-  config,
-  ...
+  config
+, ...
 }: {
-  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware.nix
+  ];
+
+  # Bootloader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.useOSProber = true;
+
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -35,7 +52,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
@@ -116,7 +133,7 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [22];
+  networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -127,5 +144,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 }
