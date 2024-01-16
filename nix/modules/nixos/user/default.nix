@@ -1,14 +1,14 @@
-{
-  options,
-  config,
-  pkgs,
-  lib,
-  ...
+{ options
+, config
+, pkgs
+, lib
+, ...
 }:
 with lib;
 with lib.rwaltr; let
   cfg = config.rwaltr.user;
-in {
+in
+{
   options.rwaltr.user = with types; {
     # name = mkOpt str "rwaltr" "The name to use for the user account.";
     name = mkOpt str "rwaltr" "The name to use for the user account.";
@@ -16,12 +16,12 @@ in {
     email = mkOpt str "rwaltr@rwalt.pro" "The email of the user.";
     initialPassword =
       mkOpt str "password"
-      "The initial password to use when the user is first created.";
+        "The initial password to use when the user is first created.";
     prompt-init = mkBoolOpt true "Whether or not to show an initial message when opening a new shell.";
-    extraGroups = mkOpt (listOf str) [] "Groups for the user to be assigned.";
+    extraGroups = mkOpt (listOf str) [ ] "Groups for the user to be assigned.";
     extraOptions =
-      mkOpt attrs {}
-      (mdDoc "Extra options passed to `users.users.<name>`.");
+      mkOpt attrs { }
+        (mdDoc "Extra options passed to `users.users.<name>`.");
   };
 
   config = {
@@ -46,7 +46,7 @@ in {
         group = "users";
         shell = pkgs.fish;
         uid = 1000;
-        extraGroups = [cfg.name] ++ cfg.extraGroups;
+        extraGroups = [ cfg.name ] ++ cfg.extraGroups;
       }
       // cfg.extraOptions;
   };

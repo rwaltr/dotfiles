@@ -10,5 +10,11 @@
           ./x86_64-linux/testvm
         ];
       };
+      nomadix = nixosSystem {
+        modules = [
+          ./x86_64-linux/nomadix
+        ];
+      };
+
     };
 }
