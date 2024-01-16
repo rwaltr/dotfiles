@@ -5,14 +5,26 @@
       inherit (inputs.nixpkgs.lib) nixosSystem;
     in
     {
-      testvm = nixosSystem {
+      iso = nixosSystem {
+        system = "x86_64-linux";
         modules = [
-          ./x86_64-linux/testvm
+          "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
+          ({ ... }: {
+            nix.settings.experimental-features = [ "nix-command" "flakes" ];
+          })
+        ];
+      };
+      testvm = nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./testvm
         ];
       };
       nomadix = nixosSystem {
+        system = "x86_64-linux";
         modules = [
-          ./x86_64-linux/nomadix
+          ./nomadix
         ];
       };
 
