@@ -23,6 +23,7 @@
       nomadix = nixosSystem {
         system = "x86_64-linux";
         modules = [
+          inputs.hardware.nixosModules.framework-13-7040-amd
           ./nomadix
         ];
       };
