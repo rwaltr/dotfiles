@@ -87,6 +87,12 @@
     curl
     git
     chezmoi
+    restic
+    rclone
+    age
+    kubectl
+    gh
+    croc
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
