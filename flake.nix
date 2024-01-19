@@ -37,12 +37,11 @@
     # Talhelper
     # talhelper.url = "github:budimanjojo/talhelper";
     # talhelper.inputs.nixpkgs.follows = "unstable";
-
   };
 
-  outputs = inputs @ { flake-parts, ... }:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
+  outputs = inputs @ {flake-parts, ...}:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux"];
       imports = [
         inputs.treefmt-nix.flakeModule
         # ./nix/lib
@@ -50,7 +49,7 @@
         ./nix/systems
       ];
 
-      perSystem = { pkgs, self', ... }: {
+      perSystem = {pkgs, ...}: {
         devShells.default = pkgs.mkShell {
           name = "minimal";
           packages = with pkgs; [

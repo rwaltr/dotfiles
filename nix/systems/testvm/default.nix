@@ -2,18 +2,18 @@
   # Snowfall Lib provides a customized `lib` instance withr access to your flake's library
   # as well as the libraries available from your flake's inputs.
   # An instance of `pkgs` with your overlays and packages applied is also available.
-  pkgs
-, # You also have access to your flake's inputs.
+  pkgs,
+  # You also have access to your flake's inputs.
   # Additional metadata is provided by Snowfall Lib.
-  system
-, # The system architecture for this host (eg. `x86_64-linux`).
+  system,
+  # The system architecture for this host (eg. `x86_64-linux`).
   # The Snowfall Lib target for this system (eg. `x86_64-iso`).
   # A normalized name for the system target (eg. `iso`).
   # A boolean to determine whether this system is a virtual target using nixos-generators.
   # An attribute map of your defined hosts.
   # All other arguments come from the system system.
-  config
-, ...
+  config,
+  ...
 }: {
   imports = [
     # Include the results of the hardware scan.
@@ -52,7 +52,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
@@ -133,7 +133,7 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [22];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
