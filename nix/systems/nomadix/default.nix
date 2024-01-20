@@ -100,6 +100,8 @@
     rclone
     restic
     wget
+    firefox
+    mpv
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
