@@ -15,7 +15,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.resume.device = "/dev/disk/by-uuid/35acc1f4-61a4-447a-9fb3-aa35ab1dbcd9";
-  boot.kernalParams = [ "resume_offset=1953695" ];
+  boot.kernelParams = [ "resume_offset=1953695" ];
 
   nixpkgs.config.allowUnfree = true;
 
