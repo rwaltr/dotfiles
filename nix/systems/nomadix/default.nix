@@ -44,6 +44,8 @@
   services.fwupd.enable = true;
 
 
+  zramSwap = { enable = true; memoryPercent = 20; };
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
     automatic = true;
