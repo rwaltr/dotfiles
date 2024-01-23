@@ -56,9 +56,12 @@
   };
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # Test the hyperland env
+  programs.hyprland.enable = true;
+  programs.waybar.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -106,6 +109,14 @@
     mpv
     podman
     fish
+
+    # Hyperland
+    dunst
+    hyprpaper
+    xdg-desktop-portal-hyperland
+    foot
+    wezterm
+    rofi-wayland
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
