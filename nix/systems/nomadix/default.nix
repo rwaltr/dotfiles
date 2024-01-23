@@ -46,7 +46,9 @@
 
   zramSwap = { enable = true; memoryPercent = 20; };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+  nix.settings.trusted-users = [ "root" "@wheel" ];
+  nix.settings.warn-dirty = false;
   nix.gc = {
     automatic = true;
     dates = "weekly";
