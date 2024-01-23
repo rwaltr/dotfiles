@@ -102,6 +102,8 @@
     wget
     firefox
     mpv
+    podman
+    fish
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
