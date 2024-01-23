@@ -114,6 +114,7 @@
     dunst
     hyprpaper
     xdg-desktop-portal-hyprland
+    kitty
     foot
     wezterm
     rofi-wayland
