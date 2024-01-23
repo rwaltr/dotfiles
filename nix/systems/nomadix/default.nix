@@ -113,7 +113,7 @@
     # Hyperland
     dunst
     hyprpaper
-    xdg-desktop-portal-hyperland
+    xdg-desktop-portal-hyprland
     foot
     wezterm
     rofi-wayland
