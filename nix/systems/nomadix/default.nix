@@ -105,6 +105,7 @@
     podman
     fish
     starship
+    gcc
 
     # Hyperland
     dunst
