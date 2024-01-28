@@ -63,6 +63,7 @@
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
   programs.sway.enable = true;
+  programs.fish.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
