@@ -83,6 +83,7 @@
   users.users.rwaltr = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+    shell = pkgs.fish;
   };
 
   # List packages installed in system profile. To search, run:
