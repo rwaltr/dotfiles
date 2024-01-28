@@ -111,7 +111,7 @@
     kitty
     foot
     wezterm
-    rofi-wayland
+    wofi
 
     #sway
   ];
