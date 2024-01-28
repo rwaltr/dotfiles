@@ -106,6 +106,9 @@
     fish
     starship
     gcc
+    figlet
+    lolcat
+    sqlite
 
     # Hyperland
     dunst
