@@ -62,7 +62,6 @@
   # Test the hyperland env
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
-
   programs.sway.enable = true;
 
   # Configure keymap in X11
@@ -80,14 +79,6 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alice = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     firefox
-  #     tree
-  #   ];
-  # };
 
   users.users.rwaltr = {
     isNormalUser = true;
@@ -111,6 +102,7 @@
     mpv
     podman
     fish
+    starship
 
     # Hyperland
     dunst
