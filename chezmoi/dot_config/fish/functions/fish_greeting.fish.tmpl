@@ -3,24 +3,27 @@
 function fish_greeting_string
     switch (random 1 6)
         case 1
-            echo "MuAcK"
+            echo MuAcK
         case 2
-            echo "SqUaK"
+            echo SqUaK
         case 3
-            echo "QuAcK"
+            echo QuAcK
         case 4
-            echo "HoNk"
+            echo HoNk
         case 5
-            echo "BoRk"
+            echo BoRk
         case 6
             echo "MY LEG!!"
     end
 end
 
 function fish_greeting
-    figlet (fish_greeting_string) | lolcat
-    echo "         _.-^~~^^^`~-,_,,~''''''```~,''``~'``~,"
-    echo " ______,'  -o  :.  _    .          ;     ,'`,  `."
-    echo "(      -\.._,.;;'._ ,(   }        _`_-_,,    `, `,"
-    echo " ``~~~~~~'   ((/'((((____/~~~~~~'(,(,___>      `~'"
+    if status is-interactive
+
+        figlet (fish_greeting_string) | lolcat
+        echo "         _.-^~~^^^`~-,_,,~''''''```~,''``~'``~,"
+        echo " ______,'  -o  :.  _    .          ;     ,'`,  `."
+        echo "(      -\.._,.;;'._ ,(   }        _`_-_,,    `, `,"
+        echo " ``~~~~~~'   ((/'((((____/~~~~~~'(,(,___>      `~'"
+    end
 end
