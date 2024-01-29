@@ -108,7 +108,7 @@
     gcc
     figlet
     lolcat
-    sqlite
+    syncthing
 
     # Hyperland
     dunst
