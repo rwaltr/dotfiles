@@ -14,8 +14,11 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.resumeDevice = "/dev/disk/by-uuid/35acc1f4-61a4-447a-9fb3-aa35ab1dbcd9";
   boot.kernelParams = [ "resume_offset=1953695" ];
+  boot.initrd.kernelModules = [ "tpm_crb" ];
+  hardware.enableAllFirmware = true;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -100,7 +103,7 @@
     rclone
     restic
     wget
-    firefox
+    firefox-wayland
     mpv
     podman
     fish
@@ -121,6 +124,10 @@
 
     #sway
   ];
+
+security.tpm2.enable = true;
+security.tpm2.pkcs11.enable = true;
+security.tpm2.tctiEnvironment.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
