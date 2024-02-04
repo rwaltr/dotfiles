@@ -94,6 +94,7 @@
   environment.systemPackages = with pkgs; [
     #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     age
+    sops
     chezmoi
     croc
     curl
@@ -112,6 +113,10 @@
     figlet
     lolcat
     syncthing
+    bitwarden
+    bitwarden-cli
+    bws
+    goldwarden
 
     # Hyperland
     dunst
@@ -125,9 +130,9 @@
     #sway
   ];
 
-security.tpm2.enable = true;
-security.tpm2.pkcs11.enable = true;
-security.tpm2.tctiEnvironment.enable = true;
+  security.tpm2.enable = true;
+  security.tpm2.pkcs11.enable = true;
+  security.tpm2.tctiEnvironment.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
