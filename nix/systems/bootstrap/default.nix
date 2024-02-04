@@ -1,10 +1,9 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
+  # import = [
+  # ];
 
-  import = [
-    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-  ];
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   services.openssh.enable = true;
