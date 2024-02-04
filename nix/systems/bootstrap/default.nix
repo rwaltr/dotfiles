@@ -8,5 +8,5 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   services.openssh.enable = true;
-  firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [ 22 ];
 }
