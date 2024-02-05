@@ -60,7 +60,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.gnome.enable = false;
 
   # Test the hyperland env
   programs.hyprland.enable = true;
