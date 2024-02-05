@@ -116,7 +116,15 @@
     bitwarden
     bitwarden-cli
     bws
-    goldwarden
+    ripgrep
+    fd
+    lazygit
+    lazydocker
+    terraform
+    unzip
+    go
+    cargo
+    python3
 
     # Hyperland
     dunst
