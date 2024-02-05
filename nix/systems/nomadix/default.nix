@@ -78,6 +78,7 @@
   # Enable sound.
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
+  services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
