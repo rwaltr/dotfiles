@@ -129,6 +129,7 @@
 
     networkmanagerapplet
     pulseaudio
+    pavucontrol
 
     # Hyperland
     dunst
