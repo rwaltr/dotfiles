@@ -78,6 +78,7 @@
   # Enable sound.
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
+  services.pipewire.pulse.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -126,6 +127,9 @@
     cargo
     python3
 
+    networkmanagerapplet
+    pulseaudio
+
     # Hyperland
     dunst
     hyprpaper
@@ -154,6 +158,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.tailscale.enable = true;
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 22 ];
