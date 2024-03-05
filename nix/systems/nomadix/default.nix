@@ -9,6 +9,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/nixos/desktops/sway/default.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -65,7 +66,6 @@
   # Test the hyperland env
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
-  programs.sway.enable = true;
   programs.fish.enable = true;
 
   # Configure keymap in X11

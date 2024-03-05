@@ -10,6 +10,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
+  # TODO: Switch to Disko
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
