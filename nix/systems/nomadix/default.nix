@@ -10,6 +10,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/desktops/sway/default.nix
+      ../../modules/nixos/users/rwaltr/default.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -84,20 +85,11 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-
-  users.users.rwaltr = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    shell = pkgs.fish;
-  };
-
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     age
     sops
-    chezmoi
     croc
     curl
     gh
@@ -110,7 +102,6 @@
     mpv
     podman
     fish
-    starship
     gcc
     figlet
     lolcat
