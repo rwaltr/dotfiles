@@ -9,6 +9,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    # ./disko.nix {device = "/dev/sda";}
   ];
   # TODO: Switch to Disko
 
