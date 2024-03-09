@@ -31,7 +31,7 @@
                 passwordFile = "/tmp/secret.key";
               };
               content = {
-                type = "btfs";
+                type = "btrfs";
                 extraArgs = [ "-f" ];
                 subvolumes = { };
                 "/root" = {
