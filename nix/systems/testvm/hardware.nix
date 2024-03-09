@@ -7,8 +7,7 @@
 }: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    ../nomadix/disko.nix
-    { device = /dev/vda; }
+    (import ../nomadix/disko.nix { device = /dev/vda; })
   ];
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
