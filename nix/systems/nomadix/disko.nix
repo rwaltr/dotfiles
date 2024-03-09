@@ -21,38 +21,50 @@
               mountpoint = "/boot";
             };
           };
-          root = {
+          luks = {
             size = "100%";
             content = {
-              type = "btfs";
-              extraArgs = [ "-f" ];
-              subvolumes = { };
-              "/root" = {
-                mountpoint = "/";
-                mountOptions = [ "noatime" "compress=zstd" ];
+              type = "luks";
+              name = "enc";
+              settings = {
+                allowDiscards = true;
+                passwordFile = "/tmp/secret.key";
               };
-              "/home" = {
-                mountpoint = "/home";
-                mountOptions = [ "noatime" "compress=zstd" ];
-              };
-              "/home/rwaltr" = { };
-              "/nix" = {
-                mountpoint = "/nix";
-                mountOptions = [ "noatime" "compress=zstd" ];
-              };
-              "/swap" = {
-                mountpoint = "/swap";
-                mountOptions = [ "noatime" "compress=zstd" ];
-                swap = {
-                  swapfile = {
-                    size = "16G";
+              content = {
+                type = "btfs";
+                extraArgs = [ "-f" ];
+                subvolumes = { };
+                "/root" = {
+                  mountpoint = "/";
+                  mountOptions = [ "noatime" "compress=zstd" ];
+                };
+                "/home" = {
+                  mountpoint = "/home";
+                  mountOptions = [ "noatime" "compress=zstd" ];
+                };
+                "/home/rwaltr" = { };
+                "/nix" = {
+                  mountpoint = "/nix";
+                  mountOptions = [ "noatime" "compress=zstd" ];
+                };
+                "/swap" = {
+                  mountpoint = "/swap";
+                  mountOptions = [ "noatime" "compress=zstd" ];
+                  swap = {
+                    swapfile = {
+                      size = "16G";
+                    };
                   };
                 };
+                "/persist" = {
+                  mountpoint = "/persist";
+                  mountOptions = [ "noatime" "compress=zstd" ];
+                };
               };
-
             };
           };
         };
       };
     };
-  }
+  };
+}
