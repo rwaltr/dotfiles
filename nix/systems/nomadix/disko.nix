@@ -8,7 +8,7 @@
       type = "disk";
       content = {
         type = "gpt";
-        content = {
+        partitions = {
           ESP = {
             priority = 1;
             name = "ESP";
