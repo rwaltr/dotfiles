@@ -28,8 +28,8 @@
               name = "enc";
               settings = {
                 allowDiscards = true;
-                passwordFile = "/tmp/secret.key";
               };
+              passwordFile = "/tmp/secret.key";
               content = {
                 type = "btrfs";
                 extraArgs = [ "-f" ];

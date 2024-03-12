@@ -15,6 +15,7 @@
       testvm = nixosSystem {
         system = "x86_64-linux";
         modules = [
+          inputs.disko.nixosModules.default
           ./testvm
         ];
       };
