@@ -46,7 +46,7 @@
         inputs.treefmt-nix.flakeModule
         # ./nix/lib
         # ./nix/modules
-        ./nix/systems
+        ./nix/hosts
       ];
 
       perSystem = { pkgs, ... }: {
