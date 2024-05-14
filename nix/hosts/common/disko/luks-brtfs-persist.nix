@@ -42,7 +42,6 @@
                     mountpoint = "/home";
                     mountOptions = [ "noatime" "compress=zstd" ];
                   };
-                  "/home/rwaltr" = { };
                   "/nix" = {
                     mountpoint = "/nix";
                     mountOptions = [ "noatime" "compress=zstd" ];

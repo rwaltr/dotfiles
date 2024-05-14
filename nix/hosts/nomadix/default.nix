@@ -9,8 +9,9 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/nixos/desktops/sway/default.nix
-      ../../modules/nixos/users/rwaltr/default.nix
+      ../common/optional/desktop/sway.nix
+      ../common/optional/desktop/hyprland.nix
+      ../common/users/rwaltr/default.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -64,9 +65,6 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.gnome.enable = false;
 
-  # Test the hyperland env
-  programs.hyprland.enable = true;
-  programs.waybar.enable = true;
   programs.fish.enable = true;
 
   # Configure keymap in X11
