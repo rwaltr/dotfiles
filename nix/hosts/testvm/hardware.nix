@@ -7,7 +7,7 @@
 }: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    (import ../common/disko/luks-brtfs-persist.nix { device = "/dev/vda"; })
+    (import ../common/disko/brtfs-persist.nix { device = "/dev/vda"; })
   ];
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
