@@ -2,8 +2,11 @@
 keys:
   # Users
   - &rwaltr age189npag0lz2hl425ldurk8czrpyv69tg4cgqgzl7wjh60w39sysesazu4u6
+  # machines
+  - &testvm age1qd3exk9yjwvw47er60qlqmhl4gdeerxqhude0rkxzyyxsmsenarswqqlue
 creation_rules:
   - path_regex: secrets/[^/]+\.yaml$
     key_groups:
       - age:
           - *rwaltr
+          - *testvm

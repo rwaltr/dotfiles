@@ -8,7 +8,6 @@
 }: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    inputs.diskos.nixosModules.diskos
   ];
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
@@ -16,11 +15,6 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-
-  disko.devices = import ../common/disko/luks-brtfs-persist.nix {
-    device = "/dev/vda";
-    luksCreds = "test123";
-  };
 
   swapDevices = [ ];
 

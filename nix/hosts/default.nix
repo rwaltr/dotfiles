@@ -14,8 +14,10 @@
       };
       testvm = nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
         modules = [
           inputs.disko.nixosModules.default
+          inputs.sops-nix.nixosModules.sops
           ./testvm
         ];
       };

@@ -13,6 +13,7 @@
   # An attribute map of your defined hosts.
   # All other arguments come from the system system.
   config
+, inputs
 , ...
 }: {
   imports = [
@@ -24,6 +25,16 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.useOSProber = true;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets.luksCreds = {
+    sopsFile = ../../../secrets/testsecrets.yaml;
+  };
+
+  disko.devices = import ../common/disko/luks-brtfs-persist.nix {
+    device = "/dev/vda";
+    luksCreds = config.sops.secrets.luksCreds.path;
+  };
+
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
