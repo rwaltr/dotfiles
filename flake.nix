@@ -1,69 +1,141 @@
 {
-  description = "Rwaltr's Dotfiles";
-
   inputs = {
-    # Nixpkgs and unstable
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    # Principle inputs (updated by `nix run .#update`)
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-darwin.url = "github:lnl7/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Hardware specials
-    hardware.url = "github:nixos/nixos-hardware";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    nixos-flake.url = "github:srid/nixos-flake";
 
-    # Generate System Images
-    nixos-generators.url = "github:nix-community/nixos-generators";
-    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
 
     # Disk managment
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    treefmt-nix.url = "github:numtide/treefmt-nix";
 
-    # Secret Management
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    # Talhelper
-    # talhelper.url = "github:budimanjojo/talhelper";
-    # talhelper.inputs.nixpkgs.follows = "unstable";
+    # Hardware specials
+    hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = inputs @ { flake-parts, disko, ... }:
+  outputs = inputs@{ self, ... }:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
       imports = [
+        inputs.nixos-flake.flakeModule
         inputs.treefmt-nix.flakeModule
-        # ./nix/lib
-        # ./nix/modules
-        ./nix/hosts
+        # ./nix/hosts
       ];
 
-      perSystem = { pkgs, ... }: {
-        devShells.default = pkgs.mkShell {
-          name = "minimal";
-          packages = with pkgs; [
-            nix
-            nixos-rebuild
-            home-manager
-            git
-          ];
+      flake =
+        let
+          # TODO: Change username
+          # myUserName = "rwaltr";
+        in
+        {
+          # Configurations for Linux (NixOS) machines
+          # nixosConfigurations = {
+          #   # TODO: Change hostname from "example1" to something else.
+          #   example1 = self.nixos-flake.lib.mkLinuxSystem {
+          #     nixpkgs.hostPlatform = "x86_64-linux";
+          #     imports = [
+          #       self.nixosModules.common # See below for "nixosModules"!
+          #       self.nixosModules.linux
+          #       # Your machine's configuration.nix goes here
+          #       ({ pkgs, ... }: {
+          #         # TODO: Put your /etc/nixos/hardware-configuration.nix here
+          #         boot.loader.grub.device = "nodev";
+          #         fileSystems."/" = {
+          #           device = "/dev/disk/by-label/nixos";
+          #           fsType = "btrfs";
+          #         };
+          #         system.stateVersion = "23.05";
+          #       })
+          #       # Your home-manager configuration
+          #       self.nixosModules.home-manager
+          #       {
+          #         home-manager.users.${myUserName} = {
+          #           imports = [
+          #             self.homeModules.common # See below for "homeModules"!
+          #             self.homeModules.linux
+          #           ];
+          #           home.stateVersion = "22.11";
+          #         };
+          #       }
+          #     ];
+          #   };
+          # };
+
+          # Configurations for macOS machines
+          # darwinConfigurations = {
+          #   # TODO: Change hostname from "example1" to something else.
+          #   example1 = self.nixos-flake.lib.mkMacosSystem {
+          #     nixpkgs.hostPlatform = "aarch64-darwin";
+          #     imports = [
+          #       self.nixosModules.common # See below for "nixosModules"!
+          #       self.nixosModules.darwin
+          #       # Your machine's configuration.nix goes here
+          #       ({ pkgs, ... }: {
+          #         # Used for backwards compatibility, please read the changelog before changing.
+          #         # $ darwin-rebuild changelog
+          #         system.stateVersion = 4;
+          #       })
+          #       # Your home-manager configuration
+          #       self.darwinModules_.home-manager
+          #       {
+          #         home-manager.users.${myUserName} = {
+          #           imports = [
+          #             self.homeModules.common # See below for "homeModules"!
+          #             self.homeModules.darwin
+          #           ];
+          #           home.stateVersion = "22.11";
+          #         };
+          #       }
+          #     ];
+          #   };
+          # };
+
+          # All nixos/nix-darwin configurations are kept here.
+          # nixosModules = {
+          #   # Common nixos/nix-darwin configuration shared between Linux and macOS.
+          #   common = { pkgs, ... }: {
+          #     environment.systemPackages = with pkgs; [
+          #       hello
+          #     ];
+          #   };
+          #   # NixOS specific configuration
+          #   linux = { pkgs, ... }: {
+          #     users.users.${myUserName}.isNormalUser = true;
+          #     services.netdata.enable = true;
+          #   };
+          #   # nix-darwin specific configuration
+          #   darwin = { pkgs, ... }: {
+          #     security.pam.enableSudoTouchIdAuth = true;
+          #   };
+          # };
+
+          # All home-manager configurations are kept here.
+          # homeModules = {
+          #   # Common home-manager configuration shared between Linux and macOS.
+          #   common = { pkgs, ... }: {
+          #     programs.git.enable = true;
+          #     programs.starship.enable = true;
+          #     programs.bash.enable = true;
+          #   };
+          #   # home-manager config specific to NixOS
+          #   linux = {
+          #     xsession.enable = true;
+          #   };
+          #   # home-manager config specifi to Darwin
+          #   darwin = {
+          #     targets.darwin.search = "Bing";
+          #   };
+          # };
+
+
         };
-        treefmt = {
-          projectRootFile = "flake.nix";
-          programs.alejandra.enable = true;
-          programs.deadnix.enable = true;
-        };
-      };
     };
 }
