@@ -24,14 +24,12 @@
 
     # Disk managment
     disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     ragenix.url = "github:yaxitech/ragenix";
     ragenix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hardware specials
     hardware.url = "github:nixos/nixos-hardware";
-    hardware.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, ... }:
