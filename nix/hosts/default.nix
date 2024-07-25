@@ -17,7 +17,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           inputs.disko.nixosModules.default
-          inputs.sops-nix.nixosModules.sops
+          # inputs.sops-nix.nixosModules.sops
           ./testvm
         ];
       };

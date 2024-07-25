@@ -25,10 +25,10 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.useOSProber = true;
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.secrets.luksCreds = {
-    sopsFile = ../../../secrets/testsecrets.yaml;
-  };
+  # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  # sops.secrets.luksCreds = {
+  #   sopsFile = ../../../secrets/testsecrets.yaml;
+  # };
 
   disko.devices = import ../common/disko/luks-brtfs-persist.nix {
     device = "/dev/vda";
