@@ -38,7 +38,7 @@
       imports = [
         inputs.nixos-flake.flakeModule
         inputs.treefmt-nix.flakeModule
-        # ./nix/hosts
+        ./systems
       ];
 
 
@@ -49,6 +49,7 @@
         };
 
         packages.default = self'.packages.activate;
+        packages.bootiso = self.nixosConfigurations.bootstrap.config.system.build.isoImage;
 
         nixos-flake = {
           primary-inputs = [

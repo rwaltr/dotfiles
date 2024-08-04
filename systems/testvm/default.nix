@@ -30,7 +30,7 @@
   #   sopsFile = ../../../secrets/testsecrets.yaml;
   # };
 
-  disko.devices = import ../common/disko/luks-brtfs-persist.nix {
+  disko.devices = import ../../nixos/disko/luks-brtfs-persist.nix {
     device = "/dev/vda";
     luksCreds = config.sops.secrets.luksCreds.path;
   };
