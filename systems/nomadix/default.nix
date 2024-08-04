@@ -9,9 +9,9 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../common/optional/desktop/sway.nix
-      ../common/optional/desktop/hyprland.nix
-      ../common/users/rwaltr/default.nix
+      ../../nixos/gui/desktops/sway.nix
+      ../../nixos/gui/desktops/hyprland.nix
+      ../../nixos/users/rwaltr.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
