@@ -19,20 +19,25 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware.nix
+    ../../nixos/gui/desktops/kde.nix
+    ../../nixos/users/rwaltr.nix
   ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.grub.enable = false;
+  # boot.loader.grub.device = "/dev/sda";
+  # boot.loader.grub.useOSProber = true;
   # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   # sops.secrets.luksCreds = {
   #   sopsFile = ../../../secrets/testsecrets.yaml;
   # };
 
-  disko.devices = import ../../nixos/disko/luks-brtfs-persist.nix {
+  networking.hostName = "testmachine"; # Define your hostname.
+  disko.devices = import ../../nixos/disko/brtfs-persist.nix {
     device = "/dev/vda";
-    luksCreds = config.sops.secrets.luksCreds.path;
+    # luksCreds = config.sops.secrets.luksCreds.path;
   };
 
 
