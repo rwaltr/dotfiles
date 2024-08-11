@@ -19,7 +19,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware.nix
-    ../../nixos/gui/desktops/kde.nix
     ../../nixos/users/rwaltr.nix
   ];
 

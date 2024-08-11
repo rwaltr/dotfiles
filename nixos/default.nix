@@ -2,7 +2,9 @@
 {
   flake = {
     nixosModules = {
-      common.imports = [ ];
+      common.imports = [
+        ./self/primary-as-admin.nix
+      ];
 
       my-home = {
         users.users.${config.people.myself}.isNormalUser = true;
