@@ -13,7 +13,6 @@
     registry.nixpkgs.flake = flake.inputs.nixpkgs; # Make `nix shell` etc use pinned nixpkgs
     gc = {
       automatic = true;
-      dates = "weekly";
       options = "--delete-older-than +5";
     };
     settings = {

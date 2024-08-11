@@ -3,11 +3,9 @@
   flake = {
     homeModules = {
       common = {
+        home.stateVersion = "22.11";
         imports = [
-          {
-            home.stateVersion = "22.11";
-          }
-          # ./nix.nix
+          ./nix.nix
         ];
       };
       common-linux = {
