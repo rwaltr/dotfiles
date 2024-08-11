@@ -3,10 +3,9 @@
   flake = {
     nixosModules = {
       common.imports = [
+        # should work on darwin as well
         ./nix.nix
         ./self/primary-as-admin.nix
-        ./services/ssh.nix
-        ./timeandspace.nix
       ];
 
       my-home = {
@@ -19,10 +18,12 @@
       };
 
       default.imports = [
-        self.nixosModules.home-manager
-        self.nixosModules.my-home
+        # self.nixosModules.home-manager
+        # self.nixosModules.my-home
         self.nixosModules.common
         inputs.ragenix.nixosModules.default
+        ./timeandspace.nix
+        ./services/ssh.nix
       ];
     };
   };

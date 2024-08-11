@@ -5,10 +5,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Mac n stuff
-    nix-darwin.url = "github:lnl7/nix-darwin/master";
+    nix-darwin.url = "github:lnl7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # homedir stuff
     home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # flake framework
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -21,6 +23,7 @@
 
     # Disk managment
     disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     ragenix.url = "github:yaxitech/ragenix";
 
