@@ -1,4 +1,5 @@
 { self, inputs, config, ... }:
+
 {
   flake = {
     nixosModules = {
@@ -18,8 +19,8 @@
       };
 
       default.imports = [
-        # self.nixosModules.home-manager
-        # self.nixosModules.my-home
+        self.nixosModules.home-manager
+        self.nixosModules.my-home
         self.nixosModules.common
         inputs.ragenix.nixosModules.default
         ./timeandspace.nix
