@@ -7,7 +7,6 @@
           "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
           self.nixosModules.common
-          ./bootstrap.nix
         ];
       };
       nomadix = self.nixos-flake.lib.mkLinuxSystem {
@@ -22,5 +21,7 @@
       };
       testvm = self.nixos-flake.lib.mkLinuxSystem
         ./testvm;
+      wifetop = self.nixos-flake.lib.mkMacosSystem
+        ./wifetop.nix;
     };
 }

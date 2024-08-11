@@ -3,8 +3,10 @@ let
   users = [ config.users.rwaltr.sshKeys ];
 
   nomadix = "CHANGE";
-  systems = [ nomadix ];
+  monolith = "CHANGE";
+  systems = [ nomadix monolith ];
 in
 {
   "nomadix.env.age".publicKeys = users ++ systems;
+  "monolith.env.age".publicKeys = users ++ systems;
 }
