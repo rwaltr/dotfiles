@@ -4,7 +4,9 @@
     homeModules = {
       common = {
         # home.stateVersion = "24.05";
-        imports = [ ];
+        imports = [
+          # ./nix.nix
+        ];
       };
       common-linux = {
         imports = [

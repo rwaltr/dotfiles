@@ -3,12 +3,13 @@
   flake = {
     nixosModules = {
       common.imports = [
+        ./nix.nix
         ./self/primary-as-admin.nix
+        ./services/ssh.nix
       ];
 
       my-home = {
         users.users.${config.people.myself}.isNormalUser = true;
-
         home-manager.users.${config.people.myself} = {
           imports = [
             self.homeModules.common-linux
