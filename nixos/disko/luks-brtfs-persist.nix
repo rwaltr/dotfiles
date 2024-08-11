@@ -10,11 +10,8 @@
       type = "gpt";
       partitions = {
         ESP = {
-          priority = 1;
-          name = "ESP";
           type = "EF00";
-          start = "1M";
-          size = "128M";
+          size = "500M";
           content = {
             type = "filesystem";
             format = "vfat";

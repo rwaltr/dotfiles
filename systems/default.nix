@@ -1,8 +1,5 @@
 { inputs, self, ... }: {
   flake.nixosConfigurations =
-    let
-      inherit (inputs.nixpkgs.lib) nixosSystem;
-    in
     {
       bootstrap = self.nixos-flake.lib.mkLinuxSystem {
         nixpkgs.hostPlatform = "x86_64-linux";
@@ -23,7 +20,7 @@
         nixpkgs.hostPlatform = "x86_64-linux";
         imports = [
           inputs.disko.nixosModules.default
-          # inputs.sops-nix.nixosModules.sops
+          self.homeModules.common-linux
           ./testvm
         ];
       };
