@@ -6,6 +6,7 @@
         ./nix.nix
         ./self/primary-as-admin.nix
         ./services/ssh.nix
+        ./timeandspace.nix
       ];
 
       my-home = {

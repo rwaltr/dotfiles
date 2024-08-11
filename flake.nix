@@ -37,6 +37,7 @@
         ./users
         ./home
         ./nixos
+        ./nix-darwin
         ./systems
       ];
 
