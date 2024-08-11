@@ -20,14 +20,7 @@
           ./nomadix
         ];
       };
-      testvm = self.nixos-flake.lib.mkLinuxSystem {
-        nixpkgs.hostPlatform = "x86_64-linux";
-        imports = [
-          inputs.disko.nixosModules.default
-          self.nixosModules.common
-          self.homeModules.common-linux
-          ./testvm
-        ];
-      };
+      testvm = self.nixos-flake.lib.mkLinuxSystem
+        ./testvm;
     };
 }
