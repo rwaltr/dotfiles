@@ -67,9 +67,6 @@
         devShells.default = pkgs.mkShell {
           inputsFrom = [ config.treefmt.build.devShell ];
           packages = with pkgs; [
-            just
-            colmena
-            chezmoi
             inputs'.ragenix.packages.default
           ];
         };

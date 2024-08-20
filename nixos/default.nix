@@ -25,6 +25,8 @@
         inputs.ragenix.nixosModules.default
         ./timeandspace.nix
         ./services/ssh.nix
+        ./networkmanager.nix
+        ./cli/fish.nix
       ];
     };
   };
