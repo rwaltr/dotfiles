@@ -10,6 +10,10 @@ in
     self.nixosModules.default
     ./hardware.nix
     ../../nixos/users/rwaltr.nix
+    ../../nixos/gui/desktops/hyprland.nix
+    ../../nixos/users/rwaltr.nix
+    ../../nixos/services/syncthing.nix
+    ../../nixos/services/tailscale.nix
   ];
 
   # Bootloader.

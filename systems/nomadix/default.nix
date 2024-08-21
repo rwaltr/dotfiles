@@ -54,7 +54,6 @@
     podman
     fish
     gcc
-    figlet
     bitwarden
     bitwarden-cli
     bws
