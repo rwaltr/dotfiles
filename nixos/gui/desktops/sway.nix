@@ -10,10 +10,10 @@
 
   # This is defaults for the desktop that assume no user config
   environment.systemPackages = with pkgs;[
-    # wofi
-    dmenu
+    wofi
     firefox-wayland
-    # wezterm
+    wezterm
+    foot
     # networkmanagerapplet
   ];
 }
