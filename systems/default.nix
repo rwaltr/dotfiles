@@ -14,7 +14,7 @@
         imports = [
           inputs.hardware.nixosModules.framework-13-7040-amd
           inputs.disko.nixosModules.default
-          self.nixosModules.common
+          self.nixosModules.default
           ./nomadix
         ];
       };
