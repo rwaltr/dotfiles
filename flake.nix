@@ -51,6 +51,15 @@
           programs.nixpkgs-fmt.enable = true;
         };
 
+        legacyPackages.homeConfigurations."rwaltr@monolith" =
+          self.nixos-flake.lib.mkHomeConfiguration pkgs {
+            imports = [
+              self.homeModules.common-linux
+            ];
+            home.username = "rwaltr";
+            home.homeDirectory = "/home/rwaltr";
+          };
+
         packages.default = self'.packages.activate;
         packages.bootiso = self.nixosConfigurations.bootstrap.config.system.build.isoImage;
 
