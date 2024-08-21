@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ../cli/chezmoi.nix
+    ../cli/fish.nix
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
