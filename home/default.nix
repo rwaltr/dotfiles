@@ -11,7 +11,7 @@
       common-linux = {
         imports = [
           self.homeModules.common
-          ./hyprland.nix
+          # ./hyprland.nix
         ];
       };
       common-darwin = {
