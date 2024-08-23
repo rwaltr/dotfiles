@@ -13,7 +13,9 @@
     wofi
     firefox-wayland
     wezterm
+    swaylock
     foot
     # networkmanagerapplet
   ];
 }
+
