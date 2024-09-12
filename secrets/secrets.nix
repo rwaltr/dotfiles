@@ -1,12 +1,13 @@
 let
   config = import ../users/config.nix;
-  users = [ config.users.rwaltr.sshKeys ];
+  rwaltrkeys = config.users.rwaltr.sshKeys;
 
   nomadix = "CHANGE";
   monolith = "CHANGE";
-  systems = [ nomadix monolith ];
+  systems = [ ];
 in
 {
-  "nomadix.env.age".publicKeys = users ++ systems;
-  "monolith.env.age".publicKeys = users ++ systems;
+  "nomadix.env.age".publicKeys = rwaltrkeys;
+  "monolith.env.age".publicKeys = rwaltrkeys;
+  "lukskey.age".publicKeys = rwaltrkeys;
 }

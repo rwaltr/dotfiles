@@ -1,4 +1,4 @@
-{ pkgs, flake, ... }:
+{ pkgs, flake, config, ... }:
 let
   inherit (flake) inputs;
   inherit (inputs) self;
@@ -19,14 +19,13 @@ in
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # sops.secrets.luksCreds = {
-  #   sopsFile = ../../../secrets/testsecrets.yaml;
-  # };
+
+  age.secrets.lukskey.file = ../../secrets/lukskey.age;
 
   networking.hostName = "testvm"; # Define your hostname.
-  disko.devices = import ../../nixos/disko/brtfs-persist.nix {
+  disko.devices = import ../../nixos/disko/luks-brtfs-persist.nix {
     device = "/dev/vda";
-    # luksCreds = config.sops.secrets.luksCreds.path;
+    luksCreds = config.age.secrets.lukskey.path;
   };
 
   # Enable networking
