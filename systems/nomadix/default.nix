@@ -41,7 +41,6 @@
   environment.systemPackages = with pkgs; [
     #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     age
-    sops
     croc
     curl
     gh
@@ -52,12 +51,10 @@
     wget
     mpv
     podman
-    fish
     gcc
-    bitwarden
-    bitwarden-cli
-    bws
     ripgrep
+    _1password
+    _1password-gui
     fd
     lazygit
     lazydocker
