@@ -1,13 +1,11 @@
 let
   config = import ../users/config.nix;
   rwaltrkeys = config.users.rwaltr.sshKeys;
-
-  nomadix = "CHANGE";
-  monolith = "CHANGE";
-  systems = [ ];
+  nomadix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICXORW7Z5b7yfupBn+LthYmXuBbRlakAcxdITQ78vvC0";
+  monolith = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGAAHmKmky6glEcQijTQsYvl36fcFC3kSeU/sIMsix7m";
+  testvm = "";
+  systems = [ nomadix monolith ];
 in
 {
-  "nomadix.env.age".publicKeys = rwaltrkeys;
-  "monolith.env.age".publicKeys = rwaltrkeys;
-  "lukskey.age".publicKeys = rwaltrkeys;
+  "lukskey.age".publicKeys = rwaltrkeys ++ systems;
 }
