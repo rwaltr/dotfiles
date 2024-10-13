@@ -9,31 +9,21 @@ in
     inputs.disko.nixosModules.default
     self.nixosModules.default
     ./hardware.nix
-    ../../nixos/users/rwaltr.nix
-    ../../nixos/gui/desktops/hyprland.nix
-    ../../nixos/users/rwaltr.nix
-    ../../nixos/services/syncthing.nix
-    ../../nixos/services/tailscale.nix
   ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  age.secrets.lukskey.file = ../../secrets/lukskey.age;
+  age.secrets.lukskey.file = ../../../secrets/lukskey.age;
 
   networking.hostName = "testvm"; # Define your hostname.
-  disko.devices = import ../../nixos/disko/luks-brtfs-persist.nix {
+  disko.devices = import ../../../modules/nixos/linux/disko/brtfs-persist.nix {
     device = "/dev/vda";
-    luksCreds = config.age.secrets.lukskey.path;
   };
 
   # Enable networking
   networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/Chicago";
-
 
   environment.systemPackages = with pkgs; [
     wget

@@ -1,8 +1,5 @@
 { pkgs, ... }: {
 
-  imports = [
-    ./sddm.nix
-  ];
   programs.sway.enable = true;
   services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;

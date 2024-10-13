@@ -16,7 +16,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     # helper flake
-    nixos-flake.url = "github:srid/nixos-flake";
+    nixos-unified.url = "github:srid/nixos-unified";
 
     # formatting
     treefmt-nix.url = "github:numtide/treefmt-nix";
@@ -34,52 +34,14 @@
   outputs = inputs@{ self, ... }:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      imports = [
-        inputs.treefmt-nix.flakeModule
-        inputs.nixos-flake.flakeModule
-        ./users
-        ./home
-        ./nixos
-        ./nix-darwin
-        ./systems
-      ];
+      imports = (with builtins;
+        map
+          (fn: ./modules/flake-parts/${fn})
+          (attrNames (readDir ./modules/flake-parts)));
 
 
-      perSystem = { self', inputs', pkgs, system, config, ... }: {
-        treefmt.config = {
-          projectRootFile = "flake.nix";
-          programs.nixpkgs-fmt.enable = true;
-        };
-
-        legacyPackages.homeConfigurations."rwaltr@monolith" =
-          self.nixos-flake.lib.mkHomeConfiguration pkgs {
-            imports = [
-              self.homeModules.common-linux
-            ];
-            home.username = "rwaltr";
-            home.homeDirectory = "/home/rwaltr";
-          };
-
-        packages.default = self'.packages.activate;
+      perSystem = { flake, self', ... }: {
         packages.bootiso = self.nixosConfigurations.bootstrap.config.system.build.isoImage;
-
-        nixos-flake = {
-          primary-inputs = [
-            "nixpkgs"
-            "nixpkgs-stable"
-            "home-manager"
-            "nix-darwin"
-            "nixos-flake"
-          ];
-        };
-
-        devShells.default = pkgs.mkShell {
-          inputsFrom = [ config.treefmt.build.devShell ];
-          packages = with pkgs; [
-            inputs'.ragenix.packages.default
-          ];
-        };
       };
-
     };
 }

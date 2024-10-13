@@ -5,13 +5,12 @@
   # Login via SSH with mmy SSH key
   users.users =
     let
-      people = flake.config.people;
-      myKeys = people.users.${people.myself}.sshKeys;
+      me = flake.config.me;
     in
     {
-      root.openssh.authorizedKeys.keys = myKeys;
-      ${people.myself} = {
-        openssh.authorizedKeys.keys = myKeys;
+      root.openssh.authorizedKeys.keys = me.sshKeys;
+      ${me.username} = {
+        openssh.authorizedKeys.keys = me.sshKeys;
       } // lib.optionalAttrs pkgs.stdenv.isLinux {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
