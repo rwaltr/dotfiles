@@ -9,13 +9,15 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../nixos/gui/desktops/sway.nix
-      ../../nixos/gui/desktops/hyprland.nix
-      ../../nixos/users/rwaltr.nix
-      ../../nixos/services/syncthing.nix
-      ../../nixos/services/tailscale.nix
-      ../../nixos/tpm2.nix
-      ../../nixos/fwupd.nix
+      ../../../modules/nixos/default.nix
+      ../../../modules/nixos/linux/networkmanager.nix
+      ../../../modules/nixos/linux/gui/login-manager/sddm.nix
+      ../../../modules/nixos/linux/gui/desktops/kde.nix
+      ../../../modules/nixos/linux/cli/fish.nix
+      ../../../modules/nixos/linux/services/syncthing.nix
+      ../../../modules/nixos/linux/services/tailscale.nix
+      ../../../modules/nixos/linux/tpm2.nix
+      ../../../modules/nixos/linux/fwupd.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -36,6 +38,13 @@
   # hardware.pulseaudio.enable = true;
   services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;
+
+
+  users.users.rwaltr = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    shell = pkgs.fish;
+  };
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
@@ -61,6 +70,7 @@
     terraform
     unzip
     go
+    firefox
 
     pulseaudio
     pavucontrol
@@ -73,8 +83,14 @@
     foot
     wezterm
     wofi
+    starship
+
+    steam
+    gamescope
+    mangohud
 
   ];
+
 
 
   # Battery Life Improvement

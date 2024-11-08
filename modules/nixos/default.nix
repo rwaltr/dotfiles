@@ -15,7 +15,7 @@ in
         self.homeModules.linux-only
       ];
     }
-    self.nixosModules.common
+    ./common.nix
     inputs.ragenix.nixosModules.default
     ./linux/timeandspace.nix
     ./linux/services/ssh.nix
