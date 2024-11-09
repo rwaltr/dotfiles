@@ -5,5 +5,6 @@
     ./all/ssh.nix
     ./all/starship.nix
     ./all/chezmoi.nix
+    ./all/remind.nix
   ];
 }

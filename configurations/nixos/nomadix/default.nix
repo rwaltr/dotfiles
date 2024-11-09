@@ -18,6 +18,7 @@
       ../../../modules/nixos/linux/services/tailscale.nix
       ../../../modules/nixos/linux/tpm2.nix
       ../../../modules/nixos/linux/fwupd.nix
+      ../../../modules/nixos/linux/gui/programs/steam.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -49,6 +50,7 @@
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    discord
     age
     croc
     curl
