@@ -1,13 +1,13 @@
-{pkgs, ...}:{
+{ pkgs, ... }: {
 
   home.packages = with pkgs; [
-  remind
-];
+    remind
+  ];
 
-home.file.".reminders" = {
-  target = ".reminders";
-  enable = true;
-  text = "INCLUDE ~/Documents/personal/reminders/index.rem";
+  home.file.".reminders" = {
+    target = ".reminders";
+    enable = true;
+    text = "INCLUDE ~/Documents/personal/reminders/index.rem";
   };
 
-  }
+}

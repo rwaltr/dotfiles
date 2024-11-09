@@ -1,4 +1,8 @@
-{ flake, pkgs, ... }:
+{ flake, pkgs, lib, ... }:
+let
+  inherit (flake) inputs;
+  inherit (inputs) self;
+in
 {
   nixpkgs = {
     config = {
@@ -17,6 +21,7 @@
     };
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
+      extra-platforms = lib.mkIf pkgs.stdenv.isDarwin "aarch64-darwin x86_64-darwin";
       warn-dirty = false;
       trusted-users = [ "root" (if pkgs.stdenv.isDarwin then flake.config.people.myself else "@wheel") ];
     };
