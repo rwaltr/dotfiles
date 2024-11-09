@@ -14,8 +14,9 @@ in
         self.homeModules.default
         self.homeModules.linux-only
       ];
+      home-manager.backupFileExtension = "backup";
     }
-    ./common.nix
+    self.nixosModules.common
     inputs.ragenix.nixosModules.default
     ./linux/timeandspace.nix
     ./linux/services/ssh.nix

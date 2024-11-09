@@ -62,7 +62,6 @@
     podman
     gcc
     ripgrep
-    _1password
     _1password-gui
     fd
     lazygit
@@ -79,15 +78,10 @@
     dunst
     hyprpaper
     xdg-desktop-portal-hyprland
-    kitty
     foot
-    wezterm
     wofi
     starship
 
-    steam
-    gamescope
-    mangohud
 
   ];
 
