@@ -8,8 +8,8 @@ in
   imports = [
     {
       # For home-manager to work.
-      users.users.${flake.config.me.username} = {
-        home = "/Users/${flake.config.me.username}";
+      users.users.${config.me.username} = {
+        home = "/Users/${config.me.username}";
       };
       home-manager.users.${config.me.username} = { };
       home-manager.sharedModules = [
