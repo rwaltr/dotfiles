@@ -6,5 +6,6 @@
     ./all/starship.nix
     ./all/chezmoi.nix
     ./all/remind.nix
+    ./all/wezterm.nix
   ];
 }
