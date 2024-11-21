@@ -18,7 +18,7 @@ packages:
 - name: derailed/k9s@v0.26.7
 - name: digitalocean/doctl@v1.91.0
 - name: hashicorp/vault@v1.12.2
-- name: helm/helm@v3.10.3
+- name: helm/helm@v3.13.3
 - name: hidetatz/kubecolor@v0.0.25
 - name: infracost/infracost@v0.10.15
 - name: itchyny/gojq@v0.12.11
