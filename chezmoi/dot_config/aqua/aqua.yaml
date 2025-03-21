@@ -34,7 +34,7 @@ packages:
 - name: sachaos/viddy@v0.3.6
 - name: sbstp/kubie@v0.19.1
 - name: schollz/croc@v9.6.2
-- name: sharkdp/bat@v0.22.1
+- name: sharkdp/bat@v0.24.0
 - name: stern/stern@v1.22.0
 - name: siderolabs/talos@v1.2.6
 - name: twpayne/chezmoi@v2.26.0
