@@ -1,0 +1,7 @@
+{{- if .headless }}
+.config/waybar
+.config/wezterm
+.config/wofi
+.config/sway
+.config/mpv
+{{- end -}}

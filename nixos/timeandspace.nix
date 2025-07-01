@@ -1,3 +1,0 @@
-{
-  time.timeZone = "America/Chicago";
-}

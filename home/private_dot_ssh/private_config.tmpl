@@ -1,0 +1,21 @@
+# Global Config Settings
+host * 
+  # Reduce auth fatigue
+  ControlMaster auto
+	ControlPath ~/.ssh/control-%h-%p-%r
+	ControlPersist 600
+
+#GitLab SSH Creds
+host gitlab.com
+	User git
+	Hostname gitlab.com
+
+#GitHub SSH Creds
+host github.com
+	User git
+	Hostname github.com
+
+# Yoink encrypted and oddball configs
+Include config.d/*
+
+# vi: ft=sshconfig

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://github.com/devcontainers/spec/blob/main/schemas/devContainer.schema.json",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/meaningful-ooo/devcontainer-features/homebrew:2": {},
+    "ghcr.io/rio/features/chezmoi:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  }
+}

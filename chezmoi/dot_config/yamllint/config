@@ -1,5 +1,0 @@
-# vi: ft=yaml
-extends: relaxed
-
-rules:
-  line-length: disable
