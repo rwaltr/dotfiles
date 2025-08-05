@@ -26,9 +26,6 @@ alias ....="cd ../../../../"
 alias .....="cd ../../../../../"
 alias cd..=".."
 
-# Weather!
-alias wttr="curl wttr.in"
-alias wttrv2="curl v2.wttr.in"
 
 #QOL
 #Forgot a space
@@ -58,10 +55,6 @@ alias gdiff='git diff'
 # IP colors
 alias ip='ip -br -c'
 
-# Services
-#Termbin
-alias tb='nc termbin.com 9999'
-alias termbin=tb
 
 # Argo!
 alias argo=argocd

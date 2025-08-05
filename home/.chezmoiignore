@@ -5,3 +5,9 @@
 .config/sway
 .config/mpv
 {{- end -}}
+{{- if .ephemeral}}
+{{- end }}
+{{- if not .work }}
+{{- end }}
+{{- if not .personal }}
+{{- end }}

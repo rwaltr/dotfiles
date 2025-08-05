@@ -7,9 +7,14 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-# Source modular Bash files
-if [ -d $HOME/.config/bash.d ]; then
-  for i in $(ls $HOME/.config/bash.d/*); do
-    source $i
+# If interactive and fish is available, exec into fish
+if [[ $- == *i* ]] && command -v fish >/dev/null 2>&1; then
+  exec fish
+fi
+
+# Source modular Bash files if interactive
+if [ -d "$HOME/.config/bash.d" ]; then
+  for i in "$HOME"/.config/bash.d/*; do
+    [ -f "$i" ] && source "$i"
   done
 fi
