@@ -37,6 +37,9 @@
 
 
 {{- $email := "rwaltr@rwalt.pro"}}
+
+sourceDir: {{ .chezmoi.sourceDir | quote }}
+
 data:
   email: {{ $email | quote }}
   personal: {{ $personal }}
