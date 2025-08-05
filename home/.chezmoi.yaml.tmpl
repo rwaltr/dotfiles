@@ -31,7 +31,7 @@
 {{- if or (eq .chezmoi.username "coder") (env "CODER") }}
 {{- $ephemeral = true -}}
 {{- $headless = true -}}
-{{- work = true -}}
+{{- $work = true -}}
 {{- end -}}
 
 {{- if not $ephemeral -}}
