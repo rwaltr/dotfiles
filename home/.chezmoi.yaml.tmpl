@@ -13,7 +13,7 @@
 {{- end -}}
 
 {{/* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */}}
-{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "root" "ubuntu" "vagrant" "vscode" "coder") (env "DEVPOD") (env "CODER") -}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "root" "ubuntu" "vagrant" "vscode") (env "DEVPOD") -}}
 {{-   $ephemeral = true -}}
 {{-   $headless = true -}}
 {{- end -}}
@@ -28,11 +28,19 @@
 {{-   $ephemeral = true -}}
 {{- end -}}
 
+{{- if or (eq .chezmoi.username "coder") (env "CODER") }}
+{{- ephemeral = true -}}
+{{- headless = true -}}
+{{- work = true -}}
+{{- end -}}
 
 {{- if not $ephemeral -}}
 {{- else if stdinIsATTY -}}
 {{-     $headless = promptBoolOnce . "headless" "headless" -}}
 {{-     $ephemeral = promptBoolOnce . "ephemeral" "ephemeral" -}}
+{{- else -}}
+{{- ephemeral = true -}}
+{{- headless = true -}}
 {{- end -}}
 
 
