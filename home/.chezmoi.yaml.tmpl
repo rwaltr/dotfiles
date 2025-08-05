@@ -29,8 +29,8 @@
 {{- end -}}
 
 {{- if or (eq .chezmoi.username "coder") (env "CODER") }}
-{{- ephemeral = true -}}
-{{- headless = true -}}
+{{- $ephemeral = true -}}
+{{- $headless = true -}}
 {{- work = true -}}
 {{- end -}}
 
@@ -39,8 +39,8 @@
 {{-     $headless = promptBoolOnce . "headless" "headless" -}}
 {{-     $ephemeral = promptBoolOnce . "ephemeral" "ephemeral" -}}
 {{- else -}}
-{{- ephemeral = true -}}
-{{- headless = true -}}
+{{- $ephemeral = true -}}
+{{- $headless = true -}}
 {{- end -}}
 
 
