@@ -1,0 +1,15 @@
+# RWALTR Bash Config
+# vi: ft=bash
+# .bashrc
+
+if [[ $- != *i* ]]; then
+  # shell is non-interactive. be done now!
+  return
+fi
+
+# Source modular Bash files if interactive
+if [ -d "$HOME/.config/bashrc.d" ]; then
+  for i in "$HOME"/.config/bashrc.d/*; do
+    source $file
+  done
+fi
