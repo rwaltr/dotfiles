@@ -1,3 +1,4 @@
+if type -q openssl
 function checkmodulus --argument-names cert --argument-names key
     if test -z {$cert}; or test -z {$key}
         echo "USAGE: checkmodulus cert key"
@@ -16,4 +17,5 @@ function checkmodulus --argument-names cert --argument-names key
     else
         set_color red; echo "Modulus FAIL"
     end
+end
 end

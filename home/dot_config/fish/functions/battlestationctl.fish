@@ -1,3 +1,4 @@
+if type -q swaymsg && type -q ddcutil
 function battlestationctl
     switch $argv[1]
         case focus
@@ -26,4 +27,5 @@ function battlestationctl
     end
     echo "I dont know what that means"
     return 1
+end
 end

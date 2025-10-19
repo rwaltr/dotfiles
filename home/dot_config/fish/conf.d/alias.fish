@@ -4,9 +4,6 @@ alias ":q" exit
 alias x exit
 alias q exit
 
-# easy resource
-alias resource "source ~/.config/fish/config.fish"
-
 # Easy Open
 alias open xdg-open
 

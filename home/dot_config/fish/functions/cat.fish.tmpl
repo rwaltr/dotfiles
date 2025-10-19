@@ -1,7 +1,0 @@
-function cat --wraps=bat --description 'bat shorthand'
-    if type -q bat
-        bat --paging=never -p $argv
-    else
-        {{ lookPath "cat" }} $argv
-    end
-end
