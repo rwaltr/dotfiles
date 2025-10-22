@@ -9,6 +9,9 @@
         "apiKey": "{env:DANAPI}"
       },
       "models": {
+        "qwen3-coder:30b": {
+          "name": "Qwen3-Coder (30b)"
+        },
         "qwen3:4b": {
           "name": "Qwen3 (4)"
         },
