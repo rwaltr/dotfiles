@@ -26,5 +26,5 @@ jobs:
         env:
           DANAPI: ${{ secrets.DANAPI }}
         with:
-          model: qwen3:4b
+          model: danollama/qwen3:4b
           share: false
