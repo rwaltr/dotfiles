@@ -6,7 +6,7 @@
       "name": "danollamma",
       "options": {
         "baseURL": "https://ollama.cloud.danmanners.com/api",
-        "apiKey": "{env: DANAPI}"
+        "apiKey": "{env:DANAPI}"
       },
       "models": {
         "qwen3:4b": {
