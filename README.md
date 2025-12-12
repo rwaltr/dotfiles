@@ -6,28 +6,25 @@ Stuff be changing, maybe it Use Chezmoi to deploy.
 
 ## Container envs
 
-- Fedora (requiues overhaul))
 - WofiOS/bluefin-cli (not Implmented yet))
-- Fedora (requiues overhaul))
 
 ## Plain OS
 
-- Fedora CLI
+- Fedora
 - Arch/cachyos
-- Minimal support for macOS
+- Minimal support for macos
 
 ## Package Managers
 
 - Brew for CLI tools on Linux
 - Flatpak for GUI apps on Linux
 - Podman for Containers on Linux
+- Docker for macos via colima or similar
 - Distrobox and exported applications for portable envs on Linux
 
 # Desktop env
 
-- KDE Plasma (not Implmented yet)
-- Hyprland (not Implmented yet)
-- Sway (broken, requires overhaul)
+- Niri
 
 # artifacts to generate
 
@@ -36,7 +33,7 @@ Stuff be changing, maybe it Use Chezmoi to deploy.
 
 # Secrets management
 
-- Via OnePassword CLI (Not Implmented yet))
+- Via OnePassword CLI for personal use only
 
 # Not targeted
 
