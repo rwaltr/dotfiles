@@ -1,0 +1,32 @@
+# ZSH Configuration
+# Converted from Fish config
+
+# History settings
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_dups
+setopt hist_ignore_space
+
+# Vi mode
+bindkey -v
+
+# Initialize completion system (required for compdef and other completion commands)
+autoload -Uz compinit
+compinit
+
+# Source all functions first (before rc.d files that might use them)
+if [[ -d "$HOME/.config/zsh/functions" ]]; then
+    for func_file in "$HOME/.config/zsh/functions"/*; do
+        [[ -f "$func_file" ]] && source "$func_file"
+    done
+fi
+
+# Source all configuration files from rc.d
+if [[ -d "$HOME/.config/zsh/rc.d" ]]; then
+    for config_file in "$HOME/.config/zsh/rc.d"/*.zsh; do
+        [[ -f "$config_file" ]] && source "$config_file"
+    done
+fi

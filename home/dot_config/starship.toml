@@ -313,3 +313,12 @@ unknown_msg = '[◌](bold dimmed ellow)'
 [spack]
 symbol = "◇ "
 format = " spack [$symbol$environment]($style)"
+
+[shell]
+disabled = false
+format = "[$indicator]($style) "
+fish_indicator = "[fish](bold cyan)"
+zsh_indicator = "[zsh](bold yellow)"
+bash_indicator = "[bash](bold green)"
+nu_indicator = "[nu](bold purple)"
+style = "italic"
