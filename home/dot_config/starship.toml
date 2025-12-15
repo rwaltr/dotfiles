@@ -172,7 +172,7 @@ format = " [$branch(:$remote_branch)]($style)"
 symbol = "[△](bold italic bright-blue)"
 style = "italic bright-blue"
 truncation_symbol = "⋯"
-truncation_length = 11
+truncation_length = 40
 ignore_branches = ["main", "master"]
 only_attached = true
 
