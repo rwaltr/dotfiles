@@ -73,3 +73,11 @@ Progress Tracking
     Clear naming in all code
 
 Focus on maintainable solutions over clever abstractions.
+
+## Tool usage
+
+### Github via GH
+
+Some tools you have are via their command line versions, like `gh`
+
+If a PR triggers a github action, use a subagent that uses `gh pr checks...` with a watch interval of 60 seconds to monitor it.

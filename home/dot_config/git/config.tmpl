@@ -14,9 +14,6 @@ signOff = false
 pushInsteadOf = https://github.com/
 
 [alias]
-{{ if eq .personal true -}}
-	yolo = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
-{{ end -}}	
 	a = add
 	ap = add -p
 	amc = am --continue
@@ -64,7 +61,24 @@ pushInsteadOf = https://github.com/
 	whitespace = trailing-space,space-before-tab
 
 [push]
-  autoSetupRemote = true
+	autoSetupRemote = true
 
+[merge]
+	conflictStyle = zdiff3
+{{- if lookPath "delta" }}
+
+[core]
+	pager = delta
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+	dark = true      # or light = true, or omit for auto-detection
+
+[interactive]
+	diffFilter = delta --color-only
+{{- end }}
+
+[includeIf "gitdir:~/src/rwaltr/"]
+	path = ~/.config/git/personal
 
 {{/* vim: set filetype=gitconfig: */}}
