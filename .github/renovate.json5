@@ -3,10 +3,7 @@
     ":enableRenovate",
     "config:base",
     ":disableRateLimiting",
-    ":semanticCommits",
-    "github>aquaproj/aqua-renovate-config#1.5.1",
-    "github>aquaproj/aqua-renovate-config:installer-script#1.5.1(install-aqua\\.sh)",
-    "github>aquaproj/aqua-renovate-config:file#1.5.1(^aqua/.*\\.ya?ml$)"
+    ":semanticCommits"
     /* "github>rwaltr/infra//.github/renovate/autoMerge", */
   ],
   platform: "github",
@@ -42,15 +39,7 @@
       requiredStatusChecks: null,
       matchUpdateTypes: ["minor", "patch"],
     },
-    {
-      automerge: true,
-      automergeType: "branch",
-      requiredStatusChecks: null,
-      matchUpdateTypes: ["minor", "patch"],
-      "matchPackageNames": [
-        "aquaproj/aqua-registry"
-      ]
-    },
+
   ],
   // set up ignored deps
   // ignoreDeps: [],
