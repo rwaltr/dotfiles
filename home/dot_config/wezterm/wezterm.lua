@@ -1,6 +1,6 @@
 -- Default config for wezterm
 -- Pull in the wezterm API
-local wezterm = require 'wezterm'
+local wezterm = require("wezterm")
 
 -- This table will hold the configuration.
 local config = {}
@@ -8,7 +8,7 @@ local config = {}
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
 if wezterm.config_builder then
-  config = wezterm.config_builder()
+	config = wezterm.config_builder()
 end
 
 -- ============================================================================
@@ -16,13 +16,19 @@ end
 -- ============================================================================
 
 -- Color scheme
-config.color_scheme = 'nord'
+config.color_scheme = "Catppuccin Mocha"
 
 -- Font settings
 config.font_size = 12
 
--- Tab bar
-config.hide_tab_bar_if_only_one_tab = true
+config.inactive_pane_hsb = {
+	saturation = 0.5,
+	brightness = 0.4,
+}
+
+wezterm.on("update-right-status", function(window, pane)
+	window:set_right_status(pane:get_domain_name() .. ":" .. window:active_workspace() .. " ")
+end)
 
 -- ============================================================================
 -- Platform-Specific Configuration
@@ -31,20 +37,20 @@ config.hide_tab_bar_if_only_one_tab = true
 -- Detect the platform using target_triple
 -- See: https://wezfurlong.org/wezterm/config/lua/wezterm/target_triple.html
 local platform_module = nil
-if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
-  -- Windows
-  platform_module = require 'platforms.windows'
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	-- Windows
+	platform_module = require("platforms.windows")
 elseif wezterm.target_triple:find("darwin") then
-  -- macOS (Intel or Apple Silicon)
-  platform_module = require 'platforms.macos'
+	-- macOS (Intel or Apple Silicon)
+	platform_module = require("platforms.macos")
 elseif wezterm.target_triple:find("linux") then
-  -- Linux
-  platform_module = require 'platforms.linux'
+	-- Linux
+	platform_module = require("platforms.linux")
 end
 
 -- Apply platform-specific configuration if available
 if platform_module then
-  platform_module.apply_to_config(config)
+	platform_module.apply_to_config(config)
 end
 
 -- ============================================================================
@@ -53,9 +59,9 @@ end
 
 -- Attempt to load local.lua for machine-specific overrides
 -- This file is optional and should be in .chezmoiignore
-local has_local, local_module = pcall(require, 'local')
+local has_local, local_module = pcall(require, "local")
 if has_local and local_module and local_module.apply_to_config then
-  local_module.apply_to_config(config)
+	local_module.apply_to_config(config)
 end
 
 -- and finally, return the configuration to wezterm
