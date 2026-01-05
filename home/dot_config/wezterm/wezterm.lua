@@ -20,7 +20,7 @@ config.color_scheme = "Catppuccin Mocha"
 
 -- Font settings
 config.font = wezterm.font_with_fallback({
-	{ family = "Iosevka Term" },
+	{ family = "Iosevka Term Nerd Font" },
 	-- "0xProto",
 	-- "Hack",
 	-- "Miracraft",
