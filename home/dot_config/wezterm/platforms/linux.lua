@@ -51,7 +51,7 @@ function module.apply_to_config(config)
 			-- Generate a new argument array that will launch a
 			-- program via systemd-run
 			local wrapped = {
-				"/usr/bin/systemd-run",
+				"systemd-run",
 				"--user",
 				"--scope",
 				"--description=Shell started by wezterm",
