@@ -10,8 +10,7 @@ Stuff be changing, maybe it Use Chezmoi to deploy.
 
 ## Plain OS
 
-- Fedora
-- Arch/cachyos
+- Fedora/Ublue
 - Minimal support for macos
 
 ## Package Managers
@@ -19,7 +18,6 @@ Stuff be changing, maybe it Use Chezmoi to deploy.
 - Brew for CLI tools on Linux
 - Flatpak for GUI apps on Linux
 - Podman for Containers on Linux
-- Docker for macos via colima or similar
 - Distrobox and exported applications for portable envs on Linux
 
 # Desktop env
