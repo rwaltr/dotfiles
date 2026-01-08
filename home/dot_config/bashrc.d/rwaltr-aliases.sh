@@ -7,8 +7,6 @@ alias "q"="exit"
 # easy resource
 alias resource="source ~/.bashrc"
 
-#Vimwiki alias
-
 # Easy Open
 alias open="xdg-open"
 
@@ -19,6 +17,11 @@ alias ll="ls -lh"
 alias la="ls -ah"
 alias lla="ls -lah"
 
+# Weather!
+alias wttrv1="curl wttr.in"
+alias wttrv2="curl v2.wttr.in"
+alias wttr=wttrv2
+
 # Easy upward navigation
 alias ..="cd .."
 alias ...="cd ../../../"
@@ -26,10 +29,16 @@ alias ....="cd ../../../../"
 alias .....="cd ../../../../../"
 alias cd..=".."
 
-
 #QOL
-#Forgot a space
-alias sudo!="sudo !!"
+alias g="git"
+alias gp="git p"
+alias gpll="git pull"
+alias gc="git c -s"
+alias ccd="chezmoi cd"
+alias cap="chezmoi apply"
+alias cup="chezmoi update"
+alias cec="chezmoi edit-config"
+alias ce="chezmoi edit"
 
 #GPG helpers
 # verify signature
@@ -38,23 +47,15 @@ alias gpg-check="gpg --keyserver-options auto-key-retrieve --verify"
 alias gpg-retrieve="gpg --keyserver-options auto-key-retrieve --receive-keys"
 
 # git
-alias addup='git add -u'
-alias addall='git add .'
-alias branch='git branch'
-alias checkout='git checkout'
-alias clone='git clone'
-alias commit='git commit -m'
-alias fetch='git fetch'
 alias pull='git pull origin'
 alias push='git push origin'
-alias status='git status'
-alias tag='git tag'
-alias newtag='git tag -a'
-alias gdiff='git diff'
 
 # IP colors
 alias ip='ip -br -c'
 
+# Services
+# Termbin
+alias tb="nc termbin.com 9999"
 
 # Argo!
 alias argo=argocd

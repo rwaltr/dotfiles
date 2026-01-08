@@ -1,4 +1,11 @@
-if type -f /home/linuxbrew/.linuxbrew/bin/brew
+# Homebrew - macOS Apple Silicon
+if test -f /opt/homebrew/bin/brew
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+# Homebrew - macOS Intel
+else if test -f /usr/local/bin/brew
+    eval "$(/usr/local/bin/brew shellenv)"
+# Linuxbrew
+else if test -f /home/linuxbrew/.linuxbrew/bin/brew
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 end
 if type -q mise

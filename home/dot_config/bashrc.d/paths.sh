@@ -11,9 +11,11 @@ fi
 
 # Mise activation
 if command -v mise &> /dev/null; then
-    eval "$(mise activate zsh)"
+    eval "$(mise activate bash)"
 fi
 
-# Path configuration
-path=(~/.local/bin $path)
-export PATH
+# PATH configuration
+export PATH="$HOME/.local/bin:$PATH"
+
+# CDPATH configuration
+export CDPATH=".:~:~/src/rwaltr:~/src/:~/Documents"

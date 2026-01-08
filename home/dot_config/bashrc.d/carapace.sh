@@ -1,2 +1,5 @@
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
-source <(carapace _carapace)
+# Carapace completion configuration
+if command -v carapace &> /dev/null; then
+    export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+    source <(carapace _carapace)
+fi

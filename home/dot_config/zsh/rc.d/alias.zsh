@@ -44,7 +44,7 @@ alias push="git push origin"
 alias ip="ip -br -c"
 
 # Services
-#Termbin
+# Termbin
 alias tb="nc termbin.com 9999"
 
 # Argo!

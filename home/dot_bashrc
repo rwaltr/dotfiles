@@ -9,7 +9,7 @@ fi
 
 # Source modular Bash files if interactive
 if [ -d "$HOME/.config/bashrc.d" ]; then
-  for i in "$HOME"/.config/bashrc.d/*; do
-    source $file
+  for file in "$HOME"/.config/bashrc.d/*.sh; do
+    [ -f "$file" ] && source "$file"
   done
 fi
