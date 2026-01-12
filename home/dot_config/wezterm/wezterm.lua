@@ -20,14 +20,15 @@ config.color_scheme = "Catppuccin Mocha"
 
 -- Font settings
 config.font = wezterm.font_with_fallback({
-	{ family = "Iosevka Term Nerd Font" },
-	-- "0xProto",
+	{ family = "IosevkaTerm Nerd Font" },
+	{ family = "Iosevka Term Font" },
+	{ family = "0xProto Nerd Font" },
+	{ family = "0xProto" },
 	-- "Hack",
 	-- "Miracraft",
 })
 config.window_frame = {
 	font = wezterm.font_with_fallback({
-		-- { family = "Miracraft" },
 		{ family = "Iosevka Term Bold" },
 	}),
 	font_size = 8,
@@ -44,10 +45,36 @@ wezterm.on("update-right-status", function(window, pane)
 	window:set_right_status(pane:get_domain_name() .. ":" .. window:active_workspace() .. " ")
 end)
 
+-- ============================================================================
+-- Platform-Specific Configuration (Load Early for fd_path)
+-- ============================================================================
+
+-- Detect the platform using target_triple
+-- See: https://wezfurlong.org/wezterm/config/lua/wezterm/target_triple.html
+local platform_module = nil
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	-- Windows
+	platform_module = require("platforms.windows")
+elseif wezterm.target_triple:find("darwin") then
+	-- macOS (Intel or Apple Silicon)
+	platform_module = require("platforms.macos")
+elseif wezterm.target_triple:find("linux") then
+	-- Linux
+	platform_module = require("platforms.linux")
+end
+
+-- ============================================================================
 -- Session managment
+-- ============================================================================
 
 local sessionizer = wezterm.plugin.require("https://github.com/mikkasendke/sessionizer.wezterm")
 local history = wezterm.plugin.require("https://github.com/mikkasendke/sessionizer-history")
+
+-- Build FdSearch options with platform-specific fd_path if available
+local fd_search_opts = { wezterm.home_dir .. "/src" }
+if platform_module and platform_module.fd_path then
+	fd_search_opts.fd_path = platform_module.fd_path
+end
 
 local schema = {
 	options = { callback = history.Wrapper(sessionizer.DefaultCallback) },
@@ -56,7 +83,7 @@ local schema = {
 	wezterm.home_dir .. "/Documents/Notebook",
 	wezterm.home_dir .. "/.local/share/chezmoi",
 	wezterm.home_dir .. "/src",
-	sessionizer.FdSearch(wezterm.home_dir .. "/src"),
+	sessionizer.FdSearch(fd_search_opts),
 
 	processing = sessionizer.for_each_entry(function(entry)
 		entry.label = entry.label:gsub(wezterm.home_dir, "~")
@@ -85,24 +112,10 @@ table.insert(config.keys, {
 })
 
 -- ============================================================================
--- Platform-Specific Configuration
+-- Apply Platform-Specific Configuration
 -- ============================================================================
 
--- Detect the platform using target_triple
--- See: https://wezfurlong.org/wezterm/config/lua/wezterm/target_triple.html
-local platform_module = nil
-if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	-- Windows
-	platform_module = require("platforms.windows")
-elseif wezterm.target_triple:find("darwin") then
-	-- macOS (Intel or Apple Silicon)
-	platform_module = require("platforms.macos")
-elseif wezterm.target_triple:find("linux") then
-	-- Linux
-	platform_module = require("platforms.linux")
-end
-
--- Apply platform-specific configuration if available
+-- Platform module was loaded earlier for fd_path, now apply config
 if platform_module then
 	platform_module.apply_to_config(config)
 end

@@ -4,6 +4,31 @@
 local wezterm = require("wezterm")
 local module = {}
 
+-- Helper function to find fd binary on macOS
+-- Checks common Homebrew installation paths using simple file existence checks
+local function find_fd_binary()
+	-- Try common Homebrew paths (Apple Silicon first, then Intel)
+	local paths = {
+		"/opt/homebrew/bin/fd", -- Apple Silicon Homebrew
+		"/usr/local/bin/fd", -- Intel Homebrew
+	}
+
+	-- Check if file exists and is executable
+	for _, path in ipairs(paths) do
+		local f = io.open(path, "r")
+		if f then
+			f:close()
+			return path
+		end
+	end
+
+	-- If not found in common locations, return nil and let fd be searched in PATH
+	return nil
+end
+
+-- Export fd_path for use in sessionizer configuration
+module.fd_path = find_fd_binary()
+
 function module.apply_to_config(config)
 	-- macOS-specific font rendering
 	-- Retina displays typically look better with slightly larger fonts
