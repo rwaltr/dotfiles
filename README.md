@@ -6,7 +6,8 @@ Stuff be changing, maybe it Use Chezmoi to deploy.
 
 ## Container envs
 
-- WofiOS/bluefin-cli (not Implmented yet))
+- WofiOS/bluefin-cli
+- ad-hoc container
 
 ## Plain OS
 
@@ -15,7 +16,7 @@ Stuff be changing, maybe it Use Chezmoi to deploy.
 
 ## Package Managers
 
-- Brew for CLI tools on Linux
+- mise/Brew for CLI tools on Linux
 - Flatpak for GUI apps on Linux
 - Podman for Containers on Linux
 - Distrobox and exported applications for portable envs on Linux
@@ -23,6 +24,7 @@ Stuff be changing, maybe it Use Chezmoi to deploy.
 # Desktop env
 
 - Niri
+- KDE
 
 # artifacts to generate
 
