@@ -30,6 +30,7 @@ config.font = wezterm.font_with_fallback({
 config.window_frame = {
 	font = wezterm.font_with_fallback({
 		{ family = "Iosevka Term Bold" },
+		{ family = "0xProto" },
 	}),
 	font_size = 8,
 }
@@ -69,6 +70,19 @@ end
 
 local sessionizer = wezterm.plugin.require("https://github.com/mikkasendke/sessionizer.wezterm")
 local history = wezterm.plugin.require("https://github.com/mikkasendke/sessionizer-history")
+-- local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+-- resurrect.state_manager.periodic_save({
+-- 	interval_seconds = 15 * 60,
+-- 	save_workspaces = true,
+-- 	save_windows = true,
+-- 	save_tabs = true,
+-- })
+--
+-- -- Oh god help lol
+-- wezterm.on("resurrect.error", function(err)
+-- 	wezterm.log_error("ERROR!")
+-- 	wezterm.gui.gui_windows()[1]:toast_notification("resurrect", err, nil, 3000)
+-- end)
 
 -- Build FdSearch options with platform-specific fd_path if available
 local fd_search_opts = { wezterm.home_dir .. "/src" }
@@ -109,6 +123,20 @@ table.insert(config.keys, {
 	key = "u",
 	mods = "ALT|CTRL",
 	action = wezterm.action.DetachDomain({ DomainName = "unix" }),
+})
+
+-- Domain Managment
+local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domains.wezterm")
+domains.apply_to_config(config)
+
+-- Splts
+local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
+smart_splits.apply_to_config(config, {
+	direction_keys = { "h", "j", "k", "l" },
+	modifiers = {
+		move = "CTRL",
+		resize = "ALT",
+	},
 })
 
 -- ============================================================================
