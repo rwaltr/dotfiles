@@ -22,7 +22,7 @@ Ryan Walter (rwaltr) owns this. Linux daily driver, CLI-focused, container-first
 - **chezmoi**: dotfiles (when in dotfiles context)
 - **curl**: HTTP ops, API testing
 - **brew**: packages (macOS only)
-- **mcpporter**: Ports mpc's to a cli, use `npx mcpporter --help` to learn more.
+- **mcporter**: Ports mcp tools's to a cli, use `npx mcpporter --help` to learn more. if you are being asked to ref something that is not a cli tool, this likely has it.
 - **wezterm**: How the user directly sees the world, use it to help show the user additional context
 
 ## Directory Structure
