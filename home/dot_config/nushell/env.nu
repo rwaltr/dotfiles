@@ -12,6 +12,9 @@ if (which nvim | is-not-empty) {
     $env.KUBE_EDITOR = $env.EDITOR
 }
 
+# Pi agent configuration
+$env.PI_CODING_AGENT_DIR = ($env.HOME | path join ".config" "pi" "agent")
+
 # Aqua package manager
 if (which aqua | is-not-empty) {
     $env.AQUA_CONFIG = ($env.HOME | path join ".config" "aqua" "aqua.yaml")

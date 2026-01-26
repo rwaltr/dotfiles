@@ -1,0 +1,21 @@
+{
+  "defaultThinkingLevel": "minimal",
+  "theme": "dark",
+  "compaction": {
+    "enabled": true,
+    "targetTokens": 50000,
+    "minTokensBeforeCompaction": 75000
+  },
+  "retry": {
+    "enabled": true,
+    "maxRetries": 3,
+    "baseDelayMs": 1000
+  },
+  "editor": {
+    "multilineShortcut": "shift+enter"
+  },
+  "messageQueue": {
+    "steeringMode": "one-at-a-time",
+    "followUpMode": "one-at-a-time"
+  }
+}
