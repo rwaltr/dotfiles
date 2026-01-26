@@ -124,7 +124,7 @@ chezmoi apply
 
 ```bash
 # Self-contained installer (downloads chezmoi)
-sh -c "$(curl -fsLS https://raw.githubusercontent.com/rwaltr/dotfiles/main/install.sh)"
+sh -c "$(curl -fsLS https://raw.githubusercontent.com/rwaltr/dotfiles/master/install.sh)"
 ```
 
 ### Option 3: In a Container
@@ -133,7 +133,7 @@ sh -c "$(curl -fsLS https://raw.githubusercontent.com/rwaltr/dotfiles/main/insta
 # Quick ephemeral environment (Docker/Podman)
 podman run -it --rm fedora:latest bash -c "
   dnf install -y git curl &&
-  sh -c \"\$(curl -fsLS https://raw.githubusercontent.com/rwaltr/dotfiles/main/install.sh)\"
+  sh -c \"\$(curl -fsLS https://raw.githubusercontent.com/rwaltr/dotfiles/master/install.sh)\"
 "
 
 # Persistent Distrobox environment (Linux only)
