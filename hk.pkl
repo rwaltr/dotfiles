@@ -1,0 +1,50 @@
+amends "package://github.com/jdx/hk/releases/download/v1.32.0/hk@1.32.0#/Config.pkl"
+
+// Dotfiles git hooks using mise tasks
+// All linters are run through mise to ensure proper tool management
+
+hooks {
+    // Pre-commit hook - runs linters with auto-fix via mise
+    ["pre-commit"] {
+        fix = true       // Enable auto-fixing
+        stash = "git"    // Stash unstaged changes before running
+        steps {
+            // Run all mise linting tasks
+            ["mise-lint"] {
+                check = "mise run lint"
+                exclusive = true  // Complete before other steps
+            }
+        }
+    }
+    
+    // Pre-push hook - runs checks only via mise
+    ["pre-push"] {
+        steps {
+            ["mise-check"] {
+                check = "mise run lint"
+                exclusive = true
+            }
+        }
+    }
+    
+    // Manual fix command - uses mise format tasks
+    ["fix"] {
+        fix = true
+        steps {
+            ["mise-format"] {
+                check = "mise run format"
+                exclusive = true
+            }
+        }
+    }
+    
+    // Manual check command - uses mise lint tasks
+    ["check"] {
+        steps {
+            ["mise-lint"] {
+                check = "mise run lint"
+                exclusive = true
+            }
+        }
+    }
+}

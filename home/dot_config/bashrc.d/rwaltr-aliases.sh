@@ -59,4 +59,3 @@ alias tb="nc termbin.com 9999"
 
 # Argo!
 alias argo=argocd
-

@@ -1,0 +1,122 @@
+# mise configuration for dotfiles development
+# This file defines tools needed for developing and maintaining the dotfiles repository
+# Not for runtime shell environment (those tools are managed separately)
+
+[tools]
+# Python package manager (enables pipx backend for Python tools)
+uv = "latest"
+
+# Git hooks manager (by mise author)
+hk = "latest"
+
+# Pkl configuration language (required by hk)
+pkl = "latest"
+
+# Dotfile management
+chezmoi = "latest"
+
+# Shell script development
+shellcheck = "latest" # Bash/Shell script linting
+shfmt = "latest"      # Shell script formatting
+
+# NOTE: Fish and Nushell not available in mise registry
+# Install via system package manager (dnf, brew, etc.) or Flatpak
+
+# Configuration file linting/formatting
+"pipx:yamllint" = "latest" # YAML linting (uses uv/uvx backend)
+taplo = "latest"           # TOML formatting and linting
+
+# Lua development (for Neovim config)
+lua = "latest"    # Lua interpreter
+stylua = "latest" # Lua formatter (configured via stylua.toml)
+
+# Markdown linting
+markdownlint-cli2 = "latest" # Markdown linting (npm backend)
+
+# Git hooks (optional)
+pre-commit = "latest" # Git hooks framework
+
+[tasks."lint:shell"]
+description = "Lint shell scripts (bash)"
+run = "shellcheck home/dot_config/bashrc.d/*.sh home/dot_local/bin/executable_*.sh 2>/dev/null || true"
+
+[tasks."lint:fish"]
+description = "Lint fish scripts"
+run = """
+if command -v fish >/dev/null 2>&1; then
+  fish --no-execute home/dot_config/fish/**/*.fish
+else
+  echo "⚠️  Fish not installed - skipping fish syntax check"
+fi
+"""
+
+[tasks."lint:lua"]
+description = "Check Lua syntax and format"
+run = """
+lua -e "print('Lua syntax check')" && \
+stylua --check home/dot_config/nvim/
+"""
+
+[tasks."lint:yaml"]
+description = "Lint YAML files"
+run = "yamllint home/.chezmoiexternal.yaml .sops.yaml 2>/dev/null || true"
+
+[tasks."lint:toml"]
+description = "Check and format TOML files"
+run = "taplo fmt --check mise.toml home/dot_config/*/config.toml home/dot_config/*/*.toml 2>/dev/null || true"
+
+[tasks."lint:markdown"]
+description = "Lint Markdown files"
+run = "markdownlint-cli2 '*.md' 'AGENTS.md' || true"
+
+[tasks.lint]
+description = "Run all linters (pre-commit check)"
+depends = [
+  "lint:shell",
+  "lint:fish",
+  "lint:lua",
+  "lint:yaml",
+  "lint:toml",
+  "lint:markdown",
+]
+
+[tasks."format:shell"]
+description = "Format shell scripts"
+run = "shfmt -w home/dot_config/bashrc.d/*.sh home/dot_local/bin/executable_*.sh 2>/dev/null || true"
+
+[tasks."format:lua"]
+description = "Format Lua files"
+run = "stylua home/dot_config/nvim/"
+
+[tasks."format:toml"]
+description = "Format TOML files"
+run = "taplo fmt mise.toml home/dot_config/*/config.toml home/dot_config/*/*.toml 2>/dev/null || true"
+
+[tasks.format]
+description = "Format all code"
+depends = ["format:shell", "format:lua", "format:toml"]
+
+[tasks."pre-commit-install"]
+description = "Install git pre-commit hooks (legacy - use hk:install)"
+run = "pre-commit install"
+
+# Git hooks with hk (high-performance hook manager by mise author)
+[tasks."hk:install"]
+description = "Install git hooks with hk (uses mise wrapper)"
+run = "hk install --mise"
+
+[tasks."hk:check"]
+description = "Run hk checks on staged files"
+run = "hk check"
+
+[tasks."hk:fix"]
+description = "Run hk with auto-fix on staged files"
+run = "hk fix"
+
+[tasks.check]
+description = "Full check: run hk checks (recommended pre-commit)"
+run = "hk check"
+
+[env]
+# Ensure local bin is in PATH for chezmoi-installed scripts
+_.path = ["{{ config_root }}/bin", "$PATH"]
