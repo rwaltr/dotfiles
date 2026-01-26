@@ -1,4 +1,5 @@
 # Nvim
+# shellcheck shell=bash
 if [ -x "$(command -v nvim)" ]; then
 	alias vim=nvim
 	alias vi=vim

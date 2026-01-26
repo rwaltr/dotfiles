@@ -1,4 +1,5 @@
 # Aqua package manager configuration
+# shellcheck shell=bash
 if command -v aqua &>/dev/null; then
 	export AQUA_CONFIG="$HOME/.config/aqua/aqua.yaml"
 	export AQUA_GLOBAL_CONFIG="$HOME/.config/aqua/aqua.yaml"

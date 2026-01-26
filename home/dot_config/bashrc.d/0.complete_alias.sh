@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1009,SC1073,SC1029,SC1108,SC1072
 
 ##  ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ##  automagical shell alias completion;

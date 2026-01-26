@@ -1,4 +1,5 @@
 # Custom Alias
+# shellcheck shell=bash
 
 alias ":q"="exit"
 alias "x"="exit"

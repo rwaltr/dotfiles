@@ -2,40 +2,41 @@
 
 Stuff be changing, maybe it Use Chezmoi to deploy.
 
-# Targets to install for
+## Targets to install for
 
-## Container envs
+### Container envs
 
 - WofiOS/bluefin-cli
 - ad-hoc container
 
-## Plain OS
+### Plain OS
 
 - Fedora/Ublue
 - Minimal support for macos
 
-## Package Managers
+### Package Managers
 
 - mise/Brew for CLI tools on Linux
 - Flatpak for GUI apps on Linux
 - Podman for Containers on Linux
 - Distrobox and exported applications for portable envs on Linux
 
-# Desktop env
+## Desktop env
 
 - Niri
 - KDE
 
-# artifacts to generate
+## Artifacts to generate
 
 - Distrobox container for quick dev use
 - `chezmoi init rwaltr` with minimal input
 
-# Secrets management
+## Secrets management
 
 - Via OnePassword CLI for personal use only
 
-# Not targeted
+## Not targeted
 
-- Automatic Host System Configuration (e.g. NetworkManager, host level systemd services, etc)
+- Automatic Host System Configuration (e.g. NetworkManager, host level
+  systemd services, etc)
 - Server configuration

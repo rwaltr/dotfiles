@@ -1,4 +1,5 @@
-shopt -s autocd  # change to named directory
+# shellcheck shell=bash
+shopt -s autocd # change to named directory
 shopt -s cdspell # autocorrects cd misspellings
 shopt -s cmdhist # save multi-line commands in history as single line
 shopt -s dotglob

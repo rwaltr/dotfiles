@@ -1,4 +1,5 @@
 # Kubeconfig management functions
+# shellcheck shell=bash
 
 # sets kubeconfig env with .kube/clusters
 set-kubeconfig() {
@@ -49,7 +50,8 @@ append-kubeconfig() {
 # store kubeconfig in .kube/clusters
 store-kubeconfig() {
 	local config_path="$1"
-	local basename=$(basename "$config_path")
+	local basename
+	basename=$(basename "$config_path")
 	cp "$config_path" "$HOME/.kube/clusters/$basename"
 	set-kubeconfig
 }

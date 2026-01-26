@@ -1,4 +1,5 @@
 # Shell greeting
+# shellcheck shell=bash
 if [[ $- == *i* ]]; then
 	# === Fun Quotes ===
 	quotes=(

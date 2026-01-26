@@ -2,7 +2,9 @@
 
 ## Project Overview
 
-This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmoi.io/). It provides cross-platform configuration management for Linux and macOS environments, with a focus on containerized development workflows.
+This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmoi.io/). It provides
+cross-platform configuration management for Linux and macOS environments, with a focus on containerized
+development workflows.
 
 **Repository URL**: Initialized with `chezmoi init rwaltr`
 
@@ -10,7 +12,7 @@ This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmo
 
 - **Minimal input required**: `chezmoi init rwaltr` should work with minimal configuration
 - **Container-first**: Designed for portable development environments
-- **Multi-shell by purpose**: 
+- **Multi-shell by purpose**:
   - **Fish**: Primary interactive shell, focused on user-friendliness
   - **Bash**: Streamlined scripting-focused configuration
   - **Nushell**: Data processing and structured data workflows
@@ -22,15 +24,18 @@ This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmo
 ## Target Environments
 
 ### Container Environments
+
 - WofiOS/bluefin-cli containers
 - Ad-hoc development containers
 - Distrobox portable environments
 
 ### Operating Systems
+
 - **Primary**: Fedora/Universal Blue (ublue)
 - **Secondary**: macOS (minimal support)
 
 ### Desktop Environments
+
 - Niri
 - KDE
 
@@ -99,7 +104,8 @@ This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmo
 ## Key Technologies & Tools
 
 ### Shell & CLI
-- **Shells**: 
+
+- **Shells**:
   - **Fish** (primary interactive) - User-friendly, modern syntax
   - **Bash** (scripting) - Streamlined, modular, POSIX-compatible scripting
   - **Nushell** (data processing) - Structured data manipulation
@@ -110,6 +116,7 @@ This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmo
 - **Aliases**: complete_alias.sh (Bash/Zsh via POSIX compatibility)
 
 ### Development Tools
+
 - **Editor**: Neovim (Lua-based config)
 - **Terminal**: WezTerm (multi-platform support)
 - **Version Manager**: mise (for tool versions)
@@ -117,6 +124,7 @@ This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmo
 - **Git**: Template-based configuration
 
 ### Container & Cloud
+
 - **Container Runtime**: Podman
 - **Development Environments**: Distrobox
 - **Kubernetes tooling**: kubectl with extensive aliases and completions
@@ -124,6 +132,7 @@ This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmo
 ## Important Files
 
 ### Configuration Entry Points
+
 - `home/dot_config/fish/config.fish` - Fish shell (primary interactive shell)
 - `home/dot_bashrc` - Bash initialization (scripting-focused, sources bashrc.d/*.sh)
 - `home/dot_config/zsh/` - Zsh (minimal, leverages Bash config via POSIX compatibility)
@@ -133,11 +142,13 @@ This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmo
 - `home/dot_config/wezterm/wezterm.lua` - Terminal configuration
 
 ### Chezmoi Metadata
+
 - `.chezmoiroot` - Sets source directory to `home/`
 - `.chezmoiignore` - Excludes `.config/wezterm/local.lua`
 - `.sops.yaml` - Encryption configuration for secrets
 
 ### Bootstrap
+
 - `install.sh` - Self-contained installer that:
   - Installs chezmoi if not present
   - Initializes from source directory
@@ -146,13 +157,16 @@ This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmo
 ## Templating & Secrets
 
 ### Chezmoi Templates
+
 Files with `.tmpl` extension are processed as Go templates:
+
 - `home/dot_config/git/config.tmpl`
 - `home/private_dot_ssh/private_authorized_keys.tmpl`
 - `home/private_dot_ssh/private_config.tmpl`
 - `home/symlink_dot_bin.tmpl`
 
 ### Secrets Management
+
 - **Tool**: 1Password CLI
 - **Scope**: Personal use only
 - **Method**: Templates can reference 1Password items
@@ -161,27 +175,35 @@ Files with `.tmpl` extension are processed as Go templates:
 ## Shell-Specific Configuration Philosophy
 
 ### Fish (Primary Interactive Shell)
+
 Located in `home/dot_config/fish/` - focused on **user-friendliness**:
+
 - Modern, intuitive syntax
 - Excellent out-of-the-box experience
 - Auto-suggestions and completions
 - Primary shell for daily interactive use
 
 ### Bash (Scripting Shell)
+
 Located in `home/dot_bashrc` and `home/dot_config/bashrc.d/` - focused on **streamlined scripting**:
+
 - Modular configuration via `bashrc.d/*.sh`
 - POSIX-compatible for portability
 - Script execution and automation
 - Shared with Zsh via POSIX compatibility
 
 ### Nushell (Data Processing)
+
 Located in `home/dot_config/nushell/` - focused on **structured data workflows**:
+
 - Pipeline-oriented data processing
 - Structured data manipulation
 - Modern approach to shell scripting with typed data
 
 ### Zsh (Migration Bridge)
+
 Located in `home/dot_config/zsh/` - **minimal configuration**:
+
 - Helps users transition to Fish/Nushell
 - Leverages Bash configuration via POSIX compatibility
 - Shares bashrc.d modules where applicable
@@ -189,17 +211,20 @@ Located in `home/dot_config/zsh/` - **minimal configuration**:
 
 ## Modular Bash Configuration
 
-The `home/dot_config/bashrc.d/` directory contains modular bash scripts for scripting-focused configuration, loaded in alphabetical order.
+The `home/dot_config/bashrc.d/` directory contains modular bash scripts for scripting-focused
+configuration, loaded in alphabetical order.
 
 **Note**: Zsh can source these same scripts due to POSIX compatibility, providing consistency between Bash and Zsh environments.
 
 ### Core (0.* prefix for load order)
+
 - `0.complete_alias.sh` - Alias completion support
 - `0.custom_prompt.sh` - Prompt customization
 - `0.editor.sh` - Editor configuration
 - `0.opts.sh` - Shell options
 
 ### Tool-specific
+
 - `aqua.sh` - Aqua package manager
 - `carapace.sh` - Completion generator
 - `exa.sh` - Modern ls replacement
@@ -213,6 +238,7 @@ The `home/dot_config/bashrc.d/` directory contains modular bash scripts for scri
 ## Common Operations
 
 ### Initial Setup
+
 ```bash
 # Bootstrap from GitHub
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply rwaltr
@@ -222,6 +248,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply rwaltr
 ```
 
 ### Daily Usage
+
 ```bash
 # Update dotfiles from source
 chezmoi update
@@ -237,6 +264,7 @@ chezmoi diff
 ```
 
 ### Adding New Files
+
 ```bash
 # Add a file to chezmoi management
 chezmoi add ~/.config/newfile
@@ -258,6 +286,7 @@ chezmoi add --template ~/.config/templated-file
 ## Important Notes
 
 ### What This Manages
+
 - ✅ User-level dotfiles and configurations
 - ✅ Fish shell environment (primary interactive)
 - ✅ Bash environment (streamlined scripting)
@@ -268,6 +297,7 @@ chezmoi add --template ~/.config/templated-file
 - ✅ Container and Kubernetes tooling
 
 ### What This Does NOT Manage
+
 - ❌ Host system NetworkManager configuration
 - ❌ Host-level systemd services
 - ❌ Server infrastructure
@@ -288,6 +318,7 @@ chezmoi add --template ~/.config/templated-file
 9. **Containers**: Test in both host and containerized environments
 
 ### File Naming Conventions
+
 - `dot_` prefix → becomes `.` (e.g., `dot_bashrc` → `.bashrc`)
 - `private_` prefix → restricts permissions
 - `executable_` prefix → makes file executable
@@ -297,6 +328,7 @@ chezmoi add --template ~/.config/templated-file
 ## Testing Changes
 
 Before committing:
+
 ```bash
 # Preview changes
 chezmoi diff
@@ -325,6 +357,7 @@ Mise tasks provide automated linting and formatting for the dotfiles repository.
 ### Available Tasks
 
 #### Linting Tasks
+
 ```bash
 # Lint all files (runs all linters)
 mise run lint
@@ -339,6 +372,7 @@ mise run lint:markdown   # Lint markdown with markdownlint-cli2
 ```
 
 #### Formatting Tasks
+
 ```bash
 # Format all code
 mise run format
@@ -350,6 +384,7 @@ mise run format:toml     # Format TOML files with taplo
 ```
 
 #### Combined Tasks
+
 ```bash
 # Run format and lint (full check)
 mise run check
@@ -370,6 +405,7 @@ For automated linting before commits:
 ### Integration with Git
 
 Add to your workflow:
+
 ```bash
 # Before committing
 mise run check
@@ -384,6 +420,7 @@ mise run lint
 ### Task Configuration
 
 All tasks are defined in `mise.toml` in the `[tasks]` section. Tasks support:
+
 - Dependencies between tasks
 - Parallel execution
 - Environment variables
@@ -396,6 +433,7 @@ The project uses `hk` (by the mise author) for high-performance git hook managem
 ### What is hk?
 
 `hk` is a modern git hook manager that:
+
 - **Runs fast**: Parallel execution with file locking
 - **Integrates with mise**: Automatic tool management
 - **Auto-fixes**: Can automatically fix issues before commit
@@ -407,6 +445,7 @@ The project uses `hk` (by the mise author) for high-performance git hook managem
 Git hooks are configured in `hk.pkl` (Pkl configuration language):
 
 **Configured Linters:**
+
 - `shellcheck` - Bash/shell script linting
 - `shfmt` - Shell script formatting
 - `fish` - Fish shell syntax checking
@@ -447,6 +486,7 @@ HK=0 git commit -m "skip hooks"
 ### Hook Behavior
 
 **Pre-commit Hook:**
+
 - ✅ Runs automatically on `git commit`
 - ✅ Only checks staged files
 - ✅ Auto-fixes issues when possible
@@ -454,6 +494,7 @@ HK=0 git commit -m "skip hooks"
 - ✅ Fails commit if unfixable issues found
 
 **Pre-push Hook:**
+
 - ✅ Runs automatically on `git push`
 - ✅ Runs checks (no auto-fix)
 - ✅ Prevents push if issues found
@@ -461,6 +502,7 @@ HK=0 git commit -m "skip hooks"
 ### Files Checked
 
 The hooks intelligently filter files by type:
+
 - **Shell scripts**: `home/dot_config/bashrc.d/*.sh`, `home/dot_local/bin/executable_*.sh`
 - **Fish scripts**: `home/dot_config/fish/**/*.fish`
 - **Lua files**: `home/dot_config/nvim/**/*.lua`
@@ -491,4 +533,3 @@ mise run hk:check
 - **Simpler**: One config file (`hk.pkl`)
 - **Same author**: Tight integration with mise ecosystem
 - **File locking**: Safe concurrent execution
-

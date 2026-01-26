@@ -1,4 +1,5 @@
 # Homebrew - OS-specific paths
+# shellcheck shell=bash
 case "$(uname -s)" in
 Darwin)
 	# macOS - Apple Silicon

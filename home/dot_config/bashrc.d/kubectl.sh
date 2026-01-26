@@ -1,4 +1,5 @@
 # kubectl convenience aliases
+# shellcheck shell=bash
 
 if command -v kubectl &>/dev/null; then
 	# base

@@ -9,10 +9,11 @@ starttmux() {
 		echo -n "Please provide of list of hosts separated by spaces [ENTER]: "
 		read -ra HOSTS
 	fi
-	local hosts=($HOSTS)
+	local hosts
+	read -ra hosts <<<"${HOSTS[*]}"
 
 	tmux new-window "ssh -A ${hosts[0]}"
-	unset hosts[0]
+	unset 'hosts[0]'
 	for i in "${hosts[@]}"; do
 		tmux split-window -h "ssh $i"
 		tmux select-layout tiled >/dev/null
