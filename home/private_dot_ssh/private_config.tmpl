@@ -4,6 +4,7 @@ host *
   ControlMaster auto
 	ControlPath ~/.ssh/control-%h-%p-%r
 	ControlPersist 600
+	IdentityAgent ~/.1password/agent.sock
 
 #GitLab SSH Creds
 host gitlab.com
