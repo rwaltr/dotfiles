@@ -18,27 +18,13 @@ mapfile -t DECLARED < <(cat << 'EOF' | grep -v '^\s*#' | grep -v '^\s*$'
 EOF
 )
 
-if [[ ${#DECLARED[@]} -gt 0 ]]; then
-	echo "Installing/updating ${#DECLARED[@]} flatpaks..."
-	flatpak install -y --noninteractive --or-update flathub "${DECLARED[@]}"
+if [[ ${#DECLARED[@]} -eq 0 ]]; then
+	echo "No flatpaks configured for this machine profile"
+	exit 0
 fi
 
-# Remove flatpaks that are installed but no longer declared
-# Only consider user-installed apps (skip runtimes — flatpak manages those)
-mapfile -t INSTALLED < <(flatpak list --app --columns=application 2>/dev/null)
-
-for app in "${INSTALLED[@]}"; do
-	if [[ -z "$app" ]]; then continue; fi
-	# Skip OrcaSlicer — managed separately by run_always_after_36
-	if [[ "$app" == "io.github.softfever.OrcaSlicer" ]]; then continue; fi
-	if ! printf '%s\n' "${DECLARED[@]}" | grep -qx "$app"; then
-		echo "Removing unlisted flatpak: $app"
-		flatpak uninstall -y --noninteractive "$app"
-	fi
-done
-
-# Clean up unused runtimes
-flatpak uninstall -y --noninteractive --unused 2>/dev/null || true
+echo "Installing/updating ${#DECLARED[@]} flatpaks..."
+flatpak install -y --noninteractive --or-update flathub "${DECLARED[@]}"
 {{- else }}
 echo "Skipping flatpaks (not Linux or headless)"
 {{- end }}

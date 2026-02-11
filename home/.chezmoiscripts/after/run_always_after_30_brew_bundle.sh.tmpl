@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # vi: ft=sh
-# Install/update all packages declared in the Brewfile, and remove any that
-# are no longer listed (--cleanup --force).
+# Install/update all packages declared in the Brewfile.
 # run_always — brew bundle is idempotent; runs on every chezmoi apply.
 
 set -euo pipefail
@@ -34,6 +33,4 @@ BREWFILE_EOF
 echo "Running brew bundle..."
 brew bundle install \
 	--file="$BREWFILE" \
-	--cleanup \
-	--force \
 	--verbose
