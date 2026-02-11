@@ -1,0 +1,32 @@
+{{ if not .headless -}}
+# !headless — GUI machines
+org.wezfurlong.wezterm
+dev.zed.Zed
+io.podman_desktop.PodmanDesktop
+org.gnome.meld
+io.github.Qalculate.qalculate-qt
+org.videolan.VLC
+io.mpv.Mpv
+org.rncbc.qpwgraph
+
+{{ if .personal -}}
+# personal
+com.onepassword.OnePassword
+md.obsidian.Obsidian
+org.mozilla.Thunderbird
+org.mozilla.firefox
+org.libreoffice.LibreOffice
+org.inkscape.Inkscape
+org.freecad.FreeCAD
+io.github.softfever.OrcaSlicer
+dev.vencord.Vesktop
+com.heroicgameslauncher.hgl
+net.lutris.Lutris
+net.davidotek.pupgui2
+{{ end -}}
+
+{{ if .work -}}
+# work — placeholder
+{{ end -}}
+
+{{ end -}}

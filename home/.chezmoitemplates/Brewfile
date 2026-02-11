@@ -1,14 +1,13 @@
 # Brewfile — rendered by chezmoi from .chezmoitemplates/Brewfile
 # Context: personal={{ .personal }} work={{ .work }} headless={{ .headless }} ephemeral={{ .ephemeral }}
+# NOTE: flatpaks are NOT here — installed via dedicated script for batched parallel pulls.
 #
 # Segments:
 #   always     — every machine
-#   !headless  — machines with a GUI (fonts, flatpaks, terminal apps)
-#   personal   — personal machines (notes, media, gaming, creative)
-#   work       — work machines (TBD)
-#   !ephemeral — persistent machines (heavier tools not worth installing on throwaway envs)
+#   !headless  — machines with a GUI (font casks)
+#   !ephemeral — persistent machines
 
-# ── Taps (always) ─────────────────────────────────────────────────────────────
+# ── Taps (!headless) ──────────────────────────────────────────────────────────
 {{ if not .headless -}}
 tap "ublue-os/tap"
 tap "ublue-os/experimental-tap"
@@ -50,53 +49,4 @@ cask "font-fantasque-sans-mono-nerd-font"
 cask "font-meslo-lg-nerd-font"
 cask "font-monocraft"
 cask "font-miracode"
-
-# ── Flatpaks (!headless) ──────────────────────────────────────────────────────
-# Linux only — brew bundle silently skips these on macOS
-
-# Terminal
-flatpak "org.wezfurlong.wezterm"
-
-# Development
-flatpak "dev.zed.Zed"
-flatpak "io.podman_desktop.PodmanDesktop"
-flatpak "org.gnome.meld"
-
-# Utilities
-flatpak "io.github.Qalculate.qalculate-qt"
-
-# Media
-flatpak "org.videolan.VLC"
-flatpak "io.mpv.Mpv"
-flatpak "org.rncbc.qpwgraph"
-
-{{ if .personal -}}
-# ── Flatpaks (personal + !headless) ───────────────────────────────────────────
-
-# Security — flatpak GUI + op CLI via mise; socket fix via script _31
-flatpak "com.onepassword.OnePassword"
-
-# Notes / Productivity
-flatpak "md.obsidian.Obsidian"
-flatpak "org.mozilla.Thunderbird"
-flatpak "org.mozilla.firefox"
-flatpak "org.libreoffice.LibreOffice"
-
-# Creative / 3D
-flatpak "org.inkscape.Inkscape"
-flatpak "org.freecad.FreeCAD"
-flatpak "io.github.softfever.OrcaSlicer"
-
-# Gaming (flatpak on immutable; Steam → distrobox on ublue)
-flatpak "dev.vencord.Vesktop"
-flatpak "com.heroicgameslauncher.hgl"
-flatpak "net.lutris.Lutris"
-flatpak "net.davidotek.pupgui2"
-{{ end -}}
-
-{{ if .work -}}
-# ── Flatpaks (work + !headless) ────────────────────────────────────────────────
-# placeholder — add work-specific GUI apps here
-{{ end -}}
-
 {{ end -}}

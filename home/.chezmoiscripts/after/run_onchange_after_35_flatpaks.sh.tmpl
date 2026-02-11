@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# Install flatpaks in a single batched call for speed.
+# flatpak install batches shared runtimes — much faster than one-at-a-time.
+# --or-update provides idempotency: skips up-to-date, updates stale, exit 0.
+# Linux only — skipped entirely on macOS.
+#
+# flatpaks hash: {{ include ".chezmoitemplates/flatpaks.txt" | sha256sum }}
+
+{{ if (and (eq .chezmoi.os "linux") (not .headless)) -}}
+set -euo pipefail
+
+if ! command -v flatpak &>/dev/null; then
+	echo "flatpak not available, skipping"
+	exit 0
+fi
+
+# Render the app list — strip comments and blank lines
+mapfile -t FLATPAKS < <(cat << 'EOF' | grep -v '^\s*#' | grep -v '^\s*$'
+{{ template "flatpaks.txt" . }}
+EOF
+)
+
+if [[ ${#FLATPAKS[@]} -eq 0 ]]; then
+	echo "No flatpaks configured for this machine profile"
+	exit 0
+fi
+
+echo "Installing ${#FLATPAKS[@]} flatpaks..."
+flatpak install -y --noninteractive --or-update flathub "${FLATPAKS[@]}"
+{{- else }}
+echo "Skipping flatpaks (not Linux or headless)"
+{{- end }}
