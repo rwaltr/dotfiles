@@ -20,9 +20,26 @@ if [[ ! -f "$BUNDLE" ]]; then
 	exit 1
 fi
 
-echo "Installing OrcaSlicer from $BUNDLE..."
-flatpak install -y --noninteractive --user "$BUNDLE"
-echo "OrcaSlicer installed"
+# Version baked in at chezmoi template render time from the GitHub release URL
+BUNDLE_VER="{{ gitHubLatestReleaseAssetURL "SoftFever/OrcaSlicer" "OrcaSlicer-Linux-flatpak_*_x86_64.flatpak" | base | trimPrefix "OrcaSlicer-Linux-flatpak_V" | splitList "_" | first }}"
+
+# Get installed version
+INSTALLED_VER=$(flatpak info --user io.github.softfever.OrcaSlicer 2>/dev/null | grep "Version" | awk '{print $2}' || true)
+INSTALLED_VER="${INSTALLED_VER:-$(flatpak info --system io.github.softfever.OrcaSlicer 2>/dev/null | grep "Version" | awk '{print $2}' || true)}"
+
+if [[ -n "$INSTALLED_VER" && "$INSTALLED_VER" == *"$BUNDLE_VER"* ]]; then
+	echo "OrcaSlicer $INSTALLED_VER already installed and current, skipping"
+	exit 0
+fi
+
+if [[ -n "$INSTALLED_VER" ]]; then
+	echo "Updating OrcaSlicer $INSTALLED_VER → $BUNDLE_VER..."
+	flatpak install -y --noninteractive --user --reinstall "$BUNDLE"
+else
+	echo "Installing OrcaSlicer $BUNDLE_VER..."
+	flatpak install -y --noninteractive --user "$BUNDLE"
+fi
+echo "OrcaSlicer $BUNDLE_VER installed"
 {{- else }}
 echo "Skipping OrcaSlicer (not Linux, headless, or not personal)"
 {{- end }}
