@@ -8,6 +8,11 @@ io.github.Qalculate.qalculate-qt
 org.videolan.VLC
 io.mpv.Mpv
 org.rncbc.qpwgraph
+io.github.flattool.Warehouse
+com.github.tchx84.Flatseal
+io.github.flattool.Ignition
+com.ranfdev.DistroShelf
+io.github.kolunmi.Bazaar
 
 {{ if .personal -}}
 # personal
@@ -22,8 +27,9 @@ dev.vencord.Vesktop
 com.heroicgameslauncher.hgl
 net.lutris.Lutris
 net.davidotek.pupgui2
+io.github.diegopvlk.Cine
 # NOTE: OrcaSlicer is NOT here — it has no Flathub remote.
-# Installed via run_onchange_after_36_orcaslicer.sh.tmpl from GitHub releases.
+# Installed via run_always_after_36_orcaslicer.sh.tmpl from GitHub releases.
 {{ end -}}
 
 {{ if .work -}}
