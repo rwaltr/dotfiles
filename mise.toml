@@ -119,4 +119,4 @@ run = "hk check"
 
 [env]
 # Ensure local bin is in PATH for chezmoi-installed scripts
-_.path = ["{{ config_root }}/bin", "$PATH"]
+_.path = ["{{ config_root }}/bin"]
