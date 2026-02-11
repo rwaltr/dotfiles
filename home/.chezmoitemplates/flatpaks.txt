@@ -18,11 +18,12 @@ org.mozilla.firefox
 org.libreoffice.LibreOffice
 org.inkscape.Inkscape
 org.freecad.FreeCAD
-io.github.softfever.OrcaSlicer
 dev.vencord.Vesktop
 com.heroicgameslauncher.hgl
 net.lutris.Lutris
 net.davidotek.pupgui2
+# NOTE: OrcaSlicer is NOT here — it has no Flathub remote.
+# Installed via run_onchange_after_36_orcaslicer.sh.tmpl from GitHub releases.
 {{ end -}}
 
 {{ if .work -}}

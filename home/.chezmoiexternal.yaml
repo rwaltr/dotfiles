@@ -1,1 +1,8 @@
-
+{{- if and (eq .chezmoi.os "linux") (not .headless) .personal }}
+{{- $arch := "x86_64" }}
+{{- if eq .chezmoi.arch "arm64" }}{{- $arch = "aarch64" }}{{- end }}
+".local/share/flatpak-bundles/orcaslicer.flatpak":
+  type: file
+  url: {{ gitHubLatestReleaseAssetURL "SoftFever/OrcaSlicer" (printf "OrcaSlicer-Linux-flatpak_*_%s.flatpak" $arch) | quote }}
+  refreshPeriod: 168h
+{{- end }}
