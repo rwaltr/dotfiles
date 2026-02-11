@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # vi: ft=sh
-# Install/update all packages declared in the Brewfile.
-# Handles: brew formulae, font casks, and flatpaks (Linux only).
-# run_onchange — reruns whenever the Brewfile content changes.
-#
-# Brewfile hash: {{ include ".chezmoitemplates/Brewfile" | sha256sum }}
+# Install/update all packages declared in the Brewfile, and remove any that
+# are no longer listed (--cleanup --force).
+# run_always — brew bundle is idempotent; runs on every chezmoi apply.
 
 set -euo pipefail
 
@@ -36,4 +34,6 @@ BREWFILE_EOF
 echo "Running brew bundle..."
 brew bundle install \
 	--file="$BREWFILE" \
+	--cleanup \
+	--force \
 	--verbose

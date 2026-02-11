@@ -3,9 +3,7 @@
 # Install OrcaSlicer from the .flatpak bundle fetched by .chezmoiexternal.yaml.
 # OrcaSlicer has no Flathub remote — ships its own bundle per GitHub release.
 # chezmoi handles download + caching + re-fetch on new version (refreshPeriod: 168h).
-# run_onchange — reruns when the bundle URL changes (i.e. new release).
-#
-# bundle url: {{ gitHubLatestReleaseAssetURL "SoftFever/OrcaSlicer" "OrcaSlicer-Linux-flatpak_*_x86_64.flatpak" }}
+# flatpak install --user is idempotent; run_always fires on every chezmoi apply.
 
 {{ if (and (eq .chezmoi.os "linux") (not .headless) .personal) -}}
 set -euo pipefail
