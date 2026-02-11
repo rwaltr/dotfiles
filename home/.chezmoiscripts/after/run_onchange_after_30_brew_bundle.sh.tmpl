@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# Install/update all packages declared in the Brewfile.
+# Handles: brew formulae, font casks, and flatpaks (Linux only).
+# run_onchange — reruns whenever the Brewfile content changes.
+#
+# Brewfile hash: {{ include (joinPath (.chezmoi.sourceDir | dir) "Brewfile") | sha256sum }}
+
+set -euo pipefail
+
+{{ if eq .chezmoi.os "linux" -}}
+# Ensure brew is on PATH (may not be in environment during chezmoi apply)
+if ! command -v brew &>/dev/null; then
+	if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+		eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	else
+		echo "ERROR: brew not found. Run chezmoi apply again after the install_homebrew script." >&2
+		exit 1
+	fi
+fi
+{{- else }}
+if ! command -v brew &>/dev/null; then
+	echo "ERROR: brew not found." >&2
+	exit 1
+fi
+{{- end }}
+
+BREWFILE="{{ .chezmoi.sourceDir | dir }}/Brewfile"
+
+echo "Running brew bundle..."
+brew bundle install \
+	--file="$BREWFILE" \
+	--no-lock \
+	--verbose

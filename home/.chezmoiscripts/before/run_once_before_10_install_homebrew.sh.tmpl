@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# Install Homebrew if not present.
+# On Linux: installs to /home/linuxbrew/.linuxbrew
+# On macOS: installs to /usr/local (Intel) or /opt/homebrew (Apple Silicon)
+# run_once — only runs if it has never run before on this machine.
+
+set -euo pipefail
+
+if command -v brew &>/dev/null; then
+	echo "brew already installed, skipping"
+	exit 0
+fi
+
+echo "Installing Homebrew..."
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+{{ if eq .chezmoi.os "linux" -}}
+# Ensure brew is on PATH for subsequent chezmoi scripts in this run
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{- end }}

@@ -1,1 +1,33 @@
+# ~/.config/mise/config.toml — global user tools
+# Managed by chezmoi. Only truly universal daily-driver tools live here.
+#
+# Project-specific tools (kubectl, terraform, opentofu, pulumi, flux, talosctl,
+# clusterctl, talhelper, butane, cosign, k9s, podman) belong in each project's
+# own mise.toml — not here.
+#
+# Dotfiles dev tools (shellcheck, stylua, hk, pkl, etc.) live in
+# ~/.local/share/chezmoi/mise.toml — not here.
+#
+# Backend preference order: brew > aqua > github
+#   brew:   managed via Brewfile (brew bundle), skip in mise if present
+#   aqua:   aqua registry — verified checksums, curated
+#   github: GitHub releases not in aqua registry (ubi: is deprecated alias for github:)
+
 [tools]
+# ── Security & Secrets ────────────────────────────────────────────────────────
+# NOTE: 1password-cli is a brew cask (macOS only) — aqua backend on Linux
+"1password-cli" = "latest"        # op CLI; pairs with 1Password GUI for biometric auth
+"aqua:FiloSottile/age" = "latest" # age encryption
+"aqua:getsops/sops" = "latest"    # secrets encryption (SOPS)
+
+# ── Core runtimes ─────────────────────────────────────────────────────────────
+# Kept global as they are required backends for npm: and other mise tools
+go   = "latest"
+node = "latest"
+
+# ── Universal CLI tools ───────────────────────────────────────────────────────
+"aqua:cli/cli"           = "latest" # gh — GitHub CLI
+"aqua:casey/just"        = "latest" # just — command runner / task file
+"aqua:jqlang/jq"         = "latest" # jq — JSON processor
+"aqua:charmbracelet/glow" = "latest" # glow — markdown renderer
+"github:jdx/fnox"        = "latest" # fnox — no aqua entry

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# Install all tools declared in ~/.config/mise/config.toml.
+# run_onchange — reruns whenever the mise config changes.
+#
+# config hash: {{ include (joinPath .chezmoi.sourceDir "dot_config/mise/config.toml") | sha256sum }}
+
+set -euo pipefail
+
+{{ if eq .chezmoi.os "linux" -}}
+# Ensure brew-installed mise is on PATH
+if ! command -v mise &>/dev/null; then
+	if [[ -x /home/linuxbrew/.linuxbrew/bin/mise ]]; then
+		eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	else
+		echo "ERROR: mise not found. Ensure brew bundle ran successfully." >&2
+		exit 1
+	fi
+fi
+{{- else }}
+if ! command -v mise &>/dev/null; then
+	echo "ERROR: mise not found." >&2
+	exit 1
+fi
+{{- end }}
+
+echo "Running mise install..."
+mise install --yes
