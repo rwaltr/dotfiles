@@ -5,13 +5,14 @@ local module = {}
 
 function module.apply_to_config(config)
 	local wezterm = require("wezterm")
+	local utils = require("utils")
 
 	local function basename(s)
 		return string.gsub(s, "(.*[/\\])(.*)", "%2")
 	end
 
 	-- Enable Wayland if available (recommended for better performance)
-	if os.getenv("WAYLANND_DISPLAY") ~= "" then
+	if os.getenv("WAYLAND_DISPLAY") ~= "" then
 		config.enable_wayland = true
 	end
 
@@ -27,58 +28,64 @@ function module.apply_to_config(config)
 	-- }
 	-- end
 
-	-- Linux-specific key bindings could go here
-	-- config.keys = config.keys or {}
-	config.exec_domains = {
-		-- Defines a domain called "scoped" that will run the requested
-		-- command inside its own individual systemd scope.
-		-- This defines a strong boundary for resource control and can
-		-- help to avoid OOMs in one pane causing other panes to be
-		-- killed.
-		wezterm.exec_domain("scoped", function(cmd)
-			-- The "cmd" parameter is a SpawnCommand object.
-			-- You can log it to see what's inside:
-			wezterm.log_info(cmd)
+	-- Wrap each pane in its own systemd scope for strong resource isolation.
+	-- Requirements:
+	--   * systemd-run must be available (host or via flatpak-spawn)
+	--   * Inside Flatpak the commands are forwarded to the host via flatpak-spawn
+	if utils.command_exists("systemd-run") then
+		config.exec_domains = {
+			-- Defines a domain called "scoped" that will run the requested
+			-- command inside its own individual systemd scope.
+			-- This defines a strong boundary for resource control and can
+			-- help to avoid OOMs in one pane causing other panes to be
+			-- killed.
+			wezterm.exec_domain("scoped", function(cmd)
+				-- The "cmd" parameter is a SpawnCommand object.
+				-- You can log it to see what's inside:
+				wezterm.log_info(cmd)
 
-			-- Synthesize a human understandable scope name that is
-			-- (reasonably) unique. WEZTERM_PANE is the pane id that
-			-- will be used for the newly spawned pane.
-			-- WEZTERM_UNIX_SOCKET is associated with the wezterm
-			-- process id.
-			local env = cmd.set_environment_variables
-			local ident = "wezterm-pane-" .. env.WEZTERM_PANE .. "-on-" .. basename(env.WEZTERM_UNIX_SOCKET)
+				-- Synthesize a human understandable scope name that is
+				-- (reasonably) unique. WEZTERM_PANE is the pane id that
+				-- will be used for the newly spawned pane.
+				-- WEZTERM_UNIX_SOCKET is associated with the wezterm
+				-- process id.
+				local env = cmd.set_environment_variables
+				local ident = "wezterm-pane-" .. env.WEZTERM_PANE .. "-on-" .. basename(env.WEZTERM_UNIX_SOCKET)
 
-			-- Generate a new argument array that will launch a
-			-- program via systemd-run
-			local wrapped = {
-				"systemd-run",
-				"--user",
-				"--scope",
-				"--description=Shell started by wezterm",
-				"--same-dir",
-				"--collect",
-				"--unit=" .. ident,
-			}
+				-- Build the systemd-run argument list, then optionally
+				-- wrap with flatpak-spawn --host when inside Flatpak.
+				local wrapped = utils.maybe_host_wrap({
+					"systemd-run",
+					"--user",
+					"--scope",
+					"--description=Shell started by wezterm",
+					"--same-dir",
+					"--collect",
+					"--unit=" .. ident,
+				})
 
-			-- Append the requested command
-			-- Note that cmd.args may be nil; that indicates that the
-			-- default program should be used. Here we're using the
-			-- shell defined by the SHELL environment variable.
-			for _, arg in ipairs(cmd.args or { os.getenv("SHELL") }) do
-				table.insert(wrapped, arg)
-			end
+				-- Append the requested command.
+				-- Note that cmd.args may be nil; that indicates that the
+				-- default program should be used. Here we're using the
+				-- shell defined by the SHELL environment variable.
+				for _, arg in ipairs(cmd.args or { os.getenv("SHELL") }) do
+					table.insert(wrapped, arg)
+				end
 
-			-- replace the requested argument array with our new one
-			cmd.args = wrapped
+				-- replace the requested argument array with our new one
+				cmd.args = wrapped
 
-			-- and return the SpawnCommand that we want to execute
-			return cmd
-		end),
-	}
+				-- and return the SpawnCommand that we want to execute
+				return cmd
+			end),
+		}
 
-	-- Making the domain the default means that every pane/tab/window
-	-- spawned by wezterm will have its own scope
-	config.default_domain = "scoped"
+		-- Making the domain the default means that every pane/tab/window
+		-- spawned by wezterm will have its own scope.
+		config.default_domain = "scoped"
+	else
+		wezterm.log_warn("systemd-run not found — skipping scoped exec domain")
+	end
 end
 
 return module

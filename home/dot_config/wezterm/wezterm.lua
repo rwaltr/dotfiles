@@ -19,18 +19,28 @@ end
 config.color_scheme = "Catppuccin Mocha"
 
 -- Font settings
+-- Preferred fonts are tried in order; wezterm also auto-appends its built-in
+-- fallback (JetBrains Mono → Symbols Nerd Font Mono → Noto Color Emoji), but
+-- we list them explicitly so the config works correctly even on bare systems
+-- that have none of the preferred fonts installed.
 config.font = wezterm.font_with_fallback({
 	{ family = "IosevkaTerm Nerd Font" },
 	{ family = "Iosevka Term Font" },
 	{ family = "0xProto Nerd Font" },
 	{ family = "0xProto" },
-	-- "Hack",
-	-- "Miracraft",
+	-- WezTerm built-in fonts (always available, bundled in the binary)
+	{ family = "JetBrains Mono" },
+	{ family = "Symbols Nerd Font Mono" },
+	{ family = "Noto Color Emoji" },
 })
 config.window_frame = {
 	font = wezterm.font_with_fallback({
 		{ family = "Iosevka Term Bold" },
 		{ family = "0xProto" },
+		-- WezTerm built-in fonts (always available, bundled in the binary)
+		{ family = "JetBrains Mono" },
+		{ family = "Symbols Nerd Font Mono" },
+		{ family = "Noto Color Emoji" },
 	}),
 	font_size = 8,
 }
