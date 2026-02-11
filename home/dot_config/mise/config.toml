@@ -13,6 +13,10 @@
 #   aqua:   aqua registry — verified checksums, curated
 #   github: GitHub releases not in aqua registry (ubi: is deprecated alias for github:)
 
+[settings]
+# Automatically trust the global mise config — prevents interactive prompt on first run
+trusted_config_paths = ["~/.config/mise/config.toml"]
+
 [tools]
 # ── Security & Secrets ────────────────────────────────────────────────────────
 # NOTE: 1password-cli is a brew cask (macOS only) — aqua backend on Linux
