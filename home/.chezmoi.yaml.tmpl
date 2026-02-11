@@ -35,12 +35,15 @@
 {{- end -}}
 
 {{- if not $ephemeral -}}
-{{- else if stdinIsATTY -}}
-{{-     $headless = promptBoolOnce . "headless" "headless" -}}
-{{-     $ephemeral = promptBoolOnce . "ephemeral" "ephemeral" -}}
-{{- else -}}
-{{- $ephemeral = true -}}
-{{- $headless = true -}}
+{{-   if stdinIsATTY -}}
+{{-     $headless  = promptBoolOnce . "headless"  "Headless machine (no GUI)?" -}}
+{{-     $ephemeral = promptBoolOnce . "ephemeral" "Ephemeral machine (CI/VM/container)?" -}}
+{{-     $personal  = promptBoolOnce . "personal"  "Personal machine?" -}}
+{{-     $work      = promptBoolOnce . "work"      "Work machine?" -}}
+{{-   else -}}
+{{-     $ephemeral = true -}}
+{{-     $headless  = true -}}
+{{-   end -}}
 {{- end -}}
 
 

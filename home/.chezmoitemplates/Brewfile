@@ -1,54 +1,48 @@
-# Brewfile — managed by chezmoi (.chezmoitemplates/Brewfile)
-# Never applied to ~/ directly; rendered by run_onchange_after_30_brew_bundle.sh.tmpl
-# Update with: brew bundle dump --file=path/to/Brewfile --all --describe --force
+# Brewfile — rendered by chezmoi from .chezmoitemplates/Brewfile
+# Context: personal={{ .personal }} work={{ .work }} headless={{ .headless }} ephemeral={{ .ephemeral }}
 #
-# brew bundle install handles:
-#   - brew formulae  (CLI tools, Linux bottled)
-#   - casks          (fonts — installs to ~/.local/share/fonts/ on Linux)
-#   - flatpaks       (Linux only, silently skipped on macOS)
-#   - taps
+# Segments:
+#   always     — every machine
+#   !headless  — machines with a GUI (fonts, flatpaks, terminal apps)
+#   personal   — personal machines (notes, media, gaming, creative)
+#   work       — work machines (TBD)
+#   !ephemeral — persistent machines (heavier tools not worth installing on throwaway envs)
 
-# ── Taps ──────────────────────────────────────────────────────────────────────
+# ── Taps (always) ─────────────────────────────────────────────────────────────
+{{ if not .headless -}}
 tap "ublue-os/tap"
 tap "ublue-os/experimental-tap"
+{{ end -}}
 
-# ── CLI tools ─────────────────────────────────────────────────────────────────
+# ── CLI tools (always) ────────────────────────────────────────────────────────
 
-# Tool version manager — PRIMARY (installs all other dev tools via mise install)
-brew "mise"
-
-# Shells
+brew "mise"      # tool version manager — PRIMARY bootstrap
 brew "fish"
-
-# Secrets (mise also manages these via aqua: backend as fallback)
-brew "age"
-brew "sops"
-
-# Core utilities
+brew "neovim"
 brew "ripgrep"
 brew "fd"
 brew "fzf"
 brew "bat"
 brew "eza"
 brew "zoxide"
-
-# Shell enhancements
 brew "starship"
 brew "atuin"
 
-# Editor (CLI)
-brew "neovim"
-
-# System monitoring (TUI)
+{{ if not .ephemeral -}}
+# ── CLI tools (!ephemeral) ────────────────────────────────────────────────────
+brew "age"
+brew "sops"
 brew "btop"
+{{ end -}}
 
-# ── Fonts ─────────────────────────────────────────────────────────────────────
+{{ if not .headless -}}
+# ── Fonts (!headless) ─────────────────────────────────────────────────────────
 # Casks install to ~/.local/share/fonts/ on Linux, ~/Library/Fonts/ on macOS
 
 # WezTerm primary fonts (wezterm.lua font_with_fallback)
-cask "font-iosevka-term-nerd-font"        # IosevkaTerm Nerd Font — primary
-cask "font-iosevka"                       # Iosevka — base family fallback
-cask "font-0xproto-nerd-font"             # 0xProto Nerd Font — secondary
+cask "font-iosevka-term-nerd-font"
+cask "font-iosevka"
+cask "font-0xproto-nerd-font"
 
 # Other tracked fonts
 cask "font-hack-nerd-font"
@@ -57,41 +51,52 @@ cask "font-meslo-lg-nerd-font"
 cask "font-monocraft"
 cask "font-miracode"
 
-# ── Flatpaks (Linux only — silently skipped on macOS) ─────────────────────────
+# ── Flatpaks (!headless) ──────────────────────────────────────────────────────
+# Linux only — brew bundle silently skips these on macOS
 
-# Productivity
-flatpak "md.obsidian.Obsidian"
-flatpak "org.mozilla.Thunderbird"
-flatpak "org.mozilla.firefox"
-flatpak "org.libreoffice.LibreOffice"
-flatpak "io.github.Qalculate.qalculate-qt"
+# Terminal
+flatpak "org.wezfurlong.wezterm"
+
+# Development
+flatpak "dev.zed.Zed"
+flatpak "io.podman_desktop.PodmanDesktop"
 flatpak "org.gnome.meld"
+
+# Utilities
+flatpak "io.github.Qalculate.qalculate-qt"
 
 # Media
 flatpak "org.videolan.VLC"
 flatpak "io.mpv.Mpv"
+flatpak "org.rncbc.qpwgraph"
+
+{{ if .personal -}}
+# ── Flatpaks (personal + !headless) ───────────────────────────────────────────
+
+# Security — flatpak GUI + op CLI via mise; socket fix via script _31
+flatpak "com.onepassword.OnePassword"
+
+# Notes / Productivity
+flatpak "md.obsidian.Obsidian"
+flatpak "org.mozilla.Thunderbird"
+flatpak "org.mozilla.firefox"
+flatpak "org.libreoffice.LibreOffice"
 
 # Creative / 3D
 flatpak "org.inkscape.Inkscape"
 flatpak "org.freecad.FreeCAD"
 flatpak "io.github.softfever.OrcaSlicer"
 
-# Development
-flatpak "dev.zed.Zed"
-flatpak "io.podman_desktop.PodmanDesktop"
-
-# Audio
-flatpak "org.rncbc.qpwgraph"
-
-# Security
-# NOTE: op CLI installed via mise (1password-cli); socket fix via script _31
-flatpak "com.onepassword.OnePassword"
-
-# Terminals (no Linux brew bottle for wezterm)
-flatpak "org.wezfurlong.wezterm"
-
 # Gaming (flatpak on immutable; Steam → distrobox on ublue)
 flatpak "dev.vencord.Vesktop"
 flatpak "com.heroicgameslauncher.hgl"
 flatpak "net.lutris.Lutris"
 flatpak "net.davidotek.pupgui2"
+{{ end -}}
+
+{{ if .work -}}
+# ── Flatpaks (work + !headless) ────────────────────────────────────────────────
+# placeholder — add work-specific GUI apps here
+{{ end -}}
+
+{{ end -}}
