@@ -24,7 +24,7 @@ if [[ ${#DECLARED[@]} -eq 0 ]]; then
 fi
 
 echo "Installing/updating ${#DECLARED[@]} flatpaks..."
-flatpak install -y --noninteractive --or-update flathub "${DECLARED[@]}"
+flatpak install -y --noninteractive --system --or-update flathub "${DECLARED[@]}"
 {{- else }}
 echo "Skipping flatpaks (not Linux or headless)"
 {{- end }}
