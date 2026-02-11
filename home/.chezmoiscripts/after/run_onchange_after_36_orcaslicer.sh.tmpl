@@ -23,7 +23,7 @@ if [[ ! -f "$BUNDLE" ]]; then
 fi
 
 echo "Installing OrcaSlicer from $BUNDLE..."
-flatpak install -y --noninteractive "$BUNDLE"
+flatpak install -y --noninteractive --user "$BUNDLE"
 echo "OrcaSlicer installed"
 {{- else }}
 echo "Skipping OrcaSlicer (not Linux, headless, or not personal)"
