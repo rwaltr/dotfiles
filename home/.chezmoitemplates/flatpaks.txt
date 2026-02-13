@@ -3,9 +3,7 @@
 org.wezfurlong.wezterm
 dev.zed.Zed
 io.podman_desktop.PodmanDesktop
-org.gnome.meld
 io.github.Qalculate.qalculate-qt
-org.videolan.VLC
 io.mpv.Mpv
 org.rncbc.qpwgraph
 io.github.flattool.Warehouse
@@ -13,6 +11,7 @@ com.github.tchx84.Flatseal
 io.github.flattool.Ignition
 com.ranfdev.DistroShelf
 io.github.kolunmi.Bazaar
+org.localsend.localsend_app
 
 {{ if .personal -}}
 # personal
@@ -24,7 +23,6 @@ org.libreoffice.LibreOffice
 org.inkscape.Inkscape
 org.freecad.FreeCAD
 dev.vencord.Vesktop
-com.heroicgameslauncher.hgl
 net.lutris.Lutris
 net.davidotek.pupgui2
 io.github.diegopvlk.Cine
