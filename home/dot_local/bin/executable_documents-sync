@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+# documents-sync — continuous bisync of ~/Documents to mouse via rclone + inotifywait
+#
+# Usage:
+#   documents-sync          # run continuously (for systemd service)
+#   documents-sync once     # single bisync run then exit
+#   documents-sync resync   # force --resync (first-time setup / recovery)
+#
+# Requirements: rclone, inotify-tools
+# SSH auth via 1Password agent socket
+
+set -euo pipefail
+
+# ── Config ────────────────────────────────────────────────────────────────────
+LOCAL="${HOME}/Documents"
+REMOTE=":sftp,host=mouse:Documents"
+SSH_SOCK="${HOME}/.1password/agent.sock"
+BACKUP_LOCAL="${LOCAL}/.bisync-backups"
+BACKUP_REMOTE=":sftp,host=mouse:Documents/.bisync-backups"
+
+WATCH_EVENTS="modify,delete,create,move"
+SYNC_DELAY=5        # seconds to wait after a change before syncing (debounce)
+SYNC_INTERVAL=3600  # seconds between forced syncs even with no changes
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
+
+notify() {
+    local msg="$1"
+    if command -v notify-send &>/dev/null && [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
+        notify-send "rclone bisync" "$msg" --icon=emblem-synchronizing 2>/dev/null || true
+    fi
+}
+
+bisync() {
+    local extra_flags=("$@")
+    log "Running bisync..."
+    SSH_AUTH_SOCK="$SSH_SOCK" rclone bisync \
+        "$LOCAL" "$REMOTE" \
+        --create-empty-src-dirs \
+        --backup-dir1 "$BACKUP_LOCAL" \
+        --backup-dir2 "$BACKUP_REMOTE" \
+        --compare size,modtime \
+        --resilient \
+        --verbose \
+        "${extra_flags[@]}"
+}
+
+# ── Commands ──────────────────────────────────────────────────────────────────
+cmd="${1:-watch}"
+
+case "$cmd" in
+resync)
+    log "Running initial resync..."
+    bisync --resync
+    log "Resync complete"
+    ;;
+
+once)
+    bisync
+    log "Sync complete"
+    ;;
+
+watch)
+    log "Starting continuous sync: $LOCAL ↔ $REMOTE"
+    log "Watching for changes (debounce: ${SYNC_DELAY}s, forced interval: ${SYNC_INTERVAL}s)"
+
+    # Initial sync on startup
+    bisync && notify "Started" || { notify "Startup sync failed"; log "Startup sync failed"; }
+
+    while true; do
+        # Wait for a file event or timeout
+        if inotifywait \
+            --recursive \
+            --timeout "$SYNC_INTERVAL" \
+            --event "$WATCH_EVENTS" \
+            --exclude '/\.bisync-backups/' \
+            "$LOCAL" 2>/dev/null; then
+            # File change detected — debounce then sync
+            log "Change detected, waiting ${SYNC_DELAY}s..."
+            sleep "$SYNC_DELAY"
+            bisync && notify "Synchronized" || { notify "Sync failed — check logs"; log "Sync failed"; }
+        else
+            exit_code=$?
+            if [[ $exit_code -eq 2 ]]; then
+                # Timeout — do a forced interval sync
+                log "Interval sync triggered"
+                bisync || { notify "Interval sync failed"; log "Interval sync failed"; }
+            else
+                log "inotifywait error (exit $exit_code), retrying in 10s..."
+                sleep 10
+            fi
+        fi
+    done
+    ;;
+
+*)
+    echo "Usage: $(basename "$0") [watch|once|resync]"
+    exit 1
+    ;;
+esac
