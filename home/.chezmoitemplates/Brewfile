@@ -32,6 +32,9 @@ brew "atuin"
 brew "age"
 brew "sops"
 brew "btop"
+brew "rclone"
+brew "restic"
+brew "inotify-tools"
 {{ end -}}
 
 {{ if not .headless -}}
