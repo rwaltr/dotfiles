@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# Reload the systemd user daemon after chezmoi apply so any new or changed
+# unit files are picked up immediately.
+# run_always — harmless to run every time, fast, ensures units are current.
+
+{{ if eq .chezmoi.os "linux" -}}
+set -euo pipefail
+
+if ! command -v systemctl &>/dev/null; then
+	echo "systemctl not available, skipping"
+	exit 0
+fi
+
+echo "Reloading systemd user daemon..."
+systemctl --user daemon-reload
+{{- else }}
+echo "Skipping systemd reload (not Linux)"
+{{- end }}
