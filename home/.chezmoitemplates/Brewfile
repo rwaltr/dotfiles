@@ -19,6 +19,7 @@ tap "ublue-os/experimental-tap"
 # ── CLI tools (always) ────────────────────────────────────────────────────────
 
 brew "mise"      # tool version manager — PRIMARY bootstrap
+brew "gh"        # GitHub CLI
 brew "fish"
 brew "neovim"
 brew "ripgrep"

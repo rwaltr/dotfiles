@@ -30,7 +30,7 @@ go   = "latest"
 node = "latest"
 
 # ── Universal CLI tools ───────────────────────────────────────────────────────
-"aqua:cli/cli"           = "latest" # gh — GitHub CLI
+# gh installed via Brewfile
 "aqua:casey/just"        = "latest" # just — command runner / task file
 "aqua:jqlang/jq"         = "latest" # jq — JSON processor
 "aqua:charmbracelet/glow" = "latest" # glow — markdown renderer
