@@ -13,4 +13,6 @@
 .local/bin/virtcontainerctl
 .config/systemd/user/documents-sync.service
 .config/resticprofile
+.config/containers/systemd/resticprofile-home.container
+.config/containers/systemd/resticprofile-home.timer
 {{- end }}

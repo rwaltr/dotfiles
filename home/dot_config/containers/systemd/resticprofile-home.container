@@ -1,0 +1,31 @@
+[Unit]
+Description=resticprofile home backup
+After=network-online.target
+Wants=network-online.target
+After=sys-subsystem-net-devices-tailscale0.device
+Requires=sys-subsystem-net-devices-tailscale0.device
+
+[Container]
+Image=ghcr.io/creativeprojects/resticprofile:latest
+Exec=--name home backup
+
+# Mount config and home for backup source + SFTP keys
+Volume=%h/.config/resticprofile:%h/.config/resticprofile:ro
+Volume=%h:%h
+
+# 1Password SSH agent for SFTP auth
+Volume=%h/.1password/agent.sock:%h/.1password/agent.sock:ro
+Environment=SSH_AUTH_SOCK=%h/.1password/agent.sock
+
+# Keep same UID/GID as host user
+UserNS=keep-id
+
+# Network access for SFTP
+Network=host
+
+[Service]
+Type=oneshot
+# No RemainAfterExit — allows timer to retrigger
+
+[Install]
+WantedBy=default.target

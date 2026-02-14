@@ -8,7 +8,6 @@
 #   !ephemeral — persistent machines
 
 # ── Taps ─────────────────────────────────────────────────────────────────────
-tap "creativeprojects/tap"  # resticprofile
 
 # ── Taps (!headless) ──────────────────────────────────────────────────────────
 {{ if not .headless -}}
@@ -39,7 +38,7 @@ brew "btop"
 brew "rclone"
 brew "restic"
 brew "inotify-tools"
-brew "creativeprojects/tap/resticprofile"
+# resticprofile runs via podman quadlet — see ~/.config/containers/systemd/
 {{ end -}}
 
 {{ if not .headless -}}

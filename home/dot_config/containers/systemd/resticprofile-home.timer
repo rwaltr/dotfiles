@@ -1,0 +1,10 @@
+[Unit]
+Description=Hourly resticprofile home backup timer
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target
