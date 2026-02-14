@@ -16,8 +16,8 @@ if ! command -v flatpak &>/dev/null; then
 fi
 
 if [[ ! -f "$BUNDLE" ]]; then
-	echo "OrcaSlicer bundle not found at $BUNDLE — chezmoi external may not have run yet"
-	exit 1
+	echo "OrcaSlicer bundle not found at $BUNDLE — skipping (chezmoi external may not have run yet)"
+	exit 0
 fi
 
 # Version baked in at chezmoi template render time from the GitHub release URL
