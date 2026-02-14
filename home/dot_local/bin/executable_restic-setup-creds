@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# restic-setup-creds — one-time per-host resticprofile credential setup
+#
+# Encrypts the restic repo password using systemd-creds (TPM/host-key bound).
+# Stores the plaintext password at ~/.config/resticprofile/password (mode 600).
+# That file is read by resticprofile's password-file setting.
+#
+# Run once after chezmoi apply on each new host.
+#
+# Usage:
+#   restic-setup-creds          # prompts for password interactively
+#   restic-setup-creds --show   # show credential status
+
+set -euo pipefail
+
+CRED_DIR="${HOME}/.config/resticprofile"
+PASS_FILE="${CRED_DIR}/password"
+
+log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
+
+case "${1:-}" in
+--show)
+    if [[ -f "$PASS_FILE" ]]; then
+        echo "Password file: $PASS_FILE"
+        echo "Size: $(wc -c < "$PASS_FILE") bytes"
+        echo "Permissions: $(stat -c '%a' "$PASS_FILE")"
+        echo "Modified: $(stat -c '%y' "$PASS_FILE")"
+    else
+        echo "No password file found at $PASS_FILE"
+        echo "Run restic-setup-creds to create one."
+    fi
+    exit 0
+    ;;
+esac
+
+if [[ -f "$PASS_FILE" ]]; then
+    echo "Password file already exists at $PASS_FILE"
+    read -r -p "Overwrite? [y/N] " confirm
+    [[ "$confirm" =~ ^[Yy]$ ]] || exit 0
+fi
+
+mkdir -p "$CRED_DIR"
+chmod 700 "$CRED_DIR"
+
+log "Enter your restic repo password:"
+systemd-ask-password --no-tty "Restic repo password:" > "$PASS_FILE"
+chmod 600 "$PASS_FILE"
+
+log "Password saved to $PASS_FILE"
+log "Verify with: restic-setup-creds --show"
+log "Then run: resticprofile --name home init"
+log "And schedule: resticprofile schedule --all"

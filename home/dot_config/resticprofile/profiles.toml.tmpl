@@ -1,0 +1,102 @@
+#:schema https://creativeprojects.github.io/resticprofile/jsonschema/config-1.json
+# resticprofile configuration
+# Managed by chezmoi.
+#
+# Credentials: per-host, encrypted with systemd-creds.
+# Setup: run `restic-setup-creds` once per host after chezmoi apply.
+# Schedule: resticprofile schedule --all
+
+version = "1"
+
+# ── Global settings ───────────────────────────────────────────────────────────
+[global]
+# Run at low priority — don't compete with interactive workloads
+priority = "background"
+ionice-class = 2
+ionice-level = 6
+
+# ── Base profile — inherited by all backup profiles ───────────────────────────
+[base]
+# Password via systemd-creds — set up per host with restic-setup-creds
+password-file = "~/.config/resticprofile/password"
+
+initialize = true
+
+[base.backup]
+verbose = true
+one-file-system = true
+exclude-caches = true
+
+exclude = [
+    # Caches
+    ".cache",
+    ".local/share/recently-used.xbel",
+
+    # Gaming
+    ".local/share/Steam",
+    ".local/share/lutris",
+    ".steam",
+    "Games",
+
+    # Containers & VMs
+    ".local/share/containers",
+    ".local/share/gnome-boxes",
+    ".var/app/*/data/containers",
+
+    # Package managers / reinstallable
+    ".local/share/flatpak",
+    ".local/share/mise",
+    ".linuxbrew",
+    ".local/share/Trash",
+
+    # Build artifacts
+    "node_modules",
+    "__pycache__",
+    "*.pyc",
+    "*.pyo",
+    "target",
+    ".cargo/registry",
+    ".cargo/git",
+    ".gradle",
+    ".m2",
+    "dist",
+    "build",
+
+    # Source code — on GitHub
+    "src",
+
+    # Downloads — transient
+    "Downloads",
+
+    # Large media / disk images
+    "*.iso",
+    "*.img",
+    "*.qcow2",
+    "*.vmdk",
+    "*.vdi",
+
+    # resticprofile credentials — host-specific, useless elsewhere
+    ".config/resticprofile/password",
+]
+
+[base.retention]
+after-backup = true
+keep-hourly  = 24
+keep-daily   = 7
+keep-weekly  = 4
+keep-monthly = 12
+keep-yearly  = 3
+
+# ── Home backup profile ───────────────────────────────────────────────────────
+[home]
+inherit     = "base"
+repository  = "sftp:mouse:backups/{{ .chezmoi.hostname }}/home"
+
+[home.backup]
+source = ["~"]
+
+[home.backup.schedule]
+schedule                    = "hourly"
+schedule-permission         = "user"
+schedule-after-network-online = true
+schedule-lock-wait          = "45m"

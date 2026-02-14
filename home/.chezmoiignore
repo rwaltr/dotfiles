@@ -8,5 +8,7 @@
 {{- end }}
 {{- if not .personal }}
 .local/bin/auto-bisync
+.local/bin/restic-setup-creds
 .config/systemd/user/documents-sync.service
+.config/resticprofile
 {{- end }}
