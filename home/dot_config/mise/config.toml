@@ -34,5 +34,4 @@ node = "latest"
 "aqua:casey/just"        = "latest" # just — command runner / task file
 "aqua:jqlang/jq"         = "latest" # jq — JSON processor
 "aqua:charmbracelet/glow" = "latest" # glow — markdown renderer
-"github:jdx/fnox"                          = "latest" # fnox — no aqua entry
-"github:creativeprojects/resticprofile"    = "latest" # resticprofile — restic backup scheduler
+"github:jdx/fnox"        = "latest" # fnox — no aqua entry

@@ -7,6 +7,9 @@
 #   !headless  — machines with a GUI (font casks)
 #   !ephemeral — persistent machines
 
+# ── Taps ─────────────────────────────────────────────────────────────────────
+tap "creativeprojects/tap"  # resticprofile
+
 # ── Taps (!headless) ──────────────────────────────────────────────────────────
 {{ if not .headless -}}
 tap "ublue-os/tap"
@@ -35,6 +38,7 @@ brew "btop"
 brew "rclone"
 brew "restic"
 brew "inotify-tools"
+brew "creativeprojects/tap/resticprofile"
 {{ end -}}
 
 {{ if not .headless -}}
