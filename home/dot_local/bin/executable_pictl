@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+# pictl — distrobox wrapper for the pi AI coding agent
+#
+# Currently uses ghcr.io/ublue-os/fedora-toolbox as the base image.
+# TODO: migrate to alpine or wolfi once compatibility is confirmed,
+#       for a more minimal footprint.
+
+import os
+import sys
+import subprocess
+
+CONTAINER_NAME = "pi"
+IMAGE = "ghcr.io/ublue-os/fedora-toolbox:latest"
+PI_PACKAGE = "@mariozechner/pi-coding-agent"
+
+
+def run(cmd, *, check=True):
+    """Run a command with list arguments, print it, raise on error."""
+    print("Running:", " ".join(cmd))
+    subprocess.run(cmd, check=check)
+
+
+def container_exists(name):
+    """Return True if a Podman container with this name exists."""
+    try:
+        result = subprocess.run(
+            ["podman", "ps", "-a", "--format", "{{.Names}}"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return name in result.stdout.splitlines()
+    except subprocess.CalledProcessError:
+        return False
+
+
+def install():
+    if container_exists(CONTAINER_NAME):
+        print(f"Container '{CONTAINER_NAME}' already exists - skipping install.")
+        return
+
+    print(f"Creating distrobox container {CONTAINER_NAME} from {IMAGE}")
+    run([
+        "distrobox", "create",
+        "--name", CONTAINER_NAME,
+        "--image", IMAGE,
+        "--pull",
+        "--yes",
+    ])
+
+    print(f"Installing {PI_PACKAGE}...")
+    run([
+        "distrobox", "enter", CONTAINER_NAME,
+        "--", "npm", "install", "-g", PI_PACKAGE,
+    ])
+
+    print("Exporting pi binary to host...")
+    run([
+        "distrobox", "enter", CONTAINER_NAME,
+        "--", "distrobox-export", "--bin", "/home/rwaltr/.local/bin/pi",
+    ])
+
+    print(f"pi installed. Run with: pi")
+
+
+def upgrade():
+    if not container_exists(CONTAINER_NAME):
+        print(f"Container '{CONTAINER_NAME}' does not exist - cannot upgrade.")
+        return
+
+    print(f"Upgrading {PI_PACKAGE}...")
+    run([
+        "distrobox", "enter", CONTAINER_NAME,
+        "--", "npm", "install", "-g", PI_PACKAGE,
+    ])
+
+    print(f"Upgrading container '{CONTAINER_NAME}'...")
+    run(["distrobox", "upgrade", CONTAINER_NAME])
+    print("Upgrade complete!")
+
+
+def enter():
+    if not container_exists(CONTAINER_NAME):
+        print(f"Container '{CONTAINER_NAME}' does not exist - run pictl install first.")
+        return
+
+    print(f"Entering container '{CONTAINER_NAME}'...")
+    os.execvp("distrobox", ["distrobox", "enter", CONTAINER_NAME])
+
+
+def uninstall():
+    if not container_exists(CONTAINER_NAME):
+        print(f"Container '{CONTAINER_NAME}' does not exist.")
+        return
+
+    print(f"Removing distrobox container {CONTAINER_NAME}...")
+    run(["distrobox", "rm", "-f", CONTAINER_NAME])
+    print("Done.")
+
+
+def usage():
+    print(f"Usage: {sys.argv[0]} {{install|upgrade|enter|uninstall}}")
+    sys.exit(1)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        usage()
+
+    cmd = sys.argv[1].lower()
+    if cmd == "install":
+        install()
+    elif cmd == "upgrade":
+        upgrade()
+    elif cmd == "enter":
+        enter()
+    elif cmd == "uninstall":
+        uninstall()
+    else:
+        usage()

@@ -11,6 +11,7 @@
 .local/bin/restic-setup-creds
 .local/bin/gamingctl
 .local/bin/virtcontainerctl
+.local/bin/pictl
 .config/systemd/user/documents-sync.service
 .config/resticprofile
 {{- end }}
