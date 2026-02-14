@@ -62,9 +62,9 @@ Different shells for different tasks, not just preference:
 This repo does **not** manage:
 
 - ❌ Host NetworkManager configurations
-- ❌ Systemd services (host level)
+- ❌ Host-level systemd services (system units)
 - ❌ Server/system administration
-- ❌ Package installation on host
+- ❌ Host package installation (no pacman/apt/dnf)
 
 This keeps configs portable and safe for immutable operating systems.
 
@@ -104,6 +104,21 @@ This keeps configs portable and safe for immutable operating systems.
 - **Containers**: Podman + Distrobox exported apps
 - **Language Tools**: Managed by mise per-project (Python, Node, Go, Rust, etc.)
 
+### 🤖 Bootstrap Automation
+
+`chezmoi apply` on a fresh ublue/immutable Linux system automatically:
+
+1. **Installs Homebrew** (`run_once_before_10`) — Linuxbrew in `/home/linuxbrew`
+2. **Installs Tailscale** (`run_once_before_20`) — via official install script, skipped if present or ephemeral
+3. **Runs `brew bundle`** (`run_always_after_30`) — CLI tools, fonts; rendered from `Brewfile` template
+4. **Configures 1Password flatpak** (`run_onchange_after_31`) — filesystem overrides for SSH agent + CLI daemon
+5. **Installs Flatpaks** (`run_always_after_35`) — system-wide from `flatpaks.txt` template; additive only
+6. **Installs OrcaSlicer** (`run_always_after_36`) — personal machines; version-checked, flatpak bundle
+7. **Runs `mise install`** (`run_onchange_after_50`) — installs all tools in `~/.config/mise/config.toml`
+8. **Reloads systemd** (`run_always_after_99`) — picks up new/changed user units
+
+All scripts are idempotent and additive — safe to re-run on every `chezmoi apply`.
+
 ### 🎨 Desktop Environments
 
 - **Niri** (Wayland tiling compositor)
@@ -119,7 +134,7 @@ chezmoi init rwaltr
 chezmoi apply
 ```
 
-**Coming Soon**: Auto-install mise, Homebrew, and Flatpaks during init
+On first apply, chezmoi will automatically install Homebrew, Tailscale, brew bundle (CLI tools + fonts), Flatpaks, and mise tools.
 
 ### Option 2: Bootstrap Without Chezmoi
 
@@ -230,26 +245,35 @@ dotfiles/
 ├── .markdownlint-cli2.jsonc  # Markdown linting rules
 │
 ├── home/                 # Chezmoi source directory (becomes ~/)
-│   ├── .chezmoiexternal.yaml  # External asset management
-│   ├── .chezmoiignore    # Files to skip
+│   ├── .chezmoiexternal.yaml  # External assets (OrcaSlicer bundle)
+│   ├── .chezmoiignore    # Files to skip (personal-only gating)
+│   ├── .chezmoi.yaml.tmpl    # Machine flags: personal, work, headless, ephemeral
+│   │
+│   ├── .chezmoiscripts/
+│   │   ├── before/       # Pre-apply: homebrew, tailscale, common dirs
+│   │   └── after/        # Post-apply: brew bundle, flatpaks, mise, systemd reload
+│   │
+│   ├── .chezmoitemplates/
+│   │   ├── Brewfile       # CLI tools + fonts (segmented by flags)
+│   │   └── flatpaks.txt   # Flatpak app IDs (segmented by flags)
 │   │
 │   ├── dot_config/
-│   │   ├── fish/         # Fish shell (15+ modular files)
-│   │   │   ├── config.fish
-│   │   │   ├── conf.d/   # Auto-loaded configs
-│   │   │   └── functions/
-│   │   │
-│   │   ├── bashrc.d/     # Modular Bash configs (17 files)
-│   │   │   ├── 0.*.sh    # Core (load order)
-│   │   │   └── *.sh      # Tool-specific
-│   │   │
-│   │   ├── nvim/         # Neovim Lua config
-│   │   ├── wezterm/      # Terminal config
-│   │   ├── mise/         # mise configuration
-│   │   └── ...
+│   │   ├── fish/          # Fish shell (primary interactive)
+│   │   ├── bashrc.d/      # Modular Bash configs
+│   │   ├── nushell/       # Nushell data processing
+│   │   ├── zsh/           # Zsh (minimal, shares Bash config)
+│   │   ├── nvim/          # Neovim Lua config
+│   │   ├── wezterm/       # Terminal config
+│   │   ├── mise/          # Global mise tool config
+│   │   ├── niri/          # Niri Wayland compositor
+│   │   ├── containers/systemd/  # Podman quadlets (resticprofile)
+│   │   ├── systemd/user/  # User systemd units + timers
+│   │   └── resticprofile/ # Backup profiles (personal only)
 │   │
 │   └── dot_local/
-│       └── bin/          # Custom scripts
+│       └── bin/           # Custom scripts:
+│                          #   auto-bisync, gamingctl, virtcontainerctl,
+│                          #   restic-setup-creds, ssh-multi
 │
 ├── AGENTS.md             # Comprehensive context for AI agents
 └── README.md             # This file
@@ -360,15 +384,30 @@ mise list
 ## 💾 Backups
 
 Home directory backups are managed via [resticprofile](https://creativeprojects.github.io/resticprofile/) —
-a profile-based wrapper around [restic](https://restic.net/) with built-in systemd scheduling.
+a profile-based wrapper around [restic](https://restic.net/).
 
 ### How it works
 
 - **Profile config**: `~/.config/resticprofile/profiles.toml` (managed by chezmoi, personal machines only)
 - **Repo**: `sftp:mouse:backups/<hostname>/home` — per-host repo on the mouse server over SFTP/Tailscale
-- **Schedule**: Hourly via a user systemd timer, starts after `network-online.target`
+- **SSH auth**: 1Password SSH agent (`~/.1password/agent.sock`)
+- **Schedule**: Hourly via user systemd timer (`resticprofile@home.timer`), starts after `tailscale0` is up
 - **Retention**: 24 hourly, 7 daily, 4 weekly, 12 monthly, 3 yearly snapshots
 - **Credentials**: Per-host password stored at `~/.config/resticprofile/password` (mode 600, not in git)
+
+### Podman quadlet
+
+resticprofile runs in a rootless Podman container via a systemd quadlet — no local install required.
+
+```
+systemd timer → resticprofile@<profile>.service → podman run ghcr.io/creativeprojects/resticprofile
+```
+
+The quadlet (`~/.config/containers/systemd/resticprofile@.container`) mounts:
+
+- `~` — backup source and SSH keys
+- `~/.config/resticprofile` — profile config and credentials
+- `~/.1password/agent.sock` — 1Password SSH agent for SFTP auth
 
 ### What's excluded
 
@@ -378,41 +417,40 @@ Caches, Steam, container storage, build artifacts (`node_modules`, `target`, `.c
 ### First-time setup (per host)
 
 ```bash
-# 1. Set the repo password — encrypted to this host, stored locally
+# 1. Set the repo password — stored at ~/.config/resticprofile/password
 restic-setup-creds
 
 # 2. Initialize the restic repo on the remote
-resticprofile --name home init
+systemctl --user start resticprofile@home.service
+# (resticprofile initialize = true handles this automatically on first run)
 
-# 3. Install the systemd schedule
-resticprofile schedule --all
+# 3. Enable the timer
+systemctl --user enable --now resticprofile@home.timer
 
-# 4. Dry run to verify
-resticprofile --name home backup --dry-run
-
-# 5. Watch logs
-journalctl --user -u resticprofile-home@backup -f
+# 4. Watch logs
+journalctl --user -u resticprofile@home.service -f
 ```
 
-### Adding a new backup target
+### Adding a new backup profile
 
 Add a new profile to `profiles.toml` inheriting from `base`:
 
 ```toml
 [documents]
 inherit    = "base"
-repository = "sftp:mouse:backups/monolith/documents"
+repository = "sftp:mouse:backups/{{ "{{" }} .chezmoi.hostname {{ "}}" }}/documents"
 
 [documents.backup]
 source = ["~/Documents"]
-
-[documents.backup.schedule]
-schedule                      = "hourly"
-schedule-permission           = "user"
-schedule-after-network-online = true
 ```
 
-Then run `resticprofile schedule --all` to install the new timer.
+Then add and enable a timer:
+
+```bash
+cp ~/.config/systemd/user/resticprofile@home.timer \
+   ~/.config/systemd/user/resticprofile@documents.timer
+systemctl --user enable --now resticprofile@documents.timer
+```
 
 ### Future: S3 backend
 
@@ -454,9 +492,6 @@ For **project-specific** version management:
 **vs Homebrew**: Homebrew is for global tools used everywhere (kubectl, jq, fzf, etc.),
 while mise handles per-project versions (Node 18 in project A, Node 20 in project B).
 
-**vs Homebrew**: Homebrew is for global tools used everywhere (kubectl, jq, fzf, etc.),
-while mise handles per-project versions (Node 18 in project A, Node 20 in project B).
-
 ### Why Container-First?
 
 **Goal**: Run this environment anywhere:
@@ -478,8 +513,8 @@ while mise handles per-project versions (Node 18 in project A, Node 20 in projec
 ### In Progress
 
 - [ ] **Distrobox Assemble**: Rebuild pi AI agent environment on any machine
-- [ ] **Auto-install during init**: mise, Homebrew, Flatpaks
 - [ ] **Kubernetes debug container**: Run dotfiles in `kubectl debug` pods
+- [ ] **First bootstrap test**: Full end-to-end test on a fresh ublue system
 
 ### Ideas
 
@@ -487,6 +522,7 @@ while mise handles per-project versions (Node 18 in project A, Node 20 in projec
 - [ ] **Container image**: Pre-built Docker/Podman image with full setup
 - [ ] **macOS improvements**: Better Homebrew integration
 - [ ] **Nushell integration**: Deeper data processing workflows
+- [ ] **S3 backup backend**: Second restic profile pointing at S3-compatible storage
 
 ## 📚 Additional Documentation
 
