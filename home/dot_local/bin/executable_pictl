@@ -54,10 +54,11 @@ def install():
         "--", "npm", "install", "-g", PI_PACKAGE,
     ])
 
-    print("Exporting pi binary to host...")
+    pi_bin = os.path.join(os.path.expanduser("~"), ".local", "bin", "pi")
+    print(f"Exporting pi binary to host ({pi_bin})...")
     run([
         "distrobox", "enter", CONTAINER_NAME,
-        "--", "distrobox-export", "--bin", "/home/rwaltr/.local/bin/pi",
+        "--", "distrobox-export", "--bin", pi_bin,
     ])
 
     print(f"pi installed. Run with: pi")
