@@ -12,6 +12,7 @@
 #
 # Requirements: rclone, inotify-tools
 # SSH auth via 1Password agent socket
+# Backup dirs: ~/.local/share/bisync-backups/<local-path-slug>/{local,remote}
 
 set -euo pipefail
 
@@ -27,8 +28,10 @@ CMD="${3:-watch}"
 
 # ── Config ────────────────────────────────────────────────────────────────────
 SSH_SOCK="${HOME}/.1password/agent.sock"
-BACKUP_LOCAL="${LOCAL}/.bisync-backups"
-BACKUP_REMOTE="${REMOTE%:*}/.bisync-backups"  # derive from remote path
+# Backup dirs must be outside the sync source — use a stable name derived from the local path
+_SAFE_NAME="$(echo "$LOCAL" | tr '/' '_' | sed 's/^_//')"
+BACKUP_LOCAL="${HOME}/.local/share/bisync-backups/${_SAFE_NAME}/local"
+BACKUP_REMOTE="${HOME}/.local/share/bisync-backups/${_SAFE_NAME}/remote"
 
 WATCH_EVENTS="modify,delete,create,move"
 SYNC_DELAY=5        # seconds to wait after a change before syncing (debounce)
@@ -83,7 +86,7 @@ watch)
             --recursive \
             --timeout "$SYNC_INTERVAL" \
             --event "$WATCH_EVENTS" \
-            --exclude '/\.bisync-backups/' \
+            --exclude '/\.git/' \
             "$LOCAL" 2>/dev/null; then
             # File change detected — debounce then sync
             log "Change detected, waiting ${SYNC_DELAY}s..."
