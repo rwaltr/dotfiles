@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# rclone-bisync — inotify-driven continuous bisync between a local path and an rclone remote
+# auto-bisync — inotify-driven continuous bisync between a local path and an rclone remote
 #
 # Usage:
-#   rclone-bisync <local-path> <remote>                  # watch continuously
-#   rclone-bisync <local-path> <remote> once             # single bisync run then exit
-#   rclone-bisync <local-path> <remote> resync           # force --resync (first-time / recovery)
+#   auto-bisync <local-path> <remote>                  # watch continuously
+#   auto-bisync <local-path> <remote> once             # single bisync run then exit
+#   auto-bisync <local-path> <remote> resync           # force --resync (first-time / recovery)
 #
 # Examples:
-#   rclone-bisync ~/Documents :sftp,host=mouse:Documents
-#   rclone-bisync ~/Documents :sftp,host=mouse:Documents resync
+#   auto-bisync ~/Documents :sftp,host=mouse:Documents
+#   auto-bisync ~/Documents :sftp,host=mouse:Documents resync
 #
 # Requirements: rclone, inotify-tools
 # SSH auth via 1Password agent socket
@@ -40,7 +40,7 @@ log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 notify() {
     local msg="$1"
     if command -v notify-send &>/dev/null && [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
-        notify-send "rclone-bisync" "$msg" --icon=emblem-synchronizing 2>/dev/null || true
+        notify-send "auto-bisync" "$msg" --icon=emblem-synchronizing 2>/dev/null || true
     fi
 }
 
