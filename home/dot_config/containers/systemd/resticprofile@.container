@@ -1,5 +1,5 @@
 [Unit]
-Description=resticprofile home backup
+Description=resticprofile %i backup
 After=network-online.target
 Wants=network-online.target
 After=sys-subsystem-net-devices-tailscale0.device
@@ -7,7 +7,7 @@ Requires=sys-subsystem-net-devices-tailscale0.device
 
 [Container]
 Image=ghcr.io/creativeprojects/resticprofile:latest
-Exec=--name home backup
+Exec=--name %i backup
 
 # Mount config and home for backup source + SFTP keys
 Volume=%h/.config/resticprofile:%h/.config/resticprofile:ro

@@ -1,5 +1,5 @@
 [Unit]
-Description=Hourly resticprofile home backup timer
+Description=Hourly resticprofile %i backup timer
 
 [Timer]
 OnCalendar=hourly
