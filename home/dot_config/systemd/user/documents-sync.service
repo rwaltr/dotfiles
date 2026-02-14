@@ -1,0 +1,20 @@
+[Unit]
+Description=Continuous bisync of ~/Documents to mouse via rclone
+Documentation=man:rclone(1)
+# Require network and tailscale interface before starting
+After=network-online.target
+Wants=network-online.target
+# Wait for tailscale0 interface to appear
+After=sys-subsystem-net-devices-tailscale0.device
+Requires=sys-subsystem-net-devices-tailscale0.device
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/documents-sync watch
+Restart=on-failure
+RestartSec=30s
+# Give tailscale a moment to establish connectivity after interface appears
+ExecStartPre=/bin/sleep 5
+
+[Install]
+WantedBy=default.target
