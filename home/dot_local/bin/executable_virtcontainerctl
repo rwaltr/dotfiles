@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Inspired by Zena-Linux's virtualization script:
+# https://github.com/Zena-Linux/Zena/blob/main/system-files/base/usr/local/bin/virtualization
 
 import os
 import sys
