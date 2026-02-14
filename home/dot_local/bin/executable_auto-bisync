@@ -28,10 +28,13 @@ CMD="${3:-watch}"
 
 # ── Config ────────────────────────────────────────────────────────────────────
 SSH_SOCK="${HOME}/.1password/agent.sock"
-# Backup dirs must be outside the sync source — use a stable name derived from the local path
+# Backup dirs must be outside the sync source and on the same remote as their respective path
 _SAFE_NAME="$(echo "$LOCAL" | tr '/' '_' | sed 's/^_//')"
-BACKUP_LOCAL="${HOME}/.local/share/bisync-backups/${_SAFE_NAME}/local"
-BACKUP_REMOTE="${HOME}/.local/share/bisync-backups/${_SAFE_NAME}/remote"
+BACKUP_LOCAL="${HOME}/.local/share/bisync-backups/${_SAFE_NAME}"
+# Remote backup: same connection string, different path — strip trailing path component
+# e.g. :sftp,host=mouse:Documents/ → :sftp,host=mouse:.bisync-backups/home_rwaltr_Documents
+_REMOTE_CONN="${REMOTE%:*}:"   # everything up to and including the last colon
+BACKUP_REMOTE="${_REMOTE_CONN}.bisync-backups/${_SAFE_NAME}"
 
 WATCH_EVENTS="modify,delete,create,move"
 SYNC_DELAY=5        # seconds to wait after a change before syncing (debounce)
