@@ -48,6 +48,12 @@ def install():
         "--yes",
     ])
 
+    print("Installing dependencies...")
+    run([
+        "distrobox", "enter", CONTAINER_NAME,
+        "--", "sudo", "dnf", "install", "-y", "libatomic",
+    ])
+
     print(f"Installing {PI_PACKAGE}...")
     run([
         "distrobox", "enter", CONTAINER_NAME,
