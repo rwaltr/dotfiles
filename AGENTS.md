@@ -12,12 +12,13 @@ development workflows.
 
 - **Minimal input required**: `chezmoi init rwaltr` should work with minimal configuration
 - **Container-first**: Designed for portable development environments
+- **Build Reusable software**: As we add functions, consider how it could be broken up into smaller parts to be reused elsewhere.
 - **Multi-shell by purpose**:
   - **Fish**: Primary interactive shell, focused on user-friendliness
   - **Bash**: Streamlined scripting-focused configuration
   - **Nushell**: Data processing and structured data workflows
   - **Zsh**: Minimal config as migration bridge, shares config with Bash via POSIX compatibility
-- **No system-level automation**: Does not manage host NetworkManager, systemd services, etc.
+- **No system-level automation**: Does not manage host NetworkManager, host level systemd services, etc.
 - **Secrets via 1Password**: Personal secrets managed through 1Password CLI
 - **Not for servers**: Focused on workstation/development environments
 
