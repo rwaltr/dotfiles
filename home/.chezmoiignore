@@ -11,7 +11,8 @@
 .local/bin/restic-setup-creds
 .local/bin/gamingctl
 .local/bin/virtcontainerctl
-.config/systemd/user/documents-sync.service
+.config/systemd/user/bisync@.service
+.config/bisync
 .config/resticprofile
 .config/containers/systemd/resticprofile@.container
 .config/systemd/user/resticprofile@home.timer

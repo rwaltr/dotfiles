@@ -1,16 +1,16 @@
 [Unit]
-Description=Continuous bisync of ~/Documents to mouse via rclone
+Description=Continuous bisync for %i
 Documentation=man:rclone(1)
-# Require network and tailscale interface before starting
 After=network-online.target
 Wants=network-online.target
-# Wait for tailscale0 interface to appear
 After=sys-subsystem-net-devices-tailscale0.device
 Requires=sys-subsystem-net-devices-tailscale0.device
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/auto-bisync %h/Documents :sftp,host=mouse:Documents watch
+# Read LOCAL and REMOTE from ~/.config/bisync/%i.env
+EnvironmentFile=%h/.config/bisync/%i.env
+ExecStart=%h/.local/bin/auto-bisync ${LOCAL} ${REMOTE} watch
 Restart=on-failure
 RestartSec=30s
 # Give tailscale a moment to establish connectivity after interface appears
