@@ -2,9 +2,10 @@
 # Inspired by Zena-Linux's gaming script:
 # https://github.com/Zena-Linux/Zena/blob/main/system-files/base/usr/local/bin/gaming
 
+import argparse
 import os
-import sys
 import subprocess
+import sys
 
 CONTAINER_NAME = "Gaming"
 IMAGE = "docker.io/cachyos/cachyos-v3:latest"
@@ -45,7 +46,7 @@ def has_nvidia_gpu():
         return False
 
 
-def install():
+def install(extra_dirs=None):
     if container_exists(CONTAINER_NAME):
         print(f"Container '{CONTAINER_NAME}' already exists - skipping install.")
         return
@@ -54,12 +55,21 @@ def install():
 
     print(f"Creating distrobox container {CONTAINER_NAME} from {IMAGE}")
 
-    # Mount external Steam library if present
-    extra_volumes = []
+    # Auto-detect default Steam library
+    volumes = []
     steam_lib = f"/media/ssdcache/{os.getlogin()}/games"
     if os.path.isdir(steam_lib):
         print(f"Found Steam library at {steam_lib} — mounting into container")
-        extra_volumes = ["--volume", f"{steam_lib}:{steam_lib}:rslave"]
+        volumes += ["--volume", f"{steam_lib}:{steam_lib}:rslave"]
+
+    # Extra volumes from --volume args
+    for d in (extra_dirs or []):
+        d = os.path.realpath(d)
+        if os.path.isdir(d):
+            print(f"Mounting extra volume: {d}")
+            volumes += ["--volume", f"{d}:{d}:rslave"]
+        else:
+            print(f"Warning: {d} does not exist, skipping")
 
     run([
         "distrobox", "create",
@@ -67,7 +77,7 @@ def install():
         "--image", IMAGE,
         "--pull",
         *nvidia_flag,
-        *extra_volumes,
+        *volumes,
         "--yes",
     ])
 
@@ -152,23 +162,27 @@ def uninstall():
     print("Done.")
 
 
-def usage():
-    print(f"Usage: {sys.argv[0]} {{install|upgrade|enter|uninstall}}")
-    sys.exit(1)
-
-
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        usage()
+    parser = argparse.ArgumentParser(description="Manage the Gaming distrobox container")
+    subparsers = parser.add_subparsers(dest="cmd", required=True)
 
-    cmd = sys.argv[1].lower()
-    if cmd == "install":
-        install()
-    elif cmd == "upgrade":
+    p_install = subparsers.add_parser("install", help="Create and set up the container")
+    p_install.add_argument(
+        "-v", "--volume", dest="volumes", action="append", default=[],
+        metavar="DIR", help="Extra directory to mount (can be repeated)",
+    )
+
+    subparsers.add_parser("upgrade", help="Upgrade the container and packages")
+    subparsers.add_parser("enter", help="Enter the container shell")
+    subparsers.add_parser("uninstall", help="Remove the container")
+
+    args = parser.parse_args()
+
+    if args.cmd == "install":
+        install(extra_dirs=args.volumes)
+    elif args.cmd == "upgrade":
         upgrade()
-    elif cmd == "enter":
+    elif args.cmd == "enter":
         enter()
-    elif cmd == "uninstall":
+    elif args.cmd == "uninstall":
         uninstall()
-    else:
-        usage()
