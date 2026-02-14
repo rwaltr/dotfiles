@@ -14,5 +14,5 @@
 .config/systemd/user/documents-sync.service
 .config/resticprofile
 .config/containers/systemd/resticprofile-home.container
-.config/containers/systemd/resticprofile-home.timer
+.config/systemd/user/resticprofile-home.timer
 {{- end }}
