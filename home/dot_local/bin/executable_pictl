@@ -51,7 +51,7 @@ def install():
     print(f"Installing {PI_PACKAGE}...")
     run([
         "distrobox", "enter", CONTAINER_NAME,
-        "--", "npm", "install", "-g", PI_PACKAGE,
+        "--", "/usr/bin/npm", "install", "-g", PI_PACKAGE,
     ])
 
     pi_bin = os.path.join(os.path.expanduser("~"), ".local", "bin", "pi")
@@ -72,7 +72,7 @@ def upgrade():
     print(f"Upgrading {PI_PACKAGE}...")
     run([
         "distrobox", "enter", CONTAINER_NAME,
-        "--", "npm", "install", "-g", PI_PACKAGE,
+        "--", "/usr/bin/npm", "install", "-g", PI_PACKAGE,
     ])
 
     print(f"Upgrading container '{CONTAINER_NAME}'...")
