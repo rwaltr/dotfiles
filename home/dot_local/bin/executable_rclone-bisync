@@ -1,22 +1,34 @@
 #!/usr/bin/env bash
-# documents-sync — continuous bisync of ~/Documents to mouse via rclone + inotifywait
+# rclone-bisync — inotify-driven continuous bisync between a local path and an rclone remote
 #
 # Usage:
-#   documents-sync          # run continuously (for systemd service)
-#   documents-sync once     # single bisync run then exit
-#   documents-sync resync   # force --resync (first-time setup / recovery)
+#   rclone-bisync <local-path> <remote>                  # watch continuously
+#   rclone-bisync <local-path> <remote> once             # single bisync run then exit
+#   rclone-bisync <local-path> <remote> resync           # force --resync (first-time / recovery)
+#
+# Examples:
+#   rclone-bisync ~/Documents :sftp,host=mouse:Documents
+#   rclone-bisync ~/Documents :sftp,host=mouse:Documents resync
 #
 # Requirements: rclone, inotify-tools
 # SSH auth via 1Password agent socket
 
 set -euo pipefail
 
+# ── Args ──────────────────────────────────────────────────────────────────────
+if [[ $# -lt 2 ]]; then
+    echo "Usage: $(basename "$0") <local-path> <remote> [watch|once|resync]"
+    exit 1
+fi
+
+LOCAL="$(realpath "$1")"
+REMOTE="$2"
+CMD="${3:-watch}"
+
 # ── Config ────────────────────────────────────────────────────────────────────
-LOCAL="${HOME}/Documents"
-REMOTE=":sftp,host=mouse:Documents"
 SSH_SOCK="${HOME}/.1password/agent.sock"
 BACKUP_LOCAL="${LOCAL}/.bisync-backups"
-BACKUP_REMOTE=":sftp,host=mouse:Documents/.bisync-backups"
+BACKUP_REMOTE="${REMOTE%:*}/.bisync-backups"  # derive from remote path
 
 WATCH_EVENTS="modify,delete,create,move"
 SYNC_DELAY=5        # seconds to wait after a change before syncing (debounce)
@@ -28,13 +40,13 @@ log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 notify() {
     local msg="$1"
     if command -v notify-send &>/dev/null && [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
-        notify-send "rclone bisync" "$msg" --icon=emblem-synchronizing 2>/dev/null || true
+        notify-send "rclone-bisync" "$msg" --icon=emblem-synchronizing 2>/dev/null || true
     fi
 }
 
 bisync() {
     local extra_flags=("$@")
-    log "Running bisync..."
+    log "Running bisync: $LOCAL ↔ $REMOTE"
     SSH_AUTH_SOCK="$SSH_SOCK" rclone bisync \
         "$LOCAL" "$REMOTE" \
         --create-empty-src-dirs \
@@ -47,9 +59,7 @@ bisync() {
 }
 
 # ── Commands ──────────────────────────────────────────────────────────────────
-cmd="${1:-watch}"
-
-case "$cmd" in
+case "$CMD" in
 resync)
     log "Running initial resync..."
     bisync --resync
@@ -66,10 +76,9 @@ watch)
     log "Watching for changes (debounce: ${SYNC_DELAY}s, forced interval: ${SYNC_INTERVAL}s)"
 
     # Initial sync on startup
-    bisync && notify "Started" || { notify "Startup sync failed"; log "Startup sync failed"; }
+    bisync && notify "Started ($LOCAL)" || { notify "Startup sync failed ($LOCAL)"; log "Startup sync failed"; }
 
     while true; do
-        # Wait for a file event or timeout
         if inotifywait \
             --recursive \
             --timeout "$SYNC_INTERVAL" \
@@ -79,13 +88,13 @@ watch)
             # File change detected — debounce then sync
             log "Change detected, waiting ${SYNC_DELAY}s..."
             sleep "$SYNC_DELAY"
-            bisync && notify "Synchronized" || { notify "Sync failed — check logs"; log "Sync failed"; }
+            bisync && notify "Synchronized ($LOCAL)" || { notify "Sync failed ($LOCAL)"; log "Sync failed"; }
         else
             exit_code=$?
             if [[ $exit_code -eq 2 ]]; then
-                # Timeout — do a forced interval sync
+                # Timeout — forced interval sync
                 log "Interval sync triggered"
-                bisync || { notify "Interval sync failed"; log "Interval sync failed"; }
+                bisync || { notify "Interval sync failed ($LOCAL)"; log "Interval sync failed"; }
             else
                 log "inotifywait error (exit $exit_code), retrying in 10s..."
                 sleep 10
@@ -95,7 +104,7 @@ watch)
     ;;
 
 *)
-    echo "Usage: $(basename "$0") [watch|once|resync]"
+    echo "Usage: $(basename "$0") <local-path> <remote> [watch|once|resync]"
     exit 1
     ;;
 esac

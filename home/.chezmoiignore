@@ -7,6 +7,6 @@
 {{- if not .work }}
 {{- end }}
 {{- if not .personal }}
-.local/bin/documents-sync
+.local/bin/rclone-bisync
 .config/systemd/user/documents-sync.service
 {{- end }}

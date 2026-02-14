@@ -10,7 +10,7 @@ Requires=sys-subsystem-net-devices-tailscale0.device
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/documents-sync watch
+ExecStart=%h/.local/bin/rclone-bisync %h/Documents :sftp,host=mouse:Documents watch
 Restart=on-failure
 RestartSec=30s
 # Give tailscale a moment to establish connectivity after interface appears
