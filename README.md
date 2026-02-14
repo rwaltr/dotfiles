@@ -21,6 +21,7 @@
 - [Shell Strategy](#-shell-strategy)
 - [Project Structure](#-project-structure)
 - [Development Workflow](#%EF%B8%8F-development-workflow)
+- [Backups](#-backups)
 - [Design Choices](#-design-choices)
 - [Future Plans](#-future-plans)
 
@@ -355,6 +356,68 @@ mise install
 # Verify
 mise list
 ```
+
+## 💾 Backups
+
+Home directory backups are managed via [resticprofile](https://creativeprojects.github.io/resticprofile/) —
+a profile-based wrapper around [restic](https://restic.net/) with built-in systemd scheduling.
+
+### How it works
+
+- **Profile config**: `~/.config/resticprofile/profiles.toml` (managed by chezmoi, personal machines only)
+- **Repo**: `sftp:mouse:backups/<hostname>/home` — per-host repo on the mouse server over SFTP/Tailscale
+- **Schedule**: Hourly via a user systemd timer, starts after `network-online.target`
+- **Retention**: 24 hourly, 7 daily, 4 weekly, 12 monthly, 3 yearly snapshots
+- **Credentials**: Per-host password stored at `~/.config/resticprofile/password` (mode 600, not in git)
+
+### What's excluded
+
+Caches, Steam, container storage, build artifacts (`node_modules`, `target`, `.cargo`),
+`~/src` (on GitHub), `~/Downloads`, large disk images (`*.iso`, `*.qcow2`).
+
+### First-time setup (per host)
+
+```bash
+# 1. Set the repo password — encrypted to this host, stored locally
+restic-setup-creds
+
+# 2. Initialize the restic repo on the remote
+resticprofile --name home init
+
+# 3. Install the systemd schedule
+resticprofile schedule --all
+
+# 4. Dry run to verify
+resticprofile --name home backup --dry-run
+
+# 5. Watch logs
+journalctl --user -u resticprofile-home@backup -f
+```
+
+### Adding a new backup target
+
+Add a new profile to `profiles.toml` inheriting from `base`:
+
+```toml
+[documents]
+inherit    = "base"
+repository = "sftp:mouse:backups/monolith/documents"
+
+[documents.backup]
+source = ["~/Documents"]
+
+[documents.backup.schedule]
+schedule                      = "hourly"
+schedule-permission           = "user"
+schedule-after-network-online = true
+```
+
+Then run `resticprofile schedule --all` to install the new timer.
+
+### Future: S3 backend
+
+When mouse gets an S3-compatible backend, add a second profile pointing at it —
+the `base` excludes and retention policy inherit automatically.
 
 ## 🤔 Design Choices
 
