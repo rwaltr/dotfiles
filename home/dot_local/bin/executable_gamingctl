@@ -54,11 +54,12 @@ def install():
 
     print(f"Creating distrobox container {CONTAINER_NAME} from {IMAGE}")
 
-    # Mount external game storage if present
+    # Mount external Steam library if present
     extra_volumes = []
-    if os.path.isdir("/media/ssdcache"):
-        print("Found /media/ssdcache — mounting as Steam library path")
-        extra_volumes = ["--volume", "/media/ssdcache:/media/ssdcache:rslave"]
+    steam_lib = f"/media/ssdcache/{os.getlogin()}/games"
+    if os.path.isdir(steam_lib):
+        print(f"Found Steam library at {steam_lib} — mounting into container")
+        extra_volumes = ["--volume", f"{steam_lib}:{steam_lib}:rslave"]
 
     run([
         "distrobox", "create",
