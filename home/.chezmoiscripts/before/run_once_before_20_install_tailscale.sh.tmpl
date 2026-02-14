@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# Install Tailscale if not already present.
+# run_once — only runs if it has never run before on this machine.
+
+{{ if (and (eq .chezmoi.os "linux") (not .ephemeral)) -}}
+set -euo pipefail
+
+if command -v tailscale &>/dev/null; then
+	echo "tailscale already installed, skipping"
+	exit 0
+fi
+
+echo "Installing Tailscale..."
+curl -fsSL https://tailscale.com/install.sh | sh
+{{- else }}
+echo "Skipping Tailscale install (not Linux or ephemeral)"
+{{- end }}
