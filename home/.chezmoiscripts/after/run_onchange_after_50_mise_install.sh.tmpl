@@ -13,14 +13,14 @@ if ! command -v mise &>/dev/null; then
 	if [[ -x /home/linuxbrew/.linuxbrew/bin/mise ]]; then
 		eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 	else
-		echo "ERROR: mise not found. Ensure brew bundle ran successfully." >&2
-		exit 1
+		echo "WARN: mise not found — brew bundle may not have run yet. Skipping." >&2
+		exit 0
 	fi
 fi
 {{- else }}
 if ! command -v mise &>/dev/null; then
-	echo "ERROR: mise not found." >&2
-	exit 1
+	echo "WARN: mise not found. Skipping." >&2
+	exit 0
 fi
 {{- end }}
 
