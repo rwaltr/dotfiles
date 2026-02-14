@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # pictl — distrobox wrapper for the pi AI coding agent
 #
-# Currently uses ghcr.io/ublue-os/fedora-toolbox as the base image.
+# Uses ghcr.io/ublue-os/bluefin-cli as the base image.
 # TODO: migrate to alpine or wolfi once compatibility is confirmed,
 #       for a more minimal footprint.
 
@@ -10,7 +10,7 @@ import sys
 import subprocess
 
 CONTAINER_NAME = "pi"
-IMAGE = "ghcr.io/ublue-os/fedora-toolbox:latest"
+IMAGE = "ghcr.io/ublue-os/bluefin-cli:latest"
 PI_PACKAGE = "@mariozechner/pi-coding-agent"
 
 
@@ -46,12 +46,6 @@ def install():
         "--image", IMAGE,
         "--pull",
         "--yes",
-    ])
-
-    print("Installing dependencies...")
-    run([
-        "distrobox", "enter", CONTAINER_NAME,
-        "--", "sudo", "dnf", "install", "-y", "libatomic",
     ])
 
     print(f"Installing {PI_PACKAGE}...")
