@@ -9,6 +9,8 @@
 {{- if not .personal }}
 .local/bin/auto-bisync
 .local/bin/restic-setup-creds
+.local/bin/gamingctl
+.local/bin/virtcontainerctl
 .config/systemd/user/documents-sync.service
 .config/resticprofile
 {{- end }}
