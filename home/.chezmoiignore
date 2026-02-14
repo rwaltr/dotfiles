@@ -7,4 +7,6 @@
 {{- if not .work }}
 {{- end }}
 {{- if not .personal }}
+.local/bin/documents-sync
+.config/systemd/user/documents-sync.service
 {{- end }}
