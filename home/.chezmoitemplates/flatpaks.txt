@@ -19,6 +19,7 @@ com.onepassword.OnePassword
 md.obsidian.Obsidian
 org.mozilla.Thunderbird
 org.mozilla.firefox
+com.brave.Browser
 org.libreoffice.LibreOffice
 org.inkscape.Inkscape
 org.freecad.FreeCAD
