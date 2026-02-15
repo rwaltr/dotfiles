@@ -5,8 +5,18 @@ _flatpak_wrap() {
     local app_id="$1"
     shift
     if ! flatpak info "$app_id" &>/dev/null; then
-        echo "flatpak: $app_id is not installed — installing..." >&2
-        flatpak install --system --or-update flathub "$app_id" || return 1
+        if [[ -t 0 ]]; then
+            echo "flatpak: $app_id is not installed." >&2
+            read -rp "Install now? [y/N] " answer
+            if [[ "$answer" =~ ^[Yy] ]]; then
+                flatpak install --system --or-update flathub "$app_id" || return 1
+            else
+                return 1
+            fi
+        else
+            echo "flatpak: $app_id is not installed (non-interactive, skipping)" >&2
+            return 1
+        fi
     fi
     flatpak run "$app_id" "$@"
 }
