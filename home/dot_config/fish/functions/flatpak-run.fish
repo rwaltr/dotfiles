@@ -9,6 +9,10 @@
 function _flatpak_wrap
     set -l app_id $argv[1]
     set -l rest $argv[2..]
+    if not flatpak info $app_id &>/dev/null
+        echo "flatpak: $app_id is not installed" >&2
+        return 1
+    end
     flatpak run $app_id $rest
 end
 
