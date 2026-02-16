@@ -1,7 +1,7 @@
 # 🚀 rwaltr's dotfiles
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/rwaltr/branding/refs/heads/master/vector/logoisolated.png"
+  <img src="https://raw.githubusercontent.com/rwaltr/branding/refs/heads/master/vector/logo.svg"
        alt="rwaltr logo" width="200"/>
 </div>
 
