@@ -231,24 +231,54 @@ echo -e "${RED}║  chezmoi source state is preserved.                  ║${NC}
 echo -e "${RED}╚══════════════════════════════════════════════════════╝${NC}"
 echo ""
 
-if ! $FORCE; then
-	confirm "Proceed with cleanup?" || { info "Aborted."; exit 0; }
+# Collect all answers upfront
+RUN_SYSTEMD=false
+RUN_ORCASLICER=false
+RUN_FLATPAKS=false
+RUN_MISE=false
+RUN_BREW=false
+RUN_DOTFILES=false
+RUN_STATE=false
+
+if $FORCE; then
+	RUN_SYSTEMD=true
+	RUN_ORCASLICER=true
+	RUN_FLATPAKS=true
+	RUN_MISE=true
+	RUN_BREW=true
+	RUN_DOTFILES=true
+	RUN_STATE=true
+else
+	confirm "Phase 1: Stop systemd user units?"           && RUN_SYSTEMD=true
+	confirm "Phase 2: Remove OrcaSlicer flatpak + bundle?" && RUN_ORCASLICER=true
+	confirm "Phase 3: Remove all declared flatpaks?"       && RUN_FLATPAKS=true
+	confirm "Phase 4: Remove mise-installed tools?"        && RUN_MISE=true
+	confirm "Phase 5: Remove brew packages?"               && RUN_BREW=true
+	confirm "Phase 6: Remove chezmoi-managed dotfiles?"    && RUN_DOTFILES=true
+	confirm "Phase 7: Clear chezmoi script state?"         && RUN_STATE=true
+
+	# Show summary and final confirmation
 	echo ""
+	info "Selected phases:"
+	$RUN_SYSTEMD    && info "  1. Stop systemd user units"
+	$RUN_ORCASLICER && info "  2. Remove OrcaSlicer flatpak + bundle"
+	$RUN_FLATPAKS   && info "  3. Remove all declared flatpaks"
+	$RUN_MISE       && info "  4. Remove mise-installed tools"
+	$RUN_BREW       && info "  5. Remove brew packages"
+	$RUN_DOTFILES   && info "  6. Remove chezmoi-managed dotfiles"
+	$RUN_STATE      && info "  7. Clear chezmoi script state"
+	echo ""
+	confirm "Execute selected phases?" || { info "Aborted."; exit 0; }
 fi
 
-confirm "Phase 1: Stop systemd user units?"           && phase_systemd
 echo ""
-confirm "Phase 2: Remove OrcaSlicer flatpak + bundle?" && phase_orcaslicer
-echo ""
-confirm "Phase 3: Remove all declared flatpaks?"       && phase_flatpaks
-echo ""
-confirm "Phase 4: Remove mise-installed tools?"        && phase_mise
-echo ""
-confirm "Phase 5: Remove brew packages?"               && phase_brew
-echo ""
-confirm "Phase 6: Remove chezmoi-managed dotfiles?"    && phase_dotfiles
-echo ""
-confirm "Phase 7: Clear chezmoi script state?"         && phase_chezmoi_state
+$RUN_SYSTEMD    && phase_systemd
+$RUN_ORCASLICER && phase_orcaslicer
+$RUN_FLATPAKS   && phase_flatpaks
+$RUN_MISE       && phase_mise
+$RUN_BREW       && phase_brew
+$RUN_DOTFILES   && phase_dotfiles
+$RUN_STATE      && phase_chezmoi_state
 
 echo ""
 info "Cleanup complete."
