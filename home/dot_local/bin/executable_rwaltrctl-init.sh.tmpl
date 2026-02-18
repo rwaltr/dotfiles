@@ -1,0 +1,343 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# rwaltrctl-init — post-chezmoi-apply setup wizard
+# Walks through all manual configuration steps needed after a fresh chezmoi apply.
+# Idempotent — safe to re-run; skips steps that are already configured.
+#
+# Usage:
+#   rwaltrctl-init          # interactive wizard
+#   rwaltrctl-init --force  # no prompts — run everything
+#   rwaltrctl-init --status # show current setup status
+
+{{ if (and (eq .chezmoi.os "linux") (not .headless)) -}}
+set -euo pipefail
+
+FORCE=false
+STATUS=false
+case "${1:-}" in
+--force) FORCE=true ;;
+--status) STATUS=true ;;
+esac
+
+# ── Colors & helpers ──────────────────────────────────────────────────────────
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+DIM='\033[2m'
+NC='\033[0m'
+
+info()  { echo -e "${GREEN}[init]${NC} $*"; }
+warn()  { echo -e "${YELLOW}[init]${NC} $*"; }
+error() { echo -e "${RED}[init]${NC} $*" >&2; }
+step()  { echo -e "${CYAN}${BOLD}══ $* ══${NC}"; }
+
+check_done() { echo -e "  ${GREEN}✓${NC} $*"; }
+check_todo() { echo -e "  ${YELLOW}○${NC} $*"; }
+check_skip() { echo -e "  ${DIM}─ $* (skipped)${NC}"; }
+
+confirm() {
+	if $FORCE; then return 0; fi
+	local msg="$1"
+	read -rp "$(echo -e "${YELLOW}$msg [y/N]${NC} ")" answer
+	[[ "$answer" =~ ^[Yy] ]]
+}
+
+wait_enter() {
+	if $FORCE; then return 0; fi
+	read -rp "$(echo -e "${DIM}Press Enter to continue...${NC}")"
+}
+
+# ── Status checks ─────────────────────────────────────────────────────────────
+is_tailscale_up() {
+	command -v tailscale &>/dev/null && tailscale status &>/dev/null
+}
+
+is_1password_signed_in() {
+	command -v op &>/dev/null && op account list 2>/dev/null | grep -q '.'
+}
+
+is_shell_fish() {
+	[[ "$(basename "${SHELL:-}")" == "fish" ]]
+}
+
+is_gh_authed() {
+	command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1
+}
+
+is_restic_creds_set() {
+	[[ -f "{{ .chezmoi.homeDir }}/.config/resticprofile/password" ]]
+}
+
+is_restic_timer_enabled() {
+	systemctl --user is-enabled resticprofile@home.timer &>/dev/null 2>&1
+}
+
+is_bisync_enabled() {
+	systemctl --user is-enabled bisync@documents.service &>/dev/null 2>&1
+}
+
+is_bisync_resynced() {
+	# Check if bisync has ever done a --resync (lock files exist)
+	local lock_dir="{{ .chezmoi.homeDir }}/.cache/rclone/bisync"
+	[[ -d "$lock_dir" ]] && [[ -n "$(ls -A "$lock_dir" 2>/dev/null)" ]]
+}
+
+# ── Status display ────────────────────────────────────────────────────────────
+show_status() {
+	echo ""
+	echo -e "${BOLD}rwaltrctl-init — setup status${NC}"
+	echo ""
+
+	if is_tailscale_up;        then check_done "Tailscale: connected";       else check_todo "Tailscale: not connected"; fi
+	if is_1password_signed_in; then check_done "1Password: signed in";       else check_todo "1Password: not signed in"; fi
+	if is_shell_fish;          then check_done "Default shell: fish";        else check_todo "Default shell: $(basename "${SHELL:-unknown}")"; fi
+	if is_gh_authed;           then check_done "GitHub CLI: authenticated";  else check_todo "GitHub CLI: not authenticated"; fi
+	if is_restic_creds_set;    then check_done "Restic credentials: set";    else check_todo "Restic credentials: not set"; fi
+	if is_restic_timer_enabled; then check_done "Restic timer: enabled";     else check_todo "Restic timer: not enabled"; fi
+	if is_bisync_resynced;     then check_done "Bisync: initialized";        else check_todo "Bisync: not initialized"; fi
+	if is_bisync_enabled;      then check_done "Bisync service: enabled";    else check_todo "Bisync service: not enabled"; fi
+	echo ""
+}
+
+if $STATUS; then
+	show_status
+	exit 0
+fi
+
+# ── Wizard questions ──────────────────────────────────────────────────────────
+echo ""
+echo -e "${CYAN}╔══════════════════════════════════════════════════════╗${NC}"
+echo -e "${CYAN}║          rwaltrctl-init — setup wizard              ║${NC}"
+echo -e "${CYAN}║  Post chezmoi-apply configuration for a new host.   ║${NC}"
+echo -e "${CYAN}╚══════════════════════════════════════════════════════╝${NC}"
+echo ""
+
+show_status
+
+RUN_TAILSCALE=false
+RUN_1PASSWORD=false
+RUN_SHELL=false
+RUN_GH=false
+RUN_RESTIC=false
+RUN_RESTIC_TIMER=false
+RUN_BISYNC_RESYNC=false
+RUN_BISYNC_ENABLE=false
+
+if $FORCE; then
+	RUN_TAILSCALE=true
+	RUN_1PASSWORD=true
+	RUN_SHELL=true
+	RUN_GH=true
+	RUN_RESTIC=true
+	RUN_RESTIC_TIMER=true
+	RUN_BISYNC_RESYNC=true
+	RUN_BISYNC_ENABLE=true
+else
+	echo -e "${BOLD}Select steps to run:${NC}"
+	echo ""
+	! is_tailscale_up        && confirm "1. Connect to Tailscale?"            && RUN_TAILSCALE=true
+	  is_tailscale_up        && check_skip "1. Tailscale (already connected)"
+	! is_1password_signed_in && confirm "2. Sign in to 1Password?"            && RUN_1PASSWORD=true
+	  is_1password_signed_in && check_skip "2. 1Password (already signed in)"
+	! is_shell_fish          && confirm "3. Set default shell to fish?"       && RUN_SHELL=true
+	  is_shell_fish          && check_skip "3. Default shell (already fish)"
+	! is_gh_authed           && confirm "4. Authenticate GitHub CLI?"         && RUN_GH=true
+	  is_gh_authed           && check_skip "4. GitHub CLI (already authed)"
+	! is_restic_creds_set    && confirm "5. Set up restic backup credentials?" && RUN_RESTIC=true
+	  is_restic_creds_set    && check_skip "5. Restic credentials (already set)"
+	! is_restic_timer_enabled && confirm "6. Enable restic backup timer?"      && RUN_RESTIC_TIMER=true
+	  is_restic_timer_enabled && check_skip "6. Restic timer (already enabled)"
+	! is_bisync_resynced     && confirm "7. Initialize bisync (first resync)?" && RUN_BISYNC_RESYNC=true
+	  is_bisync_resynced     && check_skip "7. Bisync init (already resynced)"
+	! is_bisync_enabled      && confirm "8. Enable bisync service?"            && RUN_BISYNC_ENABLE=true
+	  is_bisync_enabled      && check_skip "8. Bisync service (already enabled)"
+	echo ""
+fi
+
+# Count selected
+SELECTED=0
+$RUN_TAILSCALE     && ((SELECTED++)) || true
+$RUN_1PASSWORD     && ((SELECTED++)) || true
+$RUN_SHELL         && ((SELECTED++)) || true
+$RUN_GH            && ((SELECTED++)) || true
+$RUN_RESTIC        && ((SELECTED++)) || true
+$RUN_RESTIC_TIMER  && ((SELECTED++)) || true
+$RUN_BISYNC_RESYNC && ((SELECTED++)) || true
+$RUN_BISYNC_ENABLE && ((SELECTED++)) || true
+
+if [[ $SELECTED -eq 0 ]]; then
+	info "Nothing to do — system is fully configured!"
+	exit 0
+fi
+
+if ! $FORCE; then
+	info "$SELECTED step(s) selected."
+	confirm "Begin setup?" || { info "Aborted."; exit 0; }
+fi
+
+echo ""
+
+# ── Step 1: Tailscale ────────────────────────────────────────────────────────
+if $RUN_TAILSCALE; then
+	step "Step 1: Tailscale"
+	if ! command -v tailscale &>/dev/null; then
+		error "tailscale not installed — run chezmoi apply first"
+	elif is_tailscale_up; then
+		check_done "Already connected"
+	else
+		info "Starting Tailscale login..."
+		sudo tailscale up
+		if is_tailscale_up; then
+			check_done "Tailscale connected"
+		else
+			warn "Tailscale login may not have completed — check 'tailscale status'"
+		fi
+	fi
+	echo ""
+fi
+
+# ── Step 2: 1Password ────────────────────────────────────────────────────────
+if $RUN_1PASSWORD; then
+	step "Step 2: 1Password"
+	if is_1password_signed_in; then
+		check_done "Already signed in"
+	else
+		info "Open the 1Password desktop app and sign in."
+		info "The CLI authenticates via the desktop app's socket."
+		info "  App: flatpak run com.onepassword.OnePassword"
+		info ""
+		info "After signing in to the app, enable these in 1Password Settings:"
+		info "  → Developer → CLI integration"
+		info "  → Developer → SSH agent"
+		wait_enter
+		if is_1password_signed_in; then
+			check_done "1Password CLI connected"
+		else
+			warn "1Password CLI not yet connected — finish setup in the app"
+		fi
+	fi
+	echo ""
+fi
+
+# ── Step 3: Default shell ────────────────────────────────────────────────────
+if $RUN_SHELL; then
+	step "Step 3: Default shell → fish"
+	if is_shell_fish; then
+		check_done "Already fish"
+	else
+		FISH_PATH=$(command -v fish 2>/dev/null || true)
+		if [[ -z "$FISH_PATH" ]]; then
+			error "fish not found in PATH — run chezmoi apply first"
+		else
+			# Ensure fish is in /etc/shells
+			if ! grep -qxF "$FISH_PATH" /etc/shells 2>/dev/null; then
+				info "Adding $FISH_PATH to /etc/shells..."
+				echo "$FISH_PATH" | sudo tee -a /etc/shells >/dev/null
+			fi
+			info "Changing default shell to $FISH_PATH..."
+			chsh -s "$FISH_PATH"
+			check_done "Default shell set to fish (takes effect on next login)"
+		fi
+	fi
+	echo ""
+fi
+
+# ── Step 4: GitHub CLI ────────────────────────────────────────────────────────
+if $RUN_GH; then
+	step "Step 4: GitHub CLI auth"
+	if is_gh_authed; then
+		check_done "Already authenticated"
+	else
+		info "Authenticating with GitHub..."
+		gh auth login
+		if is_gh_authed; then
+			check_done "GitHub CLI authenticated"
+		else
+			warn "GitHub auth may not have completed"
+		fi
+	fi
+	echo ""
+fi
+
+# ── Step 5: Restic credentials ───────────────────────────────────────────────
+if $RUN_RESTIC; then
+	step "Step 5: Restic backup credentials"
+	if is_restic_creds_set; then
+		check_done "Credentials already set"
+	else
+		info "Running restic-setup-creds..."
+		restic-setup-creds
+		if is_restic_creds_set; then
+			check_done "Restic credentials configured"
+		else
+			warn "Credentials not set — run 'restic-setup-creds' manually"
+		fi
+	fi
+	echo ""
+fi
+
+# ── Step 6: Restic timer ─────────────────────────────────────────────────────
+if $RUN_RESTIC_TIMER; then
+	step "Step 6: Enable restic backup timer"
+	if is_restic_timer_enabled; then
+		check_done "Timer already enabled"
+	else
+		info "Enabling resticprofile@home.timer..."
+		systemctl --user enable --now resticprofile@home.timer
+		check_done "Restic backup timer enabled (hourly)"
+	fi
+	echo ""
+fi
+
+# ── Step 7: Bisync initial resync ────────────────────────────────────────────
+if $RUN_BISYNC_RESYNC; then
+	step "Step 7: Bisync initial resync"
+	if is_bisync_resynced; then
+		check_done "Already initialized"
+	else
+		if ! is_tailscale_up; then
+			warn "Tailscale not connected — bisync needs network to the remote"
+			warn "Skipping — connect Tailscale first, then re-run"
+		else
+			info "Running initial bisync resync for Documents..."
+			info "  Local:  {{ .chezmoi.homeDir }}/Documents"
+			info "  Remote: :sftp,host=mouse:Documents"
+			auto-bisync "{{ .chezmoi.homeDir }}/Documents" ":sftp,host=mouse:Documents" resync
+			if is_bisync_resynced; then
+				check_done "Bisync initial resync complete"
+			else
+				warn "Resync may not have completed — check output above"
+			fi
+		fi
+	fi
+	echo ""
+fi
+
+# ── Step 8: Bisync service ───────────────────────────────────────────────────
+if $RUN_BISYNC_ENABLE; then
+	step "Step 8: Enable bisync service"
+	if is_bisync_enabled; then
+		check_done "Service already enabled"
+	else
+		if ! is_bisync_resynced; then
+			warn "Bisync not initialized — run initial resync first (step 7)"
+		else
+			info "Enabling bisync@documents.service..."
+			systemctl --user enable --now bisync@documents.service
+			check_done "Bisync service enabled (continuous sync)"
+		fi
+	fi
+	echo ""
+fi
+
+# ── Summary ───────────────────────────────────────────────────────────────────
+echo ""
+info "Setup wizard complete."
+echo ""
+show_status
+
+{{- else }}
+echo "Skipping init wizard (not Linux or headless)"
+{{- end }}
