@@ -2,7 +2,7 @@
 # vi: ft=sh
 # rwaltrctl-init — post-chezmoi-apply setup wizard
 # Walks through all manual configuration steps needed after a fresh chezmoi apply.
-# Idempotent — safe to re-run; completed steps offer a redo option.
+# Uses gum for a polished TUI experience, falls back to plain prompts.
 #
 # Usage:
 #   rwaltrctl-init          # interactive wizard
@@ -19,52 +19,86 @@ case "${1:-}" in
 --status) STATUS=true ;;
 esac
 
-# ── Colors & helpers ──────────────────────────────────────────────────────────
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-CYAN='\033[0;36m'
-BOLD='\033[1m'
-DIM='\033[2m'
-NC='\033[0m'
+HAS_GUM=false
+command -v gum &>/dev/null && HAS_GUM=true
 
 BISYNC_DIR="{{ .chezmoi.homeDir }}/.config/bisync"
 
-info()  { echo -e "${GREEN}[init]${NC} $*"; }
-warn()  { echo -e "${YELLOW}[init]${NC} $*"; }
-error() { echo -e "${RED}[init]${NC} $*" >&2; }
-step()  { echo -e "${CYAN}${BOLD}══ $* ══${NC}"; }
+# ── TUI helpers (gum with plain fallback) ─────────────────────────────────────
 
-check_done() { echo -e "  ${GREEN}✓${NC} $*"; }
-check_todo() { echo -e "  ${YELLOW}○${NC} $*"; }
-check_skip() { echo -e "  ${DIM}─ $* (skipped)${NC}"; }
+header() {
+	if $HAS_GUM; then
+		gum style --border double --border-foreground 99 --padding "1 3" --margin "1 0" \
+			"$(gum format -- "# rwaltrctl-init" "Post chezmoi-apply setup wizard")"
+	else
+		echo ""
+		echo "══════════════════════════════════════════"
+		echo "  rwaltrctl-init — setup wizard"
+		echo "  Post chezmoi-apply configuration"
+		echo "══════════════════════════════════════════"
+		echo ""
+	fi
+}
+
+log_info()  { if $HAS_GUM; then gum log --level info "$@";  else echo "[info]  $*"; fi; }
+log_warn()  { if $HAS_GUM; then gum log --level warn "$@";  else echo "[warn]  $*"; fi; }
+log_error() { if $HAS_GUM; then gum log --level error "$@"; else echo "[error] $*" >&2; fi; }
+log_done()  { if $HAS_GUM; then gum log --level info "✓ $*"; else echo "[✓] $*"; fi; }
+
+step_header() {
+	if $HAS_GUM; then
+		echo ""
+		gum style --foreground 99 --bold "▸ $*"
+	else
+		echo ""
+		echo "── $* ──"
+	fi
+}
 
 confirm() {
 	if $FORCE; then return 0; fi
-	local msg="$1"
-	read -rp "$(echo -e "${YELLOW}$msg [y/N]${NC} ")" answer
-	[[ "$answer" =~ ^[Yy] ]]
+	if $HAS_GUM; then
+		gum confirm "$1"
+	else
+		local answer
+		read -rp "$1 [y/N] " answer
+		[[ "$answer" =~ ^[Yy] ]]
+	fi
 }
 
-# Ask for a step: if not done, ask to run; if done, offer redo.
-# Returns 0 (run), 1 (skip).
-# Usage: ask_step <step_num> <is_done> <description> <done_description>
-ask_step() {
-	local num="$1" done="$2" desc="$3" done_desc="$4"
-	if $FORCE; then return 0; fi
-	if [[ "$done" == "true" ]]; then
-		confirm "$num. ${done_desc} — redo?"
+spin() {
+	local title="$1"; shift
+	if $HAS_GUM; then
+		gum spin --spinner dot --title "$title" --show-error -- "$@"
 	else
-		confirm "$num. ${desc}?"
+		echo "$title"
+		"$@"
+	fi
+}
+
+password_input() {
+	local prompt="${1:-Password:}"
+	if $HAS_GUM; then
+		gum input --password --placeholder "$prompt"
+	else
+		local pw
+		read -rsp "$prompt " pw
+		echo ""  >&2
+		echo "$pw"
 	fi
 }
 
 wait_enter() {
-	if $FORCE; then return 0; fi
-	read -rp "$(echo -e "${DIM}Press Enter to continue...${NC}")"
+	if $FORCE; then return; fi
+	if $HAS_GUM; then
+		gum input --placeholder "Press Enter to continue..." > /dev/null
+	else
+		read -rp "Press Enter to continue..."
+	fi
 }
 
 # ── Status checks ─────────────────────────────────────────────────────────────
+
 is_tailscale_up() {
 	command -v tailscale &>/dev/null && tailscale status &>/dev/null
 }
@@ -95,7 +129,6 @@ is_bisync_resynced() {
 	[[ -d "$lock_dir" ]] && [[ -n "$(ls -A "$lock_dir" 2>/dev/null)" ]]
 }
 
-# Discover bisync configs from ~/.config/bisync/*.env
 get_bisync_configs() {
 	local -a configs=()
 	if [[ -d "$BISYNC_DIR" ]]; then
@@ -108,31 +141,50 @@ get_bisync_configs() {
 }
 
 # ── Status display ────────────────────────────────────────────────────────────
+
+status_line() {
+	local done="$1" label="$2"
+	if $HAS_GUM; then
+		if [[ "$done" == "true" ]]; then
+			echo "  $(gum style --foreground 82 '✓') $label"
+		else
+			echo "  $(gum style --foreground 214 '○') $label"
+		fi
+	else
+		if [[ "$done" == "true" ]]; then
+			echo "  ✓ $label"
+		else
+			echo "  ○ $label"
+		fi
+	fi
+}
+
 show_status() {
 	echo ""
-	echo -e "${BOLD}rwaltrctl-init — setup status${NC}"
+	if $HAS_GUM; then
+		gum style --bold "Setup Status"
+	else
+		echo "Setup Status"
+	fi
 	echo ""
 
-	if is_tailscale_up;         then check_done "Tailscale: connected";       else check_todo "Tailscale: not connected"; fi
-	if is_1password_signed_in;  then check_done "1Password: signed in";       else check_todo "1Password: not signed in"; fi
-	if is_gh_authed;            then check_done "GitHub CLI: authenticated";  else check_todo "GitHub CLI: not authenticated"; fi
-	if is_restic_creds_set;     then check_done "Restic credentials: set";    else check_todo "Restic credentials: not set"; fi
-	if is_restic_timer_enabled; then check_done "Restic timer: enabled";      else check_todo "Restic timer: not enabled"; fi
+	if is_tailscale_up;         then status_line true  "Tailscale: connected";       else status_line false "Tailscale: not connected"; fi
+	if is_1password_signed_in;  then status_line true  "1Password: signed in";       else status_line false "1Password: not signed in"; fi
+	if is_gh_authed;            then status_line true  "GitHub CLI: authenticated";  else status_line false "GitHub CLI: not authenticated"; fi
+	if is_restic_creds_set;     then status_line true  "Restic credentials: set";    else status_line false "Restic credentials: not set"; fi
+	if is_restic_timer_enabled; then status_line true  "Restic timer: enabled";      else status_line false "Restic timer: not enabled"; fi
+	if is_bisync_resynced;      then status_line true  "Bisync: initialized";        else status_line false "Bisync: not initialized"; fi
 
-	# Bisync status per config
-	if is_bisync_resynced; then check_done "Bisync: initialized"; else check_todo "Bisync: not initialized"; fi
 	local configs
 	read -ra configs <<< "$(get_bisync_configs)"
 	if [[ ${#configs[@]} -gt 0 ]]; then
 		for name in "${configs[@]}"; do
 			if is_bisync_service_enabled "$name"; then
-				check_done "Bisync service ($name): enabled"
+				status_line true  "Bisync service ($name): enabled"
 			else
-				check_todo "Bisync service ($name): not enabled"
+				status_line false "Bisync service ($name): not enabled"
 			fi
 		done
-	else
-		check_skip "Bisync: no configs in $BISYNC_DIR"
 	fi
 	echo ""
 }
@@ -142,230 +194,261 @@ if $STATUS; then
 	exit 0
 fi
 
-# ── Wizard questions ──────────────────────────────────────────────────────────
-echo ""
-echo -e "${CYAN}╔══════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║          rwaltrctl-init — setup wizard              ║${NC}"
-echo -e "${CYAN}║  Post chezmoi-apply configuration for a new host.   ║${NC}"
-echo -e "${CYAN}╚══════════════════════════════════════════════════════╝${NC}"
-echo ""
+# ── Build choice list ─────────────────────────────────────────────────────────
 
+header
 show_status
 
-RUN_TAILSCALE=false
-RUN_1PASSWORD=false
-RUN_GH=false
-RUN_RESTIC=false
-RUN_RESTIC_TIMER=false
-RUN_BISYNC_RESYNC=false
-declare -A RUN_BISYNC_ENABLE
+# Build options for gum choose / manual selection
+declare -A STEPS
+declare -a STEP_ORDER=()
 
-# Discover bisync configs
+add_step() {
+	local key="$1" label="$2" done="$3"
+	if [[ "$done" == "true" ]]; then
+		STEPS[$key]="↻ $label (redo)"
+	else
+		STEPS[$key]="$label"
+	fi
+	STEP_ORDER+=("$key")
+}
+
+if is_tailscale_up;         then add_step tailscale    "Connect to Tailscale"            true
+else                             add_step tailscale    "Connect to Tailscale"            false; fi
+
+if is_1password_signed_in;  then add_step 1password    "Sign in to 1Password"            true
+else                             add_step 1password    "Sign in to 1Password"            false; fi
+
+if is_gh_authed;            then add_step gh           "Authenticate GitHub CLI"         true
+else                             add_step gh           "Authenticate GitHub CLI"         false; fi
+
+if is_restic_creds_set;     then add_step restic_creds "Set up restic backup credentials" true
+else                             add_step restic_creds "Set up restic backup credentials" false; fi
+
+if is_restic_timer_enabled; then add_step restic_timer "Enable restic backup timer"      true
+else                             add_step restic_timer "Enable restic backup timer"      false; fi
+
+if is_bisync_resynced;      then add_step bisync_init  "Initialize bisync (first resync)" true
+else                             add_step bisync_init  "Initialize bisync (first resync)" false; fi
+
 BISYNC_CONFIGS=()
 read -ra BISYNC_CONFIGS <<< "$(get_bisync_configs)"
-
-if $FORCE; then
-	RUN_TAILSCALE=true
-	RUN_1PASSWORD=true
-	RUN_GH=true
-	RUN_RESTIC=true
-	RUN_RESTIC_TIMER=true
-	RUN_BISYNC_RESYNC=true
-	for name in "${BISYNC_CONFIGS[@]}"; do
-		RUN_BISYNC_ENABLE[$name]=true
-	done
-else
-	echo -e "${BOLD}Select steps to run:${NC}"
-	echo ""
-
-	STEP=1
-
-	if is_tailscale_up; then DONE=true; else DONE=false; fi
-	ask_step $STEP "$DONE" "Connect to Tailscale" "Tailscale (connected)" && RUN_TAILSCALE=true
-	((STEP++))
-
-	if is_1password_signed_in; then DONE=true; else DONE=false; fi
-	ask_step $STEP "$DONE" "Sign in to 1Password" "1Password (signed in)" && RUN_1PASSWORD=true
-	((STEP++))
-
-	if is_gh_authed; then DONE=true; else DONE=false; fi
-	ask_step $STEP "$DONE" "Authenticate GitHub CLI" "GitHub CLI (authenticated)" && RUN_GH=true
-	((STEP++))
-
-	if is_restic_creds_set; then DONE=true; else DONE=false; fi
-	ask_step $STEP "$DONE" "Set up restic backup credentials" "Restic credentials (set)" && RUN_RESTIC=true
-	((STEP++))
-
-	if is_restic_timer_enabled; then DONE=true; else DONE=false; fi
-	ask_step $STEP "$DONE" "Enable restic backup timer" "Restic timer (enabled)" && RUN_RESTIC_TIMER=true
-	((STEP++))
-
-	if is_bisync_resynced; then DONE=true; else DONE=false; fi
-	ask_step $STEP "$DONE" "Initialize bisync (first resync)" "Bisync (initialized)" && RUN_BISYNC_RESYNC=true
-	((STEP++))
-
-	if [[ ${#BISYNC_CONFIGS[@]} -gt 0 ]]; then
-		for name in "${BISYNC_CONFIGS[@]}"; do
-			if is_bisync_service_enabled "$name"; then DONE=true; else DONE=false; fi
-			ask_step $STEP "$DONE" "Enable bisync service: ${name}" "Bisync service ($name) (enabled)" && RUN_BISYNC_ENABLE[$name]=true
-			((STEP++))
-		done
+for name in "${BISYNC_CONFIGS[@]}"; do
+	if is_bisync_service_enabled "$name"; then
+		add_step "bisync_svc_${name}" "Enable bisync service: ${name}" true
+	else
+		add_step "bisync_svc_${name}" "Enable bisync service: ${name}" false
 	fi
-
-	echo ""
-fi
-
-# Count selected
-SELECTED=0
-$RUN_TAILSCALE     && ((SELECTED++)) || true
-$RUN_1PASSWORD     && ((SELECTED++)) || true
-$RUN_GH            && ((SELECTED++)) || true
-$RUN_RESTIC        && ((SELECTED++)) || true
-$RUN_RESTIC_TIMER  && ((SELECTED++)) || true
-$RUN_BISYNC_RESYNC && ((SELECTED++)) || true
-for name in "${!RUN_BISYNC_ENABLE[@]}"; do
-	[[ "${RUN_BISYNC_ENABLE[$name]}" == "true" ]] && ((SELECTED++)) || true
 done
 
-if [[ $SELECTED -eq 0 ]]; then
-	info "Nothing to do — all steps skipped."
+# ── Select steps ──────────────────────────────────────────────────────────────
+
+declare -A SELECTED
+
+if $FORCE; then
+	for key in "${STEP_ORDER[@]}"; do
+		SELECTED[$key]=true
+	done
+else
+	if $HAS_GUM; then
+		# Build display labels for gum choose
+		LABELS=()
+		for key in "${STEP_ORDER[@]}"; do
+			LABELS+=("${STEPS[$key]}")
+		done
+
+		CHOSEN=$(printf '%s\n' "${LABELS[@]}" | \
+			gum choose --no-limit \
+				--header "Select steps to run (space to toggle, enter to confirm):" \
+				--height "$((${#LABELS[@]} + 2))" \
+			|| true)
+
+		# Map chosen labels back to keys
+		while IFS= read -r line; do
+			[[ -z "$line" ]] && continue
+			for key in "${STEP_ORDER[@]}"; do
+				if [[ "${STEPS[$key]}" == "$line" ]]; then
+					SELECTED[$key]=true
+					break
+				fi
+			done
+		done <<< "$CHOSEN"
+	else
+		# Plain fallback: ask per step
+		for key in "${STEP_ORDER[@]}"; do
+			label="${STEPS[$key]}"
+			confirm "$label?" && SELECTED[$key]=true || true
+		done
+	fi
+fi
+
+if [[ ${#SELECTED[@]} -eq 0 ]]; then
+	log_info "Nothing selected — all done!"
 	exit 0
 fi
 
 if ! $FORCE; then
-	info "$SELECTED step(s) selected."
-	confirm "Begin setup?" || { info "Aborted."; exit 0; }
+	echo ""
+	if $HAS_GUM; then
+		gum style --foreground 99 "${#SELECTED[@]} step(s) selected"
+	else
+		echo "${#SELECTED[@]} step(s) selected"
+	fi
+	confirm "Begin setup?" || { log_info "Aborted."; exit 0; }
 fi
 
-echo ""
+# ── Execute steps ─────────────────────────────────────────────────────────────
 
-# ── Step: Tailscale ───────────────────────────────────────────────────────────
-if $RUN_TAILSCALE; then
-	step "Tailscale"
+# Tailscale
+if [[ "${SELECTED[tailscale]:-}" == "true" ]]; then
+	step_header "Tailscale"
 	if ! command -v tailscale &>/dev/null; then
-		error "tailscale not installed — run chezmoi apply first"
+		log_error "tailscale not installed — run chezmoi apply first"
 	else
-		info "Starting Tailscale login..."
+		log_info "Starting Tailscale login..."
 		sudo tailscale up
-		if is_tailscale_up; then
-			check_done "Tailscale connected"
+		if is_tailscale_up; then log_done "Tailscale connected"
+		else log_warn "Tailscale login may not have completed"; fi
+	fi
+fi
+
+# 1Password
+if [[ "${SELECTED[1password]:-}" == "true" ]]; then
+	step_header "1Password"
+	if $HAS_GUM; then
+		gum format -- \
+			"Open the **1Password desktop app** and sign in." \
+			"" \
+			"The CLI authenticates via the desktop app's socket." \
+			"" \
+			"    flatpak run com.onepassword.OnePassword" \
+			"" \
+			"After signing in, enable in **Settings → Developer**:" \
+			"- CLI integration" \
+			"- SSH agent"
+	else
+		echo "Open the 1Password desktop app and sign in."
+		echo "  App: flatpak run com.onepassword.OnePassword"
+		echo "After signing in, enable: Settings → Developer → CLI integration + SSH agent"
+	fi
+	echo ""
+	wait_enter
+	if is_1password_signed_in; then log_done "1Password CLI connected"
+	else log_warn "1Password CLI not yet connected — finish setup in the app"; fi
+fi
+
+# GitHub CLI
+if [[ "${SELECTED[gh]:-}" == "true" ]]; then
+	step_header "GitHub CLI"
+	log_info "Authenticating with GitHub..."
+	gh auth login
+	if is_gh_authed; then log_done "GitHub CLI authenticated"
+	else log_warn "GitHub auth may not have completed"; fi
+fi
+
+# Restic credentials
+if [[ "${SELECTED[restic_creds]:-}" == "true" ]]; then
+	step_header "Restic backup credentials"
+
+	CRED_DIR="{{ .chezmoi.homeDir }}/.config/resticprofile"
+	PASS_FILE="${CRED_DIR}/password"
+
+	if [[ -s "$PASS_FILE" ]]; then
+		log_warn "Password file exists ($(wc -c < "$PASS_FILE") bytes)"
+		if ! confirm "Overwrite existing credentials?"; then
+			log_info "Keeping existing credentials"
 		else
-			warn "Tailscale login may not have completed — check 'tailscale status'"
+			_do_restic_creds=true
+		fi
+	elif [[ -f "$PASS_FILE" ]]; then
+		log_warn "Found empty password file — replacing"
+		rm -f "$PASS_FILE"
+		_do_restic_creds=true
+	else
+		_do_restic_creds=true
+	fi
+
+	if [[ "${_do_restic_creds:-}" == "true" ]]; then
+		mkdir -p "$CRED_DIR"
+		chmod 700 "$CRED_DIR"
+
+		password=$(password_input "Restic repo password")
+		password_confirm=$(password_input "Confirm password")
+
+		if [[ "$password" != "$password_confirm" ]]; then
+			log_error "Passwords do not match"
+		elif [[ -z "$password" ]]; then
+			log_error "Password cannot be empty"
+		else
+			printf '%s' "$password" > "$PASS_FILE"
+			chmod 600 "$PASS_FILE"
+			log_done "Restic credentials configured"
 		fi
 	fi
-	echo ""
 fi
 
-# ── Step: 1Password ──────────────────────────────────────────────────────────
-if $RUN_1PASSWORD; then
-	step "1Password"
-	info "Open the 1Password desktop app and sign in."
-	info "The CLI authenticates via the desktop app's socket."
-	info "  App: flatpak run com.onepassword.OnePassword"
-	info ""
-	info "After signing in to the app, enable these in 1Password Settings:"
-	info "  → Developer → CLI integration"
-	info "  → Developer → SSH agent"
-	wait_enter
-	if is_1password_signed_in; then
-		check_done "1Password CLI connected"
-	else
-		warn "1Password CLI not yet connected — finish setup in the app"
-	fi
-	echo ""
-fi
-
-# ── Step: GitHub CLI ──────────────────────────────────────────────────────────
-if $RUN_GH; then
-	step "GitHub CLI auth"
-	info "Authenticating with GitHub..."
-	gh auth login
-	if is_gh_authed; then
-		check_done "GitHub CLI authenticated"
-	else
-		warn "GitHub auth may not have completed"
-	fi
-	echo ""
-fi
-
-# ── Step: Restic credentials ─────────────────────────────────────────────────
-if $RUN_RESTIC; then
-	step "Restic backup credentials"
-	info "Running restic-setup-creds..."
-	restic-setup-creds
-	if is_restic_creds_set; then
-		check_done "Restic credentials configured"
-	else
-		warn "Credentials not set — run 'restic-setup-creds' manually"
-	fi
-	echo ""
-fi
-
-# ── Step: Restic timer ───────────────────────────────────────────────────────
-if $RUN_RESTIC_TIMER; then
-	step "Enable restic backup timer"
-	info "Enabling resticprofile@home.timer..."
+# Restic timer
+if [[ "${SELECTED[restic_timer]:-}" == "true" ]]; then
+	step_header "Restic backup timer"
+	log_info "Enabling resticprofile@home.timer..."
 	systemctl --user enable --now resticprofile@home.timer
-	check_done "Restic backup timer enabled (hourly)"
-	echo ""
+	log_done "Restic backup timer enabled (hourly)"
 fi
 
-# ── Step: Bisync initial resync ──────────────────────────────────────────────
-if $RUN_BISYNC_RESYNC; then
-	step "Bisync initial resync"
+# Bisync initial resync
+if [[ "${SELECTED[bisync_init]:-}" == "true" ]]; then
+	step_header "Bisync initial resync"
 	if ! is_tailscale_up; then
-		warn "Tailscale not connected — bisync needs network to the remote"
-		warn "Skipping — connect Tailscale first, then re-run"
+		log_warn "Tailscale not connected — bisync needs network to the remote"
+		log_warn "Skipping — connect Tailscale first, then re-run"
 	else
 		for name in "${BISYNC_CONFIGS[@]}"; do
-			local_path=""
-			remote_path=""
-			# Source the env file to get LOCAL and REMOTE
+			LOCAL="" REMOTE=""
 			# shellcheck source=/dev/null
 			source "$BISYNC_DIR/${name}.env"
-			local_path="${LOCAL:-}"
-			remote_path="${REMOTE:-}"
 
-			if [[ -z "$local_path" || -z "$remote_path" ]]; then
-				warn "  $name: missing LOCAL or REMOTE in ${name}.env, skipping"
+			if [[ -z "${LOCAL:-}" || -z "${REMOTE:-}" ]]; then
+				log_warn "$name: missing LOCAL or REMOTE in ${name}.env, skipping"
 				continue
 			fi
 
-			info "  Resyncing $name..."
-			info "    Local:  $local_path"
-			info "    Remote: $remote_path"
-			auto-bisync "$local_path" "$remote_path" resync || warn "  $name: resync failed — check output above"
+			log_info "Resyncing $name: $LOCAL ↔ $REMOTE"
+			if $HAS_GUM; then
+				gum spin --spinner dot --title "Resyncing $name..." --show-error -- \
+					auto-bisync "$LOCAL" "$REMOTE" resync || log_warn "$name: resync failed"
+			else
+				auto-bisync "$LOCAL" "$REMOTE" resync || log_warn "$name: resync failed"
+			fi
 		done
 
-		if is_bisync_resynced; then
-			check_done "Bisync initial resync complete"
-		else
-			warn "Resync may not have completed — check output above"
-		fi
+		if is_bisync_resynced; then log_done "Bisync initial resync complete"
+		else log_warn "Resync may not have completed"; fi
 	fi
-	echo ""
 fi
 
-# ── Step: Bisync services ────────────────────────────────────────────────────
+# Bisync services
 for name in "${BISYNC_CONFIGS[@]}"; do
-	if [[ "${RUN_BISYNC_ENABLE[$name]:-}" == "true" ]]; then
-		step "Enable bisync service: $name"
+	if [[ "${SELECTED[bisync_svc_${name}]:-}" == "true" ]]; then
+		step_header "Enable bisync service: $name"
 		if ! is_bisync_resynced; then
-			warn "Bisync not initialized — run initial resync first"
+			log_warn "Bisync not initialized — run initial resync first"
 		else
-			info "Enabling bisync@${name}.service..."
+			log_info "Enabling bisync@${name}.service..."
 			systemctl --user enable --now "bisync@${name}.service"
-			check_done "bisync@${name}.service enabled (continuous sync)"
+			log_done "bisync@${name}.service enabled (continuous sync)"
 		fi
-		echo ""
 	fi
 done
 
 # ── Summary ───────────────────────────────────────────────────────────────────
-echo ""
-info "Setup wizard complete."
-echo ""
+
 show_status
+
+if $HAS_GUM; then
+	gum style --foreground 82 --bold "Setup wizard complete."
+else
+	echo "Setup wizard complete."
+fi
 
 {{- else }}
 echo "Skipping init wizard (not Linux or headless)"
