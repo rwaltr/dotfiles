@@ -15,7 +15,6 @@ org.localsend.localsend_app
 
 {{ if .personal -}}
 # personal
-com.onepassword.OnePassword
 md.obsidian.Obsidian
 org.mozilla.Thunderbird
 org.mozilla.firefox

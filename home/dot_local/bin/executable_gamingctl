@@ -104,7 +104,7 @@ def install(extra_dirs=None):
 
     print("Exporting apps to host...")
     desktop_files = [
-        "/usr/share/applications/heroic.desktop",
+        "/usr/share/applications/com.heroicgameslauncher.hgl.desktop",
         "/usr/share/applications/io.github.benjamimgois.goverlay.desktop",
         "/usr/share/applications/net.davidotek.pupgui2.desktop",
         "/usr/share/applications/net.lutris.Lutris.desktop",
