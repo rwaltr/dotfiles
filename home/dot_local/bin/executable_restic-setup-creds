@@ -42,8 +42,22 @@ fi
 mkdir -p "$CRED_DIR"
 chmod 700 "$CRED_DIR"
 
-log "Enter your restic repo password:"
-systemd-ask-password --no-tty "Restic repo password:" > "$PASS_FILE"
+read -rsp "Restic repo password: " password
+echo ""
+read -rsp "Confirm password: " password_confirm
+echo ""
+
+if [[ "$password" != "$password_confirm" ]]; then
+    log "ERROR: passwords do not match"
+    exit 1
+fi
+
+if [[ -z "$password" ]]; then
+    log "ERROR: password cannot be empty"
+    exit 1
+fi
+
+printf '%s' "$password" > "$PASS_FILE"
 chmod 600 "$PASS_FILE"
 
 log "Password saved to $PASS_FILE"
