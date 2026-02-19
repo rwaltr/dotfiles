@@ -115,10 +115,10 @@ show_status() {
 	if is_restic_creds_set;     then check_done "Restic credentials: set";    else check_todo "Restic credentials: not set"; fi
 	if is_restic_timer_enabled; then check_done "Restic timer: enabled";      else check_todo "Restic timer: not enabled"; fi
 
-	if is_bisync_resynced; then check_done "Bisync: initialized"; else check_todo "Bisync: not initialized"; fi
 	local configs
 	read -ra configs <<< "$(get_bisync_configs)"
 	if [[ ${#configs[@]} -gt 0 ]]; then
+		if is_bisync_resynced; then check_done "Bisync: initialized"; else check_todo "Bisync: not initialized"; fi
 		for name in "${configs[@]}"; do
 			if is_bisync_service_enabled "$name"; then
 				check_done "Bisync service ($name): enabled"
@@ -232,32 +232,34 @@ if ask_step "$DONE" "Enable restic backup timer" "Restic timer (enabled)"; then
 	check_done "Restic backup timer enabled (hourly)"
 fi
 
-# ── Step 6: Bisync initial resync ────────────────────────────────────────────
-if is_bisync_resynced; then DONE=true; else DONE=false; fi
-if ask_step "$DONE" "Initialize bisync (first resync)" "Bisync (initialized)"; then
-	step_header "Bisync initial resync"
-	if ! is_tailscale_up; then
-		warn "Tailscale not connected — bisync needs network to the remote"
-		warn "Skipping — connect Tailscale first, then re-run"
-	else
-		for name in "${BISYNC_CONFIGS[@]}"; do
-			LOCAL="" REMOTE=""
-			# shellcheck source=/dev/null
-			source "$BISYNC_DIR/${name}.env"
+# ── Step 6+: Bisync initial resync (per config) ─────────────────────────────
+for name in "${BISYNC_CONFIGS[@]}"; do
+	if is_bisync_resynced; then DONE=true; else DONE=false; fi
+	if ask_step "$DONE" "Initial bisync resync: ${name}" "Bisync resync ($name) (initialized)"; then
+		step_header "Bisync resync: $name"
+		if ! is_tailscale_up; then
+			warn "Tailscale not connected — bisync needs network to the remote"
+			warn "Skipping — connect Tailscale first, then re-run"
+			continue
+		fi
 
-			if [[ -z "${LOCAL:-}" || -z "${REMOTE:-}" ]]; then
-				warn "$name: missing LOCAL or REMOTE in ${name}.env, skipping"
-				continue
-			fi
+		LOCAL="" REMOTE=""
+		# shellcheck source=/dev/null
+		source "$BISYNC_DIR/${name}.env"
 
-			info "Resyncing $name: $LOCAL ↔ $REMOTE"
-			auto-bisync "$LOCAL" "$REMOTE" resync || warn "$name: resync failed"
-		done
+		if [[ -z "${LOCAL:-}" || -z "${REMOTE:-}" ]]; then
+			warn "$name: missing LOCAL or REMOTE in ${name}.env, skipping"
+			continue
+		fi
 
-		if is_bisync_resynced; then check_done "Bisync initial resync complete"
-		else warn "Resync may not have completed"; fi
+		info "Resyncing $name: $LOCAL ↔ $REMOTE"
+		if auto-bisync "$LOCAL" "$REMOTE" resync; then
+			check_done "Bisync resync ($name) complete"
+		else
+			warn "$name: resync failed"
+		fi
 	fi
-fi
+done
 
 # ── Step 7+: Bisync services (per config) ────────────────────────────────────
 for name in "${BISYNC_CONFIGS[@]}"; do
