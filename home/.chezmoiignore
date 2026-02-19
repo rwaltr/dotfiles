@@ -1,7 +1,10 @@
 {{- if .headless }}
 .config/wezterm
 .config/mpv
-{{- end -}}
+{{- end }}
+# Host-specific credentials created by rwaltrctl-init / restic-setup-creds
+.config/resticprofile/password
+
 {{- if .ephemeral}}
 {{- end }}
 {{- if not .work }}
