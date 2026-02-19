@@ -2,7 +2,7 @@
 # vi: ft=sh
 # rwaltrctl-init — post-chezmoi-apply setup wizard
 # Walks through all manual configuration steps needed after a fresh chezmoi apply.
-# Idempotent — safe to re-run; skips steps that are already configured.
+# Idempotent — safe to re-run; completed steps offer a redo option.
 #
 # Usage:
 #   rwaltrctl-init          # interactive wizard
@@ -46,6 +46,19 @@ confirm() {
 	[[ "$answer" =~ ^[Yy] ]]
 }
 
+# Ask for a step: if not done, ask to run; if done, offer redo.
+# Returns 0 (run), 1 (skip).
+# Usage: ask_step <step_num> <is_done> <description> <done_description>
+ask_step() {
+	local num="$1" done="$2" desc="$3" done_desc="$4"
+	if $FORCE; then return 0; fi
+	if [[ "$done" == "true" ]]; then
+		confirm "$num. ${done_desc} — redo?"
+	else
+		confirm "$num. ${desc}?"
+	fi
+}
+
 wait_enter() {
 	if $FORCE; then return 0; fi
 	read -rp "$(echo -e "${DIM}Press Enter to continue...${NC}")"
@@ -65,7 +78,7 @@ is_gh_authed() {
 }
 
 is_restic_creds_set() {
-	[[ -f "{{ .chezmoi.homeDir }}/.config/resticprofile/password" ]]
+	[[ -s "{{ .chezmoi.homeDir }}/.config/resticprofile/password" ]]
 }
 
 is_restic_timer_enabled() {
@@ -145,7 +158,6 @@ RUN_GH=false
 RUN_RESTIC=false
 RUN_RESTIC_TIMER=false
 RUN_BISYNC_RESYNC=false
-# Associative array for per-config bisync enable choices
 declare -A RUN_BISYNC_ENABLE
 
 # Discover bisync configs
@@ -167,37 +179,35 @@ else
 	echo ""
 
 	STEP=1
-	! is_tailscale_up        && confirm "$STEP. Connect to Tailscale?"             && RUN_TAILSCALE=true
-	  is_tailscale_up        && check_skip "$STEP. Tailscale (already connected)"
+
+	if is_tailscale_up; then DONE=true; else DONE=false; fi
+	ask_step $STEP "$DONE" "Connect to Tailscale" "Tailscale (connected)" && RUN_TAILSCALE=true
 	((STEP++))
 
-	! is_1password_signed_in && confirm "$STEP. Sign in to 1Password?"             && RUN_1PASSWORD=true
-	  is_1password_signed_in && check_skip "$STEP. 1Password (already signed in)"
+	if is_1password_signed_in; then DONE=true; else DONE=false; fi
+	ask_step $STEP "$DONE" "Sign in to 1Password" "1Password (signed in)" && RUN_1PASSWORD=true
 	((STEP++))
 
-	! is_gh_authed           && confirm "$STEP. Authenticate GitHub CLI?"          && RUN_GH=true
-	  is_gh_authed           && check_skip "$STEP. GitHub CLI (already authed)"
+	if is_gh_authed; then DONE=true; else DONE=false; fi
+	ask_step $STEP "$DONE" "Authenticate GitHub CLI" "GitHub CLI (authenticated)" && RUN_GH=true
 	((STEP++))
 
-	! is_restic_creds_set    && confirm "$STEP. Set up restic backup credentials?" && RUN_RESTIC=true
-	  is_restic_creds_set    && check_skip "$STEP. Restic credentials (already set)"
+	if is_restic_creds_set; then DONE=true; else DONE=false; fi
+	ask_step $STEP "$DONE" "Set up restic backup credentials" "Restic credentials (set)" && RUN_RESTIC=true
 	((STEP++))
 
-	! is_restic_timer_enabled && confirm "$STEP. Enable restic backup timer?"      && RUN_RESTIC_TIMER=true
-	  is_restic_timer_enabled && check_skip "$STEP. Restic timer (already enabled)"
+	if is_restic_timer_enabled; then DONE=true; else DONE=false; fi
+	ask_step $STEP "$DONE" "Enable restic backup timer" "Restic timer (enabled)" && RUN_RESTIC_TIMER=true
 	((STEP++))
 
-	! is_bisync_resynced     && confirm "$STEP. Initialize bisync (first resync)?" && RUN_BISYNC_RESYNC=true
-	  is_bisync_resynced     && check_skip "$STEP. Bisync init (already resynced)"
+	if is_bisync_resynced; then DONE=true; else DONE=false; fi
+	ask_step $STEP "$DONE" "Initialize bisync (first resync)" "Bisync (initialized)" && RUN_BISYNC_RESYNC=true
 	((STEP++))
 
 	if [[ ${#BISYNC_CONFIGS[@]} -gt 0 ]]; then
 		for name in "${BISYNC_CONFIGS[@]}"; do
-			if ! is_bisync_service_enabled "$name"; then
-				confirm "$STEP. Enable bisync service: ${name}?" && RUN_BISYNC_ENABLE[$name]=true
-			else
-				check_skip "$STEP. Bisync service ($name) (already enabled)"
-			fi
+			if is_bisync_service_enabled "$name"; then DONE=true; else DONE=false; fi
+			ask_step $STEP "$DONE" "Enable bisync service: ${name}" "Bisync service ($name) (enabled)" && RUN_BISYNC_ENABLE[$name]=true
 			((STEP++))
 		done
 	fi
@@ -218,7 +228,7 @@ for name in "${!RUN_BISYNC_ENABLE[@]}"; do
 done
 
 if [[ $SELECTED -eq 0 ]]; then
-	info "Nothing to do — system is fully configured!"
+	info "Nothing to do — all steps skipped."
 	exit 0
 fi
 
@@ -234,8 +244,6 @@ if $RUN_TAILSCALE; then
 	step "Tailscale"
 	if ! command -v tailscale &>/dev/null; then
 		error "tailscale not installed — run chezmoi apply first"
-	elif is_tailscale_up; then
-		check_done "Already connected"
 	else
 		info "Starting Tailscale login..."
 		sudo tailscale up
@@ -251,22 +259,18 @@ fi
 # ── Step: 1Password ──────────────────────────────────────────────────────────
 if $RUN_1PASSWORD; then
 	step "1Password"
+	info "Open the 1Password desktop app and sign in."
+	info "The CLI authenticates via the desktop app's socket."
+	info "  App: flatpak run com.onepassword.OnePassword"
+	info ""
+	info "After signing in to the app, enable these in 1Password Settings:"
+	info "  → Developer → CLI integration"
+	info "  → Developer → SSH agent"
+	wait_enter
 	if is_1password_signed_in; then
-		check_done "Already signed in"
+		check_done "1Password CLI connected"
 	else
-		info "Open the 1Password desktop app and sign in."
-		info "The CLI authenticates via the desktop app's socket."
-		info "  App: flatpak run com.onepassword.OnePassword"
-		info ""
-		info "After signing in to the app, enable these in 1Password Settings:"
-		info "  → Developer → CLI integration"
-		info "  → Developer → SSH agent"
-		wait_enter
-		if is_1password_signed_in; then
-			check_done "1Password CLI connected"
-		else
-			warn "1Password CLI not yet connected — finish setup in the app"
-		fi
+		warn "1Password CLI not yet connected — finish setup in the app"
 	fi
 	echo ""
 fi
@@ -274,16 +278,12 @@ fi
 # ── Step: GitHub CLI ──────────────────────────────────────────────────────────
 if $RUN_GH; then
 	step "GitHub CLI auth"
+	info "Authenticating with GitHub..."
+	gh auth login
 	if is_gh_authed; then
-		check_done "Already authenticated"
+		check_done "GitHub CLI authenticated"
 	else
-		info "Authenticating with GitHub..."
-		gh auth login
-		if is_gh_authed; then
-			check_done "GitHub CLI authenticated"
-		else
-			warn "GitHub auth may not have completed"
-		fi
+		warn "GitHub auth may not have completed"
 	fi
 	echo ""
 fi
@@ -291,16 +291,12 @@ fi
 # ── Step: Restic credentials ─────────────────────────────────────────────────
 if $RUN_RESTIC; then
 	step "Restic backup credentials"
+	info "Running restic-setup-creds..."
+	restic-setup-creds
 	if is_restic_creds_set; then
-		check_done "Credentials already set"
+		check_done "Restic credentials configured"
 	else
-		info "Running restic-setup-creds..."
-		restic-setup-creds
-		if is_restic_creds_set; then
-			check_done "Restic credentials configured"
-		else
-			warn "Credentials not set — run 'restic-setup-creds' manually"
-		fi
+		warn "Credentials not set — run 'restic-setup-creds' manually"
 	fi
 	echo ""
 fi
@@ -308,22 +304,16 @@ fi
 # ── Step: Restic timer ───────────────────────────────────────────────────────
 if $RUN_RESTIC_TIMER; then
 	step "Enable restic backup timer"
-	if is_restic_timer_enabled; then
-		check_done "Timer already enabled"
-	else
-		info "Enabling resticprofile@home.timer..."
-		systemctl --user enable --now resticprofile@home.timer
-		check_done "Restic backup timer enabled (hourly)"
-	fi
+	info "Enabling resticprofile@home.timer..."
+	systemctl --user enable --now resticprofile@home.timer
+	check_done "Restic backup timer enabled (hourly)"
 	echo ""
 fi
 
 # ── Step: Bisync initial resync ──────────────────────────────────────────────
 if $RUN_BISYNC_RESYNC; then
 	step "Bisync initial resync"
-	if is_bisync_resynced; then
-		check_done "Already initialized"
-	elif ! is_tailscale_up; then
+	if ! is_tailscale_up; then
 		warn "Tailscale not connected — bisync needs network to the remote"
 		warn "Skipping — connect Tailscale first, then re-run"
 	else
@@ -360,9 +350,7 @@ fi
 for name in "${BISYNC_CONFIGS[@]}"; do
 	if [[ "${RUN_BISYNC_ENABLE[$name]:-}" == "true" ]]; then
 		step "Enable bisync service: $name"
-		if is_bisync_service_enabled "$name"; then
-			check_done "Service already enabled"
-		elif ! is_bisync_resynced; then
+		if ! is_bisync_resynced; then
 			warn "Bisync not initialized — run initial resync first"
 		else
 			info "Enabling bisync@${name}.service..."

@@ -33,10 +33,13 @@ case "${1:-}" in
     ;;
 esac
 
-if [[ -f "$PASS_FILE" ]]; then
-    echo "Password file already exists at $PASS_FILE"
+if [[ -s "$PASS_FILE" ]]; then
+    echo "Password file already exists at $PASS_FILE ($(wc -c < "$PASS_FILE") bytes)"
     read -r -p "Overwrite? [y/N] " confirm
     [[ "$confirm" =~ ^[Yy]$ ]] || exit 0
+elif [[ -f "$PASS_FILE" ]]; then
+    log "Found empty password file at $PASS_FILE — replacing"
+    rm -f "$PASS_FILE"
 fi
 
 mkdir -p "$CRED_DIR"
