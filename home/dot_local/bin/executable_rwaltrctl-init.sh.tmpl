@@ -244,10 +244,12 @@ done
 # ── Select steps ──────────────────────────────────────────────────────────────
 
 declare -A SELECTED
+SELECTED_COUNT=0
 
 if $FORCE; then
 	for key in "${STEP_ORDER[@]}"; do
 		SELECTED[$key]=true
+		((SELECTED_COUNT++))
 	done
 else
 	if $HAS_GUM; then
@@ -269,6 +271,7 @@ else
 			for key in "${STEP_ORDER[@]}"; do
 				if [[ "${STEPS[$key]}" == "$line" ]]; then
 					SELECTED[$key]=true
+					((SELECTED_COUNT++))
 					break
 				fi
 			done
@@ -277,12 +280,15 @@ else
 		# Plain fallback: ask per step
 		for key in "${STEP_ORDER[@]}"; do
 			label="${STEPS[$key]}"
-			confirm "$label?" && SELECTED[$key]=true || true
+			if confirm "$label?"; then
+				SELECTED[$key]=true
+				((SELECTED_COUNT++))
+			fi
 		done
 	fi
 fi
 
-if [[ ${#SELECTED[@]} -eq 0 ]]; then
+if [[ $SELECTED_COUNT -eq 0 ]]; then
 	log_info "Nothing selected — all done!"
 	exit 0
 fi
@@ -290,9 +296,9 @@ fi
 if ! $FORCE; then
 	echo ""
 	if $HAS_GUM; then
-		gum style --foreground 99 "${#SELECTED[@]} step(s) selected"
+		gum style --foreground 99 "${SELECTED_COUNT} step(s) selected"
 	else
-		echo "${#SELECTED[@]} step(s) selected"
+		echo "${SELECTED_COUNT} step(s) selected"
 	fi
 	confirm "Begin setup?" || { log_info "Aborted."; exit 0; }
 fi
