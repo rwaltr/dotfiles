@@ -68,4 +68,3 @@ ls -la package.json Cargo.toml go.mod requirements.txt Gemfile 2>/dev/null || ec
    - Development workflow
    - Automation opportunities
    - Configuration improvements
-

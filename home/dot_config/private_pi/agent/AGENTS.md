@@ -22,8 +22,6 @@ Ryan Walter (rwaltr) owns this. Linux daily driver, CLI-focused, container-first
 - **chezmoi**: dotfiles (when in dotfiles context)
 - **curl**: HTTP ops, API testing
 - **brew**: packages (macOS only)
-- **mcporter**: Ports mcp tools's to a cli, use `npx mcpporter --help` to learn more. if you are being asked to ref something that is not a cli tool, this likely has it.
-- **wezterm**: How the user directly sees the world, use it to help show the user additional context
 
 ## Directory Structure
 
@@ -37,15 +35,6 @@ Ryan Walter (rwaltr) owns this. Linux daily driver, CLI-focused, container-first
 - Container-aware: consider podman/distrobox solutions
 - Security-conscious: rootless containers, no secrets in git
 - Direct/practical: actionable commands, min explanation
-- Auto-activate skills: k8s (kubectl context), containers (Dockerfile/podman), nvim (lua files), distrobox (dev environments), troubleshooting (system issues)
-
-## Skills Available
-
-- `kubernetes`: k8s operations, manifests, debugging
-- `containers`: podman, Dockerfile, rootless workflows  
-- `neovim`: lua config, LSP, plugins
-- `distrobox`: dev environments, app export
-- `troubleshooting`: Linux debugging, performance, networking
 
 ## Common Patterns
 
@@ -55,10 +44,3 @@ Ryan Walter (rwaltr) owns this. Linux daily driver, CLI-focused, container-first
 - Git workflow: check status before operations
 - Tool management: use mise for versions
 - Documentation: maintain current, practical examples
-
-## Integration
-
-- Dotfiles: chezmoi-managed, multi-shell (Fish/Bash/Nushell/Zsh)
-- Secrets: 1Password CLI integration
-- Development: container-first with Distrobox
-- Kubernetes: custom aliases, rootless containers
