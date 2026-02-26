@@ -17,5 +17,13 @@
   "messageQueue": {
     "steeringMode": "one-at-a-time",
     "followUpMode": "one-at-a-time"
-  }
+  },
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-4-6",
+  "hideThinkingBlock": false,
+  "packages": [
+    "npm:pi-subagents",
+    "npm:pi-mcp-adapter",
+    "npm:pi-web-access"
+  ]
 }
