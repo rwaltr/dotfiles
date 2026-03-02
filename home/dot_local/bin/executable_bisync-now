@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+# bisync-now — ad-hoc bisync for configured profiles
+#
+# Usage:
+#   bisync-now <profile>     # sync a specific profile
+#   bisync-now all           # sync all profiles
+#   bisync-now list          # show available profiles
+#
+# Examples:
+#   bisync-now documents
+#   bisync-now music
+#   bisync-now all
+
+set -euo pipefail
+
+BISYNC_DIR="${HOME}/.config/bisync"
+AUTO_BISYNC="${HOME}/.local/bin/auto-bisync"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+usage() {
+    echo "Usage: $(basename "$0") <profile|all|list>"
+    echo ""
+    echo "Profiles:"
+    for env in "${BISYNC_DIR}"/*.env; do
+        [[ -f "$env" ]] || continue
+        profile=$(basename "$env" .env)
+        echo "  - ${profile}"
+    done
+    echo ""
+    echo "Commands:"
+    echo "  all   - sync all profiles"
+    echo "  list  - show available profiles"
+    exit 1
+}
+
+list_profiles() {
+    echo "Available bisync profiles:"
+    echo ""
+    for env in "${BISYNC_DIR}"/*.env; do
+        [[ -f "$env" ]] || continue
+        profile=$(basename "$env" .env)
+        source "$env"
+        echo -e "${BLUE}${profile}${NC}"
+        echo "  Local:  ${LOCAL}"
+        echo "  Remote: ${REMOTE}"
+        echo ""
+    done
+}
+
+sync_profile() {
+    local profile="$1"
+    local env_file="${BISYNC_DIR}/${profile}.env"
+    
+    if [[ ! -f "$env_file" ]]; then
+        echo -e "${RED}Error: Profile '${profile}' not found${NC}" >&2
+        echo "Available profiles:" >&2
+        for env in "${BISYNC_DIR}"/*.env; do
+            [[ -f "$env" ]] || continue
+            echo "  - $(basename "$env" .env)" >&2
+        done
+        return 1
+    fi
+    
+    # Source the env file
+    source "$env_file"
+    
+    echo -e "${BLUE}==> Syncing ${profile}${NC}"
+    echo "    Local:  ${LOCAL}"
+    echo "    Remote: ${REMOTE}"
+    echo ""
+    
+    if "${AUTO_BISYNC}" "${LOCAL}" "${REMOTE}" once; then
+        echo -e "${GREEN}✓ ${profile} synced successfully${NC}"
+        return 0
+    else
+        echo -e "${RED}✗ ${profile} sync failed${NC}" >&2
+        return 1
+    fi
+}
+
+sync_all() {
+    local failed=0
+    local succeeded=0
+    
+    echo -e "${YELLOW}Syncing all profiles...${NC}"
+    echo ""
+    
+    for env in "${BISYNC_DIR}"/*.env; do
+        [[ -f "$env" ]] || continue
+        profile=$(basename "$env" .env)
+        
+        if sync_profile "$profile"; then
+            ((succeeded++))
+        else
+            ((failed++))
+        fi
+        echo ""
+    done
+    
+    echo "================================"
+    echo -e "${GREEN}Succeeded: ${succeeded}${NC}"
+    if [[ $failed -gt 0 ]]; then
+        echo -e "${RED}Failed: ${failed}${NC}"
+        return 1
+    fi
+    
+    return 0
+}
+
+# Main
+if [[ $# -eq 0 ]]; then
+    usage
+fi
+
+case "$1" in
+    list)
+        list_profiles
+        ;;
+    all)
+        sync_all
+        ;;
+    -h|--help)
+        usage
+        ;;
+    *)
+        sync_profile "$1"
+        ;;
+esac

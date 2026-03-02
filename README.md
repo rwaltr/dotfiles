@@ -22,6 +22,7 @@
 - [Project Structure](#-project-structure)
 - [Development Workflow](#%EF%B8%8F-development-workflow)
 - [Backups](#-backups)
+- [Bisync](#-bisync)
 - [Design Choices](#-design-choices)
 - [Future Plans](#-future-plans)
 
@@ -266,14 +267,15 @@ dotfiles/
 │   │   ├── wezterm/       # Terminal config
 │   │   ├── mise/          # Global mise tool config
 │   │   ├── niri/          # Niri Wayland compositor
+│   │   ├── bisync/        # rclone bisync profiles (LOCAL/REMOTE env pairs)
 │   │   ├── containers/systemd/  # Podman quadlets (resticprofile)
 │   │   ├── systemd/user/  # User systemd units + timers
 │   │   └── resticprofile/ # Backup profiles (personal only)
 │   │
 │   └── dot_local/
 │       └── bin/           # Custom scripts:
-│                          #   auto-bisync, gamingctl, virtcontainerctl,
-│                          #   restic-setup-creds, ssh-multi
+│                          #   auto-bisync, bisync-now, gamingctl,
+│                          #   virtcontainerctl, restic-setup-creds, ssh-multi
 │
 ├── AGENTS.md             # Comprehensive context for AI agents
 └── README.md             # This file
@@ -456,6 +458,57 @@ systemctl --user enable --now resticprofile@documents.timer
 
 When mouse gets an S3-compatible backend, add a second profile pointing at it —
 the `base` excludes and retention policy inherit automatically.
+
+## 🔄 Bisync
+
+Two-way file synchronization between local directories and a remote server using
+[rclone bisync](https://rclone.org/bisync/), with profile-based configuration.
+
+### How it works
+
+- **Profiles**: `~/.config/bisync/*.env` — each file defines a `LOCAL` and `REMOTE` path pair
+- **Transport**: SFTP to the `mouse` server over Tailscale with SSH key auth
+- **Tools**: `auto-bisync` (watch mode) and `bisync-now` (ad-hoc sync)
+- **Backups**: Conflict/overwrite backups stored in `~/.local/share/bisync-backups/`
+
+### Configured profiles
+
+| Profile | Local | Remote |
+|---------|-------|--------|
+| books | `~/Books` | `mouse:/var/tank/home/rwaltr/Books` |
+| documents | `~/Documents` | `mouse:/var/tank/home/rwaltr/Documents` |
+| games | `~/Games` | `mouse:/var/tank/home/rwaltr/Games` |
+| music | `~/Music` | `mouse:/var/tank/home/rwaltr/Music` |
+| pictures | `~/Pictures` | `mouse:/var/tank/home/rwaltr/Pictures` |
+| videos | `~/Videos` | `mouse:/var/tank/home/rwaltr/Videos` |
+
+### Usage
+
+```bash
+# List available profiles
+bisync-now list
+
+# Sync a specific profile
+bisync-now documents
+
+# Sync all profiles
+bisync-now all
+
+# Watch mode — auto-sync on file changes (requires inotify-tools)
+auto-bisync ~/Documents :sftp,host=mouse,key_file=~/.ssh/id_ed25519:/var/tank/home/rwaltr/Documents watch
+
+# One-shot sync (used by bisync-now internally)
+auto-bisync ~/Documents :sftp,host=mouse,key_file=~/.ssh/id_ed25519:/var/tank/home/rwaltr/Documents once
+
+# First-time resync (resolves empty tracking state)
+auto-bisync ~/Documents :sftp,host=mouse,key_file=~/.ssh/id_ed25519:/var/tank/home/rwaltr/Documents resync
+```
+
+### Requirements
+
+- `rclone` — installed via Homebrew/mise
+- `inotify-tools` — for watch mode only
+- SSH key at `~/.ssh/id_ed25519` with access to `mouse`
 
 ## 🤔 Design Choices
 

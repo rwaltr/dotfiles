@@ -11,7 +11,7 @@
 #   auto-bisync ~/Documents :sftp,host=mouse:Documents resync
 #
 # Requirements: rclone, inotify-tools
-# SSH auth via 1Password agent socket
+# SSH auth via system SSH agent
 # Backup dirs: ~/.local/share/bisync-backups/<local-path-slug>/{local,remote}
 
 set -euo pipefail
@@ -27,7 +27,6 @@ REMOTE="$2"
 CMD="${3:-watch}"
 
 # ── Config ────────────────────────────────────────────────────────────────────
-SSH_SOCK="${HOME}/.1password/agent.sock"
 # Backup dirs must be outside the sync source and on the same remote as their respective path
 _SAFE_NAME="$(echo "$LOCAL" | tr '/' '_' | sed 's/^_//')"
 BACKUP_LOCAL="${HOME}/.local/share/bisync-backups/${_SAFE_NAME}"
@@ -53,7 +52,7 @@ notify() {
 bisync() {
     local extra_flags=("$@")
     log "Running bisync: $LOCAL ↔ $REMOTE"
-    SSH_AUTH_SOCK="$SSH_SOCK" rclone bisync \
+    rclone bisync \
         "$LOCAL" "$REMOTE" \
         --create-empty-src-dirs \
         --backup-dir1 "$BACKUP_LOCAL" \
