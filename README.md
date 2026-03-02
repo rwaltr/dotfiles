@@ -504,11 +504,33 @@ auto-bisync ~/Documents :sftp,host=mouse,key_file=~/.ssh/id_ed25519:/var/tank/ho
 auto-bisync ~/Documents :sftp,host=mouse,key_file=~/.ssh/id_ed25519:/var/tank/home/rwaltr/Documents resync
 ```
 
+### Systemd integration
+
+A templated user service (`bisync@.service`) runs `auto-bisync` in watch mode for any profile.
+It waits for the Tailscale interface before starting.
+
+```bash
+# Enable continuous sync for a profile
+systemctl --user enable --now bisync@documents.service
+
+# Enable all profiles
+for p in books documents games music pictures videos; do
+  systemctl --user enable --now bisync@${p}.service
+done
+
+# Check status
+systemctl --user status bisync@documents.service
+
+# View logs
+journalctl --user -u bisync@documents.service -f
+```
+
 ### Requirements
 
 - `rclone` — installed via Homebrew/mise
-- `inotify-tools` — for watch mode only
+- `inotify-tools` — for watch mode
 - SSH key at `~/.ssh/id_ed25519` with access to `mouse`
+- Tailscale — service waits for `tailscale0` interface
 
 ## 🤔 Design Choices
 
