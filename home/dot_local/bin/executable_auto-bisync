@@ -42,10 +42,18 @@ SYNC_INTERVAL=3600  # seconds between forced syncs even with no changes
 # ── Helpers ───────────────────────────────────────────────────────────────────
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 
+ICON="${HOME}/.local/share/icons/rwaltr-seal.svg"
+EXPIRE_OK=10000    # good notifications expire after 10s (milliseconds)
+
 notify() {
-    local msg="$1"
+    local level="$1" msg="$2"
     if command -v notify-send &>/dev/null && [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]]; then
-        notify-send "auto-bisync" "$msg" --icon=emblem-synchronizing 2>/dev/null || true
+        local args=("--icon=$ICON")
+        case "$level" in
+            ok)   args+=("--expire-time=$EXPIRE_OK" "--urgency=low") ;;
+            fail) args+=("--urgency=critical") ;;  # no expiry — stays until dismissed
+        esac
+        notify-send "auto-bisync" "$msg" "${args[@]}" 2>/dev/null || true
     fi
 }
 
@@ -81,7 +89,7 @@ watch)
     log "Watching for changes (debounce: ${SYNC_DELAY}s, forced interval: ${SYNC_INTERVAL}s)"
 
     # Initial sync on startup
-    bisync && notify "Started ($LOCAL)" || { notify "Startup sync failed ($LOCAL)"; log "Startup sync failed"; }
+    bisync && notify ok "Started ($LOCAL)" || { notify fail "Startup sync failed ($LOCAL)"; log "Startup sync failed"; }
 
     while true; do
         if inotifywait \
@@ -93,13 +101,13 @@ watch)
             # File change detected — debounce then sync
             log "Change detected, waiting ${SYNC_DELAY}s..."
             sleep "$SYNC_DELAY"
-            bisync && notify "Synchronized ($LOCAL)" || { notify "Sync failed ($LOCAL)"; log "Sync failed"; }
+            bisync && notify ok "Synchronized ($LOCAL)" || { notify fail "Sync failed ($LOCAL)"; log "Sync failed"; }
         else
             exit_code=$?
             if [[ $exit_code -eq 2 ]]; then
                 # Timeout — forced interval sync
                 log "Interval sync triggered"
-                bisync || { notify "Interval sync failed ($LOCAL)"; log "Interval sync failed"; }
+                bisync || { notify fail "Interval sync failed ($LOCAL)"; log "Interval sync failed"; }
             else
                 log "inotifywait error (exit $exit_code), retrying in 10s..."
                 sleep 10
