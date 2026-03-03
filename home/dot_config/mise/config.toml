@@ -35,3 +35,12 @@ node = "latest"
 "aqua:jqlang/jq"         = "latest" # jq — JSON processor
 "aqua:charmbracelet/glow" = "latest" # glow — markdown renderer
 "github:jdx/fnox"        = "latest" # fnox — no aqua entry
+kubectl = "latest"
+k9s = "latest"
+
+# ── Pi coding agent ──────────────────────────────────────────────────────────
+# Managed via npm backend so pi survives node version upgrades
+"npm:@mariozechner/pi-coding-agent" = "latest" # pi — coding agent CLI
+"npm:pi-mcp-adapter"                = "latest" # MCP adapter for pi
+"npm:pi-subagents"                  = "latest" # subagent support
+"npm:pi-web-access"                 = "latest" # web search/fetch tools
