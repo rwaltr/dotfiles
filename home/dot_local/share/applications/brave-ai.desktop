@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=Brave (AI)
+GenericName=Web Browser
+Comment=Brave with a dedicated AI profile and CDP on port 9222
+StartupNotify=true
+StartupWMClass=brave-browser
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser --remote-debugging-port=9222 --user-data-dir=/home/rwaltr/.var/app/com.brave.Browser/ai-profile --no-first-run @@u %U @@
+Terminal=false
+Icon=com.brave.Browser
+Type=Application
+Categories=Network;WebBrowser;
