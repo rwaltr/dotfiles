@@ -5,174 +5,235 @@ description: Playwright CLI for browser automation, code generation, screenshots
 
 # Playwright CLI
 
-Use this skill when working with Playwright from the command line — codegen, screenshots, testing, tracing, or scripting browser automation.
+There are **two distinct tools** — use the right one for the job:
 
-## Activation Triggers
+| Tool | Binary | Best for |
+|------|--------|----------|
+| `playwright-cli` | `~/.local/share/mise/installs/node/25.3.0/bin/playwright-cli` | Live browser automation, connecting to existing sessions, interactive CLI control |
+| `npx playwright` | via mise/npx | Test running, codegen recording, tracing, CI |
 
-Activate this skill when the user mentions:
-- Playwright codegen, screenshots, or PDF generation
-- Running or writing Playwright tests
-- Playwright tracing or trace viewer
-- Browser automation scripting
-- `npx playwright` commands
-- Connecting Playwright to an existing browser (CDP)
+---
 
-## Environment
+## `playwright-cli` — Interactive CLI Automation
 
-- **Binary**: `~/.local/share/mise/installs/node/25.3.0/bin/playwright-cli`
-- **Invoke via**: `npx playwright <command>` (preferred) or `playwright-cli`
-- **Version**: 1.58.x (check with `npx playwright --version`)
-- **Node managed by**: `mise`
+### Activation Triggers
+- Automating an existing logged-in browser session
+- Clicking/filling forms without writing scripts
+- Connecting to a running Brave/Chrome via CDP
+- Any browser task that benefits from step-by-step CLI control
 
-## Core Commands
+### Connecting to Existing Brave Session (CDP)
 
-### Browser Shortcuts
+Create a config file to point at the running Brave CDP endpoint:
+
+```json
+// playwright-cli.json  (in cwd, or specify with --config)
+{
+  "browser": {
+    "cdpEndpoint": "http://localhost:9222"
+  }
+}
+```
+
+Then all `playwright-cli` commands talk to the live Brave session automatically. No scripts needed.
+
+Alternatively use the env var: `PLAYWRIGHT_MCP_CDP_ENDPOINT=http://localhost:9222 playwright-cli snapshot`
+
+### Core Workflow: snapshot → click
 
 ```bash
-npx playwright cr [url]    # Open Chromium
-npx playwright ff [url]    # Open Firefox
-npx playwright wk [url]    # Open WebKit
-npx playwright open [url]  # Open with default browser (-b flag to specify)
+playwright-cli snapshot              # get current page state + element refs (e1, e2, ...)
+playwright-cli click e42             # click element by ref
+playwright-cli click 'text=Submit'   # click by text
+playwright-cli fill e7 "hello"       # fill input by ref
+playwright-cli screenshot            # screenshot current page
+playwright-cli go-back               # navigate back
+playwright-cli goto https://...      # navigate to URL
+playwright-cli eval "document.title" # run JS on page
+playwright-cli run-code "<playwright code snippet>"  # run arbitrary Playwright JS
 ```
+
+**Always `snapshot` first** — it returns element refs (e1, e2, ...) and page structure so you know exactly what to click without guessing selectors.
+
+### All Core Commands
+
+```bash
+playwright-cli open [url]            # open browser
+playwright-cli goto <url>            # navigate
+playwright-cli close                 # close page
+playwright-cli snapshot              # capture page snapshot → element refs
+playwright-cli click <ref>           # click element
+playwright-cli dblclick <ref>        # double click
+playwright-cli fill <ref> <text>     # fill input
+playwright-cli type <text>           # type into focused element
+playwright-cli hover <ref>           # hover
+playwright-cli select <ref> <val>    # dropdown select
+playwright-cli check <ref>           # check checkbox/radio
+playwright-cli uncheck <ref>         # uncheck
+playwright-cli drag <ref1> <ref2>    # drag and drop
+playwright-cli press <key>           # keyboard: 'Enter', 'Tab', 'ArrowLeft'
+playwright-cli keydown / keyup <key>
+playwright-cli mousemove <x> <y>
+playwright-cli mousewheel <dx> <dy>
+playwright-cli eval <func> [ref]     # evaluate JS
+playwright-cli run-code <code>       # run playwright code snippet
+playwright-cli dialog-accept [text]  # accept dialog
+playwright-cli dialog-dismiss        # dismiss dialog
+playwright-cli resize <w> <h>        # resize window
+```
+
+### Tabs
+
+```bash
+playwright-cli tab-list
+playwright-cli tab-new [url]
+playwright-cli tab-select <index>
+playwright-cli tab-close [index]
+```
+
+### Sessions (Multiple Browsers)
+
+```bash
+playwright-cli -s=myapp open https://example.com   # named session
+playwright-cli -s=myapp snapshot
+playwright-cli list                                  # list all sessions
+playwright-cli close-all
+playwright-cli kill-all                              # force kill stale sessions
+```
+
+Use `PLAYWRIGHT_CLI_SESSION=name` env var to set session for all commands.
+
+### Visual Dashboard
+
+```bash
+playwright-cli show    # opens live screencast dashboard of all sessions
+```
+
+Lets you watch and take over control from any running session.
+
+### Save / Screenshot
+
+```bash
+playwright-cli screenshot                        # stdout
+playwright-cli screenshot --filename=out.png     # save to file
+playwright-cli screenshot e5                     # screenshot specific element
+playwright-cli pdf --filename=page.pdf
+```
+
+### Storage & State
+
+```bash
+playwright-cli state-save auth.json     # save cookies + localStorage
+playwright-cli state-load auth.json     # restore auth state
+playwright-cli cookie-list
+playwright-cli cookie-set name value
+playwright-cli localstorage-list
+playwright-cli localstorage-set key val
+```
+
+### Config File (`playwright-cli.json`)
+
+Full config schema highlights:
+
+```json
+{
+  "browser": {
+    "cdpEndpoint": "http://localhost:9222",
+    "browserName": "chromium",
+    "userDataDir": "/tmp/my-profile",
+    "launchOptions": { "headless": false }
+  },
+  "outputDir": "./playwright-output",
+  "outputMode": "file",
+  "timeouts": {
+    "action": 5000,
+    "navigation": 60000
+  }
+}
+```
+
+---
+
+## `npx playwright` — Test Runner & Codegen
+
+### Activation Triggers
+- Writing/running Playwright tests (`.spec.ts`)
+- Recording codegen scripts
+- CI pipelines
+- Trace viewer
 
 ### Code Generation
 
 ```bash
-# Record user actions and output code
 npx playwright codegen https://example.com
-
-# Specify output file
 npx playwright codegen --target=javascript -o actions.js https://example.com
-
-# Codegen with specific browser
 npx playwright codegen --browser=firefox https://example.com
-
-# Codegen with viewport size
-npx playwright codegen --viewport-size=1280,720 https://example.com
 ```
 
 ### Screenshots & PDF
 
 ```bash
-# Screenshot
-npx playwright screenshot https://example.com screenshot.png
-
-# Full-page screenshot
 npx playwright screenshot --full-page https://example.com full.png
-
-# PDF (Chromium only)
 npx playwright pdf https://example.com output.pdf
 ```
 
-### Testing
+### Test Running
 
 ```bash
-# Run all tests
 npx playwright test
-
-# Run specific test file
 npx playwright test tests/login.spec.ts
-
-# Run with specific browser
 npx playwright test --project=chromium
-
-# Run in headed mode (visible browser)
 npx playwright test --headed
-
-# Run with debug UI
 npx playwright test --ui
-
-# Run with trace
 npx playwright test --trace on
-
-# Show HTML report
 npx playwright show-report
-
-# Merge sharded reports
-npx playwright merge-reports ./blob-reports
 ```
 
 ### Tracing
 
 ```bash
-# Show trace file
 npx playwright show-trace trace.zip
 ```
 
-### Installation
+### Browser Installation
 
 ```bash
-# Install browsers for current playwright version
 npx playwright install
-
-# Install specific browser
 npx playwright install chromium
-npx playwright install firefox webkit
-
-# Install browser + system deps
 npx playwright install --with-deps chromium
-
-# Install deps only (sudo required)
-npx playwright install-deps
-
-# Uninstall playwright browsers
-npx playwright uninstall
 ```
 
-### Cache
+---
 
-```bash
-npx playwright clear-cache
-```
+## Connecting to Existing Brave Session (Node.js scripts)
 
-## Connecting to an Existing Browser (CDP)
-
-Playwright can attach to a running browser via Chrome DevTools Protocol instead of launching its own:
+When you need full Playwright API control in a script (e.g., loops, complex logic):
 
 ```javascript
+// Must run from a dir with playwright installed: cd /tmp/play_test && npm install playwright
 const { chromium } = require('playwright');
 
 const browser = await chromium.connectOverCDP('http://localhost:9222');
 const context = browser.contexts()[0];
 const page = context.pages()[0];
+// ... interact with page
+await browser.close(); // disconnects, does not close Brave
 ```
 
-See the **brave** skill for launching Brave with CDP enabled.
+**Note**: `playwright` is not globally installed. Either:
+- Run from `/tmp/play_test/` (has it installed)
+- Or use `playwright-cli` with CDP config instead — no scripting needed
 
-## Common Patterns
-
-### Quick Screenshot of a URL
-
-```bash
-npx playwright screenshot --full-page https://example.com out.png
-```
-
-### Record and Save Codegen Script
-
-```bash
-npx playwright codegen -o script.js https://myapp.local
-```
-
-### Debug a Failing Test
-
-```bash
-npx playwright test --debug tests/login.spec.ts
-```
-
-### Run Tests Headlessly in CI
-
-```bash
-npx playwright test --reporter=github
-```
+---
 
 ## Best Practices
 
-- Use `npx playwright` to ensure the right version is picked up by mise
-- Prefer `connectOverCDP` over launching a new browser when you need to interact with an existing session (e.g., logged-in Brave)
-- Use `--trace on` during development to capture detailed failure info
-- Store traces/screenshots in a project-local `test-results/` directory
-- Use `codegen` to bootstrap test scripts, then refine manually
+- **Prefer `playwright-cli` + CDP config** over writing Node.js scripts for live session automation — it's faster and requires no boilerplate
+- **Always `snapshot` before clicking** — gets accurate element refs, avoids selector guessing
+- **Use `playwright-cli show`** to visually monitor what the automation is doing
+- Use `npx playwright codegen` to bootstrap test scripts, then refine manually
+- Use `--trace on` during test development for failure debugging
 
 ## Related Skills
 
-- **brave**: Launch Brave (Flatpak) with remote debugging for CDP connection
+- **brave**: Launch Brave (Flatpak) with remote debugging for CDP connection (`--remote-debugging-port=9222`)
