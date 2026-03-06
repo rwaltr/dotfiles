@@ -72,6 +72,8 @@ bisync() {
         --backup-dir2 "$BACKUP_REMOTE" \
         --compare size,modtime \
         --resilient \
+        --recover \
+        --max-lock 10m \
         --verbose \
         "${extra_flags[@]}"
 }
@@ -112,7 +114,7 @@ watch)
             if [[ $exit_code -eq 2 ]]; then
                 # Timeout — forced interval sync
                 log "Interval sync triggered"
-                bisync || { notify fail "Interval sync failed ($LOCAL)"; log "Interval sync failed"; }
+                bisync && notify ok "Synchronized ($LOCAL)" || { notify fail "Interval sync failed ($LOCAL)"; log "Interval sync failed"; }
             else
                 log "inotifywait error (exit $exit_code), retrying in 10s..."
                 sleep 10
