@@ -23,7 +23,6 @@
   "hideThinkingBlock": false,
   "packages": [
     "npm:pi-subagents",
-    "npm:pi-mcp-adapter",
-    "npm:pi-web-access"
+    "npm:pi-mcp-adapter"
   ]
 }

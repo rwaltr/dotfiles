@@ -52,4 +52,3 @@ k9s = "latest"
 "npm:@mariozechner/pi-coding-agent" = "latest" # pi — coding agent CLI
 "npm:pi-mcp-adapter"                = "latest" # MCP adapter for pi
 "npm:pi-subagents"                  = "latest" # subagent support
-"npm:pi-web-access"                 = "latest" # web search/fetch tools
