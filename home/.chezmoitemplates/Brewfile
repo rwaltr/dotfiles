@@ -29,6 +29,7 @@ brew "eza"
 brew "zoxide"
 brew "starship"
 brew "atuin"
+brew "chafa"     # terminal image viewer (used by yazi, tv)
 
 {{ if not .ephemeral -}}
 # ── CLI tools (!ephemeral) ────────────────────────────────────────────────────
