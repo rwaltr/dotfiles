@@ -49,3 +49,7 @@ alias tb "nc termbin.com 9999"
 
 # Argo!
 alias argo argocd
+
+# Rust tool aliases
+type -q btm; and alias btop btm
+type -q dust; and alias du dust
