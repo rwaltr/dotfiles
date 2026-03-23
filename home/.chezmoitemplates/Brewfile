@@ -31,7 +31,6 @@ brew "starship"
 brew "atuin"
 brew "bandwhich" # network utilization by process
 brew "chafa"     # terminal image viewer (used by yazi, tv)
-brew "macchina"  # system info fetch
 
 {{ if not .ephemeral -}}
 # ── CLI tools (!ephemeral) ────────────────────────────────────────────────────
