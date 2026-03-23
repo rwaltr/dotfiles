@@ -1,0 +1,3 @@
+# ~/.config/yazi/theme.toml — managed by chezmoi
+[flavor]
+use = "catppuccin-mocha"

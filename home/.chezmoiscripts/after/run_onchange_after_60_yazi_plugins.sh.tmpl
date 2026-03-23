@@ -12,5 +12,6 @@ if ! command -v ya &>/dev/null; then
 	exit 0
 fi
 
-echo "Installing yazi plugins..."
+echo "Installing yazi plugins and flavors..."
 ya pkg add cap153/tv 2>/dev/null || true
+ya pkg add yazi-rs/flavors:catppuccin-mocha 2>/dev/null || true
