@@ -1,3 +1,4 @@
 # ~/.config/yazi/theme.toml — managed by chezmoi
+# base16 flavor uses terminal ANSI colors, themed by DMS matugen
 [flavor]
-use = "catppuccin-mocha"
+use = "base16"

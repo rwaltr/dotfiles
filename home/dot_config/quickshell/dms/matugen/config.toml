@@ -1,0 +1,10 @@
+# DMS matugen user templates — managed by chezmoi
+# These extend the built-in DMS templates with custom app themes
+
+[templates.userbottom]
+input_path = 'CONFIG_DIR/quickshell/dms/matugen/templates/bottom.toml'
+output_path = 'CONFIG_DIR/bottom/bottom.toml'
+
+[templates.usergitui]
+input_path = 'CONFIG_DIR/quickshell/dms/matugen/templates/gitui.ron'
+output_path = 'CONFIG_DIR/gitui/theme.ron'

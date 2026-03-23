@@ -8,6 +8,8 @@
 # DMS (matugen) generated theme files — written at runtime by desktop
 .config/wezterm/colors/dank-theme.toml
 .config/nvim/lua/plugins/dankcolors.lua
+.config/bottom/bottom.toml
+.config/gitui/theme.ron
 
 # Host-specific credentials created by rwaltrctl-init / restic-setup-creds
 .config/resticprofile/password
