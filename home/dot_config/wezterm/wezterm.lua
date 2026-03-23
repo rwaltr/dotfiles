@@ -20,8 +20,21 @@ config.set_environment_variables = {
 	TERM_PROGRAM = "WezTerm",
 }
 
--- Color scheme
-config.color_scheme = "Catppuccin Mocha"
+-- Color scheme: use DMS dank-theme if available, otherwise Catppuccin Mocha
+local function file_exists(path)
+	local f = io.open(path, "r")
+	if f then
+		f:close()
+		return true
+	end
+	return false
+end
+
+if file_exists(wezterm.config_dir .. "/colors/dank-theme.toml") then
+	config.color_scheme = "dank-theme"
+else
+	config.color_scheme = "Catppuccin Mocha"
+end
 
 -- Font settings
 -- Preferred fonts are tried in order; wezterm also auto-appends its built-in
