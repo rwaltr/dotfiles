@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# Install yazi plugins declared in package.toml.
+# run_onchange — reruns whenever the package.toml changes.
+#
+# package hash: {{ include (joinPath .chezmoi.sourceDir "dot_config/yazi/package.toml") | sha256sum }}
+
+set -euo pipefail
+
+if ! command -v ya &>/dev/null; then
+	echo "WARN: ya (yazi CLI) not found. Skipping plugin install." >&2
+	exit 0
+fi
+
+echo "Installing yazi plugins..."
+ya pkg install 2>/dev/null || true

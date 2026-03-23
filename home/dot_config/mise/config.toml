@@ -32,6 +32,7 @@ node = "latest"
 # ── Universal CLI tools ───────────────────────────────────────────────────────
 # gh installed via Brewfile
 "aqua:alexpasmantier/television" = "latest" # tv — fuzzy finder with channels
+"aqua:sxyazi/yazi"               = "latest" # yazi — terminal file manager
 "aqua:casey/just"        = "latest" # just — command runner / task file
 "aqua:jqlang/jq"         = "latest" # jq — JSON processor
 "aqua:charmbracelet/glow" = "latest" # glow — markdown renderer
