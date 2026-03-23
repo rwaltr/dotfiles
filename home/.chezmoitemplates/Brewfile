@@ -48,7 +48,7 @@ brew "task"      # taskwarrior — task management
 
 {{ if not .headless -}}
 # ── Fonts (!headless) ─────────────────────────────────────────────────────────
-# Casks install to ~/.local/share/fonts/ on Linux, ~/Library/Fonts/ on macOS
+# Casks install to ~/.local/share/fonts/ on Linux
 
 # WezTerm primary fonts (wezterm.lua font_with_fallback)
 cask "font-iosevka-term-nerd-font"

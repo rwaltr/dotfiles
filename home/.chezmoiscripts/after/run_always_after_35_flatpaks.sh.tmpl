@@ -2,7 +2,7 @@
 # vi: ft=sh
 # Sync flatpaks — install declared apps, remove apps no longer declared.
 # flatpak install --or-update is idempotent; run on every chezmoi apply.
-# Linux only — skipped entirely on macOS.
+# Linux only.
 
 {{ if (and (eq .chezmoi.os "linux") (not .headless)) -}}
 set -euo pipefail

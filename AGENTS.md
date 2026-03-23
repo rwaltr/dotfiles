@@ -3,7 +3,7 @@
 ## Project Overview
 
 This is a personal dotfiles repository managed with [Chezmoi](https://www.chezmoi.io/). It provides
-cross-platform configuration management for Linux and macOS environments, with a focus on containerized
+configuration management for Linux environments, with a focus on containerized
 development workflows.
 
 **Repository URL**: Initialized with `chezmoi init rwaltr`
@@ -17,7 +17,6 @@ development workflows.
   - **Fish**: Primary interactive shell, focused on user-friendliness
   - **Bash**: Streamlined scripting-focused configuration
   - **Nushell**: Data processing and structured data workflows
-  - **Zsh**: Minimal config as migration bridge, shares config with Bash via POSIX compatibility
 - **No system-level automation**: Does not manage host NetworkManager, host level systemd services, etc.
 - **Secrets via 1Password**: Personal secrets managed through 1Password CLI
 - **Not for servers**: Focused on workstation/development environments
@@ -33,8 +32,6 @@ development workflows.
 ### Operating Systems
 
 - **Primary**: Fedora/Universal Blue (ublue)
-- **Secondary**: macOS (minimal support)
-
 ### Desktop Environments
 
 - Niri
@@ -42,7 +39,7 @@ development workflows.
 
 ## Package Management Strategy
 
-- **CLI tools**: mise (primary) / Homebrew (macOS)
+- **CLI tools**: mise (primary) / Homebrew (Linuxbrew)
 - **GUI apps**: Flatpak (Linux)
 - **Containers**: Podman
 - **Portable environments**: Distrobox with exported applications
@@ -83,7 +80,7 @@ development workflows.
 │   │   │   ├── colors/
 │   │   │   ├── platforms/
 │   │   │   └── wezterm.lua
-│   │   └── zsh/                   # Zsh shell config
+
 │   ├── dot_local/
 │   │   └── bin/                   # User scripts
 │   │       └── executable_ssh-multi.sh
@@ -93,7 +90,6 @@ development workflows.
 │   │   └── private_config.tmpl
 │   ├── symlink_dot_bin.tmpl       # Symlinked bin directory
 │   ├── symlink_dot_reminders
-│   └── symlink_dot_zshrc
 ├── .chezmoiignore                 # Files to ignore (local configs)
 ├── .chezmoiroot                   # Points to 'home' directory
 ├── .chezmoiversion                # Chezmoi version: 2.62.7
@@ -110,11 +106,10 @@ development workflows.
   - **Fish** (primary interactive) - User-friendly, modern syntax
   - **Bash** (scripting) - Streamlined, modular, POSIX-compatible scripting
   - **Nushell** (data processing) - Structured data manipulation
-  - **Zsh** (migration bridge) - Minimal config, shares Bash configuration via POSIX compatibility
 - **Prompt**: Starship (cross-shell)
 - **History**: Atuin (cross-shell)
 - **Completions**: Carapace
-- **Aliases**: complete_alias.sh (Bash/Zsh via POSIX compatibility)
+- **Aliases**: complete_alias.sh (Bash)
 
 ### Development Tools
 
@@ -136,7 +131,6 @@ development workflows.
 
 - `home/dot_config/fish/config.fish` - Fish shell (primary interactive shell)
 - `home/dot_bashrc` - Bash initialization (scripting-focused, sources bashrc.d/*.sh)
-- `home/dot_config/zsh/` - Zsh (minimal, leverages Bash config via POSIX compatibility)
 - `home/dot_config/nushell/` - Nushell (data processing workflows)
 - `home/dot_config/starship.toml` - Cross-shell prompt configuration
 - `home/dot_config/nvim/init.lua` - Neovim entry point
@@ -191,7 +185,6 @@ Located in `home/dot_bashrc` and `home/dot_config/bashrc.d/` - focused on **stre
 - Modular configuration via `bashrc.d/*.sh`
 - POSIX-compatible for portability
 - Script execution and automation
-- Shared with Zsh via POSIX compatibility
 
 ### Nushell (Data Processing)
 
@@ -201,21 +194,11 @@ Located in `home/dot_config/nushell/` - focused on **structured data workflows**
 - Structured data manipulation
 - Modern approach to shell scripting with typed data
 
-### Zsh (Migration Bridge)
-
-Located in `home/dot_config/zsh/` - **minimal configuration**:
-
-- Helps users transition to Fish/Nushell
-- Leverages Bash configuration via POSIX compatibility
-- Shares bashrc.d modules where applicable
-- Not heavily customized
-
 ## Modular Bash Configuration
 
 The `home/dot_config/bashrc.d/` directory contains modular bash scripts for scripting-focused
 configuration, loaded in alphabetical order.
 
-**Note**: Zsh can source these same scripts due to POSIX compatibility, providing consistency between Bash and Zsh environments.
 
 ### Core (0.* prefix for load order)
 
@@ -279,7 +262,6 @@ chezmoi add --template ~/.config/templated-file
 1. **Interactive Shell**: Fish provides user-friendly interactive experience
 2. **Scripting**: Bash for scripts and automation tasks
 3. **Data Processing**: Nushell for structured data manipulation
-4. **Migration Support**: Zsh available as bridge, sharing Bash config
 5. **Container Development**: Primary workflow uses Distrobox containers with dotfiles
 6. **Editor**: Neovim with Lua configuration for modern development
 7. **Terminal**: WezTerm provides consistent terminal experience across platforms
@@ -292,7 +274,6 @@ chezmoi add --template ~/.config/templated-file
 - ✅ Fish shell environment (primary interactive)
 - ✅ Bash environment (streamlined scripting)
 - ✅ Nushell environment (data processing)
-- ✅ Zsh environment (minimal migration bridge, shares Bash config)
 - ✅ Development tool configurations (git, nvim, etc.)
 - ✅ SSH configuration
 - ✅ Container and Kubernetes tooling
@@ -310,13 +291,10 @@ chezmoi add --template ~/.config/templated-file
 
 1. **Fish Scripts**: Focus on user-friendliness and interactive features
 2. **Bash Scripts**: Keep streamlined and scripting-focused; add to `bashrc.d/` for modularity
-3. **Zsh Scripts**: Keep minimal; prefer sharing Bash config via POSIX compatibility
 4. **Nushell Scripts**: Focus on data processing and structured workflows
-5. **POSIX Compatibility**: Bash configs should work in Zsh where possible
 6. **Templates**: Use `.tmpl` extension for files needing variable substitution
 7. **Secrets**: Never commit secrets directly; use 1Password CLI templates
-8. **Cross-platform**: Consider macOS compatibility when adding Linux-specific tools
-9. **Containers**: Test in both host and containerized environments
+8. **Containers**: Test in both host and containerized environments
 
 ### File Naming Conventions
 

@@ -63,13 +63,7 @@ end)
 -- Detect the platform using target_triple
 -- See: https://wezfurlong.org/wezterm/config/lua/wezterm/target_triple.html
 local platform_module = nil
-if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	-- Windows
-	platform_module = require("platforms.windows")
-elseif wezterm.target_triple:find("darwin") then
-	-- macOS (Intel or Apple Silicon)
-	platform_module = require("platforms.macos")
-elseif wezterm.target_triple:find("linux") then
+if wezterm.target_triple:find("linux") then
 	-- Linux
 	platform_module = require("platforms.linux")
 end

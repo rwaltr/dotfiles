@@ -18,15 +18,7 @@
 {{-   $headless = true -}}
 {{- end -}}
 
-{{/* work around unreliable hostname on darwin */}}
 {{- $hostname := .chezmoi.hostname -}}
-{{- if eq .chezmoi.os "darwin" -}}
-{{-   $hostname := output "scutil" "--get" "LocalHostName" | trim -}}
-{{- end -}}
-
-{{- if eq .chezmoi.os "windows" -}}
-{{-   $ephemeral = true -}}
-{{- end -}}
 
 {{- if or (eq .chezmoi.username "coder") (env "CODER") }}
 {{- $ephemeral = true -}}

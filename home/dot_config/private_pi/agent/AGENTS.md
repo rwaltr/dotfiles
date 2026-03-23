@@ -21,7 +21,7 @@ Ryan Walter (rwaltr) owns this. Linux daily driver, CLI-focused, container-first
 - **nvim**: The user's primary editor
 - **chezmoi**: dotfiles (when in dotfiles context)
 - **curl**: HTTP ops, API testing
-- **brew**: packages (macOS only)
+- **brew**: packages (Linuxbrew)
 
 ## Directory Structure
 

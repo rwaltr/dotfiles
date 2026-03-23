@@ -31,7 +31,6 @@
 This is my personal dotfiles repository, designed to provide a consistent development environment across:
 
 - **Linux workstations** (Fedora/Universal Blue)
-- **macOS** (work machine, minimal support)
 - **Container environments** (Distrobox, Podman, Docker)
 - **Future**: Kubernetes debug pods (coming soon!)
 
@@ -56,7 +55,6 @@ Different shells for different tasks, not just preference:
 - 🐚 **Fish** - Primary interactive shell (user-friendly, modern)
 - 📜 **Bash** - Scripting and automation (universal, POSIX)
 - 📊 **Nushell** - Data processing (structured pipelines)
-- 🔄 **Zsh** - macOS compatibility bridge (shares Bash config)
 
 ### User-Space Only
 
@@ -220,21 +218,6 @@ Each shell serves a specific purpose based on its strengths:
 cat logs.json | from json | where status == 500 | length
 ```
 
-#### Zsh (macOS Bridge)
-
-**Use for**: macOS compatibility (when Fish isn't an option)
-
-**Strengths**:
-
-- Shares Bash configuration (POSIX compatible)
-- Minimal maintenance
-- Smoother transition for Bash users
-
-**Configuration**:
-
-- Sources from `~/.config/bashrc.d/` (shared with Bash)
-- Minimal Zsh-specific setup
-
 ## 📁 Project Structure
 
 ```
@@ -262,7 +245,6 @@ dotfiles/
 │   │   ├── fish/          # Fish shell (primary interactive)
 │   │   ├── bashrc.d/      # Modular Bash configs
 │   │   ├── nushell/       # Nushell data processing
-│   │   ├── zsh/           # Zsh (minimal, shares Bash config)
 │   │   ├── nvim/          # Neovim Lua config
 │   │   ├── wezterm/       # Terminal config
 │   │   ├── mise/          # Global mise tool config
@@ -574,7 +556,6 @@ while mise handles per-project versions (Node 18 in project A, Node 20 in projec
 - 🖥️ **Workstation**: Full setup with GUI tools
 - 📦 **Container**: Lightweight dev environment
 - ☸️ **K8s Debug Pod**: Familiar shell in production (future)
-- 🍎 **macOS**: Work machine compatibility
 
 **Benefits**:
 
@@ -595,7 +576,6 @@ while mise handles per-project versions (Node 18 in project A, Node 20 in projec
 
 - [ ] **Wezterm sessionizer** integration with pi agent for long-running tasks
 - [ ] **Container image**: Pre-built Docker/Podman image with full setup
-- [ ] **macOS improvements**: Better Homebrew integration
 - [ ] **Nushell integration**: Deeper data processing workflows
 - [ ] **S3 backup backend**: Second restic profile pointing at S3-compatible storage
 

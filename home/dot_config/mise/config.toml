@@ -19,7 +19,7 @@ trusted_config_paths = ["~/.config/mise/config.toml"]
 
 [tools]
 # ── Security & Secrets ────────────────────────────────────────────────────────
-# NOTE: 1password-cli is a brew cask (macOS only) — aqua backend on Linux
+# 1password-cli via aqua backend
 "1password-cli" = "latest"        # op CLI; pairs with 1Password GUI for biometric auth
 "aqua:FiloSottile/age" = "latest" # age encryption
 "aqua:getsops/sops" = "latest"    # secrets encryption (SOPS)
