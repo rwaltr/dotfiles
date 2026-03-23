@@ -1,12 +1,19 @@
 # ~/.config/yazi/keymap.toml — managed by chezmoi
 
+# Make Enter navigate into dirs (like l) instead of dispatching to opener
+[[mgr.prepend_keymap]]
+on  = "<Enter>"
+run = "enter"
+desc = "Enter the child directory, or open the file"
+
+# tv.yazi — television integration
 [[mgr.prepend_keymap]]
 on  = "<C-t>"
 run = "plugin tv"
 desc = "Jump to a file via television"
 
 [[mgr.prepend_keymap]]
-on  = "<C-d>"
+on  = "<C-g>"
 run = "plugin tv dirs"
 desc = "Jump to a directory via television"
 
