@@ -33,9 +33,15 @@ node = "latest"
 # gh installed via Brewfile
 "aqua:alexpasmantier/television" = "latest" # tv — fuzzy finder with channels
 "aqua:sxyazi/yazi"               = "latest" # yazi — terminal file manager
+"aqua:bootandy/dust"     = "latest" # dust — disk usage visualizer
 "aqua:casey/just"        = "latest" # just — command runner / task file
+"aqua:chmln/sd"          = "latest" # sd — simpler sed
+"aqua:ClementTsang/bottom" = "latest" # btm — system monitor
+"aqua:dandavison/delta"  = "latest" # delta — git diff pager
+"aqua:extrawurst/gitui"  = "latest" # gitui — git TUI
 "aqua:jqlang/jq"         = "latest" # jq — JSON processor
 "aqua:charmbracelet/glow" = "latest" # glow — markdown renderer
+"aqua:sharkdp/hyperfine" = "latest" # hyperfine — CLI benchmarking
 "github:jdx/fnox"        = "latest" # fnox — no aqua entry
 kubectl = "latest"
 k9s = "latest"

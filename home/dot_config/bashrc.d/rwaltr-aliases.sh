@@ -60,3 +60,7 @@ alias tb="nc termbin.com 9999"
 
 # Argo!
 alias argo=argocd
+
+# Rust tool aliases
+command -v btm &>/dev/null && alias btop="btm"
+command -v dust &>/dev/null && alias du="dust"
