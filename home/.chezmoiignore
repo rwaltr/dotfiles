@@ -2,6 +2,9 @@
 .config/wezterm
 .config/mpv
 {{- end }}
+# Yazi package.toml is managed by `ya pkg` — don't overwrite
+.config/yazi/package.toml
+
 # Host-specific credentials created by rwaltrctl-init / restic-setup-creds
 .config/resticprofile/password
 

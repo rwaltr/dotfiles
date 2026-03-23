@@ -1,5 +1,0 @@
-# ~/.config/yazi/package.toml — managed by chezmoi
-# Install plugins with: ya pkg install
-
-[[plugin.deps]]
-use = "cap153/tv"

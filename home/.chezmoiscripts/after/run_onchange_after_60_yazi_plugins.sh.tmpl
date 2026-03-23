@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # vi: ft=sh
-# Install yazi plugins declared in package.toml.
-# run_onchange — reruns whenever the package.toml changes.
+# Install yazi plugins via ya pkg add (idempotent).
+# run_onchange — reruns whenever this script changes.
 #
-# package hash: {{ include (joinPath .chezmoi.sourceDir "dot_config/yazi/package.toml") | sha256sum }}
+# plugin list hash: {{ "cap153/tv" | sha256sum }}
 
 set -euo pipefail
 
@@ -13,4 +13,4 @@ if ! command -v ya &>/dev/null; then
 fi
 
 echo "Installing yazi plugins..."
-ya pkg install 2>/dev/null || true
+ya pkg add cap153/tv 2>/dev/null || true
