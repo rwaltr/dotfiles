@@ -15,6 +15,11 @@ end
 -- Base Configuration (Common across all platforms)
 -- ============================================================================
 
+-- Ensure TERM_PROGRAM is set so tools (yazi, etc.) detect WezTerm
+config.set_environment_variables = {
+	TERM_PROGRAM = "WezTerm",
+}
+
 -- Color scheme
 config.color_scheme = "Catppuccin Mocha"
 
