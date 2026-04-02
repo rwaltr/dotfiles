@@ -1,0 +1,19 @@
+#!/bin/bash
+# Wrapper for brave-search-cli (bx) installed via mise
+# The github: backend installs it as bx-VERSION, so we resolve dynamically.
+set -euo pipefail
+
+install_dir="${HOME}/.local/share/mise/installs/github-brave-brave-search-cli"
+if [[ ! -d "$install_dir" ]]; then
+  echo "Error: brave-search-cli not installed via mise. Run: mise install" >&2
+  exit 1
+fi
+
+# Find the latest installed version's binary
+bx_bin=$(find "$install_dir" -maxdepth 2 -name 'bx-*' -not -name '*.sha*' -type f -executable | sort -V | tail -1)
+if [[ -z "$bx_bin" ]]; then
+  echo "Error: bx binary not found in $install_dir" >&2
+  exit 1
+fi
+
+exec "$bx_bin" "$@"

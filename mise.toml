@@ -35,6 +35,7 @@ markdownlint-cli2 = "latest" # Markdown linting (npm backend)
 
 # Git hooks (optional)
 pre-commit = "latest" # Git hooks framework
+"github:brave/brave-search-cli" = { version = "latest", exe = "bx" }
 
 [tasks."lint:shell"]
 description = "Lint shell scripts (bash)"
