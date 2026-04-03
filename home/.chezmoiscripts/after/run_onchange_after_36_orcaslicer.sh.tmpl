@@ -23,9 +23,14 @@ if ! command -v flatpak &>/dev/null; then
 	exit 0
 fi
 
-# Get installed version
-INSTALLED_VER=$(flatpak info --user io.github.softfever.OrcaSlicer 2>/dev/null | grep "Version" | awk '{print $2}' || true)
-INSTALLED_VER="${INSTALLED_VER:-$(flatpak info --system io.github.softfever.OrcaSlicer 2>/dev/null | grep "Version" | awk '{print $2}' || true)}"
+# Get installed version — check both known app IDs (upstream changed from io.github to com.)
+INSTALLED_VER=""
+for app_id in com.orcaslicer.OrcaSlicer io.github.softfever.OrcaSlicer; do
+	INSTALLED_VER=$(flatpak info --user "$app_id" 2>/dev/null | grep "Version" | awk '{print $2}' || true)
+	[[ -n "$INSTALLED_VER" ]] && break
+	INSTALLED_VER=$(flatpak info --system "$app_id" 2>/dev/null | grep "Version" | awk '{print $2}' || true)
+	[[ -n "$INSTALLED_VER" ]] && break
+done
 
 if [[ -n "$INSTALLED_VER" && "$INSTALLED_VER" == *"$BUNDLE_VER"* ]]; then
 	echo "OrcaSlicer $INSTALLED_VER already installed and current, skipping"

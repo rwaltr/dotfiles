@@ -32,6 +32,7 @@ development workflows.
 ### Operating Systems
 
 - **Primary**: Fedora/Universal Blue (ublue)
+
 ### Desktop Environments
 
 - Niri
@@ -199,7 +200,6 @@ Located in `home/dot_config/nushell/` - focused on **structured data workflows**
 The `home/dot_config/bashrc.d/` directory contains modular bash scripts for scripting-focused
 configuration, loaded in alphabetical order.
 
-
 ### Core (0.* prefix for load order)
 
 - `0.complete_alias.sh` - Alias completion support
@@ -262,9 +262,9 @@ chezmoi add --template ~/.config/templated-file
 1. **Interactive Shell**: Fish provides user-friendly interactive experience
 2. **Scripting**: Bash for scripts and automation tasks
 3. **Data Processing**: Nushell for structured data manipulation
-5. **Container Development**: Primary workflow uses Distrobox containers with dotfiles
-6. **Editor**: Neovim with Lua configuration for modern development
-7. **Terminal**: WezTerm provides consistent terminal experience across platforms
+4. **Container Development**: Primary workflow uses Distrobox containers with dotfiles
+5. **Editor**: Neovim with Lua configuration for modern development
+6. **Terminal**: WezTerm provides consistent terminal experience across platforms
 
 ## Important Notes
 
@@ -291,10 +291,10 @@ chezmoi add --template ~/.config/templated-file
 
 1. **Fish Scripts**: Focus on user-friendliness and interactive features
 2. **Bash Scripts**: Keep streamlined and scripting-focused; add to `bashrc.d/` for modularity
-4. **Nushell Scripts**: Focus on data processing and structured workflows
-6. **Templates**: Use `.tmpl` extension for files needing variable substitution
-7. **Secrets**: Never commit secrets directly; use 1Password CLI templates
-8. **Containers**: Test in both host and containerized environments
+3. **Nushell Scripts**: Focus on data processing and structured workflows
+4. **Templates**: Use `.tmpl` extension for files needing variable substitution
+5. **Secrets**: Never commit secrets directly; use 1Password CLI templates
+6. **Containers**: Test in both host and containerized environments
 
 ### File Naming Conventions
 

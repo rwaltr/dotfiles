@@ -133,7 +133,8 @@ chezmoi init rwaltr
 chezmoi apply
 ```
 
-On first apply, chezmoi will automatically install Homebrew, Tailscale, brew bundle (CLI tools + fonts), Flatpaks, and mise tools.
+On first apply, chezmoi will automatically install Homebrew, Tailscale,
+brew bundle (CLI tools + fonts), Flatpaks, and mise tools.
 
 ### Option 2: Bootstrap Without Chezmoi
 
@@ -446,7 +447,7 @@ the `base` excludes and retention policy inherit automatically.
 Two-way file synchronization between local directories and a remote server using
 [rclone bisync](https://rclone.org/bisync/), with profile-based configuration.
 
-### How it works
+### Bisync details
 
 - **Profiles**: `~/.config/bisync/*.env` — each file defines a `LOCAL` and `REMOTE` path pair
 - **Transport**: SFTP to the `mouse` server over Tailscale with SSH key auth
@@ -456,7 +457,7 @@ Two-way file synchronization between local directories and a remote server using
 ### Configured profiles
 
 | Profile | Local | Remote |
-|---------|-------|--------|
+| --- | --- | --- |
 | books | `~/Books` | `mouse:/var/tank/home/rwaltr/Books` |
 | documents | `~/Documents` | `mouse:/var/tank/home/rwaltr/Documents` |
 | games | `~/Games` | `mouse:/var/tank/home/rwaltr/Games` |

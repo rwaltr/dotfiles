@@ -1,0 +1,204 @@
+// rwaltr local niri overrides
+// Loaded last via include in config.kdl — settings here win over defaults.
+// Zirconium defaults + DMS provide: input, clipboard, layout base, shadow,
+// prefer-no-csd, screenshot-path, DMS binds, colors, corner-radius, polkit.
+
+// === Output Configuration ===
+output "DP-1" {
+    mode "2560x1440@359.979"
+    scale 1
+}
+
+output "DP-2" {
+    mode "3440x1440@159.962"
+    position x=0 y=0
+}
+
+output "DP-3" {
+    mode "1920x1080@60"
+    position x=3440 y=200
+}
+
+// === Gestures ===
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+// === Layout Overrides ===
+// DMS sets gaps=4, Zirconium sets gaps=16 — we want 5
+layout {
+    gaps 5
+
+    border {
+        width 4
+        urgent-color "#cc4444"
+    }
+}
+
+// === Environment ===
+environment {
+    QT_QPA_PLATFORM "wayland"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    QT_QPA_PLATFORMTHEME "gtk3"
+    QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+    TERMINAL "xdg-terminal-exec"
+}
+
+// === Hotkey Overlay ===
+hotkey-overlay {
+    skip-at-startup
+}
+
+// === Custom Animations ===
+animations {
+    workspace-switch {
+        spring damping-ratio=0.80 stiffness=523 epsilon=0.0001
+    }
+    window-open {
+        duration-ms 150
+        curve "ease-out-expo"
+    }
+    window-close {
+        duration-ms 150
+        curve "ease-out-quad"
+    }
+    horizontal-view-movement {
+        spring damping-ratio=0.85 stiffness=423 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=0.75 stiffness=323 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=0.85 stiffness=423 epsilon=0.0001
+    }
+    config-notification-open-close {
+        spring damping-ratio=0.65 stiffness=923 epsilon=0.001
+    }
+    screenshot-ui-open {
+        duration-ms 200
+        curve "ease-out-quad"
+    }
+    overview-open-close {
+        spring damping-ratio=0.85 stiffness=800 epsilon=0.0001
+    }
+}
+
+// === Window Rules (unique to rwaltr) ===
+window-rule {
+    match app-id=r#"^org\.gnome\."#
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id=r#"^gnome-control-center$"#
+    match app-id=r#"^pavucontrol$"#
+    match app-id=r#"^nm-connection-editor$"#
+    default-column-width { proportion 0.5; }
+    open-floating false
+}
+
+window-rule {
+    match app-id=r#"^gnome-calculator$"#
+    match app-id=r#"^galculator$"#
+    match app-id=r#"^blueman-manager$"#
+    match app-id=r#"^org\.gnome\.Nautilus$"#
+    match app-id=r#"^steam$"#
+    match app-id=r#"^xdg-desktop-portal$"#
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    match app-id="Alacritty"
+    match app-id="zen"
+    match app-id="com.mitchellh.ghostty"
+    match app-id="kitty"
+    draw-border-with-background false
+}
+
+window-rule {
+    match is-active=false
+    opacity 0.9
+}
+
+window-rule {
+    match app-id="zoom"
+    open-floating true
+}
+
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    default-floating-position x=0 y=0 relative-to="bottom-right"
+    open-focused false
+    block-out-from "screen-capture"
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    default-floating-position x=50 y=50 relative-to="bottom-right"
+    default-window-height { proportion 0.2; }
+}
+
+// === Overview ===
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+// === Keybind Overrides ===
+// DMS provides: spotlight, clipboard, processlist, settings, notifications,
+// wallpapers, notepad, lock, audio, brightness via dms/binds.kdl.
+// Below are only binds that differ from Zirconium/DMS defaults.
+binds {
+    // --- Extra overview triggers ---
+    Mod+D { spawn "niri" "msg" "action" "toggle-overview"; }
+    Mod+Tab repeat=false { toggle-overview; }
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // --- Rebind: floating toggle to Mod+Shift+T (Mod+V is DMS clipboard) ---
+    Mod+Shift+T { toggle-window-floating; }
+
+    // --- Swap: Mod+Shift = move column, Mod+Ctrl = monitor focus ---
+    // (Zirconium default is the opposite)
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Down  { move-window-down; }
+    Mod+Shift+Up    { move-window-up; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+H     { move-column-left; }
+    Mod+Shift+J     { move-window-down; }
+    Mod+Shift+K     { move-window-up; }
+    Mod+Shift+L     { move-column-right; }
+
+    Mod+Ctrl+Left  { focus-monitor-left; }
+    Mod+Ctrl+Right { focus-monitor-right; }
+    Mod+Ctrl+H     { focus-monitor-left; }
+    Mod+Ctrl+J     { focus-monitor-down; }
+    Mod+Ctrl+K     { focus-monitor-up; }
+    Mod+Ctrl+L     { focus-monitor-right; }
+
+    // --- Workspace move with Mod+Ctrl arrows ---
+    Mod+Ctrl+Down { move-column-to-workspace-down; }
+    Mod+Ctrl+Up   { move-column-to-workspace-up; }
+
+    // --- Move to numbered workspace with Mod+Shift+N ---
+    // (Zirconium uses Mod+Ctrl+N)
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    // --- Extra screenshot keys ---
+    XF86Launch1 { screenshot; }
+    Mod+S { screenshot; }
+    Ctrl+XF86Launch1 { screenshot-screen; }
+    Alt+XF86Launch1 { screenshot-window; }
+}

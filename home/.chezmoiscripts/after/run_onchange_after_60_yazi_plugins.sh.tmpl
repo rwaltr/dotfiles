@@ -7,6 +7,16 @@
 
 set -euo pipefail
 
+# Ensure brew + mise are on PATH (ya is installed via mise)
+if ! command -v ya &>/dev/null; then
+	if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+		eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	fi
+	if command -v mise &>/dev/null; then
+		eval "$(mise activate bash --shims)"
+	fi
+fi
+
 if ! command -v ya &>/dev/null; then
 	echo "WARN: ya (yazi CLI) not found. Skipping plugin install." >&2
 	exit 0
