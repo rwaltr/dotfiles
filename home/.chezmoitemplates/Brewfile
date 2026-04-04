@@ -17,7 +17,7 @@ tap "ublue-os/experimental-tap"
 
 # ── CLI tools (always) ────────────────────────────────────────────────────────
 
-brew "mise"      # tool version manager — PRIMARY bootstrap
+brew "mise"      # tool version manager — runtimes (go, node) + tools not in brew
 brew "gh"        # GitHub CLI
 brew "fish"
 brew "neovim"
@@ -30,13 +30,29 @@ brew "zoxide"
 brew "starship"
 brew "atuin"
 brew "bandwhich" # network utilization by process
+brew "bottom"    # btm — system monitor
 brew "chafa"     # terminal image viewer (used by yazi, tv)
+brew "dust"      # disk usage visualizer
+brew "git-delta" # delta — git diff pager
+brew "gitui"     # git TUI
+brew "glow"      # markdown renderer
+brew "hyperfine" # CLI benchmarking
+brew "jq"        # JSON processor
+brew "just"      # command runner / task file
+brew "pi-coding-agent" # pi — AI coding agent (extensions via pi packages)
+brew "sd"        # simpler sed
+brew "television" # tv — fuzzy finder with channels
+brew "yazi"      # terminal file manager
 
 {{ if not .ephemeral -}}
 # ── CLI tools (!ephemeral) ────────────────────────────────────────────────────
+brew "1password-cli" # op CLI; pairs with 1Password GUI for biometric auth
 brew "age"
 brew "sops"
 brew "btop"
+brew "fnox"      # Firefox profile manager
+brew "kubernetes-cli" # kubectl
+brew "k9s"       # Kubernetes TUI
 brew "rclone"
 brew "restic"
 brew "inotify-tools"

@@ -18,37 +18,11 @@
 trusted_config_paths = ["~/.config/mise/config.toml"]
 
 [tools]
-# ── Security & Secrets ────────────────────────────────────────────────────────
-# 1password-cli via aqua backend
-"1password-cli" = "latest"        # op CLI; pairs with 1Password GUI for biometric auth
-"aqua:FiloSottile/age" = "latest" # age encryption
-"aqua:getsops/sops" = "latest"    # secrets encryption (SOPS)
-
 # ── Core runtimes ─────────────────────────────────────────────────────────────
-# Kept global as they are required backends for npm: and other mise tools
+# Kept in mise for version switching; everything else moved to Brewfile
 go   = "latest"
 node = "latest"
 
-# ── Universal CLI tools ───────────────────────────────────────────────────────
-# gh installed via Brewfile
-"aqua:alexpasmantier/television" = "latest" # tv — fuzzy finder with channels
-"github:brave/brave-search-cli" = "latest" # bx — Brave Search CLI for AI agents (bin named bx-VERSION, symlinked via dot_local/bin)
-"aqua:sxyazi/yazi"               = "latest" # yazi — terminal file manager
-"aqua:bootandy/dust"     = "latest" # dust — disk usage visualizer
-"aqua:casey/just"        = "latest" # just — command runner / task file
-"aqua:chmln/sd"          = "latest" # sd — simpler sed
-"aqua:ClementTsang/bottom" = "latest" # btm — system monitor
-"aqua:dandavison/delta"  = "latest" # delta — git diff pager
-"aqua:extrawurst/gitui"  = "latest" # gitui — git TUI
-"aqua:jqlang/jq"         = "latest" # jq — JSON processor
-"aqua:charmbracelet/glow" = "latest" # glow — markdown renderer
-"aqua:sharkdp/hyperfine" = "latest" # hyperfine — CLI benchmarking
-"github:jdx/fnox"        = "latest" # fnox — no aqua entry
-kubectl = "latest"
-k9s = "latest"
+# ── Tools not in Homebrew ─────────────────────────────────────────────────────
+"github:brave/brave-search-cli" = "latest" # bx — Brave Search CLI (not in brew)
 
-# ── Pi coding agent ──────────────────────────────────────────────────────────
-# Managed via npm backend so pi survives node version upgrades
-"npm:@mariozechner/pi-coding-agent" = "latest" # pi — coding agent CLI
-"npm:pi-mcp-adapter"                = "latest" # MCP adapter for pi
-"npm:pi-subagents"                  = "latest" # subagent support
