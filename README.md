@@ -322,6 +322,30 @@ HK=0 git commit -m "emergency fix"
 
 **How it works**: `hk` delegates to `mise run lint`, ensuring git hooks and manual checks are identical.
 
+### Testing
+
+138 tests across unit, container image, and VM layers. Unit tests run in a
+containerized environment for consistency:
+
+```bash
+# Build the test container (one-time)
+mise run test:build
+
+# Run unit tests in container (recommended)
+mise run test:unit
+
+# Run unit tests locally (uses host tools, may skip tests)
+mise run test:unit:local
+
+# Full suite: lint + unit tests
+mise run test
+
+# Everything including container image tests
+mise run test:all
+```
+
+See [tests/README.md](tests/README.md) for full details.
+
 ### Managing Dotfiles
 
 ```bash
@@ -571,7 +595,7 @@ while mise handles per-project versions (Node 18 in project A, Node 20 in projec
 
 - [ ] **Distrobox Assemble**: Rebuild pi AI agent environment on any machine
 - [ ] **Kubernetes debug container**: Run dotfiles in `kubectl debug` pods
-- [ ] **First bootstrap test**: Full end-to-end test on a fresh ublue system
+- [x] **Test suite**: 138 bats tests (unit + container image), containerized runner
 
 ### Ideas
 

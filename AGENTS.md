@@ -315,10 +315,20 @@ chezmoi diff
 # Dry run
 chezmoi apply --dry-run --verbose
 
-# Test in isolated container
-distrobox create --name test-dotfiles
-distrobox enter test-dotfiles
-chezmoi init --apply rwaltr
+# Build test container (one-time)
+mise run test:build
+
+# Run 138 unit tests in container
+mise run test:unit
+
+# Run unit tests locally (may skip if tools missing)
+mise run test:unit:local
+
+# Lint + unit tests
+mise run test
+
+# Full suite including container image tests
+mise run test:all
 ```
 
 ## Related Resources

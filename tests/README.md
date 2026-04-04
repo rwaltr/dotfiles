@@ -5,13 +5,19 @@ Test suite for validating dotfile configurations locally and against real OS tar
 ## Quick Start
 
 ```bash
-# Install test tools
-mise install
+# Build the test container (one-time, ~2min)
+mise run test:build
 
-# Run fast local tests (lint + unit)
+# Run unit tests in container (recommended — consistent environment)
+mise run test:unit
+
+# Run unit tests locally (uses host tools, may skip tests)
+mise run test:unit:local
+
+# Lint + unit tests
 mise run test
 
-# Run everything including container image tests
+# Everything including container image tests
 mise run test:all
 ```
 
@@ -19,7 +25,8 @@ mise run test:all
 
 ### Layer 1: Unit Tests (`mise run test:unit`)
 
-Fast, local, no containers. Uses **bats-core**. ~135 tests, runs in ~6s.
+Runs in a Fedora 44 container via podman for consistent tool availability.
+Uses **bats-core**. 138 tests.
 
 | File | Tests | What it covers |
 |---|---|---|
@@ -30,7 +37,7 @@ Fast, local, no containers. Uses **bats-core**. ~135 tests, runs in ~6s.
 | `fish.bats` | 5 | Fish syntax, conf.d, functions |
 | `interactive.bats` | 20 | Bash aliases/env, fish features, cross-shell consistency |
 | `neovim.bats` | 8 | Lua syntax, headless startup, lazy.lua, plugins |
-| `niri.bats` | 4 | KDL config, `niri validate`, keybindings |
+| `niri.bats` | 7 | KDL entrypoint, local.kdl, DMS overlay, keybindings, layout, outputs |
 | `nushell.bats` | 1 | Syntax check (skips if nu not installed) |
 | `scripts.bats` | 21 | Script template rendering + syntax + conditional logic |
 | `security.bats` | 6 | No leaked secrets in source |
@@ -70,11 +77,18 @@ See [VM Testing](#vm-testing) below.
 ## Running Tests
 
 ```bash
-# Fast: lint + unit
+# Build test container (one-time)
+mise run test:build
+
+# Fast: lint + unit (in container)
 mise run test
 
 # Full: lint + unit + container images
 mise run test:all
+
+# Unit tests only
+mise run test:unit          # in container (recommended)
+mise run test:unit:local    # on host (may skip tests)
 
 # Single container target
 mise run test:image:zirconium
@@ -82,7 +96,18 @@ mise run test:image:bluefin
 
 # Or via env var
 TEST_TARGET=bluefin bats tests/image/
+
+# Direct podman run
+podman run --rm -v .:/dotfiles:ro dotfiles-test
 ```
+
+### Test Container (`tests/Containerfile`)
+
+The unit test runner image is based on Fedora 44 and includes all tools needed
+for full test coverage: fish, neovim, lua, python3, git, systemd, shellcheck,
+yamllint, chezmoi, bats, taplo, starship, and nushell. A seeded chezmoi config
+provides template data (personal=true, headless=false, etc.) so template
+rendering tests work without user interaction.
 
 ## VM Testing
 
@@ -194,6 +219,7 @@ overwrite the config, then `chezmoi apply`.
 
 ```
 tests/
+├── Containerfile                  # test runner image (Fedora 44 + all tools)
 ├── unit/                          # bats unit tests (Layer 1)
 │   ├── atuin.bats
 │   ├── bash.bats
