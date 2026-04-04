@@ -3,15 +3,17 @@
 org.wezfurlong.wezterm
 dev.zed.Zed
 io.podman_desktop.PodmanDesktop
-io.github.Qalculate.qalculate-qt
+io.github.Qalculate.qalculate-gtk
 io.mpv.Mpv
-org.rncbc.qpwgraph
+io.github.dp0sk.Crosspipe
 io.github.flattool.Warehouse
 com.github.tchx84.Flatseal
 io.github.flattool.Ignition
 com.ranfdev.DistroShelf
 io.github.kolunmi.Bazaar
 org.localsend.localsend_app
+org.gnome.Calculator
+org.gnome.SimpleScan
 
 {{ if .personal -}}
 # personal
@@ -25,7 +27,9 @@ org.freecad.FreeCAD
 dev.vencord.Vesktop
 io.github.diegopvlk.Cine
 # NOTE: OrcaSlicer is NOT here — it has no Flathub remote.
-# Installed via run_always_after_36_orcaslicer.sh.tmpl from GitHub releases.
+# Installed via run_onchange_after_36_orcaslicer.sh.tmpl from GitHub releases.
+# NOTE: 1Password (com.onepassword.OnePassword) not here — needs rpm-ostree
+# overlay on immutable distros for browser integration / system auth.
 {{ end -}}
 
 {{ if .work -}}
