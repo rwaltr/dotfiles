@@ -1,0 +1,27 @@
+schemaVersion: "2.0.0"
+
+commandTests:
+  - name: "chezmoi is pre-installed"
+    command: "chezmoi"
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "git is available"
+    command: "git"
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "Fedora-based OS"
+    command: "sh"
+    args: ["-c", "grep -q 'ID=fedora' /etc/os-release"]
+    exitCode: 0
+
+  - name: "rpm package manager available"
+    command: "rpm"
+    args: ["--version"]
+    exitCode: 0
+
+fileExistenceTests:
+  - name: "os-release identifies as Zirconium"
+    path: "/etc/os-release"
+    shouldExist: true

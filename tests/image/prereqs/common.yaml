@@ -1,0 +1,23 @@
+schemaVersion: "2.0.0"
+
+commandTests:
+  - name: "bash is available"
+    command: "bash"
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "curl is available"
+    command: "curl"
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "sh works"
+    command: "sh"
+    args: ["-c", "echo ok"]
+    expectedOutput: ["ok"]
+    exitCode: 0
+
+fileExistenceTests:
+  - name: "root home directory exists"
+    path: "/root"
+    shouldExist: true

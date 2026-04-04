@@ -1,0 +1,88 @@
+# Common post-apply validation
+# Runs inside container as user rwaltr with HOME=/home/rwaltr
+
+file:
+  /home/rwaltr/.bashrc:
+    exists: true
+  /home/rwaltr/.config/bashrc.d:
+    exists: true
+    filetype: directory
+  /home/rwaltr/.config/bashrc.d/kubectl.sh:
+    exists: true
+  /home/rwaltr/.config/bashrc.d/rwaltr-aliases.sh:
+    exists: true
+  /home/rwaltr/.config/bashrc.d/paths.sh:
+    exists: true
+  /home/rwaltr/.config/bashrc.d/0.editor.sh:
+    exists: true
+  /home/rwaltr/.config/nvim/init.lua:
+    exists: true
+  /home/rwaltr/.config/nvim/lua/config/options.lua:
+    exists: true
+  /home/rwaltr/.config/fish/config.fish:
+    exists: true
+  /home/rwaltr/.config/fish/conf.d:
+    exists: true
+    filetype: directory
+  /home/rwaltr/.config/fish/conf.d/alias.fish:
+    exists: true
+  /home/rwaltr/.config/fish/functions:
+    exists: true
+    filetype: directory
+  /home/rwaltr/.config/fish/functions/fish_greeting.fish:
+    exists: true
+  /home/rwaltr/.config/starship.toml:
+    exists: true
+  /home/rwaltr/.config/nushell/config.nu:
+    exists: true
+  /home/rwaltr/.config/git/config:
+    exists: true
+  /home/rwaltr/.config/mise/config.toml:
+    exists: true
+  /home/rwaltr/.ssh/config:
+    exists: true
+
+command:
+  # Bash login shell works as rwaltr
+  "run-as-test-user 'echo ok'":
+    exit-status: 0
+    stdout:
+      - ok
+
+  # chezmoi accessible via login shell PATH
+  "run-as-test-user 'chezmoi --version'":
+    exit-status: 0
+
+  # Git config rendered with user info
+  "grep 'name = ' /home/rwaltr/.config/git/config":
+    exit-status: 0
+    stdout:
+      - "Ryan Walter"
+
+  # SSH config has expected structure
+  "grep 'github.com' /home/rwaltr/.ssh/config":
+    exit-status: 0
+
+  # Starship config is present and non-empty
+  "test -s /home/rwaltr/.config/starship.toml":
+    exit-status: 0
+
+  # Mise config is present and non-empty
+  "test -s /home/rwaltr/.config/mise/config.toml":
+    exit-status: 0
+
+  # Bash aliases file defines expected aliases
+  "grep -c 'alias' /home/rwaltr/.config/bashrc.d/rwaltr-aliases.sh":
+    exit-status: 0
+
+  # Editor config sets EDITOR
+  "run-as-test-user 'source ~/.config/bashrc.d/0.editor.sh && echo EDITOR=$EDITOR'":
+    exit-status: 0
+    stdout:
+      - /EDITOR=.+/
+
+  # PATH includes .local/bin after sourcing
+  "run-as-test-user 'source ~/.config/bashrc.d/paths.sh && echo $PATH'":
+    exit-status: 0
+    stdout:
+      - ".local/bin"

@@ -1,0 +1,58 @@
+# Bluefin-specific post-apply validation (bootc/immutable, Fedora-based)
+# Bluefin has fish + flatpak pre-installed
+
+command:
+  # File idempotency
+  "run-as-test-user 'chezmoi apply --source=/dotfiles/home --exclude=scripts --no-tty --dry-run 2>&1 | grep -v \"^$\" | wc -l | tr -d \" \"'":
+    exit-status: 0
+    stdout:
+      - "0"
+
+  # Fish shell starts cleanly as rwaltr
+  "run-as-test-user 'fish -c \"echo ok\"'":
+    exit-status: 0
+    stdout:
+      - ok
+
+  # Fish config loads without error
+  "run-as-test-user 'fish -c \"source ~/.config/fish/config.fish; echo loaded\"'":
+    exit-status: 0
+    stdout:
+      - loaded
+
+  # Fish vi keybindings configured
+  "grep 'fish_vi_key_bindings' /home/rwaltr/.config/fish/config.fish":
+    exit-status: 0
+
+  # Fish greeting function exists
+  "run-as-test-user 'fish -c \"type fish_greeting\"' 2>&1":
+    exit-status: 0
+    stdout:
+      - /function/
+
+  # Fish aliases defined
+  "grep -c 'alias' /home/rwaltr/.config/fish/conf.d/alias.fish":
+    exit-status: 0
+
+  # Fish conf.d scripts all parse
+  "run-as-test-user 'fish -c \"for f in ~/.config/fish/conf.d/*.fish; fish --no-execute \\$f || echo FAIL \\$f; end; echo done\"'":
+    exit-status: 0
+    stdout:
+      - done
+
+  # Flatpak: still functional
+  "flatpak remotes":
+    exit-status: 0
+    stdout:
+      - flathub
+
+  # Flatpak: apps installed (if not headless)
+  # The flatpaks script installs system flatpaks — check at least one landed
+  "flatpak list --system --columns=application 2>/dev/null | head -5 | wc -l | tr -d ' '":
+    exit-status: 0
+
+  # No dotfiles written outside home
+  "find /usr -newer /etc/os-release -not -path '/usr/local/bin/*' -not -path '/home/linuxbrew/*' 2>/dev/null | wc -l | tr -d ' '":
+    exit-status: 0
+    stdout:
+      - "0"

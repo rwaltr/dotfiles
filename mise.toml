@@ -37,6 +37,12 @@ markdownlint-cli2 = "latest" # Markdown linting (npm backend)
 pre-commit = "latest" # Git hooks framework
 "github:brave/brave-search-cli" = { version = "latest", exe = "bx" }
 
+# Testing tools
+bats = "latest"                   # Bash Automated Testing System
+goss = "latest"                   # Server/container validation (YAML-based)
+# container-structure-test removed — doesn't support rootless podman
+# Prereq checks are done via simple podman run commands instead
+
 [tasks."lint:shell"]
 description = "Lint shell scripts (bash)"
 run = "shellcheck home/dot_config/bashrc.d/*.sh home/dot_local/bin/executable_*.sh 2>/dev/null || true"
@@ -117,6 +123,41 @@ run = "hk fix"
 [tasks.check]
 description = "Full check: run hk checks (recommended pre-commit)"
 run = "hk check"
+
+# Testing tasks
+[tasks."test:build"]
+description = "Build the test runner container image"
+run = "podman build -t dotfiles-test -f tests/Containerfile ."
+
+[tasks."test:unit"]
+description = "Run unit tests in container (consistent environment)"
+run = "podman run --rm -v .:/dotfiles:ro dotfiles-test tests/unit/"
+
+[tasks."test:unit:local"]
+description = "Run unit tests locally (uses host tools, may skip tests)"
+run = "bats tests/unit/"
+
+[tasks."test:image"]
+description = "Run image tests against all targets (requires podman)"
+run = "bats tests/image/"
+
+[tasks."test:image:zirconium"]
+description = "Test against bootc Zirconium image only"
+env = { TEST_TARGET = "bootc-zirconium" }
+run = "bats tests/image/"
+
+[tasks."test:image:bluefin"]
+description = "Test against Bluefin image only"
+env = { TEST_TARGET = "bluefin" }
+run = "bats tests/image/"
+
+[tasks.test]
+description = "Lint + unit tests (fast)"
+depends = ["lint", "test:unit"]
+
+[tasks."test:all"]
+description = "Full suite: lint + unit + all image targets"
+depends = ["lint", "test:unit", "test:image"]
 
 [env]
 # Ensure local bin is in PATH for chezmoi-installed scripts

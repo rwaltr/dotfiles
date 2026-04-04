@@ -1,0 +1,32 @@
+schemaVersion: "2.0.0"
+
+commandTests:
+  - name: "git is available"
+    command: "git"
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "fish is pre-installed"
+    command: "fish"
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "Fedora-based OS"
+    command: "sh"
+    args: ["-c", "grep -q 'ID=bluefin' /etc/os-release"]
+    exitCode: 0
+
+  - name: "dnf package manager available"
+    command: "dnf"
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "rpm available"
+    command: "rpm"
+    args: ["--version"]
+    exitCode: 0
+
+fileExistenceTests:
+  - name: "os-release exists"
+    path: "/etc/os-release"
+    shouldExist: true

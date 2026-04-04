@@ -1,0 +1,24 @@
+# Zirconium-specific post-apply validation (bootc/immutable)
+
+command:
+  # File idempotency
+  "run-as-test-user 'chezmoi apply --source=/dotfiles/home --exclude=scripts --no-tty --dry-run 2>&1 | grep -v \"^$\" | wc -l | tr -d \" \"'":
+    exit-status: 0
+    stdout:
+      - "0"
+
+  # chezmoi still works post-apply
+  "run-as-test-user 'chezmoi managed --source=/dotfiles/home --include=files | head -5'":
+    exit-status: 0
+
+  # Flatpak: still functional (zirconium has flatpak + flathub)
+  "flatpak remotes":
+    exit-status: 0
+    stdout:
+      - flathub
+
+  # No unexpected writes outside home (brew goes to /home/linuxbrew, that's expected)
+  "find /usr -newer /etc/os-release -not -path '/usr/local/bin/*' 2>/dev/null | wc -l | tr -d ' '":
+    exit-status: 0
+    stdout:
+      - "0"

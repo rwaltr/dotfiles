@@ -1,0 +1,40 @@
+# Script execution + idempotency validation
+# Scripts ran twice during apply.sh (Phase 2 + Phase 3)
+# Verify outcomes here
+
+command:
+  # create_commondirs: user directories exist
+  "run-as-test-user 'test -d ~/Documents && test -d ~/src && test -d ~/Downloads && test -d ~/Pictures && test -d ~/Music && test -d ~/Videos && echo dirs-ok'":
+    exit-status: 0
+    stdout:
+      - dirs-ok
+
+  # Homebrew: installed and functional
+  "run-as-test-user 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) && brew --version'":
+    exit-status: 0
+    stdout:
+      - /Homebrew/
+
+  # Brew bundle: mise installed via brew
+  "run-as-test-user 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) && brew list mise'":
+    exit-status: 0
+
+  # mise: functional after brew install
+  "run-as-test-user 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) && mise --version'":
+    exit-status: 0
+
+  # chezmoi still works after all scripts
+  "run-as-test-user 'chezmoi --version'":
+    exit-status: 0
+
+  # Files still intact after scripts ran
+  "test -f /home/rwaltr/.bashrc && test -f /home/rwaltr/.config/nvim/init.lua && echo files-ok":
+    exit-status: 0
+    stdout:
+      - files-ok
+
+  # File-only idempotency still holds after scripts
+  "run-as-test-user 'chezmoi apply --source=/dotfiles/home --exclude=scripts --no-tty --dry-run 2>&1 | grep -v \"^$\" | wc -l | tr -d \" \"'":
+    exit-status: 0
+    stdout:
+      - "0"

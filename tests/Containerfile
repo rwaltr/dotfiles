@@ -1,0 +1,44 @@
+# Test runner container — all tools needed for unit tests
+# Build: podman build -t dotfiles-test -f tests/Containerfile .
+# Run:   podman run --rm -v .:/dotfiles:ro dotfiles-test
+FROM registry.fedoraproject.org/fedora:44
+
+# System packages (skip-unavailable for pre-installed packages)
+RUN dnf install -y --setopt=install_weak_deps=False --skip-unavailable \
+    fish \
+    neovim \
+    lua \
+    python3 \
+    python3-pip \
+    git \
+    systemd \
+    ShellCheck \
+    && pip install yamllint \
+    && dnf clean all
+
+# Install chezmoi + seed test config for template rendering
+RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin \
+    && mkdir -p /root/.config/chezmoi \
+    && cat > /root/.config/chezmoi/chezmoi.yaml << 'EOF'
+sourceDir: /dotfiles/home
+data:
+  personal: true
+  work: false
+  headless: false
+  ephemeral: false
+  email: test@example.com
+EOF
+
+# Install mise + test tools (no node — tests don't need it)
+RUN curl https://mise.run | sh \
+    && /root/.local/bin/mise use -g bats@latest \
+    && /root/.local/bin/mise use -g taplo@latest \
+    && /root/.local/bin/mise use -g starship@latest \
+    && /root/.local/bin/mise use -g "aqua:nushell/nushell@latest"
+
+ENV PATH="/root/.local/share/mise/shims:/root/.local/bin:${PATH}" \
+    MISE_YES=1
+
+WORKDIR /dotfiles
+ENTRYPOINT ["bats"]
+CMD ["tests/unit/"]
