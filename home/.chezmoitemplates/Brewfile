@@ -47,7 +47,7 @@ brew "yazi"      # terminal file manager
 
 {{ if not .ephemeral -}}
 # ── CLI tools (!ephemeral) ────────────────────────────────────────────────────
-brew "1password-cli" # op CLI; pairs with 1Password GUI for biometric auth
+cask "1password-cli" # op CLI; pairs with 1Password GUI for biometric auth
 brew "age"
 brew "sops"
 brew "btop"

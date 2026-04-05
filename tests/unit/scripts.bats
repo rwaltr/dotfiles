@@ -118,6 +118,21 @@ setup() {
 
 # --- All script templates found and accounted for ---
 
+@test "script: Brewfile uses cask for cask-only packages" {
+  local brewfile
+  brewfile=$(chezmoi execute-template < "$HOME_SRC/.chezmoitemplates/Brewfile")
+  # These are casks, not formulae — brew "..." would fail on fresh install
+  local cask_only=("1password-cli")
+  local failed=0
+  for pkg in "${cask_only[@]}"; do
+    if echo "$brewfile" | grep -q "^brew \"$pkg\""; then
+      echo "FAIL: $pkg is a cask but declared as brew formula" >&2
+      failed=1
+    fi
+  done
+  [ "$failed" -eq 0 ]
+}
+
 @test "script: no untested script templates" {
   local expected=10  # Total number of script templates
   local actual
