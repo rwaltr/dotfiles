@@ -3,7 +3,7 @@
 org.wezfurlong.wezterm
 dev.zed.Zed
 io.podman_desktop.PodmanDesktop
-io.github.Qalculate.qalculate-gtk
+io.github.Qalculate
 io.mpv.Mpv
 io.github.dp0sk.Crosspipe
 io.github.flattool.Warehouse
