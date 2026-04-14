@@ -10,6 +10,8 @@ Requires=sys-subsystem-net-devices-tailscale0.device
 Type=simple
 # Read LOCAL and REMOTE from ~/.config/bisync/%i.env
 EnvironmentFile=%h/.config/bisync/%i.env
+# Ensure non-interactive systemd units can find Homebrew and user-local tools
+Environment=PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:%h/.local/bin:/usr/local/bin:/usr/bin
 ExecStart=%h/.local/bin/auto-bisync ${LOCAL} ${REMOTE} watch
 Restart=on-failure
 RestartSec=30s

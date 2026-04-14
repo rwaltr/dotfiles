@@ -16,6 +16,9 @@
 
 set -euo pipefail
 
+# Ensure non-interactive shells/systemd units can find Homebrew + local tools.
+export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${HOME}/.local/bin:/usr/local/bin:/usr/bin:${PATH:-}"
+
 # ── Args ──────────────────────────────────────────────────────────────────────
 if [[ $# -lt 2 ]]; then
     echo "Usage: $(basename "$0") <local-path> <remote> [watch|once|resync]"
@@ -77,6 +80,16 @@ bisync() {
         --verbose \
         "${extra_flags[@]}"
 }
+
+if ! command -v rclone &>/dev/null; then
+    echo "rclone not found in PATH: $PATH" >&2
+    exit 127
+fi
+
+if [[ "$CMD" == "watch" ]] && ! command -v inotifywait &>/dev/null; then
+    echo "inotifywait not found in PATH: $PATH" >&2
+    exit 127
+fi
 
 # ── Commands ──────────────────────────────────────────────────────────────────
 case "$CMD" in
