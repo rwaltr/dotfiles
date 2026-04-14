@@ -87,6 +87,19 @@ is_1password_signed_in() {
 	command -v op &>/dev/null && op account list 2>/dev/null | grep -q '.'
 }
 
+is_locklayering_enabled() {
+	python3 - <<'PY'
+import configparser
+from pathlib import Path
+cfg = configparser.ConfigParser()
+for p in ["/usr/lib/rpm-ostreed.conf", "/etc/rpm-ostreed.conf"]:
+    if Path(p).exists():
+        cfg.read(p)
+value = cfg.get("Daemon", "LockLayering", fallback="false").strip().lower()
+print("true" if value in ("true", "yes", "1", "on") else "false")
+PY
+}
+
 install_1password_rpm_ostree() {
 	info "Adding 1Password RPM repository..."
 	sudo install -d /etc/pki/rpm-gpg /etc/yum.repos.d
@@ -196,6 +209,15 @@ if is_rpm_ostree_host; then
 		step_header "Install 1Password"
 		if is_1password_installed; then
 			check_done "1Password app + CLI already installed"
+		elif [[ "$(is_locklayering_enabled)" == "true" ]]; then
+			warn "This host has LockLayering enabled in rpm-ostree config."
+			warn "Client-side package layering is disabled, so rwaltrctl-init cannot install 1Password here."
+			warn "The config files are typically:"
+			warn "  /usr/lib/rpm-ostreed.conf   (vendor/default, usually read-only)"
+			warn "  /etc/rpm-ostreed.conf       (admin override, editable)"
+			warn "If you choose to allow layering, set LockLayering=false in /etc/rpm-ostreed.conf"
+			warn "then restart the daemon: sudo systemctl restart rpm-ostreed"
+			warn "Longer term, prefer a derived image with 1Password built in."
 		else
 			install_1password_rpm_ostree
 			warn "rpm-ostree staged the 1Password packages. A reboot is required."
@@ -212,7 +234,12 @@ if ask_step "$DONE" "Sign in to 1Password" "1Password (signed in)"; then
 	if ! is_1password_installed; then
 		warn "1Password app + CLI are not installed yet"
 		if is_rpm_ostree_host; then
-			warn "Run the rpm-ostree install step first, then reboot and re-run"
+			if [[ "$(is_locklayering_enabled)" == "true" ]]; then
+				warn "This host has LockLayering enabled — edit /etc/rpm-ostreed.conf if you want to allow layering"
+				warn "Otherwise use a derived image with 1Password built in"
+			else
+				warn "Run the rpm-ostree install step first, then reboot and re-run"
+			fi
 		else
 			warn "Install the native 1Password app and 1Password CLI first"
 		fi
