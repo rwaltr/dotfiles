@@ -27,10 +27,6 @@ setup() {
   chezmoi execute-template < "$HOME_SRC/.chezmoiscripts/after/run_always_after_30_brew_bundle.sh.tmpl" | bash -n
 }
 
-@test "script: 1password_flatpak_overrides renders valid bash" {
-  chezmoi execute-template < "$HOME_SRC/.chezmoiscripts/after/run_onchange_after_31_1password_flatpak_overrides.sh.tmpl" | bash -n
-}
-
 @test "script: flatpaks renders valid bash" {
   chezmoi execute-template < "$HOME_SRC/.chezmoiscripts/after/run_always_after_35_flatpaks.sh.tmpl" | bash -n
 }
@@ -134,7 +130,7 @@ setup() {
 }
 
 @test "script: no untested script templates" {
-  local expected=10  # Total number of script templates
+  local expected=9  # Total number of script templates
   local actual
   actual=$(find "$HOME_SRC/.chezmoiscripts" -name '*.tmpl' -type f | wc -l)
   [ "$actual" -eq "$expected" ]

@@ -101,12 +101,6 @@ EOF
 		fi
 	done
 
-	# Remove 1Password flatpak user overrides
-	if command -v flatpak &>/dev/null; then
-		info "  Resetting 1Password flatpak overrides"
-		flatpak override --user --reset com.onepassword.OnePassword 2>/dev/null || true
-	fi
-
 	# Clean unused runtimes
 	info "  Cleaning unused runtimes..."
 	flatpak uninstall -y --noninteractive --unused 2>/dev/null || true

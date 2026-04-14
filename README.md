@@ -110,11 +110,10 @@ This keeps configs portable and safe for immutable operating systems.
 1. **Installs Homebrew** (`run_once_before_10`) — Linuxbrew in `/home/linuxbrew`
 2. **Installs Tailscale** (`run_once_before_20`) — via official install script, skipped if present or ephemeral
 3. **Runs `brew bundle`** (`run_always_after_30`) — CLI tools, fonts; rendered from `Brewfile` template
-4. **Configures 1Password flatpak** (`run_onchange_after_31`) — filesystem overrides for SSH agent + CLI daemon
-5. **Installs Flatpaks** (`run_always_after_35`) — system-wide from `flatpaks.txt` template; additive only
-6. **Installs OrcaSlicer** (`run_always_after_36`) — personal machines; version-checked, flatpak bundle
-7. **Runs `mise install`** (`run_onchange_after_50`) — installs all tools in `~/.config/mise/config.toml`
-8. **Reloads systemd** (`run_always_after_99`) — picks up new/changed user units
+4. **Installs Flatpaks** (`run_always_after_35`) — system-wide from `flatpaks.txt` template; additive only
+5. **Installs OrcaSlicer** (`run_always_after_36`) — personal machines; version-checked, flatpak bundle
+6. **Runs `mise install`** (`run_onchange_after_50`) — installs all tools in `~/.config/mise/config.toml`
+7. **Reloads systemd** (`run_always_after_99`) — picks up new/changed user units
 
 All scripts are idempotent and additive — safe to re-run on every `chezmoi apply`.
 
@@ -135,6 +134,10 @@ chezmoi apply
 
 On first apply, chezmoi will automatically install Homebrew, Tailscale,
 brew bundle (CLI tools + fonts), Flatpaks, and mise tools.
+
+For 1Password on immutable/rpm-ostree hosts, use `rwaltrctl-init` to layer the native
+`1password` and `1password-cli` packages, then reboot before continuing setup.
+Flatpak 1Password is no longer part of this setup.
 
 ### Option 2: Bootstrap Without Chezmoi
 
