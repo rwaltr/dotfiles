@@ -20,6 +20,7 @@ case "${1:-}" in
 esac
 
 BISYNC_DIR="{{ .chezmoi.homeDir }}/.config/bisync"
+BRAVE_DESKTOP_ID="com.brave.Browser.desktop"
 
 # ── Colors & helpers ──────────────────────────────────────────────────────────
 GREEN='\033[0;32m'
@@ -70,6 +71,10 @@ is_1password_signed_in() {
 	command -v op &>/dev/null && op account list 2>/dev/null | grep -q '.'
 }
 
+is_brave_default_browser() {
+	command -v xdg-settings &>/dev/null && [[ "$(xdg-settings get default-web-browser 2>/dev/null)" == "$BRAVE_DESKTOP_ID" ]]
+}
+
 is_gh_authed() {
 	command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1
 }
@@ -109,8 +114,9 @@ show_status() {
 	echo -e "${BOLD}rwaltrctl-init — setup status${NC}"
 	echo ""
 
-	if is_tailscale_up;         then check_done "Tailscale: connected";       else check_todo "Tailscale: not connected"; fi
 	if is_1password_signed_in;  then check_done "1Password: signed in";       else check_todo "1Password: not signed in"; fi
+	if is_tailscale_up;         then check_done "Tailscale: connected";       else check_todo "Tailscale: not connected"; fi
+	if is_brave_default_browser; then check_done "Default browser: Brave";    else check_todo "Default browser: not Brave"; fi
 	if is_gh_authed;            then check_done "GitHub CLI: authenticated";  else check_todo "GitHub CLI: not authenticated"; fi
 	if is_restic_creds_set;     then check_done "Restic credentials: set";    else check_todo "Restic credentials: not set"; fi
 	if is_restic_timer_enabled; then check_done "Restic timer: enabled";      else check_todo "Restic timer: not enabled"; fi
@@ -147,21 +153,7 @@ show_status
 BISYNC_CONFIGS=()
 read -ra BISYNC_CONFIGS <<< "$(get_bisync_configs)"
 
-# ── Step 1: Tailscale ────────────────────────────────────────────────────────
-if is_tailscale_up; then DONE=true; else DONE=false; fi
-if ask_step "$DONE" "Connect to Tailscale" "Tailscale (connected)"; then
-	step_header "Tailscale"
-	if ! command -v tailscale &>/dev/null; then
-		error "tailscale not installed — run chezmoi apply first"
-	else
-		info "Starting Tailscale login..."
-		sudo tailscale up
-		if is_tailscale_up; then check_done "Tailscale connected"
-		else warn "Tailscale login may not have completed — check 'tailscale status'"; fi
-	fi
-fi
-
-# ── Step 2: 1Password ────────────────────────────────────────────────────────
+# ── Step 1: 1Password ────────────────────────────────────────────────────────
 if is_1password_signed_in; then DONE=true; else DONE=false; fi
 if ask_step "$DONE" "Sign in to 1Password" "1Password (signed in)"; then
 	step_header "1Password"
@@ -177,7 +169,43 @@ if ask_step "$DONE" "Sign in to 1Password" "1Password (signed in)"; then
 	else warn "1Password CLI not yet connected — finish setup in the app"; fi
 fi
 
-# ── Step 3: GitHub CLI ────────────────────────────────────────────────────────
+# ── Step 2: Tailscale ────────────────────────────────────────────────────────
+if is_tailscale_up; then DONE=true; else DONE=false; fi
+if ask_step "$DONE" "Connect to Tailscale" "Tailscale (connected)"; then
+	step_header "Tailscale"
+	if ! command -v tailscale &>/dev/null; then
+		error "tailscale not installed — run chezmoi apply first"
+	else
+		info "Starting Tailscale login..."
+		sudo tailscale up
+		if is_tailscale_up; then check_done "Tailscale connected"
+		else warn "Tailscale login may not have completed — check 'tailscale status'"; fi
+	fi
+fi
+
+# ── Step 3: Default browser ──────────────────────────────────────────────────
+if is_brave_default_browser; then DONE=true; else DONE=false; fi
+if ask_step "$DONE" "Set Brave as the default browser" "Default browser (Brave)"; then
+	step_header "Default browser"
+	if ! command -v xdg-settings &>/dev/null; then
+		warn "xdg-settings not available — skipping"
+	else
+		info "Setting Brave as the default browser..."
+		if xdg-settings set default-web-browser "$BRAVE_DESKTOP_ID"; then
+			if command -v xdg-mime &>/dev/null; then
+				xdg-mime default "$BRAVE_DESKTOP_ID" x-scheme-handler/http || true
+				xdg-mime default "$BRAVE_DESKTOP_ID" x-scheme-handler/https || true
+				xdg-mime default "$BRAVE_DESKTOP_ID" text/html || true
+			fi
+			if is_brave_default_browser; then check_done "Brave set as default browser"
+			else warn "Default browser may not have updated — check 'xdg-settings get default-web-browser'"; fi
+		else
+			warn "Failed to set Brave as the default browser — is Brave installed?"
+		fi
+	fi
+fi
+
+# ── Step 4: GitHub CLI ────────────────────────────────────────────────────────
 if is_gh_authed; then DONE=true; else DONE=false; fi
 if ask_step "$DONE" "Authenticate GitHub CLI" "GitHub CLI (authenticated)"; then
 	step_header "GitHub CLI"
@@ -187,7 +215,7 @@ if ask_step "$DONE" "Authenticate GitHub CLI" "GitHub CLI (authenticated)"; then
 	else warn "GitHub auth may not have completed"; fi
 fi
 
-# ── Step 4: Restic credentials ───────────────────────────────────────────────
+# ── Step 5: Restic credentials ───────────────────────────────────────────────
 if is_restic_creds_set; then DONE=true; else DONE=false; fi
 if ask_step "$DONE" "Set up restic backup credentials" "Restic credentials (set)"; then
 	step_header "Restic backup credentials"
@@ -223,7 +251,7 @@ if ask_step "$DONE" "Set up restic backup credentials" "Restic credentials (set)
 	fi
 fi
 
-# ── Step 5: Restic timer ─────────────────────────────────────────────────────
+# ── Step 6: Restic timer ─────────────────────────────────────────────────────
 if is_restic_timer_enabled; then DONE=true; else DONE=false; fi
 if ask_step "$DONE" "Enable restic backup timer" "Restic timer (enabled)"; then
 	step_header "Restic backup timer"
@@ -232,7 +260,7 @@ if ask_step "$DONE" "Enable restic backup timer" "Restic timer (enabled)"; then
 	check_done "Restic backup timer enabled (hourly)"
 fi
 
-# ── Step 6+: Bisync initial resync (per config) ─────────────────────────────
+# ── Step 7+: Bisync initial resync (per config) ─────────────────────────────
 for name in "${BISYNC_CONFIGS[@]}"; do
 	if is_bisync_resynced; then DONE=true; else DONE=false; fi
 	if ask_step "$DONE" "Initial bisync resync: ${name}" "Bisync resync ($name) (initialized)"; then
@@ -261,7 +289,7 @@ for name in "${BISYNC_CONFIGS[@]}"; do
 	fi
 done
 
-# ── Step 7+: Bisync services (per config) ────────────────────────────────────
+# ── Step 8+: Bisync services (per config) ────────────────────────────────────
 for name in "${BISYNC_CONFIGS[@]}"; do
 	if is_bisync_service_enabled "$name"; then DONE=true; else DONE=false; fi
 	if ask_step "$DONE" "Enable bisync service: ${name}" "Bisync service ($name) (enabled)"; then
