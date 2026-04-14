@@ -163,6 +163,13 @@ get_bisync_key_file_from_remote() {
 	fi
 }
 
+get_bisync_host_from_remote() {
+	local remote="$1"
+	if [[ "$remote" =~ host=([^,:]+) ]]; then
+		echo "${BASH_REMATCH[1]}"
+	fi
+}
+
 get_bisync_key_paths() {
 	local -a configs=() keys=()
 	local name LOCAL REMOTE key
@@ -208,15 +215,45 @@ setup_bisync_ssh_keys() {
 		pub="${key}.pub"
 		chmod 644 "$pub"
 		check_done "Created SSH key: $key"
-		warn "Install this public key on the remote host before running bisync:"
-		warn "  $pub"
 		if command -v wl-copy &>/dev/null; then
 			wl-copy < "$pub" && info "Copied public key to clipboard" || true
 		elif command -v xclip &>/dev/null; then
 			xclip -selection clipboard < "$pub" && info "Copied public key to clipboard" || true
 		fi
-		wait_enter
 	done < <(get_bisync_key_paths)
+}
+
+install_bisync_ssh_keys_to_remote() {
+	local -a configs=() pairs=()
+	local name LOCAL REMOTE key host pair pub
+	read -ra configs <<< "$(get_bisync_configs)"
+	for name in "${configs[@]}"; do
+		LOCAL="" REMOTE=""
+		# shellcheck source=/dev/null
+		source "$BISYNC_DIR/${name}.env"
+		key="$(get_bisync_key_file_from_remote "${REMOTE:-}")"
+		host="$(get_bisync_host_from_remote "${REMOTE:-}")"
+		[[ -n "$key" && -n "$host" ]] || continue
+		pairs+=("$host|$key")
+	 done
+
+	printf '%s\n' "${pairs[@]}" | awk 'NF && !seen[$0]++' | while IFS='|' read -r host key; do
+		pub="${key}.pub"
+		[[ -f "$pub" ]] || { warn "Missing public key: $pub"; continue; }
+		info "Trying to install $pub on $host..."
+		if command -v ssh-copy-id &>/dev/null; then
+			if ssh-copy-id -i "$pub" "$host"; then
+				check_done "Installed SSH key on $host"
+				continue
+			fi
+		fi
+		if ssh "$host" 'umask 077; mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' < "$pub"; then
+			check_done "Installed SSH key on $host"
+		else
+			warn "Could not install SSH key on $host automatically"
+			warn "Install this public key manually on the remote host: $pub"
+		fi
+	 done
 }
 
 # ── Status display ────────────────────────────────────────────────────────────
@@ -419,6 +456,13 @@ if ask_step "$DONE" "Set up bisync SSH key" "Bisync SSH key (ready)"; then
 		warn "No bisync profiles found — skipping"
 	else
 		setup_bisync_ssh_keys
+		if is_tailscale_up; then
+			info "Tailscale is connected — trying to install the public key on the remote host(s)..."
+			install_bisync_ssh_keys_to_remote
+		else
+			warn "Tailscale is not connected — skipping automatic remote key install"
+			warn "After connecting Tailscale, re-run init or install the public key manually on the remote host"
+		fi
 	fi
 fi
 
@@ -440,7 +484,7 @@ for name in "${BISYNC_CONFIGS[@]}"; do
 		KEY_FILE="$(get_bisync_key_file_from_remote "${REMOTE:-}")"
 		if [[ -n "$KEY_FILE" && ! -f "$KEY_FILE" ]]; then
 			warn "$name: missing SSH key file: $KEY_FILE"
-			warn "Run the bisync SSH key step first, then install the public key on the remote host"
+			warn "Run the bisync SSH key step first"
 			continue
 		fi
 

@@ -544,8 +544,9 @@ journalctl --user -u bisync@documents.service -f
 - SSH key referenced by the bisync profile (defaults to `~/.ssh/id_ed25519`) with access to `mouse`
 - Tailscale — service waits for `tailscale0` interface
 
-`rwaltrctl-init` will check for the configured bisync SSH key and can generate it if missing,
-but you still need to install the generated public key on the remote host before bisync will work.
+`rwaltrctl-init` will check for the configured bisync SSH key and can generate it if missing.
+If Tailscale is already connected, it will also try to install the generated public key on the
+remote host automatically. If that fails, you can still install the public key manually.
 
 ## 🤔 Design Choices
 
