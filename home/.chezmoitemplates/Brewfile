@@ -60,11 +60,6 @@ brew "inotify-tools"
 # resticprofile runs via podman quadlet — see ~/.config/containers/systemd/
 {{ end -}}
 
-{{ if .personal -}}
-# ── CLI tools (personal) ──────────────────────────────────────────────────────
-brew "task"      # taskwarrior — task management
-{{ end -}}
-
 {{ if not .headless -}}
 # ── Fonts (!headless) ─────────────────────────────────────────────────────────
 # Casks install to ~/.local/share/fonts/ on Linux
