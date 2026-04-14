@@ -137,6 +137,8 @@ brew bundle (CLI tools + fonts), Flatpaks, and mise tools.
 
 For 1Password on immutable/rpm-ostree hosts, use `rwaltrctl-init` to layer the native
 `1password` and `1password-cli` packages, then reboot before continuing setup.
+The init flow installs the 1Password repo key into `/etc/pki/rpm-gpg/` and uses a
+`file:///` repo key reference so it works on immutable hosts without `rpm --import`.
 Flatpak 1Password is no longer part of this setup.
 
 ### Option 2: Bootstrap Without Chezmoi
