@@ -156,6 +156,69 @@ get_bisync_configs() {
 	echo "${configs[@]}"
 }
 
+get_bisync_key_file_from_remote() {
+	local remote="$1"
+	if [[ "$remote" =~ key_file=([^,]+) ]]; then
+		echo "${BASH_REMATCH[1]}"
+	fi
+}
+
+get_bisync_key_paths() {
+	local -a configs=() keys=()
+	local name LOCAL REMOTE key
+	read -ra configs <<< "$(get_bisync_configs)"
+	for name in "${configs[@]}"; do
+		LOCAL="" REMOTE=""
+		# shellcheck source=/dev/null
+		source "$BISYNC_DIR/${name}.env"
+		key="$(get_bisync_key_file_from_remote "${REMOTE:-}")"
+		[[ -n "$key" ]] || continue
+		keys+=("$key")
+	done
+	printf '%s\n' "${keys[@]}" | awk 'NF && !seen[$0]++'
+}
+
+is_bisync_ssh_key_ready() {
+	local key
+	while IFS= read -r key; do
+		[[ -n "$key" ]] || continue
+		if [[ ! -f "$key" ]]; then
+			return 1
+		fi
+	done < <(get_bisync_key_paths)
+	return 0
+}
+
+setup_bisync_ssh_keys() {
+	local key pub comment
+	while IFS= read -r key; do
+		[[ -n "$key" ]] || continue
+		if [[ -f "$key" ]]; then
+			check_done "SSH key exists: $key"
+			continue
+		fi
+
+		step_header "Create bisync SSH key"
+		info "Missing SSH key: $key"
+		mkdir -p "$(dirname "$key")"
+		chmod 700 "$(dirname "$key")"
+		comment="${USER}@$(hostname)-bisync"
+		ssh-keygen -t ed25519 -f "$key" -C "$comment" -N ""
+		chmod 600 "$key"
+		pub="${key}.pub"
+		chmod 644 "$pub"
+		check_done "Created SSH key: $key"
+		warn "Install this public key on the remote host before running bisync:"
+		warn "  $pub"
+		if command -v wl-copy &>/dev/null; then
+			wl-copy < "$pub" && info "Copied public key to clipboard" || true
+		elif command -v xclip &>/dev/null; then
+			xclip -selection clipboard < "$pub" && info "Copied public key to clipboard" || true
+		fi
+		wait_enter
+	done < <(get_bisync_key_paths)
+}
+
 # ── Status display ────────────────────────────────────────────────────────────
 show_status() {
 	echo ""
@@ -169,6 +232,7 @@ show_status() {
 	if is_gh_authed;            then check_done "GitHub CLI: authenticated";  else check_todo "GitHub CLI: not authenticated"; fi
 	if is_restic_creds_set;     then check_done "Restic credentials: set";    else check_todo "Restic credentials: not set"; fi
 	if is_restic_timer_enabled; then check_done "Restic timer: enabled";      else check_todo "Restic timer: not enabled"; fi
+	if is_bisync_ssh_key_ready; then check_done "Bisync SSH key(s): ready";  else check_todo "Bisync SSH key(s): missing"; fi
 
 	local configs
 	read -ra configs <<< "$(get_bisync_configs)"
@@ -347,7 +411,18 @@ if ask_step "$DONE" "Enable restic backup timer" "Restic timer (enabled)"; then
 	check_done "Restic backup timer enabled (hourly)"
 fi
 
-# ── Step 8+: Bisync initial resync (per config) ─────────────────────────────
+# ── Step 8: Bisync SSH key ───────────────────────────────────────────────────
+if is_bisync_ssh_key_ready; then DONE=true; else DONE=false; fi
+if ask_step "$DONE" "Set up bisync SSH key" "Bisync SSH key (ready)"; then
+	step_header "Bisync SSH key"
+	if [[ ${#BISYNC_CONFIGS[@]} -eq 0 ]]; then
+		warn "No bisync profiles found — skipping"
+	else
+		setup_bisync_ssh_keys
+	fi
+fi
+
+# ── Step 9+: Bisync initial resync (per config) ─────────────────────────────
 for name in "${BISYNC_CONFIGS[@]}"; do
 	if is_bisync_resynced; then DONE=true; else DONE=false; fi
 	if ask_step "$DONE" "Initial bisync resync: ${name}" "Bisync resync ($name) (initialized)"; then
@@ -361,6 +436,13 @@ for name in "${BISYNC_CONFIGS[@]}"; do
 		LOCAL="" REMOTE=""
 		# shellcheck source=/dev/null
 		source "$BISYNC_DIR/${name}.env"
+
+		KEY_FILE="$(get_bisync_key_file_from_remote "${REMOTE:-}")"
+		if [[ -n "$KEY_FILE" && ! -f "$KEY_FILE" ]]; then
+			warn "$name: missing SSH key file: $KEY_FILE"
+			warn "Run the bisync SSH key step first, then install the public key on the remote host"
+			continue
+		fi
 
 		if [[ -z "${LOCAL:-}" || -z "${REMOTE:-}" ]]; then
 			warn "$name: missing LOCAL or REMOTE in ${name}.env, skipping"
@@ -376,7 +458,7 @@ for name in "${BISYNC_CONFIGS[@]}"; do
 	fi
 done
 
-# ── Step 9+: Bisync services (per config) ────────────────────────────────────
+# ── Step 10+: Bisync services (per config) ───────────────────────────────────
 for name in "${BISYNC_CONFIGS[@]}"; do
 	if is_bisync_service_enabled "$name"; then DONE=true; else DONE=false; fi
 	if ask_step "$DONE" "Enable bisync service: ${name}" "Bisync service ($name) (enabled)"; then

@@ -541,8 +541,11 @@ journalctl --user -u bisync@documents.service -f
 
 - `rclone` — installed via Homebrew/mise
 - `inotify-tools` — for watch mode
-- SSH key at `~/.ssh/id_ed25519` with access to `mouse`
+- SSH key referenced by the bisync profile (defaults to `~/.ssh/id_ed25519`) with access to `mouse`
 - Tailscale — service waits for `tailscale0` interface
+
+`rwaltrctl-init` will check for the configured bisync SSH key and can generate it if missing,
+but you still need to install the generated public key on the remote host before bisync will work.
 
 ## 🤔 Design Choices
 
