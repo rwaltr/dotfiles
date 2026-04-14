@@ -158,7 +158,7 @@ get_bisync_configs() {
 
 get_bisync_key_file_from_remote() {
 	local remote="$1"
-	if [[ "$remote" =~ key_file=([^,]+) ]]; then
+	if [[ "$remote" =~ key_file=([^,:]+) ]]; then
 		echo "${BASH_REMATCH[1]}"
 	fi
 }
