@@ -162,10 +162,10 @@ show_status() {
 	echo -e "${BOLD}rwaltrctl-init — setup status${NC}"
 	echo ""
 
+	if is_brave_default_browser; then check_done "Default browser: Brave";       else check_todo "Default browser: not Brave"; fi
 	if is_1password_installed;  then check_done "1Password app + CLI: installed"; else check_todo "1Password app + CLI: not installed"; fi
 	if is_1password_signed_in;  then check_done "1Password: signed in";          else check_todo "1Password: not signed in"; fi
 	if is_tailscale_up;         then check_done "Tailscale: connected";          else check_todo "Tailscale: not connected"; fi
-	if is_brave_default_browser; then check_done "Default browser: Brave";    else check_todo "Default browser: not Brave"; fi
 	if is_gh_authed;            then check_done "GitHub CLI: authenticated";  else check_todo "GitHub CLI: not authenticated"; fi
 	if is_restic_creds_set;     then check_done "Restic credentials: set";    else check_todo "Restic credentials: not set"; fi
 	if is_restic_timer_enabled; then check_done "Restic timer: enabled";      else check_todo "Restic timer: not enabled"; fi
@@ -227,7 +227,29 @@ if is_rpm_ostree_host; then
 	fi
 fi
 
-# ── Step 2: 1Password ────────────────────────────────────────────────────────
+# ── Step 2: Default browser ──────────────────────────────────────────────────
+if is_brave_default_browser; then DONE=true; else DONE=false; fi
+if ask_step "$DONE" "Set Brave as the default browser" "Default browser (Brave)"; then
+	step_header "Default browser"
+	if ! command -v xdg-settings &>/dev/null; then
+		warn "xdg-settings not available — skipping"
+	else
+		info "Setting Brave as the default browser..."
+		if xdg-settings set default-web-browser "$BRAVE_DESKTOP_ID"; then
+			if command -v xdg-mime &>/dev/null; then
+				xdg-mime default "$BRAVE_DESKTOP_ID" x-scheme-handler/http || true
+				xdg-mime default "$BRAVE_DESKTOP_ID" x-scheme-handler/https || true
+				xdg-mime default "$BRAVE_DESKTOP_ID" text/html || true
+			fi
+			if is_brave_default_browser; then check_done "Brave set as default browser"
+			else warn "Default browser may not have updated — check 'xdg-settings get default-web-browser'"; fi
+		else
+			warn "Failed to set Brave as the default browser — is Brave installed?"
+		fi
+	fi
+fi
+
+# ── Step 3: 1Password ────────────────────────────────────────────────────────
 if is_1password_signed_in; then DONE=true; else DONE=false; fi
 if ask_step "$DONE" "Sign in to 1Password" "1Password (signed in)"; then
 	step_header "1Password"
@@ -256,7 +278,7 @@ if ask_step "$DONE" "Sign in to 1Password" "1Password (signed in)"; then
 	fi
 fi
 
-# ── Step 3: Tailscale ────────────────────────────────────────────────────────
+# ── Step 4: Tailscale ────────────────────────────────────────────────────────
 if is_tailscale_up; then DONE=true; else DONE=false; fi
 if ask_step "$DONE" "Connect to Tailscale" "Tailscale (connected)"; then
 	step_header "Tailscale"
@@ -267,28 +289,6 @@ if ask_step "$DONE" "Connect to Tailscale" "Tailscale (connected)"; then
 		sudo tailscale up
 		if is_tailscale_up; then check_done "Tailscale connected"
 		else warn "Tailscale login may not have completed — check 'tailscale status'"; fi
-	fi
-fi
-
-# ── Step 4: Default browser ──────────────────────────────────────────────────
-if is_brave_default_browser; then DONE=true; else DONE=false; fi
-if ask_step "$DONE" "Set Brave as the default browser" "Default browser (Brave)"; then
-	step_header "Default browser"
-	if ! command -v xdg-settings &>/dev/null; then
-		warn "xdg-settings not available — skipping"
-	else
-		info "Setting Brave as the default browser..."
-		if xdg-settings set default-web-browser "$BRAVE_DESKTOP_ID"; then
-			if command -v xdg-mime &>/dev/null; then
-				xdg-mime default "$BRAVE_DESKTOP_ID" x-scheme-handler/http || true
-				xdg-mime default "$BRAVE_DESKTOP_ID" x-scheme-handler/https || true
-				xdg-mime default "$BRAVE_DESKTOP_ID" text/html || true
-			fi
-			if is_brave_default_browser; then check_done "Brave set as default browser"
-			else warn "Default browser may not have updated — check 'xdg-settings get default-web-browser'"; fi
-		else
-			warn "Failed to set Brave as the default browser — is Brave installed?"
-		fi
 	fi
 fi
 
