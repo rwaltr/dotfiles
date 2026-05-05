@@ -39,7 +39,6 @@ brew "glow"      # markdown renderer
 brew "hyperfine" # CLI benchmarking
 brew "jq"        # JSON processor
 brew "just"      # command runner / task file
-brew "lima"      # lightweight Linux VMs (agent sandboxes, dev envs)
 brew "pi-coding-agent" # pi — AI coding agent (extensions via pi packages)
 brew "sd"        # simpler sed
 brew "television" # tv — fuzzy finder with channels
@@ -57,6 +56,7 @@ brew "k9s"       # Kubernetes TUI
 brew "rclone"
 brew "restic"
 brew "inotify-tools"
+brew "zellji"
 # resticprofile runs via podman quadlet — see ~/.config/containers/systemd/
 {{ end -}}
 

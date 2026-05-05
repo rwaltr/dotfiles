@@ -1,6 +1,5 @@
 {{ if not .headless -}}
 # !headless — GUI machines
-org.wezfurlong.wezterm
 dev.zed.Zed
 io.podman_desktop.PodmanDesktop
 io.github.Qalculate
@@ -19,7 +18,6 @@ org.gnome.SimpleScan
 # personal
 md.obsidian.Obsidian
 org.mozilla.Thunderbird
-org.mozilla.firefox
 com.brave.Browser
 org.libreoffice.LibreOffice
 org.inkscape.Inkscape
