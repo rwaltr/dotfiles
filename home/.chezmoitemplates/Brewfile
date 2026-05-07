@@ -56,7 +56,7 @@ brew "k9s"       # Kubernetes TUI
 brew "rclone"
 brew "restic"
 brew "inotify-tools"
-brew "zellji"
+brew "zellij"
 # resticprofile runs via podman quadlet — see ~/.config/containers/systemd/
 {{ end -}}
 
@@ -64,7 +64,7 @@ brew "zellji"
 # ── Fonts (!headless) ─────────────────────────────────────────────────────────
 # Casks install to ~/.local/share/fonts/ on Linux
 
-# WezTerm primary fonts (wezterm.lua font_with_fallback)
+# Terminal fonts (foot/zellij compatible)
 cask "font-iosevka-term-nerd-font"
 cask "font-iosevka"
 cask "font-0xproto-nerd-font"
