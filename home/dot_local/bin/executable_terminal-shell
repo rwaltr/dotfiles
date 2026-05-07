@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Terminal shell launcher with safe fallback for fresh systems.
+# Preference order:
+# 1) Linuxbrew fish
+# 2) fish from PATH
+# 3) bash fallback
+
+if [ -x /home/linuxbrew/.linuxbrew/bin/fish ]; then
+  exec /home/linuxbrew/.linuxbrew/bin/fish
+elif command -v fish >/dev/null 2>&1; then
+  exec fish
+else
+  exec /bin/bash
+fi

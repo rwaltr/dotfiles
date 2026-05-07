@@ -1,3 +1,8 @@
+# Override distro/vendor fish_greeting (eg. zmotd) with user greeting.
+if test -f ~/.config/fish/functions/fish_greeting.fish
+    source ~/.config/fish/functions/fish_greeting.fish
+end
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
     # bass eval (gnome-keyring-daemon)
@@ -6,12 +11,5 @@ if status is-interactive
     set -gx HISTSIZE 10000
     fish_vi_key_bindings
 
-    # Auto-start zellij in interactive local terminals (foot -> fish -> zellij)
-    # Use welcome layout for quick session selection/management.
-    if type -q zellij
-        and not set -q ZELLIJ
-        and not set -q SSH_TTY
-        and test "$TERM" != "dumb"
-        exec zellij -l welcome
-    end
+
 end
