@@ -4,6 +4,6 @@
   "features": {
     "ghcr.io/meaningful-ooo/devcontainer-features/homebrew:2": {},
     "ghcr.io/rio/features/chezmoi:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:3": {}
   }
 }
