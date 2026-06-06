@@ -13,17 +13,27 @@ io.github.kolunmi.Bazaar
 org.localsend.localsend_app
 org.gnome.Calculator
 org.gnome.SimpleScan
+org.gnome.Firmware
+org.gnome.clocks
+org.gnome.Papers
 
 {{ if .personal -}}
 # personal
 md.obsidian.Obsidian
-org.mozilla.Thunderbird
+org.mozilla.thunderbird_esr
 com.brave.Browser
 org.libreoffice.LibreOffice
 org.inkscape.Inkscape
 org.freecad.FreeCAD
 dev.vencord.Vesktop
 io.github.diegopvlk.Cine
+com.logseq.Logseq
+org.videolan.VLC
+org.virt_manager.virt-manager
+org.virt_manager.virt_manager.Extension.Qemu
+com.valvesoftware.Steam
+com.mikrotik.WinBox
+com.makemkv.MakeMKV
 # NOTE: OrcaSlicer is NOT here — it has no Flathub remote.
 # Installed via run_onchange_after_36_orcaslicer.sh.tmpl from GitHub releases.
 # NOTE: 1Password (com.onepassword.OnePassword) not here — needs rpm-ostree

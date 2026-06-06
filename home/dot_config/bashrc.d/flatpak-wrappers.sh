@@ -22,7 +22,7 @@ _flatpak_wrap() {
 }
 
 obsidian() { _flatpak_wrap md.obsidian.Obsidian "$@"; }
-thunderbird() { _flatpak_wrap org.mozilla.Thunderbird "$@"; }
+thunderbird() { _flatpak_wrap org.mozilla.thunderbird_esr "$@"; }
 firefox() { _flatpak_wrap org.mozilla.firefox "$@"; }
 brave() { _flatpak_wrap com.brave.Browser "$@"; }
 inkscape() { _flatpak_wrap org.inkscape.Inkscape "$@"; }

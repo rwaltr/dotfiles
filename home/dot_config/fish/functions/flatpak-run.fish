@@ -33,7 +33,7 @@ function obsidian
 end
 
 function thunderbird
-    _flatpak_wrap org.mozilla.Thunderbird $argv
+    _flatpak_wrap org.mozilla.thunderbird_esr $argv
 end
 
 function firefox
