@@ -43,6 +43,7 @@ brew "pi-coding-agent" # pi — AI coding agent (extensions via pi packages)
 brew "sd"        # simpler sed
 brew "television" # tv — fuzzy finder with channels
 brew "yazi"      # terminal file manager
+brew "yq"        # YAML/JSON processor
 
 {{ if not .ephemeral -}}
 # ── CLI tools (!ephemeral) ────────────────────────────────────────────────────
@@ -54,8 +55,10 @@ brew "fnox"      # Firefox profile manager
 brew "kubernetes-cli" # kubectl
 brew "k9s"       # Kubernetes TUI
 brew "rclone"
+brew "remind"    # calendar + reminder CLI
 brew "restic"
 brew "inotify-tools"
+brew "task"      # taskwarrior CLI
 brew "zellij"
 # resticprofile runs via podman quadlet — see ~/.config/containers/systemd/
 {{ end -}}
