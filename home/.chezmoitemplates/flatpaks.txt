@@ -44,4 +44,7 @@ com.makemkv.MakeMKV
 # work — placeholder
 {{ end -}}
 
+# local curated additions (managed by rwaltrctl flatpaks)
+{{ template "flatpaks.custom.txt" . }}
+
 {{ end -}}

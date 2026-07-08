@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # vi: ft=sh
-# rwaltrctl-cleanup — undo everything chezmoi apply installs/configures.
+# rwaltrctl cleanup — undo everything chezmoi apply installs/configures.
 # Restores the system to pre-chezmoi state (without removing chezmoi itself).
 #
 # Usage:
-#   rwaltrctl-cleanup          # interactive — prompts before each phase
-#   rwaltrctl-cleanup --force  # no prompts — run everything
+#   rwaltrctl cleanup          # interactive — prompts before each phase
+#   rwaltrctl cleanup --force  # no prompts — run everything
 
 set -euo pipefail
 
@@ -214,7 +214,7 @@ phase_chezmoi_state() {
 
 echo ""
 echo -e "${RED}╔══════════════════════════════════════════════════════╗${NC}"
-echo -e "${RED}║          rwaltrctl-cleanup — DESTRUCTIVE              ║${NC}"
+echo -e "${RED}║          rwaltrctl cleanup — DESTRUCTIVE                ║${NC}"
 echo -e "${RED}║  This will undo everything chezmoi apply has done.   ║${NC}"
 echo -e "${RED}║  chezmoi source state is preserved.                  ║${NC}"
 echo -e "${RED}╚══════════════════════════════════════════════════════╝${NC}"

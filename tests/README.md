@@ -26,7 +26,7 @@ mise run test:all
 ### Layer 1: Unit Tests (`mise run test:unit`)
 
 Runs in a Fedora 44 container via podman for consistent tool availability.
-Uses **bats-core**. 138 tests.
+Uses **bats-core**. 141 tests.
 
 | File | Tests | What it covers |
 |---|---|---|
@@ -39,14 +39,13 @@ Uses **bats-core**. 138 tests.
 | `neovim.bats` | 8 | Lua syntax, headless startup, lazy.lua, plugins |
 | `niri.bats` | 7 | KDL entrypoint, local.kdl, DMS overlay, keybindings, layout, outputs |
 | `nushell.bats` | 1 | Syntax check (skips if nu not installed) |
-| `scripts.bats` | 21 | Script template rendering + syntax + conditional logic |
+| `scripts.bats` | 27 | Script template rendering + syntax + conditional logic |
 | `security.bats` | 6 | No leaked secrets in source |
 | `starship.bats` | 7 | TOML valid, palette, bash/fish integration |
 | `systemd.bats` | 5 | Unit sections, ExecStart, timer schedules |
 | `television.bats` | 3 | Config + cable channel TOML validity |
 | `templates.bats` | 14 | All .tmpl files render, content validation |
 | `tools.bats` | 14 | bat, mpv, containers, go, kube, bisync, resticprofile |
-| `wezterm.bats` | 5 | Lua syntax, wezterm API references |
 | `yazi.bats` | 3 | All 3 TOML configs valid |
 
 ### Layer 2: Container Image Tests (`mise run test:image`)
@@ -237,7 +236,6 @@ tests/
 │   ├── television.bats
 │   ├── templates.bats
 │   ├── tools.bats
-│   ├── wezterm.bats
 │   └── yazi.bats
 ├── image/                         # container image tests (Layer 2)
 │   ├── run.bats                   # test orchestrator

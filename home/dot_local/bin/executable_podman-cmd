@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# podman-cmd — run a container image as if it were a local command.
+#
+# Usage:
+#   podman-cmd <image> [args...]
+
+set -euo pipefail
+
+if [[ $# -lt 1 ]]; then
+  echo "Usage: podman-cmd <image> [args...]" >&2
+  exit 2
+fi
+
+if ! command -v podman >/dev/null 2>&1; then
+  echo "podman-cmd: podman is not installed" >&2
+  exit 127
+fi
+
+image="$1"
+shift
+
+volume_flags=(
+  --volume "${HOME}:${HOME}"
+  --volume "$(pwd):$(pwd)"
+)
+
+env_flags=(
+  --env HOME="${HOME}"
+  --env USER="${USER:-}"
+)
+
+# Forward SSH agent if available
+if [[ -n "${SSH_AUTH_SOCK:-}" ]]; then
+  volume_flags+=(--volume "${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}")
+  env_flags+=(--env SSH_AUTH_SOCK="${SSH_AUTH_SOCK}")
+fi
+
+tty_flag=()
+if [[ -t 1 ]]; then
+  tty_flag=(-t)
+fi
+
+exec podman run --rm -i "${tty_flag[@]}" \
+  --network=host \
+  --userns=keep-id \
+  --workdir "$(pwd)" \
+  "${volume_flags[@]}" \
+  "${env_flags[@]}" \
+  "$image" \
+  "$@"

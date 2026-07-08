@@ -1,30 +1,11 @@
 #!/usr/bin/env bash
 # vi: ft=sh
-# Sync flatpaks — install declared apps, remove apps no longer declared.
-# flatpak install --or-update is idempotent; run on every chezmoi apply.
-# Linux only.
+# Flatpak install/update is managed by `rwaltrctl flatpaks`.
+#
+# We intentionally do NOT install/update flatpaks during `chezmoi apply`.
+# Curated IDs still live in .chezmoitemplates/flatpaks*.txt.
 
-{{ if (and (eq .chezmoi.os "linux") (not .headless)) -}}
 set -euo pipefail
 
-if ! command -v flatpak &>/dev/null; then
-	echo "flatpak not available, skipping"
-	exit 0
-fi
-
-# Build declared list from template — strip comments and blank lines
-mapfile -t DECLARED < <(cat << 'EOF' | grep -v '^\s*#' | grep -v '^\s*$'
-{{ template "flatpaks.txt" . }}
-EOF
-)
-
-if [[ ${#DECLARED[@]} -eq 0 ]]; then
-	echo "No flatpaks configured for this machine profile"
-	exit 0
-fi
-
-echo "Installing/updating ${#DECLARED[@]} flatpaks..."
-flatpak install -y --noninteractive --system --or-update flathub "${DECLARED[@]}"
-{{- else }}
-echo "Skipping flatpaks (not Linux or headless)"
-{{- end }}
+echo "Skipping flatpak install/update in chezmoi apply."
+echo "Use: rwaltrctl flatpaks sync-now"

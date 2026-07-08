@@ -1,0 +1,409 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# rwaltrctl brew — curate and manage Homebrew entries.
+#
+# Model:
+# - Brewfile is curated baseline
+# - this plugin manages Brewfile.custom for local additions
+# - apply/install still happens explicitly via this plugin (not chezmoi apply)
+
+{{ if eq .chezmoi.os "linux" -}}
+set -euo pipefail
+
+if ! command -v chezmoi >/dev/null 2>&1; then
+  echo "rwaltrctl brew: chezmoi is required" >&2
+  exit 127
+fi
+
+CHEZMOI_SOURCE="$(chezmoi source-path)"
+BASE_FILE="${CHEZMOI_SOURCE}/.chezmoitemplates/Brewfile"
+CUSTOM_FILE="${CHEZMOI_SOURCE}/.chezmoitemplates/Brewfile.custom"
+
+ensure_custom_file() {
+  if [[ ! -f "$CUSTOM_FILE" ]]; then
+    mkdir -p "$(dirname "$CUSTOM_FILE")"
+    cat > "$CUSTOM_FILE" <<'EOF'
+# Additional curated Homebrew entries managed by `rwaltrctl brew`.
+#
+# Examples:
+# brew "htop"
+# cask "font-jetbrains-mono"
+# tap "homebrew/cask-fonts"
+EOF
+  fi
+}
+
+ensure_brew_on_path() {
+  if command -v brew >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
+
+  command -v brew >/dev/null 2>&1
+}
+
+install_homebrew() {
+  if ensure_brew_on_path; then
+    echo "brew already installed"
+    return 0
+  fi
+
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  ensure_brew_on_path || {
+    echo "brew install completed but brew not on PATH" >&2
+    return 1
+  }
+}
+
+render_brewfile() {
+  ensure_custom_file
+  chezmoi execute-template < "$BASE_FILE"
+}
+
+normalized_custom_lines() {
+  ensure_custom_file
+  sed 's/\r$//' "$CUSTOM_FILE" \
+    | grep -v '^\s*#' \
+    | grep -v '^\s*$' \
+    | awk '{$1=$1};1'
+}
+
+validate_custom_line() {
+  local line="${1:-}"
+  grep -Eq '^(brew|cask|tap)[[:space:]]+"[^"]+"([[:space:]]+#.*)?$' <<< "$line"
+}
+
+write_custom_lines() {
+  local tmp
+  tmp=$(mktemp)
+  {
+    echo '# Additional curated Homebrew entries managed by `rwaltrctl brew`.'
+    echo '#'
+    echo '# Examples:'
+    echo '# brew "htop"'
+    echo '# cask "font-jetbrains-mono"'
+    echo '# tap "homebrew/cask-fonts"'
+    while IFS= read -r line; do
+      [[ -n "$line" ]] && echo "$line"
+    done | awk 'NF && !seen[$0]++'
+  } > "$tmp"
+  mv "$tmp" "$CUSTOM_FILE"
+}
+
+add_lines() {
+  ensure_custom_file
+  local line
+  local -a cur add merged
+
+  mapfile -t cur < <(normalized_custom_lines)
+  for line in "$@"; do
+    if ! validate_custom_line "$line"; then
+      echo "invalid Brewfile line: $line" >&2
+      echo "expected: brew \"pkg\" | cask \"pkg\" | tap \"org/repo\"" >&2
+      return 2
+    fi
+    add+=("$line")
+  done
+
+  merged=("${cur[@]}" "${add[@]}")
+  printf '%s\n' "${merged[@]}" | write_custom_lines
+}
+
+remove_lines() {
+  ensure_custom_file
+  local line cur_line
+  local -a remove keep
+
+  for line in "$@"; do
+    if ! validate_custom_line "$line"; then
+      echo "invalid Brewfile line: $line" >&2
+      return 2
+    fi
+    remove+=("$line")
+  done
+
+  while IFS= read -r cur_line; do
+    [[ -n "$cur_line" ]] || continue
+    local drop=false
+    local r
+    for r in "${remove[@]}"; do
+      if [[ "$cur_line" == "$r" ]]; then
+        drop=true
+        break
+      fi
+    done
+    $drop || keep+=("$cur_line")
+  done < <(normalized_custom_lines)
+
+  printf '%s\n' "${keep[@]}" | write_custom_lines
+}
+
+list_declared_entries() {
+  render_brewfile \
+    | sed 's/\r$//' \
+    | grep -E '^\s*(brew|cask|tap)\s+"' \
+    | awk '{$1=$1};1' \
+    | awk 'NF && !seen[$0]++'
+}
+
+list_declared_formulas() {
+  list_declared_entries | awk '$1=="brew" {print $2}' | tr -d '"'
+}
+
+list_declared_casks() {
+  list_declared_entries | awk '$1=="cask" {print $2}' | tr -d '"'
+}
+
+list_installed_formulas() {
+  ensure_brew_on_path || return 0
+  brew list --formula 2>/dev/null | awk 'NF && !seen[$0]++'
+}
+
+list_installed_casks() {
+  ensure_brew_on_path || return 0
+  brew list --cask 2>/dev/null | awk 'NF && !seen[$0]++'
+}
+
+status_cmd() {
+  local -a declared_f declared_c installed_f installed_c
+
+  mapfile -t declared_f < <(list_declared_formulas)
+  mapfile -t declared_c < <(list_declared_casks)
+  mapfile -t installed_f < <(list_installed_formulas)
+  mapfile -t installed_c < <(list_installed_casks)
+
+  echo "Declared formulas: ${#declared_f[@]}"
+  echo "Declared casks:    ${#declared_c[@]}"
+  echo "Installed formulas:${#installed_f[@]}"
+  echo "Installed casks:   ${#installed_c[@]}"
+  echo
+
+  echo "Installed formulas not curated (drift):"
+  comm -13 \
+    <(printf '%s\n' "${declared_f[@]}" | sort -u) \
+    <(printf '%s\n' "${installed_f[@]}" | sort -u) \
+    | sed 's/^/  /' || true
+  echo
+
+  echo "Installed casks not curated (drift):"
+  comm -13 \
+    <(printf '%s\n' "${declared_c[@]}" | sort -u) \
+    <(printf '%s\n' "${installed_c[@]}" | sort -u) \
+    | sed 's/^/  /' || true
+}
+
+add_drift_cmd() {
+  local -a drift_f drift_c lines
+  mapfile -t drift_f < <(
+    comm -13 \
+      <(list_declared_formulas | sort -u) \
+      <(list_installed_formulas | sort -u)
+  )
+  mapfile -t drift_c < <(
+    comm -13 \
+      <(list_declared_casks | sort -u) \
+      <(list_installed_casks | sort -u)
+  )
+
+  local f c
+  for f in "${drift_f[@]}"; do
+    [[ -n "$f" ]] && lines+=("brew \"$f\"")
+  done
+  for c in "${drift_c[@]}"; do
+    [[ -n "$c" ]] && lines+=("cask \"$c\"")
+  done
+
+  if [[ ${#lines[@]} -eq 0 ]]; then
+    echo "No drift entries to add."
+    return 0
+  fi
+
+  add_lines "${lines[@]}"
+  echo "Added ${#lines[@]} drift entries to Brewfile.custom"
+}
+
+prune_custom_to_installed_cmd() {
+  local -a cur keep installed_f installed_c
+  mapfile -t cur < <(normalized_custom_lines)
+  mapfile -t installed_f < <(list_installed_formulas)
+  mapfile -t installed_c < <(list_installed_casks)
+
+  local line kind name
+  for line in "${cur[@]}"; do
+    [[ -n "$line" ]] || continue
+    kind=$(awk '{print $1}' <<< "$line")
+    name=$(awk '{print $2}' <<< "$line" | tr -d '"')
+
+    case "$kind" in
+      brew)
+        if printf '%s\n' "${installed_f[@]}" | grep -Fxq "$name"; then
+          keep+=("$line")
+        fi
+        ;;
+      cask)
+        if printf '%s\n' "${installed_c[@]}" | grep -Fxq "$name"; then
+          keep+=("$line")
+        fi
+        ;;
+      tap)
+        # Keep taps by default; they are metadata, not installed packages.
+        keep+=("$line")
+        ;;
+    esac
+  done
+
+  printf '%s\n' "${keep[@]}" | write_custom_lines
+  echo "Pruned Brewfile.custom to installed entries (taps preserved)."
+}
+
+sync_now_cmd() {
+  ensure_brew_on_path || {
+    echo "brew not found; run: rwaltrctl brew install-homebrew" >&2
+    return 127
+  }
+
+  local tmp
+  tmp=$(mktemp)
+  trap 'rm -f "$tmp"' RETURN
+  render_brewfile > "$tmp"
+
+  brew bundle install --file="$tmp" --verbose
+}
+
+wizard_cmd() {
+  local choice line
+  while true; do
+    echo
+    echo "rwaltrctl brew wizard"
+    echo "  1) status"
+    echo "  2) add installed drift to custom curated list"
+    echo "  3) add manual Brewfile line"
+    echo "  4) remove Brewfile line from custom list"
+    echo "  5) prune custom list to installed entries"
+    echo "  6) sync now (brew bundle install)"
+    echo "  7) install Homebrew"
+    echo "  8) show custom file path"
+    echo "  q) quit"
+    read -rp "> " choice
+
+    case "$choice" in
+      1) status_cmd ;;
+      2) add_drift_cmd ;;
+      3)
+        read -rp 'Line (e.g. brew "htop"): ' line
+        [[ -n "$line" ]] && add_lines "$line"
+        ;;
+      4)
+        read -rp 'Exact line to remove: ' line
+        [[ -n "$line" ]] && remove_lines "$line"
+        ;;
+      5) prune_custom_to_installed_cmd ;;
+      6) sync_now_cmd ;;
+      7) install_homebrew ;;
+      8) echo "$CUSTOM_FILE" ;;
+      q|Q) break ;;
+      *) echo "invalid selection" ;;
+    esac
+  done
+}
+
+usage() {
+  cat <<'EOF'
+Usage:
+  rwaltrctl brew <command> [args...]
+
+Commands:
+  status
+      Show curated vs installed brew drift.
+
+  install-homebrew
+      Install Homebrew if missing.
+
+  add <LINE> [LINE...]
+      Add Brewfile lines to Brewfile.custom.
+      Valid line forms:
+        brew "pkg"
+        cask "pkg"
+        tap "org/repo"
+
+  add-drift
+      Add installed-but-not-curated formulas/casks to Brewfile.custom.
+
+  remove <LINE> [LINE...]
+      Remove exact Brewfile lines from Brewfile.custom.
+
+  list-curated
+      Print rendered curated Brewfile entries.
+
+  list-custom
+      Print custom Brewfile entries only.
+
+  prune-custom-to-installed
+      Keep only custom entries currently installed (taps preserved).
+
+  sync-now
+      Run brew bundle install using rendered curated Brewfile.
+
+  apply
+      Run `chezmoi apply` (brew is still NOT installed during apply).
+
+  wizard
+      Interactive curation flow.
+EOF
+}
+
+cmd="${1:-}"
+shift || true
+
+case "$cmd" in
+  ""|help|-h|--help)
+    usage
+    ;;
+  status)
+    status_cmd
+    ;;
+  install-homebrew)
+    install_homebrew
+    ;;
+  add)
+    [[ $# -gt 0 ]] || { echo "add requires at least one LINE" >&2; exit 2; }
+    add_lines "$@"
+    ;;
+  add-drift)
+    add_drift_cmd
+    ;;
+  remove)
+    [[ $# -gt 0 ]] || { echo "remove requires at least one LINE" >&2; exit 2; }
+    remove_lines "$@"
+    ;;
+  list-curated)
+    list_declared_entries
+    ;;
+  list-custom)
+    normalized_custom_lines
+    ;;
+  prune-custom-to-installed)
+    prune_custom_to_installed_cmd
+    ;;
+  sync-now)
+    sync_now_cmd
+    ;;
+  apply)
+    chezmoi apply
+    ;;
+  wizard)
+    wizard_cmd
+    ;;
+  *)
+    echo "Unknown command: $cmd" >&2
+    usage >&2
+    exit 2
+    ;;
+esac
+{{- else }}
+echo "Skipping brew plugin (non-linux OS)"
+{{- end }}

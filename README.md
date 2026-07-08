@@ -72,7 +72,7 @@ This keeps configs portable and safe for immutable operating systems.
 ### 🔧 Development Tools
 
 - **Editor**: Neovim (Lua-based configuration)
-- **Terminal**: Wezterm with sessionizer
+- **Terminal**: Foot terminal configuration
 - **Shell Tools**: Starship prompt, Carapace completions, eza, bat, fzf
 - **Version Management**: mise (formerly rtx)
 - **Git Hooks**: hk (high-performance, mise-integrated)
@@ -105,12 +105,47 @@ This keeps configs portable and safe for immutable operating systems.
 
 ### 🤖 Bootstrap Automation
 
+Brew curation/install is managed with `rwaltrctl brew`:
+
+```bash
+# inspect curated vs installed drift
+rwaltrctl brew status
+
+# interactive curation flow
+rwaltrctl brew wizard
+
+# install homebrew if needed
+rwaltrctl brew install-homebrew
+
+# sync curated Brewfile now
+rwaltrctl brew sync-now
+```
+
+Flatpak curation/install is managed with `rwaltrctl flatpaks`:
+
+```bash
+# inspect curated vs installed drift
+rwaltrctl flatpaks status
+
+# interactive curation flow (add IDs, add drift, prune custom additions)
+rwaltrctl flatpaks wizard
+
+# add installed drift to curated custom list
+rwaltrctl flatpaks add-drift
+
+# prune custom curated additions to only currently installed additions
+rwaltrctl flatpaks prune-custom-to-installed
+
+# sync curated flatpaks now
+rwaltrctl flatpaks sync-now
+```
+
 `chezmoi apply` on a fresh ublue/immutable Linux system automatically:
 
-1. **Installs Homebrew** (`run_once_before_10`) — Linuxbrew in `/home/linuxbrew`
+1. **Homebrew install step is skipped in `chezmoi apply`** (`run_once_before_10`) — use `rwaltrctl brew install-homebrew`
 2. **Installs Tailscale** (`run_once_before_20`) — via official install script, skipped if present or ephemeral
-3. **Runs `brew bundle`** (`run_always_after_30`) — CLI tools, fonts; rendered from `Brewfile` template
-4. **Installs Flatpaks** (`run_always_after_35`) — system-wide from `flatpaks.txt` template; additive only
+3. **Brew bundle step is skipped in `chezmoi apply`** (`run_always_after_30`) — curate via `Brewfile` + `Brewfile.custom`, then run `rwaltrctl brew sync-now`
+4. **Flatpak step is skipped in `chezmoi apply`** (`run_always_after_35`) — curate via `flatpaks.txt` + `flatpaks.custom.txt`, then run `rwaltrctl flatpaks sync-now` explicitly
 5. **Installs OrcaSlicer** (`run_always_after_36`) — personal machines; version-checked, flatpak bundle
 6. **Runs `mise install`** (`run_onchange_after_50`) — installs all tools in `~/.config/mise/config.toml`
 7. **Reloads systemd** (`run_always_after_99`) — picks up new/changed user units
@@ -132,10 +167,11 @@ chezmoi init rwaltr
 chezmoi apply
 ```
 
-On first apply, chezmoi will automatically install Homebrew, Tailscale,
-brew bundle (CLI tools + fonts), Flatpaks, and mise tools.
+On first apply, chezmoi will configure files and scripts, then run selected
+post-apply steps (Tailscale, mise, systemd reload). Homebrew/brew bundle and
+Flatpak sync are intentionally run manually via `rwaltrctl brew` and `rwaltrctl flatpaks`.
 
-For 1Password on immutable/rpm-ostree hosts, use `rwaltrctl-init` to layer the native
+For 1Password on immutable/rpm-ostree hosts, use `rwaltrctl init` to layer the native
 `1password` and `1password-cli` packages, then reboot before continuing setup.
 The init flow installs the 1Password repo key into `/etc/pki/rpm-gpg/` and uses a
 `file:///` repo key reference so it works on immutable hosts without `rpm --import`.
@@ -245,14 +281,16 @@ dotfiles/
 │   │
 │   ├── .chezmoitemplates/
 │   │   ├── Brewfile       # CLI tools + fonts (segmented by flags)
-│   │   └── flatpaks.txt   # Flatpak app IDs (segmented by flags)
+│   │   ├── Brewfile.custom # Curated local additions via rwaltrctl brew
+│   │   ├── flatpaks.txt   # Flatpak app IDs (segmented by flags)
+│   │   └── flatpaks.custom.txt # Curated local additions via rwaltrctl flatpaks
 │   │
 │   ├── dot_config/
 │   │   ├── fish/          # Fish shell (primary interactive)
 │   │   ├── bashrc.d/      # Modular Bash configs
 │   │   ├── nushell/       # Nushell data processing
 │   │   ├── nvim/          # Neovim Lua config
-│   │   ├── wezterm/       # Terminal config
+│   │   ├── foot/          # Terminal config
 │   │   ├── mise/          # Global mise tool config
 │   │   ├── niri/          # Niri Wayland compositor
 │   │   ├── bisync/        # rclone bisync profiles (LOCAL/REMOTE env pairs)
@@ -329,7 +367,7 @@ HK=0 git commit -m "emergency fix"
 
 ### Testing
 
-138 tests across unit, container image, and VM layers. Unit tests run in a
+141 tests across unit, container image, and VM layers. Unit tests run in a
 containerized environment for consistency:
 
 ```bash
@@ -544,9 +582,26 @@ journalctl --user -u bisync@documents.service -f
 - SSH key referenced by the bisync profile (defaults to `~/.ssh/id_ed25519`) with access to `mouse`
 - Tailscale — service waits for `tailscale0` interface
 
-`rwaltrctl-init` will check for the configured bisync SSH key and can generate it if missing.
-If Tailscale is already connected, it will also try to install the generated public key on the
-remote host automatically. If that fails, you can still install the public key manually.
+Use the bisync plugin for guided setup and day-2 operations:
+
+```bash
+# interactive profile + key + resync + service flow
+rwaltrctl bisync wizard
+
+# inspect current state
+rwaltrctl bisync status
+```
+
+You can also configure profiles non-interactively via flags (for automation):
+
+```bash
+rwaltrctl bisync add documents \
+  --local "$HOME/Documents" \
+  --host mouse \
+  --key-file "$HOME/.ssh/id_ed25519" \
+  --remote-path "/var/tank/home/rwaltr/Documents"
+```
+
 
 ## 🤔 Design Choices
 
@@ -604,11 +659,11 @@ while mise handles per-project versions (Node 18 in project A, Node 20 in projec
 
 - [ ] **Distrobox Assemble**: Rebuild pi AI agent environment on any machine
 - [ ] **Kubernetes debug container**: Run dotfiles in `kubectl debug` pods
-- [x] **Test suite**: 138 bats tests (unit + container image), containerized runner
+- [x] **Test suite**: 141 bats tests (unit + container image), containerized runner
 
 ### Ideas
 
-- [ ] **Wezterm sessionizer** integration with pi agent for long-running tasks
+- [ ] **Terminal sessionizer** integration with pi agent for long-running tasks
 - [ ] **Container image**: Pre-built Docker/Podman image with full setup
 - [ ] **Nushell integration**: Deeper data processing workflows
 - [ ] **S3 backup backend**: Second restic profile pointing at S3-compatible storage
@@ -637,4 +692,4 @@ Personal use. Feel free to use as inspiration or starting point for your own dot
 ---
 
 **Built with**: [Chezmoi](https://www.chezmoi.io/) • [mise](https://mise.jdx.dev/) • [Fish](https://fishshell.com/) •
-[Neovim](https://neovim.io/) • [Wezterm](https://wezfurlong.org/wezterm/)
+[Neovim](https://neovim.io/) • [Foot](https://codeberg.org/dnkl/foot)

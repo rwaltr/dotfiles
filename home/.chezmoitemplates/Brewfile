@@ -79,3 +79,6 @@ cask "font-meslo-lg-nerd-font"
 cask "font-monocraft"
 cask "font-miracode"
 {{ end -}}
+
+# local curated additions (managed by rwaltrctl brew)
+{{ template "Brewfile.custom" . }}

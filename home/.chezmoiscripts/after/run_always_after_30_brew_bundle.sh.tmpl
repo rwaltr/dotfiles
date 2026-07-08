@@ -1,36 +1,11 @@
 #!/usr/bin/env bash
 # vi: ft=sh
-# Install/update all packages declared in the Brewfile.
-# run_always — brew bundle is idempotent; runs on every chezmoi apply.
+# Homebrew bundle install/update is managed by `rwaltrctl brew`.
+#
+# We intentionally do NOT run brew bundle during `chezmoi apply`.
+# Curated entries still live in .chezmoitemplates/Brewfile*. 
 
 set -euo pipefail
 
-{{ if eq .chezmoi.os "linux" -}}
-# Ensure brew is on PATH (may not be set during chezmoi apply)
-if ! command -v brew &>/dev/null; then
-	if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-		eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-	else
-		echo "ERROR: brew not found. Run chezmoi apply again after homebrew installs." >&2
-		exit 1
-	fi
-fi
-{{- else }}
-if ! command -v brew &>/dev/null; then
-	echo "ERROR: brew not found." >&2
-	exit 1
-fi
-{{- end }}
-
-# Write the rendered Brewfile to a temp file and run bundle against it
-BREWFILE=$(mktemp)
-trap 'rm -f "$BREWFILE"' EXIT
-
-cat > "$BREWFILE" << 'BREWFILE_EOF'
-{{ template "Brewfile" . }}
-BREWFILE_EOF
-
-echo "Running brew bundle..."
-brew bundle install \
-	--file="$BREWFILE" \
-	--verbose
+echo "Skipping brew bundle in chezmoi apply."
+echo "Use: rwaltrctl brew sync-now"

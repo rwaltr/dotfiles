@@ -1,24 +1,8 @@
 # flatpak-wrappers.sh — thin shell aliases for managed flatpak apps
-# Each wrapper passes all arguments through to `flatpak run <app-id>`.
+# Uses the shared standalone helper: ~/.local/bin/flatpak_wrapper
 
 _flatpak_wrap() {
-  local app_id="$1"
-  shift
-  if ! flatpak info "$app_id" &>/dev/null; then
-    if [[ -t 0 ]]; then
-      echo "flatpak: $app_id is not installed." >&2
-      read -rp "Install now? [y/N] " answer
-      if [[ "$answer" =~ ^[Yy] ]]; then
-        flatpak install --system --or-update flathub "$app_id" || return 1
-      else
-        return 1
-      fi
-    else
-      echo "flatpak: $app_id is not installed (non-interactive, skipping)" >&2
-      return 1
-    fi
-  fi
-  flatpak run "$app_id" "$@"
+  command flatpak_wrapper "$@"
 }
 
 obsidian() { _flatpak_wrap md.obsidian.Obsidian "$@"; }

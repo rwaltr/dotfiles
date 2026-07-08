@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# flatpak_wrapper — run a Flatpak app with optional interactive install.
+#
+# Usage:
+#   flatpak_wrapper <app-id> [args...]
+
+set -euo pipefail
+
+if [[ $# -lt 1 ]]; then
+  echo "Usage: flatpak_wrapper <app-id> [args...]" >&2
+  exit 2
+fi
+
+if ! command -v flatpak >/dev/null 2>&1; then
+  echo "flatpak_wrapper: flatpak is not installed" >&2
+  exit 127
+fi
+
+app_id="$1"
+shift
+
+if ! flatpak info "$app_id" >/dev/null 2>&1; then
+  if [[ -t 0 ]]; then
+    echo "flatpak: $app_id is not installed." >&2
+    read -r -p "Install now? [y/N] " answer
+    if [[ "$answer" =~ ^[Yy] ]]; then
+      flatpak install --system --or-update flathub "$app_id"
+    else
+      exit 1
+    fi
+  else
+    echo "flatpak: $app_id is not installed (non-interactive, skipping)" >&2
+    exit 1
+  fi
+fi
+
+exec flatpak run "$app_id" "$@"

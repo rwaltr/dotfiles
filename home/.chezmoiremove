@@ -1,1 +1,5 @@
 .gitconfig
+.local/bin/rwaltrctl-init.sh
+.local/bin/rwaltrctl-cleanup.sh
+.local/bin/rwaltrctl-bisync.sh
+.local/bin/rwaltrctl-bysync

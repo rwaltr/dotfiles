@@ -1,0 +1,202 @@
+#!/usr/bin/env bash
+# rwaltrctl — kubectl-style dispatcher for rwaltrctl-* subcommands.
+#
+# Usage:
+#   rwaltrctl <command> [args...]
+#
+# Subcommands are discovered dynamically on PATH as executables named
+# `rwaltrctl-<command>`.
+
+set -euo pipefail
+
+PROG="${0##*/}"
+PREFIX="rwaltrctl-"
+
+is_valid_command_name() {
+  [[ "${1:-}" =~ ^[A-Za-z0-9][A-Za-z0-9_-]*$ ]]
+}
+
+find_plugins() {
+  local path_dir entry name seen_name already_seen
+  local -a path_parts=() seen=()
+
+  IFS=':' read -r -a path_parts <<< "${PATH:-}"
+  for path_dir in "${path_parts[@]}"; do
+    [[ -n "$path_dir" && -d "$path_dir" ]] || continue
+    for entry in "$path_dir"/"${PREFIX}"*; do
+      [[ -x "$entry" && ! -d "$entry" ]] || continue
+
+      name="${entry##*/}"
+      name="${name#"${PREFIX}"}"
+      is_valid_command_name "$name" || continue
+
+      # Reserve typo variant; do not expose as a command.
+      [[ "$name" == "bysync" ]] && continue
+
+
+      # Avoid duplicates from multiple PATH entries; first PATH hit wins.
+      already_seen=false
+      for seen_name in "${seen[@]:-}"; do
+        if [[ "$seen_name" == "$name" ]]; then
+          already_seen=true
+          break
+        fi
+      done
+      $already_seen && continue
+
+      seen+=("$name")
+      printf '%s\t%s\n' "$name" "$entry"
+    done
+  done
+}
+
+list_commands() {
+  find_plugins | sort -t $'\t' -k1,1 | cut -f1
+}
+
+complete_commands() {
+  {
+    printf '%s\n' help list commands completion
+    list_commands
+  } | awk 'NF && !seen[$0]++' | sort
+}
+
+command_description() {
+  local name="$1" path="$2" line desc=""
+
+  while IFS= read -r line; do
+    case "$line" in
+      "# rwaltrctl ${name} — "*)
+        desc="${line#"# rwaltrctl ${name} — "}"
+        break
+        ;;
+      "# ${PREFIX}${name} — "*)
+        desc="${line#"# ${PREFIX}${name} — "}"
+        break
+        ;;
+      "# ${name} — "*)
+        desc="${line#"# ${name} — "}"
+        break
+        ;;
+    esac
+  done < "$path"
+
+  printf '%s' "$desc"
+}
+
+print_command_table() {
+  local name path desc
+
+  while IFS=$'\t' read -r name path; do
+    [[ -n "$name" ]] || continue
+    desc="$(command_description "$name" "$path")"
+    if [[ -n "$desc" ]]; then
+      printf '  %-16s %s\n' "$name" "$desc"
+    else
+      printf '  %s\n' "$name"
+    fi
+  done < <(find_plugins | sort -t $'\t' -k1,1)
+}
+
+usage() {
+  cat <<'EOF'
+Usage:
+  rwaltrctl <command> [args...]
+
+Discovery:
+  Any executable named rwaltrctl-<command> on PATH becomes available as:
+  rwaltrctl <command> [args...]
+
+Built-ins:
+  help         Show this help
+  list         List discovered subcommands
+  commands     List discovered subcommands, one per line
+  completion   Print shell completion script: rwaltrctl completion <bash|fish>
+
+Available commands:
+EOF
+  print_command_table
+}
+
+print_completion() {
+  local shell="${1:-}"
+  case "$shell" in
+    bash)
+      cat <<'EOF'
+_rwaltrctl_completion() {
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  if [[ "$COMP_CWORD" -eq 1 ]]; then
+    mapfile -t COMPREPLY < <(compgen -W "$(rwaltrctl __complete 2>/dev/null)" -- "$cur")
+  else
+    COMPREPLY=()
+  fi
+}
+complete -F _rwaltrctl_completion rwaltrctl
+EOF
+      ;;
+    fish)
+      cat <<'EOF'
+function __rwaltrctl_complete_commands
+    rwaltrctl __complete 2>/dev/null
+end
+
+complete -c rwaltrctl -f \
+    -n 'not __fish_seen_subcommand_from (__rwaltrctl_complete_commands)' \
+    -a '(__rwaltrctl_complete_commands)' \
+    -d 'rwaltrctl command'
+EOF
+      ;;
+    *)
+      echo "${PROG}: usage: rwaltrctl completion <bash|fish>" >&2
+      exit 2
+      ;;
+  esac
+}
+
+if [[ $# -eq 0 ]]; then
+  usage >&2
+  exit 1
+fi
+
+case "${1:-}" in
+  -h|--help|help)
+    usage
+    exit 0
+    ;;
+  list|commands)
+    list_commands
+    exit 0
+    ;;
+  __complete)
+    complete_commands
+    exit 0
+    ;;
+  completion|completions)
+    shift
+    print_completion "${1:-}"
+    exit 0
+    ;;
+esac
+
+cmd="$1"
+shift
+
+if [[ "$cmd" == "bysync" ]]; then
+  echo "${PROG}: unknown command: bysync (did you mean: bisync?)" >&2
+  exit 2
+fi
+
+if ! is_valid_command_name "$cmd"; then
+  echo "${PROG}: invalid command: ${cmd}" >&2
+  exit 2
+fi
+
+plugin="${PREFIX}${cmd}"
+if ! plugin_path="$(command -v "$plugin" 2>/dev/null)"; then
+  echo "${PROG}: unknown command: ${cmd}" >&2
+  echo >&2
+  usage >&2
+  exit 127
+fi
+
+exec "$plugin_path" "$@"

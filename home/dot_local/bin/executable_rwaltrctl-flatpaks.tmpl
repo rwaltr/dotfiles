@@ -1,0 +1,347 @@
+#!/usr/bin/env bash
+# vi: ft=sh
+# rwaltrctl flatpaks — curate and manage Flatpak app IDs.
+#
+# Model:
+# - flatpaks.txt is the curated baseline
+# - this plugin manages flatpaks.custom.txt for local additions
+# - apply/install still happens through chezmoi script(s)
+
+{{ if (and (eq .chezmoi.os "linux") (not .headless)) -}}
+set -euo pipefail
+
+# Resolve chezmoi source root to edit template files directly.
+if ! command -v chezmoi >/dev/null 2>&1; then
+  echo "rwaltrctl flatpaks: chezmoi is required" >&2
+  exit 127
+fi
+
+CHEZMOI_SOURCE="$(chezmoi source-path)"
+BASE_FILE="${CHEZMOI_SOURCE}/.chezmoitemplates/flatpaks.txt"
+CUSTOM_FILE="${CHEZMOI_SOURCE}/.chezmoitemplates/flatpaks.custom.txt"
+
+is_flatpak_id() {
+  [[ "${1:-}" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*\.[A-Za-z0-9._-]+$ ]]
+}
+
+ensure_custom_file() {
+  if [[ ! -f "$CUSTOM_FILE" ]]; then
+    mkdir -p "$(dirname "$CUSTOM_FILE")"
+    cat > "$CUSTOM_FILE" <<'EOF'
+# Additional curated Flatpaks managed by `rwaltrctl flatpaks`.
+# One Flatpak application ID per line.
+EOF
+  fi
+}
+
+# Render declared IDs from template using current chezmoi data profile.
+get_declared_ids() {
+  ensure_custom_file
+  chezmoi execute-template < "$BASE_FILE" \
+    | sed 's/\r$//' \
+    | grep -v '^\s*#' \
+    | grep -v '^\s*$' \
+    | awk '{print $1}' \
+    | awk 'NF && !seen[$0]++'
+}
+
+get_installed_ids() {
+  if ! command -v flatpak >/dev/null 2>&1; then
+    return 0
+  fi
+  flatpak list --app --columns=application 2>/dev/null | awk 'NF && !seen[$0]++'
+}
+
+custom_ids() {
+  ensure_custom_file
+  sed 's/\r$//' "$CUSTOM_FILE" \
+    | grep -v '^\s*#' \
+    | grep -v '^\s*$' \
+    | awk '{print $1}' \
+    | awk 'NF && !seen[$0]++'
+}
+
+write_custom_ids_sorted() {
+  ensure_custom_file
+  local tmp
+  tmp=$(mktemp)
+
+  {
+    echo '# Additional curated Flatpaks managed by `rwaltrctl flatpaks`.'
+    echo '# One Flatpak application ID per line.'
+    while IFS= read -r id; do
+      [[ -n "$id" ]] && echo "$id"
+    done | sort -u
+  } > "$tmp"
+
+  mv "$tmp" "$CUSTOM_FILE"
+}
+
+add_ids() {
+  ensure_custom_file
+  local id
+  local -a current=() add=() merged=()
+  mapfile -t current < <(custom_ids)
+
+  for id in "$@"; do
+    if ! is_flatpak_id "$id"; then
+      echo "invalid flatpak id: $id" >&2
+      return 2
+    fi
+    add+=("$id")
+  done
+
+  merged=("${current[@]}" "${add[@]}")
+  printf '%s\n' "${merged[@]}" | awk 'NF && !seen[$0]++' | write_custom_ids_sorted
+}
+
+remove_ids() {
+  ensure_custom_file
+  local id
+  local -a remove=() keep=()
+
+  for id in "$@"; do
+    if ! is_flatpak_id "$id"; then
+      echo "invalid flatpak id: $id" >&2
+      return 2
+    fi
+    remove+=("$id")
+  done
+
+  while IFS= read -r id; do
+    [[ -n "$id" ]] || continue
+    local drop=false
+    local r
+    for r in "${remove[@]}"; do
+      if [[ "$id" == "$r" ]]; then
+        drop=true
+        break
+      fi
+    done
+    $drop || keep+=("$id")
+  done < <(custom_ids)
+
+  printf '%s\n' "${keep[@]}" | write_custom_ids_sorted
+}
+
+print_status() {
+  local -a declared installed custom
+  mapfile -t declared < <(get_declared_ids)
+  mapfile -t installed < <(get_installed_ids)
+  mapfile -t custom < <(custom_ids)
+
+  echo "Curated declared IDs: ${#declared[@]}"
+  echo "Installed app IDs:    ${#installed[@]}"
+  echo "Custom curated IDs:   ${#custom[@]}"
+  echo
+
+  echo "Installed but not curated (drift):"
+  comm -13 \
+    <(printf '%s\n' "${declared[@]}" | sort -u) \
+    <(printf '%s\n' "${installed[@]}" | sort -u) \
+    | sed 's/^/  /' || true
+  echo
+
+  echo "Curated but not installed:"
+  comm -23 \
+    <(printf '%s\n' "${declared[@]}" | sort -u) \
+    <(printf '%s\n' "${installed[@]}" | sort -u) \
+    | sed 's/^/  /' || true
+}
+
+prune_curated_to_installed() {
+  local -a declared installed custom baseline keep
+
+  mapfile -t declared < <(get_declared_ids)
+  mapfile -t installed < <(get_installed_ids)
+  mapfile -t custom < <(custom_ids)
+
+  # Approximate baseline = declared - current custom additions.
+  mapfile -t baseline < <(
+    comm -23 \
+      <(printf '%s\n' "${declared[@]}" | sort -u) \
+      <(printf '%s\n' "${custom[@]}" | sort -u)
+  )
+
+  # Keep only installed IDs that are NOT in baseline; i.e. installed additions.
+  mapfile -t keep < <(
+    comm -13 \
+      <(printf '%s\n' "${baseline[@]}" | sort -u) \
+      <(printf '%s\n' "${installed[@]}" | sort -u)
+  )
+
+  printf '%s\n' "${keep[@]}" | write_custom_ids_sorted
+}
+
+sync_now() {
+  if ! command -v flatpak >/dev/null 2>&1; then
+    echo "flatpak not installed" >&2
+    return 127
+  fi
+
+  # Render declared IDs and install/update directly (same behavior as apply script).
+  local -a declared
+  mapfile -t declared < <(get_declared_ids)
+  if [[ ${#declared[@]} -eq 0 ]]; then
+    echo "No curated flatpaks declared"
+    return 0
+  fi
+
+  flatpak install -y --noninteractive --system --or-update flathub "${declared[@]}"
+}
+
+wizard() {
+  local choice
+  while true; do
+    echo
+    echo "rwaltrctl flatpaks wizard"
+    echo "  1) status"
+    echo "  2) add installed drift IDs to curated custom list"
+    echo "  3) add manual ID"
+    echo "  4) remove ID from custom curated list"
+    echo "  5) prune custom list to installed-only drift"
+    echo "  6) sync now (install/update curated IDs)"
+    echo "  7) show custom curated file path"
+    echo "  q) quit"
+    read -rp "> " choice
+
+    case "$choice" in
+      1) print_status ;;
+      2)
+        mapfile -t drift < <(
+          comm -13 \
+            <(get_declared_ids | sort -u) \
+            <(get_installed_ids | sort -u)
+        )
+        if [[ ${#drift[@]} -eq 0 ]]; then
+          echo "No drift IDs to add."
+        else
+          echo "Adding drift IDs to custom curated list:"
+          printf '  %s\n' "${drift[@]}"
+          add_ids "${drift[@]}"
+        fi
+        ;;
+      3)
+        read -rp "Flatpak app ID to add: " id
+        [[ -n "$id" ]] && add_ids "$id"
+        ;;
+      4)
+        read -rp "Flatpak app ID to remove from custom list: " id
+        [[ -n "$id" ]] && remove_ids "$id"
+        ;;
+      5)
+        prune_curated_to_installed
+        echo "Pruned custom curated list."
+        ;;
+      6)
+        sync_now
+        ;;
+      7)
+        echo "$CUSTOM_FILE"
+        ;;
+      q|Q)
+        break
+        ;;
+      *)
+        echo "invalid selection"
+        ;;
+    esac
+  done
+}
+
+usage() {
+  cat <<'EOF'
+Usage:
+  rwaltrctl flatpaks <command> [args...]
+
+Commands:
+  status
+      Show curated vs installed drift.
+
+  add <APP_ID> [APP_ID...]
+      Add IDs to curated custom list.
+
+  add-drift
+      Add all currently installed-but-not-curated IDs to custom curated list.
+
+  remove <APP_ID> [APP_ID...]
+      Remove IDs from custom curated list.
+
+  list-curated
+      Print rendered curated IDs for this machine profile.
+
+  list-custom
+      Print custom curated IDs file content (IDs only).
+
+  prune-custom-to-installed
+      Keep only installed drift IDs in custom curated list.
+
+  sync-now
+      Install/update curated IDs immediately via flatpak.
+
+  apply
+      Run `chezmoi apply` (flatpaks are still NOT installed during apply).
+
+  wizard
+      Interactive flatpak curation flow.
+EOF
+}
+
+cmd="${1:-}"
+shift || true
+
+case "$cmd" in
+  ""|help|-h|--help)
+    usage
+    ;;
+  status)
+    print_status
+    ;;
+  add)
+    [[ $# -gt 0 ]] || { echo "add requires at least one APP_ID" >&2; exit 2; }
+    add_ids "$@"
+    ;;
+  add-drift)
+    mapfile -t drift < <(
+      comm -13 \
+        <(get_declared_ids | sort -u) \
+        <(get_installed_ids | sort -u)
+    )
+    if [[ ${#drift[@]} -eq 0 ]]; then
+      echo "No drift IDs to add."
+    else
+      add_ids "${drift[@]}"
+      printf 'Added %d drift IDs to custom curated list.\n' "${#drift[@]}"
+    fi
+    ;;
+  remove)
+    [[ $# -gt 0 ]] || { echo "remove requires at least one APP_ID" >&2; exit 2; }
+    remove_ids "$@"
+    ;;
+  list-curated)
+    get_declared_ids
+    ;;
+  list-custom)
+    custom_ids
+    ;;
+  prune-custom-to-installed)
+    prune_curated_to_installed
+    ;;
+  sync-now)
+    sync_now
+    ;;
+  apply)
+    chezmoi apply
+    ;;
+  wizard)
+    wizard
+    ;;
+  *)
+    echo "Unknown command: $cmd" >&2
+    usage >&2
+    exit 2
+    ;;
+esac
+{{- else }}
+echo "Skipping flatpaks plugin (not Linux or headless)"
+{{- end }}

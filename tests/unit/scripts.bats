@@ -47,12 +47,78 @@ setup() {
   chezmoi execute-template < "$HOME_SRC/.chezmoiscripts/after/run_always_after_99_systemd_reload.sh.tmpl" | bash -n
 }
 
+@test "script: rwaltrctl dispatcher is valid bash" {
+  bash -n "$HOME_SRC/dot_local/bin/executable_rwaltrctl"
+}
+
 @test "script: rwaltrctl-init renders valid bash" {
-  chezmoi execute-template < "$HOME_SRC/dot_local/bin/executable_rwaltrctl-init.sh.tmpl" | bash -n
+  chezmoi execute-template < "$HOME_SRC/dot_local/bin/executable_rwaltrctl-init.tmpl" | bash -n
 }
 
 @test "script: rwaltrctl-cleanup renders valid bash" {
-  chezmoi execute-template < "$HOME_SRC/dot_local/bin/executable_rwaltrctl-cleanup.sh.tmpl" | bash -n
+  chezmoi execute-template < "$HOME_SRC/dot_local/bin/executable_rwaltrctl-cleanup.tmpl" | bash -n
+}
+
+@test "script: rwaltrctl-bisync renders valid bash" {
+  chezmoi execute-template < "$HOME_SRC/dot_local/bin/executable_rwaltrctl-bisync.tmpl" | bash -n
+}
+
+@test "script: rwaltrctl-flatpaks renders valid bash" {
+  chezmoi execute-template < "$HOME_SRC/dot_local/bin/executable_rwaltrctl-flatpaks.tmpl" | bash -n
+}
+
+@test "script: rwaltrctl-brew renders valid bash" {
+  chezmoi execute-template < "$HOME_SRC/dot_local/bin/executable_rwaltrctl-brew.tmpl" | bash -n
+}
+
+@test "script: rwaltrctl dispatches plugin-style subcommands" {
+  local tmpbin
+  tmpbin=$(mktemp -d)
+  cp "$HOME_SRC/dot_local/bin/executable_rwaltrctl" "$tmpbin/rwaltrctl"
+  cat > "$tmpbin/rwaltrctl-hello" <<'EOF'
+#!/usr/bin/env bash
+# rwaltrctl hello — test command
+echo "hello $*"
+EOF
+  chmod +x "$tmpbin/rwaltrctl" "$tmpbin/rwaltrctl-hello"
+
+  run env PATH="$tmpbin:$PATH" "$tmpbin/rwaltrctl" hello world
+  rm -rf "$tmpbin"
+
+  [ "$status" -eq 0 ]
+  [ "$output" = "hello world" ]
+}
+
+@test "script: rwaltrctl dynamically lists and completes subcommands" {
+  local tmpbin
+  tmpbin=$(mktemp -d)
+  cp "$HOME_SRC/dot_local/bin/executable_rwaltrctl" "$tmpbin/rwaltrctl"
+  cat > "$tmpbin/rwaltrctl-hello" <<'EOF'
+#!/usr/bin/env bash
+# rwaltrctl hello — test command
+echo "hello $*"
+EOF
+  chmod +x "$tmpbin/rwaltrctl" "$tmpbin/rwaltrctl-hello"
+
+  run env PATH="$tmpbin:$PATH" "$tmpbin/rwaltrctl" list
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"hello"* ]]
+
+  run env PATH="$tmpbin:$PATH" "$tmpbin/rwaltrctl" __complete
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"hello"* ]]
+  [[ "$output" == *"completion"* ]]
+
+  run env PATH="$tmpbin:$PATH" "$tmpbin/rwaltrctl" help
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"hello"* ]]
+  [[ "$output" == *"test command"* ]]
+
+  run env PATH="$tmpbin:$PATH" "$tmpbin/rwaltrctl" completion bash
+  rm -rf "$tmpbin"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"rwaltrctl __complete"* ]]
 }
 
 # --- Conditional logic checks: scripts gate on the right flags ---
@@ -67,8 +133,11 @@ setup() {
   grep -q 'ephemeral' "$HOME_SRC/.chezmoiscripts/before/run_once_before_20_install_tailscale.sh.tmpl"
 }
 
-@test "script: flatpaks skips when headless" {
-  grep -q 'headless' "$HOME_SRC/.chezmoiscripts/after/run_always_after_35_flatpaks.sh.tmpl"
+@test "script: flatpaks apply step is intentionally disabled" {
+  local rendered
+  rendered=$(chezmoi execute-template < "$HOME_SRC/.chezmoiscripts/after/run_always_after_35_flatpaks.sh.tmpl")
+  [[ "$rendered" == *"Skipping flatpak install/update in chezmoi apply."* ]]
+  [[ "$rendered" == *"rwaltrctl flatpaks sync-now"* ]]
 }
 
 @test "script: orcaslicer requires personal and not headless" {
@@ -82,10 +151,11 @@ setup() {
   [[ "$rendered" == *"command -v systemctl"* ]]
 }
 
-@test "script: brew_bundle checks for brew" {
+@test "script: brew apply step is intentionally disabled" {
   local rendered
   rendered=$(chezmoi execute-template < "$HOME_SRC/.chezmoiscripts/after/run_always_after_30_brew_bundle.sh.tmpl")
-  [[ "$rendered" == *"command -v brew"* ]]
+  [[ "$rendered" == *"Skipping brew bundle in chezmoi apply."* ]]
+  [[ "$rendered" == *"rwaltrctl brew sync-now"* ]]
 }
 
 @test "script: mise_install checks for mise" {
@@ -96,20 +166,16 @@ setup() {
 
 # --- Rendered content checks: Brewfile and flatpak list actually produce content ---
 
-@test "script: brew_bundle rendered Brewfile is non-empty" {
+@test "script: brew script does not run brew bundle install command" {
   local rendered
   rendered=$(chezmoi execute-template < "$HOME_SRC/.chezmoiscripts/after/run_always_after_30_brew_bundle.sh.tmpl")
-  # The BREWFILE heredoc should contain at least brew "mise"
-  [[ "$rendered" == *'brew "mise"'* ]]
+  [[ "$rendered" != *"brew bundle install --"* ]]
 }
 
-@test "script: flatpaks rendered list is non-empty when not headless" {
+@test "script: flatpaks script does not run flatpak install command" {
   local rendered
   rendered=$(chezmoi execute-template < "$HOME_SRC/.chezmoiscripts/after/run_always_after_35_flatpaks.sh.tmpl")
-  # If this machine is not headless, flatpak list should have entries
-  if [[ "$rendered" != *"Skipping flatpaks"* ]]; then
-    [[ "$rendered" == *"flatpak install"* ]]
-  fi
+  [[ "$rendered" != *"flatpak install -y"* ]]
 }
 
 # --- All script templates found and accounted for ---

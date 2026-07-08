@@ -59,3 +59,7 @@ alias nano = nvim
 
 # thefuck
 alias f = thefuck
+
+# Shared command helpers
+alias podman-cmd = ^podman-cmd
+alias flatpak_wrapper = ^flatpak_wrapper

@@ -1,0 +1,6 @@
+# Additional curated Homebrew entries managed by `rwaltrctl brew`.
+#
+# Examples:
+# brew "htop"
+# cask "font-jetbrains-mono"
+# tap "homebrew/cask-fonts"

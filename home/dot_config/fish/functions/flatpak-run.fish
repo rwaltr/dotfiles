@@ -6,72 +6,61 @@
 # Wrapper functions are defined below — one per managed flatpak app.
 # Each passes all args through to `flatpak run <app-id>`.
 
+function _flatpak_wrapper
+    command flatpak_wrapper $argv
+end
+
+# Back-compat alias
 function _flatpak_wrap
-    set -l app_id $argv[1]
-    set -l rest $argv[2..]
-    if not flatpak info $app_id &>/dev/null
-        if isatty stdin
-            echo "flatpak: $app_id is not installed." >&2
-            read --prompt-str "Install now? [y/N] " --local answer
-            if string match -qi 'y*' $answer
-                flatpak install --system --or-update flathub $app_id; or return 1
-            else
-                return 1
-            end
-        else
-            echo "flatpak: $app_id is not installed (non-interactive, skipping)" >&2
-            return 1
-        end
-    end
-    flatpak run $app_id $rest
+    _flatpak_wrapper $argv
 end
 
 # ── Wrappers ──────────────────────────────────────────────────────────────────
 
 function obsidian
-    _flatpak_wrap md.obsidian.Obsidian $argv
+    _flatpak_wrapper md.obsidian.Obsidian $argv
 end
 
 function thunderbird
-    _flatpak_wrap org.mozilla.thunderbird_esr $argv
+    _flatpak_wrapper org.mozilla.thunderbird_esr $argv
 end
 
 function firefox
-    _flatpak_wrap org.mozilla.firefox $argv
+    _flatpak_wrapper org.mozilla.firefox $argv
 end
 
 function brave
-    _flatpak_wrap com.brave.Browser $argv
+    _flatpak_wrapper com.brave.Browser $argv
 end
 
 function inkscape
-    _flatpak_wrap org.inkscape.Inkscape $argv
+    _flatpak_wrapper org.inkscape.Inkscape $argv
 end
 
 function freecad
-    _flatpak_wrap org.freecad.FreeCAD $argv
+    _flatpak_wrapper org.freecad.FreeCAD $argv
 end
 
 function vesktop
-    _flatpak_wrap dev.vencord.Vesktop $argv
+    _flatpak_wrapper dev.vencord.Vesktop $argv
 end
 
 function lutris
-    _flatpak_wrap net.lutris.Lutris $argv
+    _flatpak_wrapper net.lutris.Lutris $argv
 end
 
 function zed
-    _flatpak_wrap dev.zed.Zed $argv
+    _flatpak_wrapper dev.zed.Zed $argv
 end
 
 function mpv
-    _flatpak_wrap io.mpv.Mpv $argv
+    _flatpak_wrapper io.mpv.Mpv $argv
 end
 
 function libreoffice
-    _flatpak_wrap org.libreoffice.LibreOffice $argv
+    _flatpak_wrapper org.libreoffice.LibreOffice $argv
 end
 
 function orcaslicer
-    _flatpak_wrap io.github.softfever.OrcaSlicer $argv
+    _flatpak_wrapper io.github.softfever.OrcaSlicer $argv
 end

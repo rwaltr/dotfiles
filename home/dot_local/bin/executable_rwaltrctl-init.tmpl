@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # vi: ft=sh
-# rwaltrctl-init — post-chezmoi-apply setup wizard
+# rwaltrctl init — post-chezmoi-apply setup wizard
 # Walks through manual configuration steps one at a time after a fresh chezmoi apply.
 # Idempotent — safe to re-run; completed steps offer a redo option.
 #
 # Usage:
-#   rwaltrctl-init          # interactive wizard
-#   rwaltrctl-init --force  # no prompts — run everything
-#   rwaltrctl-init --status # show current setup status
+#   rwaltrctl init          # interactive wizard
+#   rwaltrctl init --force  # no prompts — run everything
+#   rwaltrctl init --status # show current setup status
 
 {{ if (and (eq .chezmoi.os "linux") (not .headless)) -}}
 set -euo pipefail
@@ -19,7 +19,6 @@ case "${1:-}" in
 --status) STATUS=true ;;
 esac
 
-BISYNC_DIR="{{ .chezmoi.homeDir }}/.config/bisync"
 BRAVE_DESKTOP_ID="com.brave.Browser.desktop"
 
 # ── Colors & helpers ──────────────────────────────────────────────────────────
@@ -135,131 +134,18 @@ is_restic_timer_enabled() {
 	systemctl --user is-enabled resticprofile@home.timer &>/dev/null 2>&1
 }
 
-is_bisync_service_enabled() {
-	local name="$1"
-	systemctl --user is-enabled "bisync@${name}.service" &>/dev/null 2>&1
+has_bisync_plugin() {
+	command -v rwaltrctl >/dev/null 2>&1 && command -v rwaltrctl-bisync >/dev/null 2>&1
 }
 
-is_bisync_resynced() {
-	local lock_dir="{{ .chezmoi.homeDir }}/.cache/rclone/bisync"
-	[[ -d "$lock_dir" ]] && [[ -n "$(ls -A "$lock_dir" 2>/dev/null)" ]]
-}
-
-get_bisync_configs() {
-	local -a configs=()
-	if [[ -d "$BISYNC_DIR" ]]; then
-		for f in "$BISYNC_DIR"/*.env; do
-			[[ -f "$f" ]] || continue
-			configs+=("$(basename "$f" .env)")
-		done
-	fi
-	echo "${configs[@]}"
-}
-
-get_bisync_key_file_from_remote() {
-	local remote="$1"
-	if [[ "$remote" =~ key_file=([^,:]+) ]]; then
-		echo "${BASH_REMATCH[1]}"
-	fi
-}
-
-get_bisync_host_from_remote() {
-	local remote="$1"
-	if [[ "$remote" =~ host=([^,:]+) ]]; then
-		echo "${BASH_REMATCH[1]}"
-	fi
-}
-
-get_bisync_key_paths() {
-	local -a configs=() keys=()
-	local name LOCAL REMOTE key
-	read -ra configs <<< "$(get_bisync_configs)"
-	for name in "${configs[@]}"; do
-		LOCAL="" REMOTE=""
-		# shellcheck source=/dev/null
-		source "$BISYNC_DIR/${name}.env"
-		key="$(get_bisync_key_file_from_remote "${REMOTE:-}")"
-		[[ -n "$key" ]] || continue
-		keys+=("$key")
-	done
-	printf '%s\n' "${keys[@]}" | awk 'NF && !seen[$0]++'
-}
-
-is_bisync_ssh_key_ready() {
-	local key
-	while IFS= read -r key; do
-		[[ -n "$key" ]] || continue
-		if [[ ! -f "$key" ]]; then
-			return 1
-		fi
-	done < <(get_bisync_key_paths)
-	return 0
-}
-
-setup_bisync_ssh_keys() {
-	local key pub comment
-	while IFS= read -r key; do
-		[[ -n "$key" ]] || continue
-		if [[ -f "$key" ]]; then
-			check_done "SSH key exists: $key"
-			continue
-		fi
-
-		step_header "Create bisync SSH key"
-		info "Missing SSH key: $key"
-		mkdir -p "$(dirname "$key")"
-		chmod 700 "$(dirname "$key")"
-		comment="${USER}@$(hostname)-bisync"
-		ssh-keygen -t ed25519 -f "$key" -C "$comment" -N ""
-		chmod 600 "$key"
-		pub="${key}.pub"
-		chmod 644 "$pub"
-		check_done "Created SSH key: $key"
-		if command -v wl-copy &>/dev/null; then
-			wl-copy < "$pub" && info "Copied public key to clipboard" || true
-		elif command -v xclip &>/dev/null; then
-			xclip -selection clipboard < "$pub" && info "Copied public key to clipboard" || true
-		fi
-	done < <(get_bisync_key_paths)
-}
-
-install_bisync_ssh_keys_to_remote() {
-	local -a configs=() pairs=()
-	local name LOCAL REMOTE key host pair pub
-	read -ra configs <<< "$(get_bisync_configs)"
-	for name in "${configs[@]}"; do
-		LOCAL="" REMOTE=""
-		# shellcheck source=/dev/null
-		source "$BISYNC_DIR/${name}.env"
-		key="$(get_bisync_key_file_from_remote "${REMOTE:-}")"
-		host="$(get_bisync_host_from_remote "${REMOTE:-}")"
-		[[ -n "$key" && -n "$host" ]] || continue
-		pairs+=("$host|$key")
-	 done
-
-	printf '%s\n' "${pairs[@]}" | awk 'NF && !seen[$0]++' | while IFS='|' read -r host key; do
-		pub="${key}.pub"
-		[[ -f "$pub" ]] || { warn "Missing public key: $pub"; continue; }
-		info "Trying to install $pub on $host..."
-		if command -v ssh-copy-id &>/dev/null; then
-			if ssh-copy-id -i "$pub" "$host"; then
-				check_done "Installed SSH key on $host"
-				continue
-			fi
-		fi
-		if ssh "$host" 'umask 077; mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys' < "$pub"; then
-			check_done "Installed SSH key on $host"
-		else
-			warn "Could not install SSH key on $host automatically"
-			warn "Install this public key manually on the remote host: $pub"
-		fi
-	 done
+has_bisync_profiles() {
+	compgen -G "${HOME}/.config/bisync/*.env" >/dev/null 2>&1
 }
 
 # ── Status display ────────────────────────────────────────────────────────────
 show_status() {
 	echo ""
-	echo -e "${BOLD}rwaltrctl-init — setup status${NC}"
+	echo -e "${BOLD}rwaltrctl init — setup status${NC}"
 	echo ""
 
 	if is_brave_default_browser; then check_done "Default browser: Brave";       else check_todo "Default browser: not Brave"; fi
@@ -269,19 +155,14 @@ show_status() {
 	if is_gh_authed;            then check_done "GitHub CLI: authenticated";  else check_todo "GitHub CLI: not authenticated"; fi
 	if is_restic_creds_set;     then check_done "Restic credentials: set";    else check_todo "Restic credentials: not set"; fi
 	if is_restic_timer_enabled; then check_done "Restic timer: enabled";      else check_todo "Restic timer: not enabled"; fi
-	if is_bisync_ssh_key_ready; then check_done "Bisync SSH key(s): ready";  else check_todo "Bisync SSH key(s): missing"; fi
-
-	local configs
-	read -ra configs <<< "$(get_bisync_configs)"
-	if [[ ${#configs[@]} -gt 0 ]]; then
-		if is_bisync_resynced; then check_done "Bisync: initialized"; else check_todo "Bisync: not initialized"; fi
-		for name in "${configs[@]}"; do
-			if is_bisync_service_enabled "$name"; then
-				check_done "Bisync service ($name): enabled"
-			else
-				check_todo "Bisync service ($name): not enabled"
-			fi
-		done
+	if has_bisync_plugin; then
+		if has_bisync_profiles; then
+			check_done "Bisync profiles: configured (run 'rwaltrctl bisync status')"
+		else
+			check_todo "Bisync profiles: not configured (run 'rwaltrctl bisync wizard')"
+		fi
+	else
+		check_todo "Bisync plugin: unavailable"
 	fi
 	echo ""
 }
@@ -294,14 +175,11 @@ fi
 # ── Header ────────────────────────────────────────────────────────────────────
 echo ""
 echo -e "${CYAN}╔══════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║          rwaltrctl-init — setup wizard              ║${NC}"
+echo -e "${CYAN}║          rwaltrctl init — setup wizard                ║${NC}"
 echo -e "${CYAN}║  Post chezmoi-apply configuration for a new host.   ║${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════════════╝${NC}"
 
 show_status
-
-BISYNC_CONFIGS=()
-read -ra BISYNC_CONFIGS <<< "$(get_bisync_configs)"
 
 # ── Step 1: Install 1Password on rpm-ostree ─────────────────────────────────
 if is_rpm_ostree_host; then
@@ -312,7 +190,7 @@ if is_rpm_ostree_host; then
 			check_done "1Password app + CLI already installed"
 		elif [[ "$(is_locklayering_enabled)" == "true" ]]; then
 			warn "This host has LockLayering enabled in rpm-ostree config."
-			warn "Client-side package layering is disabled, so rwaltrctl-init cannot install 1Password here."
+			warn "Client-side package layering is disabled, so rwaltrctl init cannot install 1Password here."
 			warn "The config files are typically:"
 			warn "  /usr/lib/rpm-ostreed.conf   (vendor/default, usually read-only)"
 			warn "  /etc/rpm-ostreed.conf       (admin override, editable)"
@@ -322,7 +200,7 @@ if is_rpm_ostree_host; then
 		else
 			install_1password_rpm_ostree
 			warn "rpm-ostree staged the 1Password packages. A reboot is required."
-			warn "Reboot, then run 'rwaltrctl-init' again to continue setup."
+			warn "Reboot, then run 'rwaltrctl init' again to continue setup."
 			exit 0
 		fi
 	fi
@@ -448,74 +326,18 @@ if ask_step "$DONE" "Enable restic backup timer" "Restic timer (enabled)"; then
 	check_done "Restic backup timer enabled (hourly)"
 fi
 
-# ── Step 8: Bisync SSH key ───────────────────────────────────────────────────
-if is_bisync_ssh_key_ready; then DONE=true; else DONE=false; fi
-if ask_step "$DONE" "Set up bisync SSH key" "Bisync SSH key (ready)"; then
-	step_header "Bisync SSH key"
-	if [[ ${#BISYNC_CONFIGS[@]} -eq 0 ]]; then
-		warn "No bisync profiles found — skipping"
+# ── Step 8: Bisync setup via plugin ──────────────────────────────────────────
+if has_bisync_profiles; then DONE=true; else DONE=false; fi
+if ask_step "$DONE" "Configure bisync profiles/keys/services" "Bisync profiles (configured)"; then
+	step_header "Bisync"
+	if has_bisync_plugin; then
+		info "Launching bisync wizard..."
+		rwaltrctl bisync wizard || warn "Bisync wizard exited with warnings"
+		info "Tip: run 'rwaltrctl bisync status' anytime for current state"
 	else
-		setup_bisync_ssh_keys
-		if is_tailscale_up; then
-			info "Tailscale is connected — trying to install the public key on the remote host(s)..."
-			install_bisync_ssh_keys_to_remote
-		else
-			warn "Tailscale is not connected — skipping automatic remote key install"
-			warn "After connecting Tailscale, re-run init or install the public key manually on the remote host"
-		fi
+		warn "Bisync plugin not available"
 	fi
 fi
-
-# ── Step 9+: Bisync initial resync (per config) ─────────────────────────────
-for name in "${BISYNC_CONFIGS[@]}"; do
-	if is_bisync_resynced; then DONE=true; else DONE=false; fi
-	if ask_step "$DONE" "Initial bisync resync: ${name}" "Bisync resync ($name) (initialized)"; then
-		step_header "Bisync resync: $name"
-		if ! is_tailscale_up; then
-			warn "Tailscale not connected — bisync needs network to the remote"
-			warn "Skipping — connect Tailscale first, then re-run"
-			continue
-		fi
-
-		LOCAL="" REMOTE=""
-		# shellcheck source=/dev/null
-		source "$BISYNC_DIR/${name}.env"
-
-		KEY_FILE="$(get_bisync_key_file_from_remote "${REMOTE:-}")"
-		if [[ -n "$KEY_FILE" && ! -f "$KEY_FILE" ]]; then
-			warn "$name: missing SSH key file: $KEY_FILE"
-			warn "Run the bisync SSH key step first"
-			continue
-		fi
-
-		if [[ -z "${LOCAL:-}" || -z "${REMOTE:-}" ]]; then
-			warn "$name: missing LOCAL or REMOTE in ${name}.env, skipping"
-			continue
-		fi
-
-		info "Resyncing $name: $LOCAL ↔ $REMOTE"
-		if auto-bisync "$LOCAL" "$REMOTE" resync; then
-			check_done "Bisync resync ($name) complete"
-		else
-			warn "$name: resync failed"
-		fi
-	fi
-done
-
-# ── Step 10+: Bisync services (per config) ───────────────────────────────────
-for name in "${BISYNC_CONFIGS[@]}"; do
-	if is_bisync_service_enabled "$name"; then DONE=true; else DONE=false; fi
-	if ask_step "$DONE" "Enable bisync service: ${name}" "Bisync service ($name) (enabled)"; then
-		step_header "Enable bisync service: $name"
-		if ! is_bisync_resynced; then
-			warn "Bisync not initialized — run initial resync first"
-		else
-			info "Enabling bisync@${name}.service..."
-			systemctl --user enable --now "bisync@${name}.service"
-			check_done "bisync@${name}.service enabled (continuous sync)"
-		fi
-	fi
-done
 
 # ── Summary ───────────────────────────────────────────────────────────────────
 echo ""

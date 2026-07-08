@@ -1,0 +1,2 @@
+# Additional curated Flatpaks managed by `rwaltrctl flatpaks`.
+# One Flatpak application ID per line.
