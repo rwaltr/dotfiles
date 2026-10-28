@@ -1,0 +1,682 @@
+[
+  {
+    "term": "verification",
+    "definition": "confirmation, through the provision of objective evidence, that specified requirements have been fulfilled",
+    "source": "ISO/IEC 25000:2014 Systems and software Engineering--Systems and software product Quality Requirements\nand Evaluation (S"
+  },
+  {
+    "term": "validation",
+    "definition": "confirmation, through the provision of objective evidence, that the requirements for a specific intended use or application have been fulfilled",
+    "source": "ISO/IEC 25000:2014 Systems and software Engineering--Systems and software\nproduct Quality Requirements and Evaluation (S"
+  },
+  {
+    "term": "fault",
+    "definition": "inability to perform as required, due to an internal state",
+    "source": "ISO/IEC/IEEE 15026-1:2025 Systems and software\nengineering--Systems and software assurance--Part 1: Vocabulary and conce"
+  },
+  {
+    "term": "failure",
+    "definition": "departure of system behavior from system requirements",
+    "source": "IEEE 982:2024, Standard for Measures of the\nSoftware Aspects of Dependability, 3.1"
+  },
+  {
+    "term": "error",
+    "definition": "discrepancy between a computed, observed, or measured value or condition and the true, specified, or theoretically correct value or condition",
+    "source": "ISO/IEC/IEEE 15026-1:2025 Systems and software engineering--Systems and\nsoftware assurance--Part 1: Vocabulary and conce"
+  },
+  {
+    "term": "defect",
+    "definition": "imperfection or deficiency in a work product or characteristic that does not meet its requirements or specifications",
+    "source": "IEEE 2675-2021, IEEE Standard for DevOps: Building Reliable and Secure Systems Including Application\nBuild, Package, and"
+  },
+  {
+    "term": "requirement",
+    "definition": "ANSI. (1) American National Standards Institute",
+    "source": "IEEE 1012-2024 IEEE Standard for System, Software, and Hardware\nVerification and Validation, 3.2"
+  },
+  {
+    "term": "functional requirement",
+    "definition": "statement that identifies what results a product or process produces",
+    "source": "IEEE 7000:2021,\nIEEE Standard Model Process for Addressing Ethical Concerns during System Design, 3.1"
+  },
+  {
+    "term": "performance requirement",
+    "definition": "measurable criterion that identifies a quality attribute of a function or how well a functional requirement is accomplished",
+    "source": "IEEE 730-2014 IEEE Standard for Software Quality Assurance Processes, 3.2"
+  },
+  {
+    "term": "constraint",
+    "definition": "limitation or implied requirement that constrains the design solution or implementation of the systems engineering process and is not changeable by the enterprise",
+    "source": "IEEE 730-2014 IEEE Standard for Software Quality\nAssurance Processes"
+  },
+  {
+    "term": "assumption",
+    "definition": "factor in the planning process considered to be true, real, or certain, without proof or demonstration",
+    "source": "ISO/IEC/IEEE 24765 (SEVOCAB)"
+  },
+  {
+    "term": "architecture",
+    "definition": "fundamental concepts or properties of an entity in its environment and governing principles for the realization and evolution of this entity and its related life cycle processes",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and\nsoftware engineering--Software life cycle processes, 3.1.6"
+  },
+  {
+    "term": "design",
+    "definition": "specification of system elements and their relationships, that is sufficiently complete to support a compliant implementation of the architecture",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle\nprocesses, 3.1.20"
+  },
+  {
+    "term": "interface",
+    "definition": "point at which two or more logical, physical, or both, system elements or software system elements meet and act on or communicate with each other",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life\ncycle processes, 3.1.33"
+  },
+  {
+    "term": "component",
+    "definition": "entity with discrete structure, such as an assembly or software module, within a system considered at a particular level of analysis",
+    "source": "ISO/IEC 25019:2023, Systems and software engineering Systems and software Quality\nRequirements and Evaluation (SQuaRE"
+  },
+  {
+    "term": "subsystem",
+    "definition": "secondary or subordinate system within a larger system",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and\nsoftware engineering-Vocabulary"
+  },
+  {
+    "term": "system",
+    "definition": "An external output is a type of base functional component",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "software",
+    "definition": "computer programs, procedures and possibly associated documentation and data pertaining to the operation of a computer system",
+    "source": "IEEE 828-2012 IEEE Standard for Configuration Management in Systems and Software\nEngineering, 2.1"
+  },
+  {
+    "term": "reliability",
+    "definition": "capability of a product to perform specified functions under specified conditions for a specified period of time without interruptions and failures",
+    "source": "ISO/IEC 25010:2023, Systems and software engineering--Systems and software\nQuality Requirements and Evaluation (SQuaRE"
+  },
+  {
+    "term": "availability",
+    "definition": "capability of a product to be operational and accessible when required for use",
+    "source": "ISO/IEC 25010:2023,\nSystems and software engineering--Systems and software Quality Requirements and Evaluation (SQuaRE"
+  },
+  {
+    "term": "maintainability",
+    "definition": "degree of effectiveness and efficiency with which a product or system can be modified",
+    "source": "ISO/IEC/IEEE 14764:2021, Software engineering -- Software life cycle processes -- Maintenance, 3.1.6"
+  },
+  {
+    "term": "testability",
+    "definition": "extent to which an objective and feasible test can be designed to determine whether a requirement is met",
+    "source": "ISO/IEC/IEEE 24765g:2018"
+  },
+  {
+    "term": "portability",
+    "definition": "ease with which a system or component can be transferred from one hardware or software environment to another",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "usability",
+    "definition": "extent to which a system, product or service can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use",
+    "source": "ISO TR 25060:2023 Systems and software\nengineering--Systems and software Quality Requirements and Evaluation (SQuaRE"
+  },
+  {
+    "term": "security",
+    "definition": "protection against intentional subversion or forced failure",
+    "source": "ISO/IEC/IEEE 15288:2023 Systems and\nsoftware engineering--System life cycle processes, 3.41"
+  },
+  {
+    "term": "safety",
+    "definition": "expectation that a system does not, under defined conditions, lead to a state in which human life, health, property, or the environment is endangered",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life\ncycle processes, 3.1.48"
+  },
+  {
+    "term": "correctness",
+    "definition": "degree to which a system or component is free from faults in its specification, design, and implementation",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "robustness",
+    "definition": "degree to which a system or component can function correctly in the presence of invalid inputs or stressful environmental conditions",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "resilience",
+    "definition": "degree to which a service recovers its operational condition quickly after a failure occurs",
+    "source": "ISO/IEC TS\n25052-1:2022, Systems and software engineering--Systems and software Quality Requirements and Evaluation\n(SQu"
+  },
+  {
+    "term": "fault tolerance",
+    "definition": "capability of a product to operate as intended despite the presence of hardware or software faults",
+    "source": "ISO/IEC 25010:2023, Systems and software engineering--Systems and software Quality Requirements and Evaluation\n(SQuaRE"
+  },
+  {
+    "term": "redundancy",
+    "definition": "in fault tolerance, the presence of auxiliary components in a system to perform the same or similar functions as other elements for the purpose of preventing or recovering from failures",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems\nand software engineering-Vocabulary"
+  },
+  {
+    "term": "test case",
+    "definition": "set of test inputs, execution conditions, and expected results developed for a particular objective, such as to exercise a particular program path or to verify compliance with a specific requirement",
+    "source": "IEEE 1012-2024 IEEE\nStandard for System, Software, and Hardware Verification and Validation, 3.3.31"
+  },
+  {
+    "term": "unit test",
+    "definition": "testing of individual routines and modules by the developer or an independent tester",
+    "source": "ISO/IEC TR\n7052:2023, Software engineering--Controlling frequently occurring risks during development and maintenance of"
+  },
+  {
+    "term": "integration test",
+    "definition": "progressive linking and testing of programs or modules to help ensure their proper functioning in the complete system",
+    "source": "ISO/IEC 2382:2015 Information technology -- Vocabulary"
+  },
+  {
+    "term": "acceptance test",
+    "definition": "test of a system or functional unit usually performed by the purchaser on his premises after installation with the participation of the vendor to help ensure that the contractual requirements are met",
+    "source": "ISO/IEC\n2382:2015 Information technology -- Vocabulary"
+  },
+  {
+    "term": "regression testing",
+    "definition": "testing performed following modifications to a test item or to its operational environment, to identify whether failures in unmodified parts of the test item occur",
+    "source": "ISO/IEC/IEEE 29119-1:2022, Software and systems\nengineering--Software testing--Part 1: General concepts, 3.64"
+  },
+  {
+    "term": "baseline",
+    "definition": "formally approved version of a configuration item, regardless of media, formally designated and fixed at a specific time during the configuration item's life cycle",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--\nSoftware life cycle processes, 3.1.12"
+  },
+  {
+    "term": "configuration item",
+    "definition": "item or aggregation of hardware or software with associated information and data",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle processes, 3.1.17"
+  },
+  {
+    "term": "configuration management",
+    "definition": "discipline applying technical and administrative direction and surveillance to: identify and document the functional and physical characteristics of a configuration item, control changes to those characteristics, record and report change processing and implementation status, and verify compliance with specified requirements",
+    "source": "IEEE 828-2012 IEEE Standard for Configuration Management in Systems and Software Engineering, 2.1"
+  },
+  {
+    "term": "change control",
+    "definition": "process whereby modifications to documents, deliverables, or baselines associated with the project are identified, documented, approved, or rejected",
+    "source": "ISO/IEC/IEEE 26514:2022, Systems and software engineering -- Design and development of\ninformation for users, 3.1.9"
+  },
+  {
+    "term": "version control",
+    "definition": "establishment and maintenance of baselines and the identification and control of changes to baselines that make it possible to return to the previous baseline",
+    "source": "ISO/IEC/IEEE 26511:2018 Systems and software\nengineering--Requirements for managers of information for users of systems,"
+  },
+  {
+    "term": "hazard",
+    "definition": "intrinsic property or condition that has the potential to cause harm or damage",
+    "source": "IEEE 1012-2024 IEEE\nStandard for System, Software, and Hardware Verification and Validation, 3.1.11"
+  },
+  {
+    "term": "risk",
+    "definition": "effect of uncertainty on objectives",
+    "source": "ISO/IEC 19770-1:2017 Information technology -- IT asset management --\nPart 1: IT asset management systems--Requirements,"
+  },
+  {
+    "term": "risk management",
+    "definition": "organized process for identifying and handling risk factors",
+    "source": "ISO/IEC/IEEE 24765:2017\nSystems and software engineering-Vocabulary"
+  },
+  {
+    "term": "traceability",
+    "definition": "discernible association among two or more logical entities, such as requirements, system elements, verifications, or tasks",
+    "source": "ISO/IEC/IEEE 15288:2023 Systems and software engineering--System life cycle processes, 3.52"
+  },
+  {
+    "term": "throughput",
+    "definition": "amount of work that can be performed by a computer system or component in a given period of time",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "latency",
+    "definition": "time interval between the instant at which an instruction control unit issues a call for data and the instant at which the transfer of data is started",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "response time",
+    "definition": "elapsed time between the end of an inquiry or command to an interactive computer system and the beginning of the system's response",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "iteration",
+    "definition": "repeating the application of the same process or set of processes at the same level of abstraction on the same system or system element",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle\nprocesses, 3.1.35"
+  },
+  {
+    "term": "increment",
+    "definition": "tested, deliverable version of a product that provides new or modified capabilities",
+    "source": "ISO/IEC/IEEE\n24748-8:2026, Systems and software engineering Life cycle management Part 8:Technical reviews and audits on"
+  },
+  {
+    "term": "milestone",
+    "definition": "significant point or event in a project, program, or portfolio",
+    "source": "ISO/IEC/IEEE\n24765e:2015"
+  },
+  {
+    "term": "deliverable",
+    "definition": "item to be provided to an acquirer or other designated recipient as specified in an agreement",
+    "source": "IEEE\n730-2014 IEEE Standard for Software Quality Assurance Processes, 3.2"
+  },
+  {
+    "term": "work breakdown structure",
+    "definition": "deliverable-oriented hierarchical decomposition of the work to be executed by the project team to accomplish the project objectives and create the required deliverables",
+    "source": "ISO/IEC/IEEE\n26511:2018 Systems and software engineering--Requirements for managers of information for users of systems,"
+  },
+  {
+    "term": "cohesion",
+    "definition": "manner and degree to which the tasks performed by a single software module are related to one another",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "coupling",
+    "definition": "manner and degree of interdependence between software modules",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems\n\n\n\n                                                   Edition, 2017. Copyright and all r"
+  },
+  {
+    "term": "encapsulation",
+    "definition": "software development technique that consists of isolating a system function or a set of data and operations on those data within a module and providing precise specifications for the module",
+    "source": "ISO/IEC/IEEE 24765:2017\nSystems and software engineering-Vocabulary"
+  },
+  {
+    "term": "abstraction",
+    "definition": "view of an object that focuses on the information relevant to a particular purpose and ignores the remainder of the information",
+    "source": "ISO/IEC/IEEE 24765l:2024"
+  },
+  {
+    "term": "inheritance",
+    "definition": "a semantic notion by which the responsibilities (properties and constraints) of a subclass are considered to include the responsibilities of a superclass, in addition to its own, specifically declared responsibilities Edition, 2017. Copyright and all rights reserved. Engineering Vocabulary",
+    "source": "ISO/IEC/IEEE 31320-2:2012, Information technology -- Modeling Languages -- Part 2: Syntax and Semantics for\nIDEF1X97 (ID"
+  },
+  {
+    "term": "application programming interface",
+    "definition": "set of functions, protocols, parameters, and objects of different formats, used to create software that interfaces with the features or data of an external system or service",
+    "source": "ISO/IEC/IEEE\n26514:2022, Systems and software engineering -- Design and development of information for users, 3.1.6"
+  },
+  {
+    "term": "specification",
+    "definition": "These characteristics typically include speed, accuracy, and memory usage. performance testing. (1) type of testing conducted to evaluate the degree to which a test item accomplishes its designated functions within given constraints of time and other resources",
+    "source": "ISO/IEC/IEEE 29119-2:2021, Software and\nsystems engineering--Software testing--Part 2: Test processes, 3.11"
+  },
+  {
+    "term": "standard",
+    "definition": "document established by an authority, custom, or general consent as a model or example",
+    "source": "ISO/IEC/IEEE\n24765h:2019"
+  },
+  {
+    "term": "policy",
+    "definition": "clear and measurable statements of preferred direction and behavior to condition the decisions made within an organization",
+    "source": "ISO/IEC/IEEE 15289:2019 Systems and software engineering--Content of life-cycle information items\n(documentation"
+  },
+  {
+    "term": "procedure",
+    "definition": "information item that presents an ordered series of steps to perform a process, activity, or task",
+    "source": "ISO/IEC/IEEE 15289:2019 Systems and software engineering--Content of life-cycle information items (documentation"
+  },
+  {
+    "term": "guideline",
+    "definition": "official recommendation or advice that indicates policies, standards, or procedures for how something should be accomplished",
+    "source": "IEEE 7002:2022, IEEE Standard for Data Privacy Process, 3.1"
+  },
+  {
+    "term": "quality assurance",
+    "definition": "process that is focused on providing confidence that quality requirements are fulfilled",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle processes, 3.1.52"
+  },
+  {
+    "term": "quality control",
+    "definition": "tasks to evaluate the quality of services as delivered or the quality of developed or manufactured products",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle processes,\n3.1.54"
+  },
+  {
+    "term": "stakeholder",
+    "definition": "individual or organization having a right, share, claim, or interest in a system or in its possession of characteristics that meet their needs and expectations",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--\nSoftware life cycle processes, 3.1.59"
+  },
+  {
+    "term": "user",
+    "definition": "transform analysis. (1) software development technique in which the structure of a system is derived from analyzing the flow of data through the system and the transformations that are performed on the data",
+    "source": "ISO/IEC/IEEE 24765:2017\nSystems and software engineering-Vocabulary"
+  },
+  {
+    "term": "customer",
+    "definition": "organization or person that receives a product or service",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and\nsoftware engineering--Software life cycle processes, 3.1.16"
+  },
+  {
+    "term": "conformance",
+    "definition": "fulfillment by a product, process or service of specified requirements",
+    "source": "IEEE 7005 2021, IEEE Standard for Transparent Employer Data Governance, 3.1"
+  },
+  {
+    "term": "interoperability",
+    "definition": "capability of a product to exchange information with other products and mutually use the information that has been exchanged",
+    "source": "ISO/IEC 25010:2023, Systems and software engineering--Systems and software\nQuality Requirements and Evaluation (SQuaRE"
+  },
+  {
+    "term": "compatibility",
+    "definition": "capability of a product to exchange information with other products, or to perform its required functions while sharing the same common environment and resources",
+    "source": "ISO/IEC 25010:2023, Systems and software\nengineering--Systems and software Quality Requirements and Evaluation (SQuaRE"
+  },
+  {
+    "term": "root cause analysis",
+    "definition": "determination of the underlying source(s) of a risk factor or problem",
+    "source": "ISO/IEC/IEEE\n24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "defect density",
+    "definition": "number of defects per unit of product size",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software\nengineering-Vocabulary"
+  },
+  {
+    "term": "service level agreement",
+    "definition": "documented agreement between a service provider and a customer that identifies services and service targets",
+    "source": "ISO/IEC 29110-1-2:2024, Systems and software engineering Lifecycle profiles for\nVery Small Entities (VSEs"
+  },
+  {
+    "term": "mean time between failures",
+    "definition": "the expected or observed time between consecutive failures in a system or component",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "mean time to repair",
+    "definition": "expected or observed duration required to return a malfunctioning system or component to normal operations",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "scalability",
+    "definition": "capability of a product to handle growing or shrinking workloads or to adapt its capacity to handle variability",
+    "source": "ISO/IEC 25010:2023, Systems and software engineering--Systems and software Quality Requirements and\nEvaluation (SQuaRE"
+  },
+  {
+    "term": "performance",
+    "definition": "degree to which a system or component accomplishes its designated functions within given constraints, such as speed, accuracy, or memory usage",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-\nVocabulary"
+  },
+  {
+    "term": "efficiency",
+    "definition": "relationship between the result achieved and the resources used",
+    "source": "ISO/IEC 16350-2015 Information\ntechnology--Systems and software engineering--Application management, 4.17"
+  },
+  {
+    "term": "effectiveness",
+    "definition": "accuracy and completeness with which users achieve specified goals",
+    "source": "ISO TR 25060:2023\nSystems and software engineering--Systems and software Quality Requirements and Evaluation (SQuaRE"
+  },
+  {
+    "term": "productivity",
+    "definition": "ratio of work product to work effort",
+    "source": "ISO/IEC/IEEE 24765a:2011"
+  },
+  {
+    "term": "process",
+    "definition": "set of interrelated or interacting activities which transforms inputs into outputs",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle processes, 3.1.45"
+  },
+  {
+    "term": "product",
+    "definition": "result of a process",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle\nprocesses, 3.1.49"
+  },
+  {
+    "term": "life cycle",
+    "definition": "evolution of a system, product, service, project or other human-made entity from conception through retirement",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle processes, 3.1.26"
+  },
+  {
+    "term": "phase",
+    "definition": "period of time in the life cycle during which activities are performed that enable achievement of objectives for that phase",
+    "source": "ISO/IEC/IEEE 42020:2019 Software, systems and enterprise -- Architecture processes, 3.15"
+  },
+  {
+    "term": "activity",
+    "definition": "set of cohesive tasks of a process",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--\nSoftware life cycle processes, 3.1.3"
+  },
+  {
+    "term": "task",
+    "definition": "required, recommended, or permissible action, intended to contribute to the achievement of one or more outcomes of a process",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle processes,\n\n\n\n                            "
+  },
+  {
+    "term": "artifact",
+    "definition": "work product that is produced and used during a project to capture and convey information",
+    "source": "ISO/IEC/IEEE\n12207:2026 Systems and software engineering--Software life cycle processes, 3.1.10"
+  },
+  {
+    "term": "repository",
+    "definition": "organized and persistent data storage that allows data retrieval",
+    "source": "ISO/IEC/IEEE 26511:2018 Systems\nand software engineering--Requirements for managers of information for users of systems,"
+  },
+  {
+    "term": "build",
+    "definition": "operational version of a system or component that incorporates a specified subset of the capabilities that the final product will provide",
+    "source": "IEEE 828-2012 IEEE Standard for Configuration Management in Systems and Software\nEngineering, 2.1"
+  },
+  {
+    "term": "release",
+    "definition": "particular version of a configuration item that is made available for a specific purpose",
+    "source": "IEEE 828-2012 IEEE\nStandard for Configuration Management in Systems and Software Engineering, 2.12"
+  },
+  {
+    "term": "deployment",
+    "definition": "stage of a project in which a system is put into operation and transition issues are resolved",
+    "source": "IEEE\n2675-2021, IEEE Standard for DevOps: Building Reliable and Secure Systems Including Application Build, Package, and"
+  },
+  {
+    "term": "migration",
+    "definition": "moving a cluster to a different capsule",
+    "source": "ISO/IEC 10746-3:2009 Information technology -- Open\nDistributed Processing -- Reference Model: Architecture, 8.1.27"
+  },
+  {
+    "term": "patch",
+    "definition": "modification made directly to an object program without reassembling or recompiling from the source program",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "workaround",
+    "definition": "method to continue operations despite a known error",
+    "source": "ISO/IEC/IEEE 24765h:2019"
+  },
+  {
+    "term": "incident",
+    "definition": "anomalous or unexpected event or set of events at any time during the life cycle of a project, product, service, or system",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life cycle processes, 3.1.30"
+  },
+  {
+    "term": "severity",
+    "definition": "relative detrimental effect of a failure",
+    "source": "IEEE 982:2024, Standard for Measures of the Software Aspects of\nDependability, 3.1"
+  },
+  {
+    "term": "probability",
+    "definition": "extent to which an event is likely to occur",
+    "source": "ISO/IEC/IEEE 24765j:2021"
+  },
+  {
+    "term": "vulnerability",
+    "definition": "potential flaw or weakness in software design or implementation that can be exercised (accidentally triggered or intentionally exploited) and result in harm to the system",
+    "source": "ISO/IEC 23643:2020, Software and systems\nengineering--Capabilities of software safety and security verification tools, 3"
+  },
+  {
+    "term": "threat",
+    "definition": "state of the system or system environment which can lead to adverse effects",
+    "source": "ISO/IEC/IEEE 24765a:2011"
+  },
+  {
+    "term": "authorization",
+    "definition": "action indicating that a particular behavior is not prevented",
+    "source": "ISO/IEC 15414:2015 Information\ntechnology -- Open distributed processing -- Reference model -- Enterprise language, 6.6."
+  },
+  {
+    "term": "confidentiality",
+    "definition": "capability of a product to ensure that data are accessible only to those authorized to have access",
+    "source": "ISO/IEC 25010:2023, Systems and software engineering--Systems and software Quality Requirements and Evaluation\n(SQuaRE"
+  },
+  {
+    "term": "integrity",
+    "definition": "capability of a product to ensure that the state of its system and data are protected from unauthorized modification or deletion either by malicious action or computer error",
+    "source": "ISO/IEC 25010:2023, Systems and software\nengineering--Systems and software Quality Requirements and Evaluation (SQuaRE"
+  },
+  {
+    "term": "assurance",
+    "definition": "grounds for justified confidence that a claim has been or will be achieved",
+    "source": "ISO/IEC/IEEE 15026-1:2025\nSystems and software engineering--Systems and software assurance--Part 1: Vocabulary and conce"
+  },
+  {
+    "term": "dependability",
+    "definition": "extent to which measured values of reliability, availability, recoverability, and supportability meet or exceed their required thresholds during an in-service interval",
+    "source": "IEEE 982:2024, Standard for Measures of the Software\nAspects of Dependability, 3.1"
+  },
+  {
+    "term": "failure mode",
+    "definition": "physical or functional manifestation of a failure",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software\nengineering-Vocabulary"
+  },
+  {
+    "term": "verification and validation",
+    "definition": "process of determining whether the requirements for a system or component are complete and correct, the products of each development phase fulfill the requirements or conditions imposed by the previous phase, and the final system or component complies with specified requirements",
+    "source": "ISO/IEC/IEEE\n24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "design review",
+    "definition": "formal, documented, comprehensive, and systematic examination of a design to determine if the design meets the applicable requirements, to identify problems, and to propose solutions",
+    "source": "ISO/IEC/IEEE 24765:2017\nSystems and software engineering-Vocabulary"
+  },
+  {
+    "term": "code review",
+    "definition": "meeting at which software code is presented to project personnel, managers, users, customers, or other interested parties for comment or approval",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-\nVocabulary"
+  },
+  {
+    "term": "inspection",
+    "definition": "static analysis technique that relies on visual examination of development products to detect errors, violations of development standards, and other problems",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-\nVocabulary"
+  },
+  {
+    "term": "static analysis",
+    "definition": "process of evaluating a system or component based on its form, structure, content, or documentation",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "dynamic analysis",
+    "definition": "evaluating a system or component based on its behavior during execution",
+    "source": "ISO/IEC/IEEE\n24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "equivalence partitioning",
+    "definition": "test design technique in which test cases are designed to exercise equivalence partitions by using one or more representative members of each partition",
+    "source": "ISO/IEC/IEEE 29119-1:2022, Software and\nsystems engineering--Software testing--Part 1: General concepts, 3.31"
+  },
+  {
+    "term": "boundary value analysis",
+    "definition": "specification-based test design technique based on exercising the boundaries of equivalence partitions",
+    "source": "ISO/IEC/IEEE 29119-1:2022, Software and systems engineering--Software testing--Part 1:\nGeneral concepts, 3.12"
+  },
+  {
+    "term": "mutation testing",
+    "definition": "testing methodology in which two or more program mutations are executed using the same test cases to evaluate the ability of the test cases to detect differences in the mutations",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems\nand software engineering-Vocabulary"
+  },
+  {
+    "term": "software quality",
+    "definition": "capability of a software product to satisfy stated and implied needs when used under specified conditions",
+    "source": "ISO/IEC 25000:2014 Systems and software Engineering--Systems and software product Quality\nRequirements and Evaluation (S"
+  },
+  {
+    "term": "software quality assurance",
+    "definition": "set of activities that define and assess the adequacy of software processes to provide evidence that establishes confidence that the software processes are appropriate for and produce software products of suitable quality for their intended purposes",
+    "source": "IEEE 730-2014 IEEE Standard for Software Quality\nAssurance Processes, 3.2"
+  },
+  {
+    "term": "function point analysis",
+    "definition": "method for measuring functional size",
+    "source": "ISO/IEC 20926:2009 Software and\nsystems engineering -- Software measurement -- IFPUG functional size measurement method "
+  },
+  {
+    "term": "critical path",
+    "definition": "sequence of activities that represents the longest path through a project, which determines the shortest possible duration",
+    "source": "ISO/IEC/IEEE 24765n:2026"
+  },
+  {
+    "term": "acceptance criteria",
+    "definition": "criteria that a system or component is required to satisfy to be accepted by a user, customer, or other authorized entity",
+    "source": "ISO/IEC 33202:2024, Software and systems engineering Core agile practices, 3.1"
+  },
+  {
+    "term": "use case",
+    "definition": "in UML, a complete task of a system that provides a measurable result of value for an actor",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "scenario",
+    "definition": "step-by-step description of a series of events that occur concurrently or sequentially",
+    "source": "ISO/IEC/IEEE\n24765e:2015"
+  },
+  {
+    "term": "actor",
+    "definition": "role (with respect to that action) in which the enterprise object fulfilling the role participates in the action",
+    "source": "ISO/IEC 15414:2015 Information technology -- Open distributed processing -- Reference model -- Enterprise language,\n6.3."
+  },
+  {
+    "term": "requirements analysis",
+    "definition": "process of studying user needs to arrive at a definition of system, hardware, or software requirements",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "requirements traceability matrix",
+    "definition": "structured information artifact that links requirements to their higher-level requirements or needs or to lower-level implementation",
+    "source": "ISO/IEC/IEEE 29148:2018 Systems and software\nengineering-Life cycle processes-Requirements engineering, 3.1.24"
+  },
+  {
+    "term": "prototyping",
+    "definition": "hardware and software development technique in which a preliminary version of part or all of the hardware or software is developed to permit user feedback, determine feasibility, or investigate timing or other issues in support of the development process",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "spiral model",
+    "definition": "model of the software development process in which the constituent activities, typically requirements analysis, preliminary and detailed design, coding, integration, and testing, are performed iteratively until the software is complete",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  },
+  {
+    "term": "waterfall model",
+    "definition": "model of the software development process in which the constituent activities, typically a concept phase, requirements phase, design phase, implementation phase, test phase, and installation and checkout phase, are performed in that order, possibly with overlap but with little or no iteration",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and\nsoftware engineering-Vocabulary"
+  },
+  {
+    "term": "agile development",
+    "definition": "development approach based on iterative development, frequent inspection and adaptation, and incremental deliveries, in which requirements and solutions evolve through collaboration in cross-functional teams and through continual stakeholder feedback",
+    "source": "ISO/IEC/IEEE 12207:2026 Systems and software engineering--Software life\n\n\n\n                                             "
+  },
+  {
+    "term": "scrum",
+    "definition": "iterative project management framework used in agile development, in which a team agrees on development items from a requirement backlog and produces them within a short duration of a few weeks",
+    "source": "ISO/IEC 29110-1-2:2024,\nSystems and software engineering Lifecycle profiles for Very Small Entities (VSEs"
+  },
+  {
+    "term": "extreme programming",
+    "definition": "form of agile software development in which procedures for iterative planning and working are combined with technical procedures, such as test-driven design and pair programming",
+    "source": "ISO/IEC TR\n7052:2023, Software engineering--Controlling frequently occurring risks during development and maintenance of"
+  },
+  {
+    "term": "continuous integration",
+    "definition": "technique that continually merges artifacts, including source code updates from all developers on a team, into a shared mainline to build and test the developed system",
+    "source": "IEEE 2675-2021, IEEE Standard for\nDevOps: Building Reliable and Secure Systems Including Application Build, Package, and"
+  },
+  {
+    "term": "continuous delivery",
+    "definition": "software engineering practices that allow for frequent releases of new systems (including software) to staging or various test environments through the use of automated tools",
+    "source": "IEEE 2675-2021, IEEE Standard for\nDevOps: Building Reliable and Secure Systems Including Application Build, Package, and"
+  },
+  {
+    "term": "devops",
+    "definition": "set of principles and practices which enable better communication and collaboration between relevant stakeholders for the purpose of specifying, developing, and operating software and systems products and services, and continuous improvements in all aspects of the life cycle",
+    "source": "IEEE 2675-2021, IEEE Standard for DevOps: Building Reliable\nand Secure Systems Including Application Build, Package, and"
+  },
+  {
+    "term": "change management",
+    "definition": "judicious use of means to effect a change, or a proposed change, to a product or service",
+    "source": "ISO/IEC/IEEE 24765:2017 Systems and software engineering-Vocabulary"
+  }
+]
