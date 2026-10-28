@@ -44,7 +44,6 @@
   ],
   "packages": [
     "npm:pi-subagents@0.83.1",
-    "npm:pi-background-tasks@2.6.10",
     "npm:@juicesharp/rpiv-ask-user-question@2.15.0",
     "npm:@dietrichgebert/ponytail@5.3.2"
   ],
@@ -78,6 +77,10 @@
       "oracle": {
         "model": "openrouter/anthropic/claude-opus-5",
         "thinking": "high"
+      },
+      "background": {
+        "model": "openrouter/deepseek/deepseek-v4.1-flash",
+        "thinking": "medium"
       }
     }
   },
