@@ -1,10 +1,85 @@
 {
-  "defaultThinkingLevel": "minimal",
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
+  "defaultProvider": "openrouter",
+  "defaultModel": "deepseek/deepseek-v4.1-flash",
+  "enabledModels": [
+    "openrouter/deepseek/deepseek-v4.1-flash",
+    "openrouter/deepseek/deepseek-v4-pro",
+    "openrouter/openai/gpt-5.3-codex",
+    "openrouter/anthropic/claude-sonnet-5",
+    "openrouter/anthropic/claude-opus-5",
+    "openrouter/moonshotai/kimi-k3",
+    "openrouter/z-ai/glm-5.3"
+  ],
+  "defaultThinkingLevel": "medium",
   "theme": "dark",
   "compaction": {
     "enabled": true,
-    "targetTokens": 50000,
-    "minTokensBeforeCompaction": 75000
+    "reserveTokens": 32768,
+    "keepRecentTokens": 30000,
+    "modelOverrides": {
+      "openrouter/deepseek/deepseek-v4.1-flash": {
+        "reserveTokens": 650000
+      },
+      "openrouter/deepseek/deepseek-v4-flash": {
+        "reserveTokens": 650000
+      },
+      "openrouter/~deepseek/deepseek-flash-latest": {
+        "reserveTokens": 650000
+      },
+      "openrouter/moonshotai/kimi-k3": {
+        "reserveTokens": 650000
+      },
+      "openrouter/z-ai/glm-5.3": {
+        "reserveTokens": 650000
+      },
+      "openrouter/openai/gpt-5.3-codex": {
+        "reserveTokens": 150000
+      }
+    }
+  },
+  "defaultTools": [
+    "+codemode",
+    "+tool_search"
+  ],
+  "packages": [
+    "npm:pi-subagents@0.83.1",
+    "npm:pi-background-tasks@2.6.10",
+    "npm:@juicesharp/rpiv-ask-user-question@2.15.0",
+    "npm:@dietrichgebert/ponytail@5.3.2"
+  ],
+  "subagents": {
+    "defaultThinking": "medium",
+    "agentOverrides": {
+      "scout": {
+        "model": "openrouter/deepseek/deepseek-v4.1-flash",
+        "thinking": "low"
+      },
+      "delegate": {
+        "model": "openrouter/deepseek/deepseek-v4.1-flash",
+        "thinking": "low"
+      },
+      "researcher": {
+        "model": "openrouter/deepseek/deepseek-v4.1-flash",
+        "thinking": "medium"
+      },
+      "evidence-auditor": {
+        "model": "openrouter/openai/gpt-5.3-codex",
+        "thinking": "medium"
+      },
+      "worker": {
+        "model": "openrouter/openai/gpt-5.3-codex",
+        "thinking": "medium"
+      },
+      "reviewer": {
+        "model": "openrouter/anthropic/claude-sonnet-5",
+        "thinking": "high"
+      },
+      "oracle": {
+        "model": "openrouter/anthropic/claude-opus-5",
+        "thinking": "high"
+      }
+    }
   },
   "retry": {
     "enabled": true,
@@ -18,11 +93,5 @@
     "steeringMode": "one-at-a-time",
     "followUpMode": "one-at-a-time"
   },
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-4-6",
-  "hideThinkingBlock": false,
-  "packages": [
-    "npm:pi-subagents",
-    "npm:pi-mcp-adapter"
-  ]
+  "hideThinkingBlock": false
 }

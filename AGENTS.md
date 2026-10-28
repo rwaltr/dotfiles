@@ -8,6 +8,10 @@ development workflows.
 
 **Repository URL**: Initialized with `chezmoi init rwaltr`
 
+> **Project skills (load on demand):** `/skill:chezmoi-workflow` — daily chezmoi commands,
+> adding/templating files, `mise run test`/`lint`/`check`, and the `hk` git hooks.
+> Use it instead of re-deriving the commands from this file.
+
 ## Project Philosophy
 
 - **Minimal input required**: `chezmoi init rwaltr` should work with minimal configuration
@@ -77,10 +81,7 @@ development workflows.
 │   │   ├── sops/                  # SOPS encryption config
 │   │   ├── starship.toml          # Starship prompt config
 │   │   ├── systemd/               # User systemd units
-│   │   ├── wezterm/               # WezTerm terminal config
-│   │   │   ├── colors/
-│   │   │   ├── platforms/
-│   │   │   └── wezterm.lua
+│   │   ├── foot/                  # foot terminal config (foot.ini)
 
 │   ├── dot_local/
 │   │   └── bin/                   # User scripts
@@ -115,7 +116,7 @@ development workflows.
 ### Development Tools
 
 - **Editor**: Neovim (Lua-based config)
-- **Terminal**: WezTerm (multi-platform support)
+- **Terminal**: foot (Wayland) with zellij as the multiplexer (migrated off WezTerm)
 - **Version Manager**: mise (for tool versions)
 - **Kubernetes**: kubectl, krew, custom kubeconfig management
 - **Git**: Template-based configuration
@@ -135,7 +136,7 @@ development workflows.
 - `home/dot_config/nushell/` - Nushell (data processing workflows)
 - `home/dot_config/starship.toml` - Cross-shell prompt configuration
 - `home/dot_config/nvim/init.lua` - Neovim entry point
-- `home/dot_config/wezterm/wezterm.lua` - Terminal configuration
+- `home/dot_config/foot/foot.ini` - Terminal configuration
 
 ### Chezmoi Metadata
 
@@ -264,7 +265,7 @@ chezmoi add --template ~/.config/templated-file
 3. **Data Processing**: Nushell for structured data manipulation
 4. **Container Development**: Primary workflow uses Distrobox containers with dotfiles
 5. **Editor**: Neovim with Lua configuration for modern development
-6. **Terminal**: WezTerm provides consistent terminal experience across platforms
+6. **Terminal**: foot on Wayland, with zellij as the multiplexer
 
 ## Important Notes
 
@@ -335,7 +336,7 @@ mise run test:all
 
 - [Chezmoi Documentation](https://www.chezmoi.io/)
 - [Starship Prompt](https://starship.rs/)
-- [WezTerm](https://wezfurlong.org/wezterm/)
+- [foot](https://codeberg.org/dnkl/foot) / [zellij](https://zellij.dev/)
 - [mise](https://mise.jdx.dev/)
 - [Distrobox](https://github.com/89luca89/distrobox)
 

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "kubernetes": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "kubernetes-mcp-server@latest",
+        "--config",
+        "/var/home/rwaltr/.config/kubernetes-mcp-server.toml"
+      ],
+      "exposure": "codemode"
+    }
+  }
+}

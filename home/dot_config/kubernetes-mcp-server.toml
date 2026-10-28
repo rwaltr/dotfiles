@@ -1,0 +1,9 @@
+# Config for kubernetes/kubernetes-mcp-server (used by pi's MCP integration).
+# Keep it read-only: this server points at the production `mouse` kubeconfig.
+read_only = true
+
+# Never expose Secret contents to the model, even read-only.
+[[denied_resources]]
+group = ""
+version = "v1"
+kind = "Secret"
