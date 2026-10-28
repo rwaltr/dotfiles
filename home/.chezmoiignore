@@ -29,3 +29,7 @@
 .config/containers/systemd/resticprofile@.container
 .config/systemd/user/resticprofile@home.timer
 {{- end }}
+
+# pi: managed-base inputs for modify_ templates (not applied as targets)
+.config/pi/agent/settings.managed.json
+.config/pi/agent/mcp.managed.json

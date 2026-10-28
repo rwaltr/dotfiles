@@ -1,0 +1,4 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $managed := include "dot_config/private_pi/agent/mcp.managed.json" | fromJson -}}
+{{- $live := .chezmoi.stdin | fromJson -}}
+{{- mergeOverwrite $live $managed | toJson -}}

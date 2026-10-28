@@ -1,0 +1,7 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- $managed := include "dot_config/private_pi/agent/settings.managed.json" | fromJson -}}
+{{- $live := .chezmoi.stdin | fromJson -}}
+{{- $packages := concat (default (list) $live.packages) (default (list) $managed.packages) | uniq -}}
+{{- $merged := mergeOverwrite $live $managed -}}
+{{- $_ := set $merged "packages" $packages -}}
+{{- $merged | toJson -}}
