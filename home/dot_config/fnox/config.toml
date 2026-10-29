@@ -25,12 +25,12 @@ description = "1Password service account token"
 
 [secrets.OPENROUTER_API_KEY]
 provider = "op"
-value = "TODO_ITEM/TODO_FIELD"
+value = "Openrouter pi desktop/OPENROUTER_API_KEY"
 description = "OpenRouter API key for pi model calls"
 
 [secrets.HA_TOKEN]
 provider = "op"
-value = "TODO_ITEM/TODO_FIELD"
+value = "haPi/HA_TOKEN"
 description = "Home Assistant long-lived access token"
 
 [secrets.GRAFANA_TOKEN]
