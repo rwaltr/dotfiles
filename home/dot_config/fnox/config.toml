@@ -9,6 +9,8 @@ env = "exec"
 [providers.op]
 type = "1password"
 vault = "home-ops"
+# Read the service-account token from the keychain and hand it to `op`.
+token = { secret = "OP_SERVICE_ACCOUNT_TOKEN" }
 
 [providers.keychain]
 type = "keychain"
