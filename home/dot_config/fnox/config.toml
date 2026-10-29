@@ -38,16 +38,6 @@ provider = "op"
 value = "grafana/GRAFANA_TOKEN"
 description = "Grafana service account token"
 
-[secrets.RADARR_API_KEY]
-provider = "op"
-value = "arr/radarr"
-description = "Radarr API key (mcp-arr-server)"
-
-[secrets.SONARR_API_KEY]
-provider = "op"
-value = "arr/sonarr"
-description = "Sonarr API key (mcp-arr-server)"
-
 # Agent access via `fnox mcp`, limited to these secrets.
 [mcp]
 tools = ["get_secret", "exec"]
