@@ -42,6 +42,14 @@
       },
       "exposure": "codemode",
       "description": "Home Assistant control and introspection (unofficial homeassistant-ai/ha-mcp)"
+    },
+    "terraform": {
+      "command": "terraform-mcp-server",
+      "args": [
+        "stdio"
+      ],
+      "exposure": "codemode",
+      "description": "Terraform Registry + HCP Terraform (auto-reads TFE_TOKEN from ~/.terraform.d/credentials.tfrc.json)"
     }
   }
 }

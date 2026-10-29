@@ -26,3 +26,9 @@ node = "latest"
 # ── Tools not in Homebrew ─────────────────────────────────────────────────────
 "github:brave/brave-search-cli" = "latest" # bx — Brave Search CLI (not in brew)
 
+# ── MCP servers ───────────────────────────────────────────────────────────────
+uv     = "latest" # astral uv — powers uvx-based MCP servers (ha-mcp, mqtt-mcp)
+python = "3.14.6"
+"go:github.com/grafana/mcp-grafana/cmd/mcp-grafana" = "latest"
+"go:github.com/hashicorp/terraform-mcp-server/cmd/terraform-mcp-server" = "latest"
+
