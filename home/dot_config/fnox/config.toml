@@ -1,0 +1,43 @@
+# Global fnox config — chezmoi-managed. References only; no secret values here.
+#
+# TODO(rwaltr): replace TODO_VAULT and the TODO_ITEM/TODO_FIELD refs with the
+# real 1Password locations, then run `fnox doctor` and `fnox check`.
+
+# Keep secrets out of the interactive shell; only `fnox exec` children get them.
+env = "exec"
+
+[providers.op]
+type = "1password"
+vault = "TODO_VAULT"
+
+[providers.keychain]
+type = "keychain"
+service = "fnox"
+
+# 1Password service-account token, held in the OS keychain. Bootstrap for the
+# op provider; handed to `fnox mcp` by pi at spawn time.
+[secrets.OP_SERVICE_ACCOUNT_TOKEN]
+provider = "keychain"
+value = "op-service-account-token"
+description = "1Password service account token"
+
+[secrets.OPENROUTER_API_KEY]
+provider = "op"
+value = "TODO_ITEM/TODO_FIELD"
+description = "OpenRouter API key for pi model calls"
+
+[secrets.HA_TOKEN]
+provider = "op"
+value = "TODO_ITEM/TODO_FIELD"
+description = "Home Assistant long-lived access token"
+
+[secrets.GRAFANA_TOKEN]
+provider = "op"
+value = "TODO_ITEM/TODO_FIELD"
+description = "Grafana service account token"
+
+# Agent access via `fnox mcp`, limited to these secrets.
+[mcp]
+tools = ["get_secret", "exec"]
+secrets = ["OPENROUTER_API_KEY", "HA_TOKEN", "GRAFANA_TOKEN"]
+redact_output = true
