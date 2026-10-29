@@ -8,7 +8,7 @@ env = "exec"
 
 [providers.op]
 type = "1password"
-vault = "TODO_VAULT"
+vault = "home-ops"
 
 [providers.keychain]
 type = "keychain"
