@@ -1,0 +1,16 @@
+[Unit]
+Description=Port-forward homelab services (mosquitto/radarr/sonarr) to localhost
+Documentation=https://github.com/rwaltr/home-ops
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Ensure non-interactive systemd units can find mise shims and user-local tools
+Environment=PATH=%h/.local/share/mise/shims:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:%h/.local/bin:/usr/local/bin:/usr/bin
+ExecStart=%h/.local/bin/homelab-portforward
+Restart=on-failure
+RestartSec=15s
+
+[Install]
+WantedBy=default.target

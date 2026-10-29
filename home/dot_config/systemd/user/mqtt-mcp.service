@@ -1,0 +1,19 @@
+[Unit]
+Description=MQTT MCP server (streamable HTTP on loopback)
+Documentation=https://github.com/ezhuk/mqtt-mcp
+After=network-online.target homelab-portforward.service
+Wants=network-online.target homelab-portforward.service
+
+[Service]
+Type=simple
+# Ensure non-interactive systemd units can find mise shims and user-local tools
+Environment=PATH=%h/.local/share/mise/shims:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:%h/.local/bin:/usr/local/bin:/usr/bin
+# Default broker for tool calls that omit connection params (loopback via homelab-portforward)
+Environment=MQTT_MCP_MQTT__HOST=127.0.0.1
+Environment=MQTT_MCP_MQTT__PORT=1883
+ExecStart=%h/.local/share/mise/shims/uvx mqtt-mcp --host 127.0.0.1 --port 8765
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=default.target

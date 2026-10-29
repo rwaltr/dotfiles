@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# homelab-portforward — expose in-cluster services on localhost for host-side tools.
+#
+# pi runs on zirconium; the k0s cluster and these services run on mouse. ClusterIPs
+# aren't reachable across hosts, so tunnel them to loopback: mosquitto/radarr/sonarr
+# for the MQTT and *arr MCP servers.
+#
+# Each forward is supervised independently and reconnects on its own.
+
+set -uo pipefail
+
+# Ensure non-interactive systemd units can find mise shims + brew + local tools.
+export PATH="${HOME}/.local/share/mise/shims:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${HOME}/.local/bin:/usr/local/bin:/usr/bin:${PATH:-}"
+
+supervise() {
+  local ns="$1" svc="$2" ports="$3"
+  while :; do
+    kubectl -n "$ns" port-forward "svc/${svc}" "$ports" >/dev/null 2>&1 || true
+    sleep 3
+  done
+}
+
+supervise default mosquitto 1883:1883 &
+supervise default radarr 7878:7878 &
+supervise default sonarr 8989:8989 &
+
+wait
