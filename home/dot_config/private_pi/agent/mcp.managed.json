@@ -30,6 +30,18 @@
       },
       "exposure": "codemode",
       "description": "Grafana dashboards, datasources, metrics, and Loki queries"
+    },
+    "homeassistant": {
+      "command": "uvx",
+      "args": [
+        "ha-mcp@latest"
+      ],
+      "env": {
+        "HOMEASSISTANT_URL": "https://homeassistant.waltr.tech",
+        "HOMEASSISTANT_TOKEN": "!fnox get HA_TOKEN"
+      },
+      "exposure": "codemode",
+      "description": "Home Assistant control and introspection (unofficial homeassistant-ai/ha-mcp)"
     }
   }
 }

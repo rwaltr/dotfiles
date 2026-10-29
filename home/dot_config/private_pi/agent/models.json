@@ -1,0 +1,8 @@
+{
+  "$schema": "https://pi.dev/schemas/models.schema.json",
+  "providers": {
+    "openrouter": {
+      "apiKey": "!fnox get OPENROUTER_API_KEY"
+    }
+  }
+}
