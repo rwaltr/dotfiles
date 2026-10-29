@@ -18,19 +18,6 @@
       "exposure": "codemode",
       "description": "On-demand secret access (get_secret/exec) limited to the [mcp].secrets allowlist"
     },
-    "grafana": {
-      "command": "mcp-grafana",
-      "args": [
-        "-t",
-        "stdio"
-      ],
-      "env": {
-        "GRAFANA_URL": "https://grafana.waltr.tech",
-        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "!fnox get GRAFANA_TOKEN"
-      },
-      "exposure": "codemode",
-      "description": "Grafana dashboards, datasources, metrics, and Loki queries"
-    },
     "homeassistant": {
       "command": "uvx",
       "args": [
