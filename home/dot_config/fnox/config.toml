@@ -25,7 +25,7 @@ description = "1Password service account token"
 
 [secrets.OPENROUTER_API_KEY]
 provider = "op"
-value = "Openrouter pi desktop/OPENROUTER_API_KEY"
+value = "Openrouterpi/OPENROUTER_API_KEY"
 description = "OpenRouter API key for pi model calls"
 
 [secrets.HA_TOKEN]
