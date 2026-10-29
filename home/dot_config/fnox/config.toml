@@ -33,7 +33,7 @@ description = "Home Assistant long-lived access token"
 
 [secrets.GRAFANA_TOKEN]
 provider = "op"
-value = "TODO_ITEM/TODO_FIELD"
+value = "grafana/GRAFANA_TOKEN"
 description = "Grafana service account token"
 
 # Agent access via `fnox mcp`, limited to these secrets.
