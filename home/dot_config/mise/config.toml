@@ -25,6 +25,13 @@ node = "latest"
 
 # ── Tools not in Homebrew ─────────────────────────────────────────────────────
 "github:brave/brave-search-cli" = "latest" # bx — Brave Search CLI (not in brew)
+"github:mroboff/vm-curator"    = "latest" # QEMU/KVM TUI — drives qemu directly, no libvirt
+
+# ── Dev loop ──────────────────────────────────────────────────────────────────
+# watchexec powers `mise watch`; pitchfork backs `mise daemons` (plus `pitchfork`
+# standalone for process supervision).
+watchexec = "latest"
+pitchfork = "latest"
 
 # ── MCP servers ───────────────────────────────────────────────────────────────
 uv     = "latest" # astral uv — powers uvx-based MCP servers (ha-mcp, mqtt-mcp)
