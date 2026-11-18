@@ -33,6 +33,13 @@ provider = "op"
 value = "opencode go/credential"
 description = "OpenCode Go API key (primary pi provider)"
 
+# Forgejo (git.waltr.tech) application token for rwaltr. Read by the ~/.local/bin/fj
+# wrapper, which renders forgejo-cli's keys.json into tmpfs per call.
+[secrets.FORGEJO_TOKEN]
+provider = "op"
+value = "forgejo-cli/token"
+description = "Forgejo token for fj (forgejo-cli)"
+
 [secrets.AGENTGATEWAY_API_KEY]
 provider = "op"
 value = "pi/password"

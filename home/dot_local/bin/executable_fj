@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# fj (forgejo-cli) wrapper: the token lives in 1Password via fnox, never on disk.
+#
+# fj only reads tokens from $XDG_DATA_HOME/forgejo-cli/keys.json (no env var), so
+# render that file per call into a private tmpfs dir and delete it on exit.
+# Side effect: `fj auth add-token/logout` write to the throwaway file and are lost —
+# rotate the token in 1Password instead.
+set -euo pipefail
+
+real=/home/linuxbrew/.linuxbrew/bin/fj
+host=git.waltr.tech
+
+umask 077
+dir=$(mktemp -d "${XDG_RUNTIME_DIR:-/tmp}/fj.XXXXXX")
+trap 'rm -rf "$dir"' EXIT
+mkdir "$dir/forgejo-cli"
+
+token=$(fnox get FORGEJO_TOKEN)
+[[ -n $token ]] || { echo "fj: FORGEJO_TOKEN resolved empty (fnox check)" >&2; exit 1; }
+
+jq -n --arg h "$host" --arg t "$token" \
+  '{hosts: {($h): {type: "Application", token: $t}}, aliases: {}, default_ssh: []}' \
+  >"$dir/forgejo-cli/keys.json"
+
+# Fallback host lets `fj` work outside a checkout without `-H`.
+XDG_DATA_HOME=$dir FJ_FALLBACK_HOST=${FJ_FALLBACK_HOST:-https://$host} "$real" "$@"
