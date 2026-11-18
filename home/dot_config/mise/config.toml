@@ -35,7 +35,7 @@ pitchfork = "latest"
 
 # ── MCP servers ───────────────────────────────────────────────────────────────
 uv     = "latest" # astral uv — powers uvx-based MCP servers (ha-mcp, mqtt-mcp)
-python = "3.14.6"
+python = "3.15.2"
 "go:github.com/grafana/mcp-grafana/cmd/mcp-grafana" = "latest"
 "go:github.com/hashicorp/terraform-mcp-server/cmd/terraform-mcp-server" = "latest"
 
