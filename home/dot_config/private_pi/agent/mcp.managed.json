@@ -1,5 +1,13 @@
 {
   "mcpServers": {
+    "agentgateway": {
+      "url": "https://llm.waltr.tech/mcp",
+      "headers": {
+        "Authorization": "!echo Bearer $(fnox get AGENTGATEWAY_API_KEY)"
+      },
+      "exposure": "codemode",
+      "description": "agentgateway MCP multiplex: flux, kubectl, home-assistant, mikrotik"
+    },
     "kubernetes": {
       "command": "npx",
       "args": [

@@ -3,6 +3,43 @@
   "providers": {
     "openrouter": {
       "apiKey": "!fnox get OPENROUTER_API_KEY"
+    },
+    "opencode-go": {
+      "apiKey": "!fnox get OPENCODE_API_KEY"
+    },
+    "agentgateway": {
+      "baseUrl": "https://llm.waltr.tech/v1",
+      "api": "openai-completions",
+      "apiKey": "!fnox get AGENTGATEWAY_API_KEY",
+      "models": [
+        {
+          "id": "claude-sonnet-5-5",
+          "name": "Claude Sonnet 5.5 (subscription)",
+          "contextWindow": 1000000,
+          "maxTokens": 128000,
+          "reasoning": true,
+          "input": ["text", "image"],
+          "compat": { "thinkingFormat": "openai" }
+        },
+        {
+          "id": "claude-opus-5-5",
+          "name": "Claude Opus 5.5 (subscription)",
+          "contextWindow": 1000000,
+          "maxTokens": 128000,
+          "reasoning": true,
+          "input": ["text", "image"],
+          "compat": { "thinkingFormat": "openai" }
+        },
+        {
+          "id": "claude-haiku-5-5",
+          "name": "Claude Haiku 5.5 (subscription)",
+          "contextWindow": 1000000,
+          "maxTokens": 128000,
+          "reasoning": true,
+          "input": ["text", "image"],
+          "compat": { "thinkingFormat": "openai" }
+        }
+      ]
     }
   }
 }

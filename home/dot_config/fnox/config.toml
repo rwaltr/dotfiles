@@ -28,10 +28,21 @@ provider = "op"
 value = "Openrouterpi/OPENROUTER_API_KEY"
 description = "OpenRouter API key for pi model calls"
 
+[secrets.OPENCODE_API_KEY]
+provider = "op"
+value = "opencode go/credential"
+description = "OpenCode Go API key (primary pi provider)"
+
+[secrets.AGENTGATEWAY_API_KEY]
+provider = "op"
+value = "pi/password"
+description = "agentgateway client key for pi (claude via llm.waltr.tech)"
+
 [secrets.HA_TOKEN]
 provider = "op"
 value = "haPi/HA_TOKEN"
 description = "Home Assistant long-lived access token"
+
 
 # Agent access via `fnox mcp`, limited to these secrets.
 [mcp]
