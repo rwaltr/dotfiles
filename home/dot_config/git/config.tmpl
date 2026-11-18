@@ -13,6 +13,11 @@ signOff = false
 [url "ssh://git@github.com/"]
 pushInsteadOf = https://github.com/
 
+# Forgejo: token from fnox (1Password) on demand, nothing stored on disk.
+[credential "https://git.waltr.tech"]
+	helper =
+	helper = fnox
+
 [alias]
 	a = add
 	ap = add -p
@@ -81,5 +86,11 @@ pushInsteadOf = https://github.com/
 
 [includeIf "gitdir:~/src/rwaltr/"]
 	path = ~/.config/git/personal
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 
 {{/* vim: set filetype=gitconfig: */}}
